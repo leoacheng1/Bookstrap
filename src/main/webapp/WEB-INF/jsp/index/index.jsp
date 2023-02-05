@@ -16,6 +16,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css" href="${contextRoot}/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="${contextRoot}/css/slick-theme.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+
     <style>
         .top_search_table {
             padding-left: 50px;
@@ -36,13 +43,45 @@
         .logoFont {
             font-family: 'Noto Serif', serif;
         }
-        
-           .nav-link{
+
+        /* body {
+            font-family: 'Noto Serif', serif;
+        } */
+
+        .nav-link {
             position: relative;
         }
 
-        .nav-link:hover{
+        .nav-link:hover {
             border-bottom: 2px solid black;
+        }
+
+        /* .nav-link::after{
+           content: '';
+           opacity: 0;
+           transition: all 0.2s;
+           height: 2px;
+            width: 20%;
+            background-color: black;
+            position: absolute;
+            border: 0;
+            left: 0;
+        } */
+
+        /* .nav-link{
+            opacity: 1;
+        } */
+
+        .slick-prev:before {
+            color: black;
+        }
+
+        .slick-next::before {
+            color: black;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
         }
     </style>
 
@@ -88,13 +127,16 @@
                             aria-current="page" href="#"><i class="fa-solid fa-location-dot"></i>分店位置 </a>
                     </li> <br>
                     <li class="nav-item">
-                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark" href="#">部落格</a>
+                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark"
+                            href="#">部落格</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark" href="#">優惠資訊</a>
+                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark"
+                            href="#">優惠資訊</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark" href="#">當月熱銷</a>
+                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark"
+                            href="#">當月熱銷</a>
                     </li>
                 </ul>
             </div>
@@ -151,12 +193,12 @@
             </ul>
         </div>
 
-                <div class="container-fluid p-3 mb-2 bg-dark text-white" style="height: 50px;">
-                    
-                    <p class="text-light fs-6 lh-1 text-center">限時優惠 凡購物滿五百免運費</p>
+        <div class="container-fluid p-3 mb-2 bg-dark text-white" style="height: 50px;">
+
+            <p class="text-light fs-6 lh-1 text-center">限時優惠 凡購物滿五百免運費</p>
 
 
-                </div>
+        </div>
 
 
     </header>
@@ -195,53 +237,342 @@
     </div>
 
 
-    <div class="container mt-5 border">
+    <!-- 新書推薦 頭 寫死 僅供參考-->
+
+    <div class="container mt-5">
         <nav>
-            <span class="fs-2">新書推薦</span> <br>
-                <div class="d-flex align-items-center">
-            <img src="logo/logo2.png" width="4%" alt=""><p >By Booktopia</p>
-        </div>
+            <span class="fs-2">即將上架</span> <br>
+            <div class="d-flex align-items-center">
+                <img src="logo/logo2.png" width="4%" alt="">
+                <p>By Booktopia</p>
+            </div>
             <div class="nav nav-tabs " id="nav-tab" role="tablist">
-                <button class="nav-link active border border-2 border-dark rounded-0 border-top-0 border-bottom-0 text-dark" id="nav-home-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-home" type="button" role="button" aria-controls="nav-home"
-                    aria-selected="true">中文</button>
-                <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-profile-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
-                    aria-selected="false">外文</button>
-                <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-contact-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
-                    aria-selected="false">人氣小說</button>
-                    <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-contact-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
-                    aria-selected="false">雜誌新刊</button>
-                    <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-contact-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
-                    aria-selected="false">人氣小說</button>
-                    <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-contact-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
-                    aria-selected="false">創意生活</button>
+
+                <!-- 要改改這裡的data-bs-target="#..." -->
+                <!-- id 中間名稱 改  新書推薦t1 內附類別 i1、 i2 依此類推-->
+                <button
+                    class="nav-link active border border-2 border-dark rounded-0 border-top-0 border-bottom-0 text-dark"
+                    id="nav-t1i1-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i1" type="button" role="button"
+                    aria-controls="nav-t1i1" aria-selected="true">中文</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t1i2-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i2" type="button" role="tab"
+                    aria-controls="nav-t1i2" aria-selected="false">外文</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t1i3-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i3" type="button" role="tab"
+                    aria-controls="nav-t1i3" aria-selected="false">人氣小說</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t1i4-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i4" type="button" role="tab"
+                    aria-controls="nav-t1i4" aria-selected="false">雜誌新刊</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t1i5-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i5" type="button" role="tab"
+                    aria-controls="nav-t1i5" aria-selected="false">人氣小說</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t1i6-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i6" type="button" role="tab"
+                    aria-controls="nav-t1i6" aria-selected="false">創意生活</button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
-                tabindex="0">home</div>
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-                profile</div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-                contact</div>
-            <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab"
-                tabindex="0">...disable
+
+            <!-- nav-home 改此id -->
+            <div class="tab-pane fade show active " id="nav-t1i1" role="tabpanel" aria-labelledby="nav-home-tab"
+                tabindex="0">
+
+                <!-- slick slider -->
+                <div class="container ">
+                    <div class="homeslider">
+                        <div class="slider">
+                            <img src="sildePage/i1.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i2.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i3.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i1.jpg">
+                        </div>
+                        <div class="slider">
+                            <img src="sildePage/i2.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i3.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i1.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i2.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i3.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i1.jpg">
+                        </div>
+                        <div class="slider">
+                            <img src="sildePage/i2.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i3.jpg">
+                        </div>
+                    </div>
+                </div>
 
             </div>
-        </div>
+            <div class="tab-pane fade" id="nav-t1i2" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                <!-- slick slider -->
+                <div class="container ">
+                    <div class="homeslider">
+                        <div class="slider">
+                            <img src="sildePage/i4.jpg">
+                        </div>
 
+                        <div class="slider">
+                            <img src="sildePage/i5.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i6.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i4.jpg">
+                        </div>
+                        <div class="slider">
+                            <img src="sildePage/i5.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i6.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i4.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i5.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i6.jpg">
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+            <div class="tab-pane fade" id="nav-t1i3" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                t1i3</div>
+
+            <div class="tab-pane fade" id="nav-t1i4" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                t1i4</div>
+
+
+            <div class="tab-pane fade" id="nav-t1i5" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
+                t1i5
+            </div>
+
+            <div class="tab-pane fade" id="nav-t1i6" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                t1i6</div>
+
+        </div>
+    </div>
+    <!-- 新書推薦 尾 -->
+
+
+
+    <!-- 本周熱銷 頭 (寫死 僅供參考)-->
+
+    <div class="container mt-5">
+        <nav>
+            <span class="fs-2">新書推薦</span> <br>
+            <div class="d-flex align-items-center">
+                <img src="logo/logo2.png" width="4%" alt="">
+                <p>By Booktopia</p>
+            </div>
+            <div class="nav nav-tabs " id="nav-tab" role="tablist">
+
+                <!-- 要改改這裡的data-bs-target="#..." -->
+                <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
+                <button
+                    class="nav-link active border border-2 border-dark rounded-0 border-top-0 border-bottom-0 text-dark"
+                    id="nav-t2i1-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i1" type="button" role="button"
+                    aria-controls="nav-t2i1" aria-selected="true">中文</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t2i2-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i2" type="button" role="tab"
+                    aria-controls="nav-t2i2" aria-selected="false">外文</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t2i3-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i3" type="button" role="tab"
+                    aria-controls="nav-t2i3" aria-selected="false">人氣小說</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t2i4-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i4" type="button" role="tab"
+                    aria-controls="nav-t2i4" aria-selected="false">雜誌新刊</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t2i5-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i5" type="button" role="tab"
+                    aria-controls="nav-t2i5" aria-selected="false">人氣小說</button>
+                <button
+                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                    id="nav-t2i6-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i6" type="button" role="tab"
+                    aria-controls="nav-t2i6" aria-selected="false">創意生活</button>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+
+            <!-- nav-home 改此id -->
+            <div class="tab-pane fade show active " id="nav-t2i1" role="tabpanel" aria-labelledby="nav-home-tab"
+                tabindex="0">
+
+                <div class="container ">
+                    <div class="homeslider">
+                        <div class="slider">
+                            <img src="sildePage/i1.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i2.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i3.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i1.jpg">
+                        </div>
+                        <div class="slider">
+                            <img src="sildePage/i2.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i3.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i1.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i2.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i3.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i1.jpg">
+                        </div>
+                        <div class="slider">
+                            <img src="sildePage/i2.jpg">
+                        </div>
+
+                        <div class="slider">
+                            <img src="sildePage/i3.jpg">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="nav-t2i2" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                t2i2</div>
+            <div class="tab-pane fade" id="nav-t2i3" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                t2i3</div>
+
+            <div class="tab-pane fade" id="nav-t2i4" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                t2i4</div>
+
+
+            <div class="tab-pane fade" id="nav-t2i5" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">
+                t2i5
+            </div>
+
+            <div class="tab-pane fade" id="nav-t2i6" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                t2i6</div>
+
+        </div>
+    </div>
+
+    <!-- 本周熱銷 尾 -->
+
+
+    <div class="container">
+        <footer class="text-muted mt-5 border border-2 border-bottom-0 border-start-0 border-end-0">
+
+            <p class="float-right justify-content-center">
+                ##########Test only############
+                客戶服務專線：02-26535588 傳真：02-27885008 服務時間：週一~五 8:00~19:00，週六~日、例假日 9:00~18:00，365天全年無休
+
+                博客來數位科技股份有限公司 統編 : 96922355 地址：臺灣 115 台北市南港區八德路四段768巷1弄18號B1之1 食品業者登陸字號：A-196922355-00000-9
+
+                Copyright © since 1995 books.com.tw All Rights Reserved.</p>
+            <div class="d-flex justify-content-center">
+                <a href="">服務條款</a>
+                <a href="" class="ms-2">隱私全政策</a>
+            </div>
+    </div>
+    </footer>
     </div>
 
 
+    <!-- //////////////js///////////// -->
+    <script src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+    <script type="text/javascript" src="${contextRoot}/js/slick.js"></script>
+
+    <script>
+        $('.homeslider').slick({
+            centerMode: true,
+            centerPadding: '60px',
+            slidesToShow: 6,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
 
 
-
-    <script src="js/bootstrap.bundle.min.js"></script>
-
+    </script>
 </body>
 </html>
