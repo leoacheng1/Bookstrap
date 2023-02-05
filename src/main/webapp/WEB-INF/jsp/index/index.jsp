@@ -161,37 +161,40 @@
             </div>
         </div>
 
-        <div class="bottom_search_table">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link active text-dark" aria-current="page" href="#">書籍||</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark  mb-2" href="#">小說</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">中文</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">外文</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">電子書</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">青少年</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">孩童</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">禮品</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">音樂</a>
-                </li>
-            </ul>
+        <div class="container-fluid">
+            <div class="bottom_search_table ms-5">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item ">
+                        <p class="nav-link active text-dark disable fs-5 me-3">書籍||</p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 me-3" href="#">小說</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 me-3" href="#">中文</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 me-3" href="#">外文</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 me-3" href="#">電子書</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 me-3" href="#">青少年</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 me-3" href="#">孩童</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 me-3" href="#">禮品</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fs-5 me-3" href="#">音樂</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+
 
         <div class="container-fluid p-3 mb-2 bg-dark text-white" style="height: 50px;">
 
@@ -236,8 +239,40 @@
         </button>
     </div>
 
+    <div class="container mx-auto mt-5 border border-start-0 border-end-0 border-top-0">
 
-    <!-- 新書推薦 頭 寫死 僅供參考-->
+        <p class="text-center mt-3 mb-3">Booktopia 滿足您在家裡也能找到最難買的書，300萬本各式書籍以及100萬件周邊商品任您選!</p>
+
+    </div>
+
+
+    <!-- 類別縮圖 -->
+    <div class="container mt-2">
+
+        <div class="second-carousel border border-end-0 border-start-0 border-top-0 mt-3">
+            <div class="slider"><a href="#"><img src="icon/medal.png" width="120px" class="mx-auto">
+                    <p class="text-center">
+                </a>暢銷書籍</p>
+            </div>
+            <div class="slider"><a href="#"><img src="icon/book.png" width="120px" class="mx-auto"><p class="text-center">
+            </a>最新發行</p></div>
+            <div class="slider"><a href="#"><img src="icon/audiobook.png" width="120px" class="mx-auto"><p class="text-center">
+            </a>有聲書</p></div>
+            <div class="slider"><a href="#"><img src="icon/coming-soon.png" width="120px" class="mx-auto"><p class="text-center">
+            </a>即將上架</p></div>
+            <div class="slider"><a href="#"><img src="icon/coupon.png" width="120px" class="mx-auto"><p class="text-center">
+            </a>優惠資訊</p></div>
+            <div class="slider"><a href="#"><img src="icon/pen-tool.png" width="120px" class="mx-auto"><p class="text-center">
+            </a>特別精裝</p></div>
+            <div class="slider"><a href="#"><img src="icon/gift.png" width="120px" class="mx-auto"><p class="text-center">
+            </a>禮品</p></div>
+            
+        </div>
+    </div>
+
+
+
+    <!-- 即將上架 頭 寫死 僅供參考-->
 
     <div class="container mt-5">
         <nav>
@@ -540,10 +575,10 @@
 
 
     <!-- //////////////js///////////// -->
-    <script src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
-    <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
-    <script type="text/javascript" src="${contextRoot}/js/slick.js"></script>
+    <script type="text/javascript" src="js/jquery-3.6.3.min.js"></script>
+    <script type="text/javascript" src="js/slick.js"></script>
 
     <script>
         $('.homeslider').slick({
@@ -572,7 +607,13 @@
             ]
         });
 
+        $('.second-carousel').slick({
+            slidesToShow: 5,
+            slidesToScroll: 1,
 
+
+        });
     </script>
+</body>
 </body>
 </html>
