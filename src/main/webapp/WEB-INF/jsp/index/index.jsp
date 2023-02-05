@@ -36,6 +36,14 @@
         .logoFont {
             font-family: 'Noto Serif', serif;
         }
+        
+           .nav-link{
+            position: relative;
+        }
+
+        .nav-link:hover{
+            border-bottom: 2px solid black;
+        }
     </style>
 
 </head>
@@ -55,12 +63,12 @@
 
 
             <div class="container-fluid d-flex justify-content-end">
-                
-                        <a href="#" class=" text-light me-2 pe-2 border-light border-end"><i
-                                class="fa-regular fa-user me-1"></i>會員登入</a>
-                    
-                        <a href="#" class=" text-light me-5">註冊會員</a>
-                
+
+                <a href="#" class=" text-light me-2 pe-2 border-light border-end"><i
+                        class="fa-regular fa-user me-1"></i>會員登入</a>
+
+                <a href="#" class=" text-light me-5">註冊會員</a>
+
             </div>
 
 
@@ -76,23 +84,23 @@
                 <ul class="nav">
 
                     <li class="nav-item">
-                        <a class="nav-link active -2 border-end border-dark border-opacity-50 text-dark"
+                        <a class="nav-link active-2 border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark"
                             aria-current="page" href="#"><i class="fa-solid fa-location-dot"></i>分店位置 </a>
                     </li> <br>
                     <li class="nav-item">
-                        <a class="nav-link border-end border-dark border-opacity-50 text-dark" href="#">部落格</a>
+                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark" href="#">部落格</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link border-end border-dark border-opacity-50 text-dark" href="#">優惠資訊</a>
+                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark" href="#">優惠資訊</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link border-end border-dark border-opacity-50 text-dark" href="#">當月熱銷</a>
+                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark" href="#">當月熱銷</a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="container d-flex">
+        <div class="container d-flex mt-2">
             <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
 
             <div class="input-group mb-2 mt-2">
@@ -117,7 +125,7 @@
                     <a class="nav-link active text-dark" aria-current="page" href="#">書籍||</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">小說</a>
+                    <a class="nav-link text-dark  mb-2" href="#">小說</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="#">中文</a>
@@ -142,6 +150,14 @@
                 </li>
             </ul>
         </div>
+
+                <div class="container-fluid p-3 mb-2 bg-dark text-white" style="height: 50px;">
+                    
+                    <p class="text-light fs-6 lh-1 text-center">限時優惠 凡購物滿五百免運費</p>
+
+
+                </div>
+
 
     </header>
 
@@ -178,59 +194,45 @@
         </button>
     </div>
 
-    <div class="container">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-                    type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                    type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
-                    type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane"
-                    type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false"
-                    disabled>Disabled</button>
-            </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                tabindex="0">...</div>
-            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                ...</div>
-            <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                ...</div>
-            <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab"
-                tabindex="0">...</div>
-        </div>
 
-        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="10000">
-                    <img src="sildePage/i1.jpg" class="d-block w-10" alt="...">
-                </div>
-                <div class="carousel-item" data-bs-interval="2000">
-                    <img src="sildePage/i2.jpg" class="d-block w-10" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="sildePage/i3.jpg" class="d-block w-10" alt="...">
-                </div>
+    <div class="container mt-5 border">
+        <nav>
+            <span class="fs-2">新書推薦</span> <br>
+                <div class="d-flex align-items-center">
+            <img src="logo/logo2.png" width="4%" alt=""><p >By Booktopia</p>
+        </div>
+            <div class="nav nav-tabs " id="nav-tab" role="tablist">
+                <button class="nav-link active border border-2 border-dark rounded-0 border-top-0 border-bottom-0 text-dark" id="nav-home-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-home" type="button" role="button" aria-controls="nav-home"
+                    aria-selected="true">中文</button>
+                <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-profile-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                    aria-selected="false">外文</button>
+                <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-contact-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
+                    aria-selected="false">人氣小說</button>
+                    <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-contact-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
+                    aria-selected="false">雜誌新刊</button>
+                    <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-contact-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
+                    aria-selected="false">人氣小說</button>
+                    <button class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark" id="nav-contact-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact"
+                    aria-selected="false">創意生活</button>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+                tabindex="0">home</div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                profile</div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                contact</div>
+            <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab"
+                tabindex="0">...disable
+
+            </div>
         </div>
 
     </div>
@@ -239,8 +241,7 @@
 
 
 
-
-    <script src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
