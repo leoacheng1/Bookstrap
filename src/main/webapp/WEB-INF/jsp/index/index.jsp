@@ -83,6 +83,15 @@
         body {
             font-family: 'Noto Sans TC', sans-serif;
         }
+        
+         .icon-text {
+            text-decoration: none;
+            color: black;
+        }
+
+        .icon-text:hover {
+            color: black;
+        }
     </style>
 
 </head>
@@ -128,7 +137,7 @@
                     </li> <br>
                     <li class="nav-item">
                         <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark"
-                            href="#">部落格</a>
+                            href="#">線上商城</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark"
@@ -137,6 +146,10 @@
                     <li class="nav-item">
                         <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark"
                             href="#">當月熱銷</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0 border-end-0 text-dark text-dark"
+                            href="#">部落格</a>
                     </li>
                 </ul>
             </div>
@@ -247,27 +260,61 @@
 
 
     <!-- 類別縮圖 -->
-    <div class="container mt-2">
+    <div class="container mt-3">
 
-        <div class="second-carousel border border-end-0 border-start-0 border-top-0 mt-3">
-            <div class="slider"><a href="#"><img src="icon/medal.png" width="120px" class="mx-auto">
-                    <p class="text-center">
-                </a>暢銷書籍</p>
+        <div class="second-carousel border border-end-0 border-start-0 border-top-0 mt-2">
+            <div class="slider">
+                <a href="#" class="icon-text"><img src="icon/medal.png" width="120px" class="mx-auto">
+                    <p class="text-center">暢銷書籍</p>
+                </a>
             </div>
-            <div class="slider"><a href="#"><img src="icon/book.png" width="120px" class="mx-auto"><p class="text-center">
-            </a>最新發行</p></div>
-            <div class="slider"><a href="#"><img src="icon/audiobook.png" width="120px" class="mx-auto"><p class="text-center">
-            </a>有聲書</p></div>
-            <div class="slider"><a href="#"><img src="icon/coming-soon.png" width="120px" class="mx-auto"><p class="text-center">
-            </a>即將上架</p></div>
-            <div class="slider"><a href="#"><img src="icon/coupon.png" width="120px" class="mx-auto"><p class="text-center">
-            </a>優惠資訊</p></div>
-            <div class="slider"><a href="#"><img src="icon/pen-tool.png" width="120px" class="mx-auto"><p class="text-center">
-            </a>特別精裝</p></div>
-            <div class="slider"><a href="#"><img src="icon/gift.png" width="120px" class="mx-auto"><p class="text-center">
-            </a>禮品</p></div>
-            
+            <div class="slider">
+                <a href="#" class="icon-text"><img src="icon/book.png" width="120px" class="mx-auto">
+                    <p class="text-center">
+                        最新發行</p>
+                </a>
+            </div>
+            <div class="slider">
+                <a href="#" class="icon-text"><img src="icon/audiobook.png" width="120px" class="mx-auto">
+                    <p class="text-center">
+                        有聲書</p>
+                </a>
+            </div>
+            <div class="slider">
+                <a href="#" class="icon-text"><img src="icon/coming-soon.png" width="120px" class="mx-auto">
+                    <p class="text-center">
+                        即將上架</p>
+                </a>
+            </div>
+            <div class="slider">
+                <a href="#" class="icon-text"><img src="icon/coupon.png" width="120px" class="mx-auto">
+                    <p class="text-center">
+                        優惠資訊</p>
+                </a>
+            </div>
+            <div class="slider">
+                <a href="#" class="icon-text"><img src="icon/pen-tool.png" width="120px" class="mx-auto">
+                    <p class="text-center">
+                        特別精裝</p>
+                </a>
+            </div>
+            <div class="slider">
+                <a href="#" class="icon-text"><img src="icon/gift.png" width="120px" class="mx-auto">
+                    <p class="text-center">
+                        禮品</p>
+                </a>
+            </div>
+
         </div>
+    </div>
+
+
+    <!-- 分界廣告 -->
+
+    <div class="container-fluid">
+
+        <img src="sildePage/adv1.jpg" class="w-100 mt-5" alt="">
+
     </div>
 
 
