@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booktopia</title>
+    <title>Bookstrap</title>
     <link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,7 +104,7 @@
 
             <img src="logo/logo2.png" alt="Logo" height="60" class="me-2 ms-5">
 
-            <a class="navbar-brand logoFont" href="#">Booktopia</a>
+            <a class="navbar-brand logoFont" href="#">Bookstrap</a>
             <a class="navbar-brand" href="#"></a>
 
 
@@ -254,7 +254,7 @@
 
     <div class="container mx-auto mt-5 border border-start-0 border-end-0 border-top-0">
 
-        <p class="text-center mt-3 mb-3">Booktopia 滿足您在家裡也能找到最難買的書，300萬本各式書籍以及100萬件周邊商品任您選!</p>
+        <p class="text-center mt-3 mb-3">Bookstrap 滿足您想被書困住的需求，在家裡也能找到最難買的書，300萬本各式書籍以及100萬件周邊商品任您選!</p>
 
     </div>
 
@@ -326,7 +326,7 @@
             <span class="fs-2">即將上架</span> <br>
             <div class="d-flex align-items-center">
                 <img src="logo/logo2.png" width="4%" alt="">
-                <p>By Booktopia</p>
+                <p>By Bookstrap</p>
             </div>
             <div class="nav nav-tabs " id="nav-tab" role="tablist">
 
@@ -491,7 +491,7 @@
             <span class="fs-2">新書推薦</span> <br>
             <div class="d-flex align-items-center">
                 <img src="logo/logo2.png" width="4%" alt="">
-                <p>By Booktopia</p>
+                <p>By Bookstrap</p>
             </div>
             <div class="nav nav-tabs " id="nav-tab" role="tablist">
 
@@ -619,7 +619,6 @@
     </div>
     </footer>
     </div>
-
 
     <!-- //////////////js///////////// -->
     <script src="js/bootstrap.bundle.min.js"></script>
