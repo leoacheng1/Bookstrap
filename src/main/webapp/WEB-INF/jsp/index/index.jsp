@@ -254,7 +254,9 @@
 
     <div class="container mx-auto mt-5 border border-start-0 border-end-0 border-top-0">
 
-        <p class="text-center mt-3 mb-3">Bookstrap 滿足您在家裡也能找到最難買的書，300萬本各式書籍以及100萬件周邊商品任您選!</p>
+
+        <p class="text-center mt-3 mb-3">Bookstrap 滿足您想被書困住的需求，在家裡也能找到最難買的書，300萬本各式書籍以及100萬件周邊商品任您選!</p>
+
 
     </div>
 
@@ -619,7 +621,6 @@
     </div>
     </footer>
     </div>
-
 
     <!-- //////////////js///////////// -->
     <script src="js/bootstrap.bundle.min.js"></script>
