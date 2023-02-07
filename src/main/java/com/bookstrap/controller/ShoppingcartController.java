@@ -1,5 +1,5 @@
 package com.bookstrap.controller;
 
-public class ShoppingCartController {
+public class ShoppingcartController {
 
 }
