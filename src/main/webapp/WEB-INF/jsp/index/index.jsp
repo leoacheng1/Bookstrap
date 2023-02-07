@@ -110,7 +110,7 @@
 
 
         <!-- <nav class="navbar navbar-expand navbar-dark bg-dark"> -->
-        <div class="bg-dark d-flex pt-3 pb-3">
+        <div class="bg-secondary d-flex pt-3 pb-3">
 
             <div class="container d-flex justify-content-center">
                 <img src="logo/logo2.png" alt="Logo" height="60" class=" my-auto">
@@ -135,7 +135,7 @@
                 </select>
 
                 <input type="text" class="form-control w-50" aria-label="Text input with dropdown button">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
+                <button class="btn btn-outline-dark type="button" id="button-addon2"><i
                         class="fa-solid fa-magnifying-glass"></i></button>
             </div>
 
