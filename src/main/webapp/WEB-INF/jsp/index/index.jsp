@@ -145,10 +145,10 @@
 
             <div class="container d-flex mx-auto my-auto justify-content-end">
 
-                <a href="#" class=" text-light me-2 pe-2 border-light border-end"><i
+                <a href="${contextRoot}/member/signin" class=" text-light me-2 pe-2 border-light border-end"><i
                         class="fa-regular fa-user me-1"></i>會員登入</a>
 
-                <a href="#" class=" text-light me-5">註冊會員</a>
+                <a href="${contextRoot}/member/signup" class=" text-light me-5">註冊會員</a>
 
             </div>
 
