@@ -2,12 +2,15 @@ package com.bookstrap.model;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,8 +22,8 @@ public class MemberDetails {
 
 	
 @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name = "member_id")
+@JoinColumn(name = "member_id")
+@OneToOne(cascade = CascadeType.ALL)
 private Integer memberId;
 
 @Column(name = "member_name")

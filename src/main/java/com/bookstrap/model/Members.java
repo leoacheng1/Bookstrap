@@ -1,10 +1,13 @@
 package com.bookstrap.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +30,17 @@ public class Members {
 	
 	@Column(name = "member_level")
 	private String memberLevel;
+
+	@OneToOne(mappedBy ="memberId")
+	private MemberDetails memberDetails;
+	
+	public MemberDetails getMemberDetails() {
+		return memberDetails;
+	}
+
+	public void setMemberDetails(MemberDetails memberDetails) {
+		this.memberDetails = memberDetails;
+	}
 
 	public Members() {
 	}
