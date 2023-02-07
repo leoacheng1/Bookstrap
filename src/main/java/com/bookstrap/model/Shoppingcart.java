@@ -1,5 +1,5 @@
 package com.bookstrap.model;
 
-public class ShoppingCartModel {
+public class Shoppingcart {
 
 }
