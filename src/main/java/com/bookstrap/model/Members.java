@@ -29,17 +29,18 @@ public class Members {
 	@Column(name = "member_level")
 	private String memberLevel;
 
-//	@OneToOne(mappedBy ="Members")
-//	private MemberDetails memberDetails;
+	//雙向，去找memberDetails有本類別屬性的參考變數
+	@OneToOne(mappedBy ="member")
+	private MemberDetails memberDetails;
 	
 	
-//	public MemberDetails getMemberDetails() {
-//		return memberDetails;
-//	}
-//
-//	public void setMemberDetails(MemberDetails memberDetails) {
-//		this.memberDetails = memberDetails;
-//	}
+	public MemberDetails getMemberDetails() {
+		return memberDetails;
+	}
+
+	public void setMemberDetails(MemberDetails memberDetails) {
+		this.memberDetails = memberDetails;
+	}
 
 	public Members() {
 	}

@@ -22,8 +22,7 @@ public class MemberDetails {
 
 	
 @Id
-@JoinColumn(name = "member_id")
-@OneToOne(cascade = CascadeType.ALL)
+@Column(name = "member_id" )
 private Integer memberId;
 
 @Column(name = "member_name")
@@ -50,6 +49,9 @@ private String memberAddress;
 private Date memberBirthday;
 
 
+@JoinColumn(name = "member_id")
+@OneToOne(cascade = CascadeType.ALL)
+private Members member;
 
 public MemberDetails() {
 }

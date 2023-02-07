@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -21,7 +22,7 @@
                   <div class="mb-md-5 mt-md-4 pb-5">
       
                     <h2 class="fw-bold mb-2 text-uppercase">登入</h2>
-                    <p class="text-white-50 mb-5">請出入帳號以及密碼!</p>
+                    <p class="text-white-50 mb-5">請輸入帳號以及密碼!</p>
       
                     <div class="form-outline form-white mb-4">
                       <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="註冊信箱" name="memberEmail"/>
