@@ -8,87 +8,125 @@
 <meta charset="UTF-8">
 <title>註冊會員</title>
 
-<link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css">
-<link rel="stylesheet" href="${contextRoot}/css/SignUpIn.css">
+<link rel="stylesheet" href="${contextRoot}/css/bootstrap.css">
+<link rel="stylesheet" href="${contextRoot}/css/SignUp.css">
 </head>
 <body>
   <section class="h-100 h-custom" style="background-color: rgb(26, 24, 28);">
+    
+
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-lg-8 col-xl-6">
+        <!-- col-lg-10可改註冊框大小 -->
+        <div class="col-lg-10 col-xl-6">
           <div class="card rounded-3">
-            <img src="${contextRoot}/signupbackground/bg.png"
-              class="w-100 " style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
-              alt="Sample photo">
+            <img src="${contextRoot}/signupbackground/bg.png" class="w-100 "
+              style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
             <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration Info</h3>
-  
-              <form class="px-md-2">
-  
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1q" class="form-control" />
-                  <label class="form-label" for="form3Example1q">Name</label>
-                </div>
-  
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-  
-                    <div class="form-outline datepicker">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
-                      <label for="exampleDatepicker1" class="form-label">Select a date</label>
+
+              <div class="d-flex mb-4">
+              <a href="${contextRoot}/index"><img src="${contextRoot}/logo/logo2.png" width="70px" class="my-auto"></a>
+              <h3 class="my-auto ps-2 ">註冊資訊</h3>
+            </div>
+
+              <form class="row ">
+
+                <!-- 左  頭 -->
+                <div class="col border-end mb-5">
+
+                  <!-- md改input寬 -->
+                  <div class="col-md-10 mb-4">
+                    <div class="form-outline mb-3">
+                      <input type="text" id="form3Example1q" class="form-control" name="memberName" />
+                      <label class="form-label" for="form3Example1q">姓名</label>
                     </div>
 
-                    <div class="form-outline datepicker">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
-                      <label for="exampleDatepicker1" class="form-label">Select a date</label>
+                    <div class="form-outline datepicker mb-3">
+                      <input type="email" class="form-control" id="exampleDatepicker1" name="memberEmail"/>
+                      <label for="exampleDatepicker1" class="form-label">電子郵件地址</label>
                     </div>
-                    <div class="form-outline datepicker">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
-                      <label for="exampleDatepicker1" class="form-label">Select a date</label>
-                    </div><div class="form-outline datepicker">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
-                      <label for="exampleDatepicker1" class="form-label">Select a date</label>
+
+                    <div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1" name="memberPassword"/>
+                      <label for="exampleDatepicker1" class="form-label">密碼</label>
                     </div>
-  
-                  </div>
-                  <div class="col-md-6 mb-4">
-  
-                    <select class="select">
-                      <option value="1" disabled>Gender</option>
-                      <option value="2">Female</option>
-                      <option value="3">Male</option>
-                      <option value="4">Other</option>
-                    </select>
-  
-                  </div>
-                </div>
-  
-                <div class="mb-4">
-  
-                  <select class="select">
-                    <option value="1" disabled>Class</option>
-                    <option value="2">Class 1</option>
-                    <option value="3">Class 2</option>
-                    <option value="4">Class 3</option>
-                  </select>
-  
-                </div>
-  
-                <div class="row mb-4 pb-2 pb-md-0 mb-md-5">
-                  <div class="col-md-6">
-  
-                    <div class="form-outline">
-                      <input type="text" id="form3Example1w" class="form-control" />
-                      <label class="form-label" for="form3Example1w">Registration code</label>
+                    <div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1" name="re_memberPassword"/>
+                      <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
-  
+                    <div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="0" hidden />
+
+
+                      <div class="mb-4">
+
+                        <select class="select" name="memberSex"> 
+                          <option value="1" selected disabled>請選取性別</option>
+                          <option value="male">男</option>
+                          <option value="female">女</option>
+                          <option value="other">其他</option>
+                        </select>
+                        <br>
+                          <label for="exampleDatepicker1" class="form-label">性別</label>
+                      </div>
+                      <div class="form-outline datepicker mb-3">
+                       
+                      </div>
+
+
+                    </div>
+
                   </div>
+
                 </div>
-  
+                <!-- 左  尾 -->
+
+                <!-- 右  頭 -->
+                <div class="col ms-5">
+                  <!-- md改input寬 -->
+                  <div class="col-md-10 mb-4">
+                    <div class="form-outline mb-3">
+                      <input type="date" id="form3Example1q" class="form-control" name="memberBirthday"/>
+                      <label class="form-label" for="form3Example1q">出生年月日</label>
+                    </div>
+
+                    <div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <label for="exampleDatepicker1" class="form-label">連絡電話</label>
+                    </div>
+
+                    <div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <label for="exampleDatepicker1" class="form-label">手機號碼</label>
+                    </div>
+                    <div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <label for="exampleDatepicker1" class="form-label">聯絡地址</label>
+                    </div>
+                    <div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="0" hidden />
+
+
+                     
+
+
+
+
+                      
+
+
+                    </div>
+
+                  </div>
+
+                </div>
+                <!-- 右  尾 -->
+
+
                 <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
-  
+
               </form>
-  
+
             </div>
           </div>
         </div>
