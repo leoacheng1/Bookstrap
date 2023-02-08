@@ -1,0 +1,101 @@
+package com.bookstrap.harry.bean;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.bookstrap.model.Books;
+
+@Entity
+@Table(name = "Comment")
+public class Comment {
+
+	@Column(name = "member_id")
+	private Integer memberId;
+
+	@Column(name = "book_id")
+	private Integer bookId;
+
+	@Column(name = "content")
+	private String content;
+
+	@Column(name = "rating")
+	private Integer evaluation;
+
+	// ??最愛 0:沒有 1:有
+	@Column(name = "favorite")
+	private Integer favorite;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "member_id")
+	private	Members member;
+	
+	@ManyToOne(fetch = FetchType.EAGER)  //??
+	@JoinColumn(name = "book_id")
+	private Books book;
+	
+	public Comment() {
+			}
+
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
+	public Integer getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Integer getEvaluation() {
+		return evaluation;
+	}
+
+	public void setEvaluation(Integer evaluation) {
+		this.evaluation = evaluation;
+	}
+
+	public Integer getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(Integer favorite) {
+		this.favorite = favorite;
+	}
+
+	public Members getMember() {
+		return member;
+	}
+
+	public void setMember(Members member) {
+		this.member = member;
+	}
+
+	public Books getBook() {
+		return book;
+	}
+
+	public void setBook(Books book) {
+		this.book = book;
+	}
+	
+	
+}
