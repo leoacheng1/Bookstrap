@@ -28,6 +28,17 @@ public class Shops {
 	@Column(name="open_hour")
 	private String shopOpenHour;
 	
+	@Column(name="close_hour")
+	private String shopcloseHour;
+	
+	public String getShopcloseHour() {
+		return shopcloseHour;
+	}
+
+	public void setShopcloseHour(String shopcloseHour) {
+		this.shopcloseHour = shopcloseHour;
+	}
+
 	public Integer getId() {
 		return id;
 	}

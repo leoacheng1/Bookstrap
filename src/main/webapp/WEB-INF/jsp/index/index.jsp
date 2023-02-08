@@ -12,19 +12,24 @@
     <title>Bookstrap</title>
     <link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="${contextRoot}/css/slick.css">
     <link rel="stylesheet" type="text/css" href="${contextRoot}/css/slick-theme.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap" rel="stylesheet">
 
     <style>
-        .top_search_table {
+          .top_search_table {
             padding-left: 50px;
         }
 
@@ -41,7 +46,7 @@
         }
 
         .logoFont {
-            font-family: 'Noto Serif', serif;
+            font-family: 'Crimson Text', serif;
         }
 
         /* body {
@@ -83,14 +88,18 @@
         body {
             font-family: 'Noto Sans TC', sans-serif;
         }
-        
-         .icon-text {
+
+        .icon-text {
             text-decoration: none;
             color: black;
         }
 
         .icon-text:hover {
             color: black;
+        }
+
+        .slider-title-en {
+            font-family: 'Roboto Slab', serif;
         }
     </style>
 
@@ -100,79 +109,82 @@
     <header>
 
 
-        <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <!-- <nav class="navbar navbar-expand navbar-dark bg-dark"> -->
+        <div class="bg-secondary d-flex pt-3 pb-3">
 
-            <img src="logo/logo2.png" alt="Logo" height="60" class="me-2 ms-5">
-
-            <a class="navbar-brand logoFont" href="#">Bookstrap</a>
-            <a class="navbar-brand" href="#"></a>
-
-
-
-
-            <div class="container-fluid d-flex justify-content-end">
-
-                <a href="#" class=" text-light me-2 pe-2 border-light border-end"><i
-                        class="fa-regular fa-user me-1"></i>會員登入</a>
-
-                <a href="#" class=" text-light me-5">註冊會員</a>
-
+            <div class="container d-flex justify-content-center">
+                <img src="logo/logo2.png" alt="Logo" height="60" class=" my-auto">
+                <a class="navbar-brand logoFont fs-2 my-auto ms-3" style="color: white;">Bookstrap.com</a>
             </div>
 
-
-
-
-
-
-            </div>
-        </nav>
-
-        <div class="container d-flex mt-2 justify-content-center">
-            <div class="top_search_table">
-                <ul class="nav">
-
-                    <li class="nav-item">
-                        <a class="nav-link active-2 border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark"
-                            aria-current="page" href="#"><i class="fa-solid fa-location-dot"></i>分店位置 </a>
-                    </li> <br>
-                    <li class="nav-item">
-                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark"
-                            href="#">線上商城</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark"
-                            href="#">優惠資訊</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0  text-dark text-dark"
-                            href="#">當月熱銷</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link border border-2 border-dark border-end border-top-0 border-bottom-0 border-start-0 border-end-0 text-dark text-dark"
-                            href="#">部落格</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="container d-flex mt-2">
+            <!-- 蒐尋器 -->
             <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
 
-            <div class="input-group mb-2 mt-2">
+            <!-- <div class="container  mt-2 ms-5 justify-content-center"> -->
 
-                <select class="form-select me-10" id="inputGroupSelect01">
+
+
+
+            <div class="input-group d-flex mx-auto my-auto ">
+                <select class="form-select w-20 d" id="inputGroupSelect01">
                     <option selected>全部</option>
                     <option value="1">書籍</option>
                     <option value="2">電子書</option>
                     <option value="3">語言</option>
                     <option value="4">somethingElse</option>
-
                 </select>
-                <input type="text" class="form-control w-75" aria-label="Text input with dropdown button">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i
+
+                <input type="text" class="form-control w-50" aria-label="Text input with dropdown button">
+                <button class="btn btn-outline-dark type="button" id="button-addon2"><i
                         class="fa-solid fa-magnifying-glass"></i></button>
             </div>
+
+
+
+            <!-- </div> -->
+
+            <div class="container d-flex mx-auto my-auto justify-content-end">
+
+                <a href="${contextRoot}/member/signin" class=" text-light me-2 pe-2 border-light border-end"><i
+                        class="fa-regular fa-user me-1"></i>會員登入</a>
+
+                <a href="${contextRoot}/member/signup" class=" text-light me-5">註冊會員</a>
+
+            </div>
+
         </div>
+        <!-- </nav> -->
+
+        <div class="container-fluid d-flex mt-2 mb-5 justify-content-center border-bottom border-1">
+            <div class="top_search_table">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link active-2 text-dark fs-5 me-5" aria-current="page" href="#"><i
+                                class="fa-solid fa-location-dot"></i>分店位置 </a>
+                    </li> <br>
+                    <li class="nav-item">
+                        <a class="nav-link  text-dark fs-5 me-5" href="#">線上商城</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link b text-dark text-dark fs-5 me-5" href="#">優惠資訊</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link   text-dark text-dark fs-5 me-5" href="#">當月熱銷</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  text-dark text-dark fs-5 me-5" href="#">部落格</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-fluid p-3 mb-2 bg-dark text-white" style="height: 50px;">
+
+            <p class="text-light fs-6 lh-1 text-center">限時優惠 凡購物滿五百免運費</p>
+
+
+        </div>
+
 
         <div class="container-fluid">
             <div class="bottom_search_table ms-5">
@@ -209,12 +221,7 @@
         </div>
 
 
-        <div class="container-fluid p-3 mb-2 bg-dark text-white" style="height: 50px;">
 
-            <p class="text-light fs-6 lh-1 text-center">限時優惠 凡購物滿五百免運費</p>
-
-
-        </div>
 
 
     </header>
@@ -254,9 +261,7 @@
 
     <div class="container mx-auto mt-5 border border-start-0 border-end-0 border-top-0">
 
-
         <p class="text-center mt-3 mb-3">Bookstrap 滿足您想被書困住的需求，在家裡也能找到最難買的書，300萬本各式書籍以及100萬件周邊商品任您選!</p>
-
 
     </div>
 
@@ -327,37 +332,37 @@
         <nav>
             <span class="fs-2">即將上架</span> <br>
             <div class="d-flex align-items-center">
-                <img src="logo/logo2.png" width="4%" alt="">
-                <p>By Bookstrap</p>
+                <img src="logo/logo2.png" width="4%" class="">
+                <p class="align-middle slider-title-en" ">By Bookstrap.com</p>
             </div>
-            <div class="nav nav-tabs " id="nav-tab" role="tablist">
+            <div class=" nav nav-tabs " id=" nav-tab" role="tablist">
 
-                <!-- 要改改這裡的data-bs-target="#..." -->
-                <!-- id 中間名稱 改  新書推薦t1 內附類別 i1、 i2 依此類推-->
-                <button
-                    class="nav-link active border border-2 border-dark rounded-0 border-top-0 border-bottom-0 text-dark"
-                    id="nav-t1i1-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i1" type="button" role="button"
-                    aria-controls="nav-t1i1" aria-selected="true">中文</button>
-                <button
-                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
-                    id="nav-t1i2-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i2" type="button" role="tab"
-                    aria-controls="nav-t1i2" aria-selected="false">外文</button>
-                <button
-                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
-                    id="nav-t1i3-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i3" type="button" role="tab"
-                    aria-controls="nav-t1i3" aria-selected="false">人氣小說</button>
-                <button
-                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
-                    id="nav-t1i4-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i4" type="button" role="tab"
-                    aria-controls="nav-t1i4" aria-selected="false">雜誌新刊</button>
-                <button
-                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
-                    id="nav-t1i5-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i5" type="button" role="tab"
-                    aria-controls="nav-t1i5" aria-selected="false">人氣小說</button>
-                <button
-                    class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
-                    id="nav-t1i6-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i6" type="button" role="tab"
-                    aria-controls="nav-t1i6" aria-selected="false">創意生活</button>
+                    <!-- 要改改這裡的data-bs-target="#..." -->
+                    <!-- id 中間名稱 改  新書推薦t1 內附類別 i1、 i2 依此類推-->
+                    <button
+                        class="nav-link active border border-2 border-dark rounded-0 border-top-0 border-bottom-0 text-dark"
+                        id="nav-t1i1-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i1" type="button" role="button"
+                        aria-controls="nav-t1i1" aria-selected="true">中文</button>
+                    <button
+                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        id="nav-t1i2-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i2" type="button" role="tab"
+                        aria-controls="nav-t1i2" aria-selected="false">外文</button>
+                    <button
+                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        id="nav-t1i3-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i3" type="button" role="tab"
+                        aria-controls="nav-t1i3" aria-selected="false">人氣小說</button>
+                    <button
+                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        id="nav-t1i4-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i4" type="button" role="tab"
+                        aria-controls="nav-t1i4" aria-selected="false">雜誌新刊</button>
+                    <button
+                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        id="nav-t1i5-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i5" type="button" role="tab"
+                        aria-controls="nav-t1i5" aria-selected="false">人氣小說</button>
+                    <button
+                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        id="nav-t1i6-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i6" type="button" role="tab"
+                        aria-controls="nav-t1i6" aria-selected="false">創意生活</button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -493,7 +498,7 @@
             <span class="fs-2">新書推薦</span> <br>
             <div class="d-flex align-items-center">
                 <img src="logo/logo2.png" width="4%" alt="">
-                <p>By Bookstrap</p>
+                <p class="slider-title-en">By Bookstrap.com</p>
             </div>
             <div class="nav nav-tabs " id="nav-tab" role="tablist">
 
