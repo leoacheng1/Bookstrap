@@ -14,7 +14,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg" style="background-color: #DDD0C8">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="${contextRoot}">新抖音</a>
+			<a class="navbar-brand" href="${contextRoot}">商城後台</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarNav"
 				aria-controls="navbarNav" aria-expanded="false"
@@ -26,8 +26,8 @@
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="${contextRoot}/">首頁</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="${contextRoot}/messages/add">新增訊息</a></li>
-					<li class="nav-item"><a class="nav-link" href="${contextRoot}/messages/page">查看訊息</a>
+						href="${contextRoot}/books/add">新增書籍</a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextRoot}/books/all">所有書籍</a>
 					</li>
 					<li class="nav-item"><a class="nav-link disabled">Disabled</a>
 					</li>
@@ -37,5 +37,6 @@
 	</nav>
 	<script type="text/javascript"
 		src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
 </body>
 </html>
