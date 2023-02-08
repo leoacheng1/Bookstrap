@@ -1,0 +1,76 @@
+.top_search_table {
+    padding-left: 50px;
+}
+
+.searchBar {
+    padding-left: 500px;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.ms-45 {
+    margin-left: 30px;
+}
+
+.logoFont {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* body {
+    font-family: 'Noto Serif', serif;
+} */
+
+.nav-link {
+    position: relative;
+}
+
+.nav-link:hover {
+    border-bottom: 2px solid black;
+}
+
+/* .nav-link::after{
+   content: '';
+   opacity: 0;
+   transition: all 0.2s;
+   height: 2px;
+    width: 20%;
+    background-color: black;
+    position: absolute;
+    border: 0;
+    left: 0;
+} */
+
+/* .nav-link{
+    opacity: 1;
+} */
+
+.slick-prev:before {
+    color: black;
+}
+
+.slick-next::before {
+    color: black;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+.icon-text {
+    text-decoration: none;
+    color: black;
+}
+
+.icon-text:hover {
+    color: black;
+}
+
+.slider-title-en {
+    font-family: 'Roboto Slab', serif;
+}
+
+.bg-custom {
+    background-color: #5ea0cc;
+}

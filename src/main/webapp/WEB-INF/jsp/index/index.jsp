@@ -12,13 +12,13 @@
     <title>Bookstrap</title>
     <link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="${contextRoot}/css/slick.css">
-    <link rel="stylesheet" type="text/css" href="${contextRoot}/css/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="css/slick.css">
+    <link rel="stylesheet" type="text/css" href="css/slick-theme.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,132 +28,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap" rel="stylesheet">
 
-    <style>
-          .top_search_table {
-            padding-left: 50px;
-        }
-
-        .searchBar {
-            padding-left: 500px;
-        }
-
-        .w-10 {
-            width: 10%;
-        }
-
-        .ms-45 {
-            margin-left: 30px;
-        }
-
-        .logoFont {
-            font-family: 'Crimson Text', serif;
-        }
-
-        /* body {
-            font-family: 'Noto Serif', serif;
-        } */
-
-        .nav-link {
-            position: relative;
-        }
-
-        .nav-link:hover {
-            border-bottom: 2px solid black;
-        }
-
-        /* .nav-link::after{
-           content: '';
-           opacity: 0;
-           transition: all 0.2s;
-           height: 2px;
-            width: 20%;
-            background-color: black;
-            position: absolute;
-            border: 0;
-            left: 0;
-        } */
-
-        /* .nav-link{
-            opacity: 1;
-        } */
-
-        .slick-prev:before {
-            color: black;
-        }
-
-        .slick-next::before {
-            color: black;
-        }
-
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
-
-        .icon-text {
-            text-decoration: none;
-            color: black;
-        }
-
-        .icon-text:hover {
-            color: black;
-        }
-
-        .slider-title-en {
-            font-family: 'Roboto Slab', serif;
-        }
-    </style>
+    <link rel="stylesheet" href="${contextRoot}/css/index.css">
+    
 
 </head>
 
 <body>
-    <header>
-
-
-        <!-- <nav class="navbar navbar-expand navbar-dark bg-dark"> -->
-        <div class="bg-secondary d-flex pt-3 pb-3">
-
-            <div class="container d-flex justify-content-center">
-                <img src="logo/logo2.png" alt="Logo" height="60" class=" my-auto">
-                <a class="navbar-brand logoFont fs-2 my-auto ms-3" style="color: white;">Bookstrap.com</a>
-            </div>
-
-            <!-- 蒐尋器 -->
-            <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
-
-            <!-- <div class="container  mt-2 ms-5 justify-content-center"> -->
-
-
-
-
-            <div class="input-group d-flex mx-auto my-auto ">
-                <select class="form-select w-20 d" id="inputGroupSelect01">
-                    <option selected>全部</option>
-                    <option value="1">書籍</option>
-                    <option value="2">電子書</option>
-                    <option value="3">語言</option>
-                    <option value="4">somethingElse</option>
-                </select>
-
-                <input type="text" class="form-control w-50" aria-label="Text input with dropdown button">
-                <button class="btn btn-outline-dark type="button" id="button-addon2"><i
-                        class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-
-
-
-            <!-- </div> -->
-
-            <div class="container d-flex mx-auto my-auto justify-content-end">
-
-                <a href="${contextRoot}/member/signin" class=" text-light me-2 pe-2 border-light border-end"><i
-                        class="fa-regular fa-user me-1"></i>會員登入</a>
-
-                <a href="${contextRoot}/member/signup" class=" text-light me-5">註冊會員</a>
-
-            </div>
-
-        </div>
-        <!-- </nav> -->
+    
+        <jsp:include page="../layout/header.jsp"></jsp:include>
 
         <div class="container-fluid d-flex mt-2 mb-5 justify-content-center border-bottom border-1">
             <div class="top_search_table">
@@ -224,7 +106,7 @@
 
 
 
-    </header>
+   
 
 
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
