@@ -1,5 +1,5 @@
 package com.bookstrap.service;
 
-public class ShoppingCartService {
+public class ShoppingcartService {
 
 }

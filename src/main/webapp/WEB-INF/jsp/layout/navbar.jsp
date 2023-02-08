@@ -14,52 +14,34 @@
 
 </head>
 <body>
-	<header>
 
 
-        
-        <div class="bg-custom d-flex pt-3 pb-3">
+	<nav class="navbar navbar-expand-lg" style="background-color: #DDD0C8">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="${contextRoot}">商城後台</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="${contextRoot}/">首頁</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="${contextRoot}/books/add">新增書籍</a></li>
+					<li class="nav-item"><a class="nav-link" href="${contextRoot}/books/all">所有書籍</a>
+					</li>
+					<li class="nav-item"><a class="nav-link disabled">Disabled</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<script type="text/javascript"
+		src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
 
-             <div class="container d-flex justify-content-center">
-                <img src="logo/logo2.png" alt="Logo" height="60" class=" my-auto">
-                <a class="navbar-brand logoFont fs-2 my-auto ms-3" style="color: white;"
-                    href="http://localhost:8080/Bookstrap/index">Bookstrap.com</a>
-            </div>
-
-            <!-- 蒐尋器 -->
-            <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
-            
-
-            <div class="input-group d-flex mx-auto my-auto ">
-                <select class="form-select w-20 d" id="inputGroupSelect01">
-                    <option selected>全部</option>
-                    <option value="1">書籍</option>
-                    <option value="2">電子書</option>
-                    <option value="3">語言</option>
-                    <option value="4">somethingElse</option>
-                </select>
-
-                <input type="text" class="form-control w-50" aria-label="Text input with dropdown button">
-                <button class="btn btn-dark" type="button" id="button-addon2"><i
-                        class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-
-
-            
-            <div class="container d-flex mx-auto my-auto justify-content-end">
-
-                <a href="${contextRoot}/member/signin" class=" text-light me-2 pe-2 border-light border-end"><i
-                        class="fa-regular fa-user me-1"></i>會員登入</a>
-
-                <a href="${contextRoot}/member/signup" class=" text-light me-5">註冊會員</a>
-
-            </div>
-
-        </div>
-         </header>
-         
-	<script src="js/bootstrap.bundle.min.js"></script>
-
-    <script type="text/javascript" src="js/jquery-3.6.3.min.js"></script>
 </body>
 </html>
