@@ -1,4 +1,4 @@
-package com.bookstrap.service;
+package com.bookstrap.harry.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bookstrap.model.MemberRepository;
-import com.bookstrap.model.Members;
+import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.dao.MemberRepository;
 
 @Service
 @Transactional

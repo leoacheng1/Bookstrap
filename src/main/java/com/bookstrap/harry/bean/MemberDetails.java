@@ -1,4 +1,4 @@
-package com.bookstrap.model;
+package com.bookstrap.harry.bean;
 
 import java.sql.Date;
 

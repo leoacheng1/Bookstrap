@@ -10,8 +10,12 @@
 <meta charset="UTF-8">
 
 <link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${contextRoot}/css/index.css">
+
 </head>
 <body>
+
+
 	<nav class="navbar navbar-expand-lg" style="background-color: #DDD0C8">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="${contextRoot}">商城後台</a>
@@ -38,5 +42,6 @@
 	<script type="text/javascript"
 		src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+
 </body>
 </html>
