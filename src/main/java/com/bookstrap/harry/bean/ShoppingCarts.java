@@ -37,4 +37,44 @@ public class ShoppingCarts {
 	public ShoppingCarts() {
 	}
 
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
+	public Integer getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+
+	public Members getMember() {
+		return member;
+	}
+
+	public void setMember(Members member) {
+		this.member = member;
+	}
+
+	public Books getBook() {
+		return book;
+	}
+
+	public void setBook(Books book) {
+		this.book = book;
+	}
+
 }
