@@ -35,7 +35,7 @@
 
 <body>
     
-        <jsp:include page="../layout/navbar.jsp"></jsp:include>
+        <jsp:include page="../layout/header.jsp"></jsp:include>
 
         <div class="container-fluid d-flex mt-2 mb-5 justify-content-center border-bottom border-1">
             <div class="top_search_table">
