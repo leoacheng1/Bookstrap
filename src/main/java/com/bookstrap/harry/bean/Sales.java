@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Sales")
-public class Salses {
+public class Sales {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +44,7 @@ public class Salses {
 	@JoinColumn(name = "member_id")
 	private Members member;
 	
-	public Salses() {
+	public Sales() {
 	}
 
 	public Integer getSaleId() {

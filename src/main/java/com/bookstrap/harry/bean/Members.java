@@ -1,10 +1,15 @@
 package com.bookstrap.harry.bean;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,6 +37,15 @@ public class Members {
 	//雙向，去找memberDetails有本類別屬性的參考變數
 	@OneToOne(mappedBy ="member")
 	private MemberDetails memberDetails;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private List<ShoppingCarts> shoppingCarts;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private List<Comment> comment;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private List<Sales> sales;
 	
 	
 	public MemberDetails getMemberDetails() {
