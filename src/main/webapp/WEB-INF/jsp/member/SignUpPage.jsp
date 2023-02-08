@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="${contextRoot}/css/SignUp.css">
 </head>
 <body>
-  <section class="h-100 h-custom" style="background-color: rgb(26, 24, 28);">
+  <section class="h-custom"  style="background-color: rgb(26, 24, 28);">
     
 
     <div class="container py-5 h-100">
