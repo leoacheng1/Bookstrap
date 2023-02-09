@@ -15,9 +15,7 @@ import com.bookstrap.model.Books;
 
 @Entity
 @Table(name = "ShoppingCart")
-public class ShoppingCarts implements Serializable{
-
-
+public class ShoppingCarts implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
