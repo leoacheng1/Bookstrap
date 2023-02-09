@@ -59,6 +59,20 @@ public MemberDetails() {
 
 
 
+public Members getMember() {
+	return member;
+}
+
+
+
+
+public void setMember(Members member) {
+	this.member = member;
+}
+
+
+
+
 public Integer getMemberId() {
 	return memberId;
 }
