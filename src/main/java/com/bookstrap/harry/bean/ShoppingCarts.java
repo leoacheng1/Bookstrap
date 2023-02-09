@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.bookstrap.model.Books;
 
@@ -17,11 +18,11 @@ import com.bookstrap.model.Books;
 public class ShoppingCarts implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@Column(name = "member_id")
 	private Integer memberId;
-
+	
 	@Id
 	@Column(name = "book_id")
 	private Integer bookId;
