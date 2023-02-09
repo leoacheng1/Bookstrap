@@ -9,38 +9,42 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import com.bookstrap.model.Books;
 
 @Entity
-@Table(name = "ShoppingCart")
-public class ShoppingCarts implements Serializable{
-
+@Table(name="UserCoupon")
+public class UserCoupon implements Serializable{
 
 
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name = "coupon_id")
+	private Integer couponId;
 	
 	@Id
 	@Column(name = "member_id")
 	private Integer memberId;
 	
-	@Id
-	@Column(name = "book_id")
-	private Integer bookId;
-
 	@Column(name = "amount")
 	private Integer amount;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id")
 	private Members member;
-
+	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "book_id")
-	private Books book;
+	@JoinColumn(name = "coupon_id")
+	private Coupons coupon;
+	
+	public UserCoupon() {
+	}
 
-	public ShoppingCarts() {
+	public Integer getCouponId() {
+		return couponId;
+	}
+
+	public void setCouponId(Integer couponId) {
+		this.couponId = couponId;
 	}
 
 	public Integer getMemberId() {
@@ -49,14 +53,6 @@ public class ShoppingCarts implements Serializable{
 
 	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
-	}
-
-	public Integer getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
 	}
 
 	public Integer getAmount() {
@@ -75,12 +71,12 @@ public class ShoppingCarts implements Serializable{
 		this.member = member;
 	}
 
-	public Books getBook() {
-		return book;
+	public Coupons getCoupon() {
+		return coupon;
 	}
 
-	public void setBook(Books book) {
-		this.book = book;
+	public void setCoupon(Coupons coupon) {
+		this.coupon = coupon;
 	}
 
 }
