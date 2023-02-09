@@ -47,7 +47,63 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<Sales> sales;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private List<UserCoupon> userCoupon;
 	
+	
+	public Members() {
+	}
+	
+	
+	
+	public List<ShoppingCarts> getShoppingCarts() {
+		return shoppingCarts;
+	}
+
+
+
+	public void setShoppingCarts(List<ShoppingCarts> shoppingCarts) {
+		this.shoppingCarts = shoppingCarts;
+	}
+
+
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+
+
+
+	public List<Sales> getSales() {
+		return sales;
+	}
+
+
+
+	public void setSales(List<Sales> sales) {
+		this.sales = sales;
+	}
+
+
+
+	public List<UserCoupon> getUserCoupon() {
+		return userCoupon;
+	}
+
+
+
+	public void setUserCoupon(List<UserCoupon> userCoupon) {
+		this.userCoupon = userCoupon;
+	}
+
+
+
 	public MemberDetails getMemberDetails() {
 		return memberDetails;
 	}
@@ -56,8 +112,6 @@ public class Members {
 		this.memberDetails = memberDetails;
 	}
 
-	public Members() {
-	}
 
 	public Integer getMemberId() {
 		return memberId;
