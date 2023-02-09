@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Sales")
@@ -37,6 +38,7 @@ public class Sales {
 	@Column(name = "state")
 	private String status;
 			
+	@Transient
 	@Column(name = "member_id")
 	private Integer memberId;
 	

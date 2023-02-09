@@ -2,19 +2,22 @@ package com.bookstrap.model;
 
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
+import com.bookstrap.harry.bean.Comment;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -62,6 +65,17 @@ public class Books {
 //	@JoinColumn(name = "")
 //	private BookDetails bookDetails;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	private List<Comment> comment;
+	
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+
 	public Books() {
 	}
 

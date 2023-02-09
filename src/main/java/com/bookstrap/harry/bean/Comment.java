@@ -1,45 +1,56 @@
 package com.bookstrap.harry.bean;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.bookstrap.model.Books;
 
 @Entity
-@Table(name = "ShoppingCart")
-public class ShoppingCarts implements Serializable {
+@Table(name = "Comment")
+public class Comment {
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "comment_id")
+	private Integer commentId;
+	
+	@Transient
 	@Column(name = "member_id")
 	private Integer memberId;
 	
-	@Id
+	@Transient
 	@Column(name = "book_id")
 	private Integer bookId;
 
-	@Column(name = "amount")
-	private Integer amount;
+	@Column(name = "content")
+	private String content;
+
+	@Column(name = "rating")
+	private Integer evaluation;
+
+	// ??最愛 0:沒有 1:有
+	@Column(name = "favorite")
+	private Integer favorite;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id")
-	private Members member;
-
-	@ManyToOne(fetch = FetchType.EAGER)
+	private	Members member;
+	
+	@ManyToOne(fetch = FetchType.EAGER)  //??
 	@JoinColumn(name = "book_id")
 	private Books book;
-
-	public ShoppingCarts() {
-	}
+	
+	public Comment() {
+			}
 
 	public Integer getMemberId() {
 		return memberId;
@@ -57,12 +68,28 @@ public class ShoppingCarts implements Serializable {
 		this.bookId = bookId;
 	}
 
-	public Integer getAmount() {
-		return amount;
+	public String getContent() {
+		return content;
 	}
 
-	public void setAmount(Integer amount) {
-		this.amount = amount;
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Integer getEvaluation() {
+		return evaluation;
+	}
+
+	public void setEvaluation(Integer evaluation) {
+		this.evaluation = evaluation;
+	}
+
+	public Integer getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(Integer favorite) {
+		this.favorite = favorite;
 	}
 
 	public Members getMember() {
@@ -80,5 +107,6 @@ public class ShoppingCarts implements Serializable {
 	public void setBook(Books book) {
 		this.book = book;
 	}
-
+	
+	
 }
