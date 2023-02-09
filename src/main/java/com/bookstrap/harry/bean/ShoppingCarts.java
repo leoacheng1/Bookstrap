@@ -1,5 +1,7 @@
 package com.bookstrap.harry.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,28 +14,29 @@ import com.bookstrap.model.Books;
 
 @Entity
 @Table(name = "ShoppingCart")
-public class ShoppingCarts {
+public class ShoppingCarts implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "member_id")
 	private Integer memberId;
-	
+
 	@Id
 	@Column(name = "book_id")
 	private Integer bookId;
-	
-	
+
 	@Column(name = "amount")
 	private Integer amount;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id")
 	private Members member;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "book_id")
 	private Books book;
-	
+
 	public ShoppingCarts() {
 	}
 

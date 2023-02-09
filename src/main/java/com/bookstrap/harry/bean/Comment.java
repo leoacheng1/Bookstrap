@@ -3,10 +3,14 @@ package com.bookstrap.harry.bean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.bookstrap.model.Books;
 
@@ -14,9 +18,16 @@ import com.bookstrap.model.Books;
 @Table(name = "Comment")
 public class Comment {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "comment_id")
+	private Integer commentId;
+	
+	@Transient
 	@Column(name = "member_id")
 	private Integer memberId;
-
+	
+	@Transient
 	@Column(name = "book_id")
 	private Integer bookId;
 
