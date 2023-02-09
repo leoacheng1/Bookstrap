@@ -1,5 +1,7 @@
 package com.bookstrap.harry.bean;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +14,7 @@ import com.bookstrap.model.Books;
 
 @Entity
 @Table(name = "ShoppingCart")
-public class ShoppingCarts {
+public class ShoppingCarts implements Serializable{
 
 	@Id
 	@Column(name = "member_id")

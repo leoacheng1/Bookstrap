@@ -31,12 +31,12 @@ public class ShopEmployees {
 	private String title;
 	
 	@JsonBackReference
-	@JoinColumn(name="emp_id")
+	@JoinColumn(name="emp_id", insertable=false, updatable=false)
 	@ManyToOne
 	private Employees employee;
 	
 	@JsonBackReference
-	@JoinColumn(name="shop_id")
+	@JoinColumn(name="shop_id", insertable=false, updatable=false)
 	@ManyToOne
 	private Shops shop;
 
