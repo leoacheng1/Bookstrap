@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bookstrap.harry.bean.Members;
+
 @Entity
 @Table(name = "ShoppingCarts")
 @IdClass(ShoppingCartPK.class)

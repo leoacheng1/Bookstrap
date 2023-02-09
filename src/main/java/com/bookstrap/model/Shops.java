@@ -1,11 +1,18 @@
 package com.bookstrap.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.bookstrap.model.bean.ShopEmployees;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Shops")
@@ -30,6 +37,10 @@ public class Shops {
 	
 	@Column(name="close_hour")
 	private String shopcloseHour;
+	
+	@JsonManagedReference
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "shop")
+	private List<ShopEmployees> shopEmployees;
 	
 	public String getShopcloseHour() {
 		return shopcloseHour;
@@ -77,6 +88,14 @@ public class Shops {
 
 	public void setShopOpenHour(String shopOpenHour) {
 		this.shopOpenHour = shopOpenHour;
+	}
+
+	public List<ShopEmployees> getShopEmployees() {
+		return shopEmployees;
+	}
+
+	public void setShopEmployees(List<ShopEmployees> shopEmployees) {
+		this.shopEmployees = shopEmployees;
 	}
 
 	public Shops() {
