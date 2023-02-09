@@ -12,17 +12,17 @@
 <title>會員登入</title>
 </head>
 <body>
-    <section class="vh-50 gradient-custom">
+    <section class="vh-100 gradient-custom">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+              <div class="card bg-secondary text-white" style="border-radius: 1rem;">
                 <div class="card-body p-5 text-center">
       
                   <div class="mb-md-5 mt-md-4 pb-5">
       
                     <h2 class="fw-bold mb-2 text-uppercase">登入</h2>
-                    <p class="text-white-50 mb-5">請輸入帳號以及密碼!</p>
+                    <p class="text-white-50 mb-5">請出入帳號以及密碼!</p>
       
                     <div class="form-outline form-white mb-4">
                       <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="註冊信箱" name="memberEmail"/>
