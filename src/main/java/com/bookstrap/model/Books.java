@@ -58,9 +58,9 @@ public class Books {
 	@Column(name = "translator")
 	private String translator;
 	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "")
-//	private BookDetails bookDetails;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "bookDetail_id")
+	private BookDetails bookDetails;
 	
 	public Books() {
 	}
@@ -151,6 +151,14 @@ public class Books {
 
 	public void setTranslator(String translator) {
 		this.translator = translator;
+	}
+
+	public BookDetails getBookDetails() {
+		return bookDetails;
+	}
+
+	public void setBookDetails(BookDetails bookDetails) {
+		this.bookDetails = bookDetails;
 	}
 
 }
