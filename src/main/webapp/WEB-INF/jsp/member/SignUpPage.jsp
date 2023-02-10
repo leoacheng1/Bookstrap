@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <section class="h-custom" style="background-color: rgb(26, 24, 28);">
+  <section class="vh-100 gradient-custom" style="background-color: rgb(26, 24, 28);">
     
 
     <div class="container py-5 h-100">
