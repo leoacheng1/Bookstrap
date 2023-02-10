@@ -49,6 +49,7 @@ Create Table Employees(
 	password nvarchar(max) not null,		
 	emp_name nvarchar(max),
 	sex tinyint,
+	emp_photo varbinary(max),
 	emp_position nvarchar(max) --職位 eg. 普通員工,經理,.......
 );
 
@@ -65,7 +66,7 @@ Create Table Shops(
 );
 
 create table ShopEmployees(
-	emp_id int primary key identity(1,1) not null,
+	emp_id int primary key foreign key references Employees(emp_id),
 	emp_shopid int foreign key references Shops(shop_id),
 	emp_name nvarchar(50) not null,
 	emp_photo varbinary(max),
