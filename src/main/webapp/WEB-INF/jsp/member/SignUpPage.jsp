@@ -56,13 +56,17 @@
                       <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="0" hidden />
-
+                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="0" hidden name="membervalid"/>
+					
+					<div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="1" hidden name="memberlevel"/>
+                                        
+                  </div>
 
                       <div class="mb-4">
 
                         <select class="select" name="memberSex"> 
-                          <option value="1" selected disabled>請選取性別</option>
+                          <option value="selected" selected disabled>請選取性別</option>
                           <option value="male">男</option>
                           <option value="female">女</option>
                           <option value="other">其他</option>
@@ -92,31 +96,20 @@
                     </div>
 
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <input type="text" class="form-control" id="exampleDatepicker1" name="memberPhone"/>
                       <label for="exampleDatepicker1" class="form-label">連絡電話</label>
                     </div>
 
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <input type="text" class="form-control" id="exampleDatepicker1" name="memberCellPhone"/>
                       <label for="exampleDatepicker1" class="form-label">手機號碼</label>
                     </div>
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <input type="text" class="form-control" id="exampleDatepicker1" name="memberAddress"/>
                       <label for="exampleDatepicker1" class="form-label">聯絡地址</label>
                     </div>
-                    <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="0" hidden />
-
-
-                     
-
-
-
-
-                      
-
-
-                    </div>
+                    
+                  
 
                   </div>
 
