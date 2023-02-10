@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,7 @@
               <h3 class="my-auto ps-2 ">註冊資訊</h3>
             </div>
 
-              <form class="row ">
+              <form:form class="row " action="">
 
                 <!-- 左  頭 -->
                 <div class="col border-end mb-5">
@@ -67,9 +68,9 @@
 
                         <select class="select" name="memberSex"> 
                           <option value="selected" selected disabled>請選取性別</option>
-                          <option value="male">男</option>
-                          <option value="female">女</option>
-                          <option value="other">其他</option>
+                          <option value="1">男</option>
+                          <option value="2">女</option>
+                          <option value="3">其他</option>
                         </select>
                         <br>
                           <label for="exampleDatepicker1" class="form-label">性別</label>
@@ -119,7 +120,7 @@
 
                 <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
 
-              </form>
+              </form:form>
 
             </div>
           </div>
