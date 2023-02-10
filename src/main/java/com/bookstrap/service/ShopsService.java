@@ -1,6 +1,7 @@
 package com.bookstrap.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,18 @@ public class ShopsService {
 	public Shops insertShop(Shops sh) {
 		return sDao.save(sh);
 	}
+	
 	public List<Shops> findAllShop() {
 		return sDao.findAll();
+	}
+	
+	public Shops getPhotoById(Integer id) {
+		Optional<Shops> optional = sDao.findById(id);
+		
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		
+		return null;
 	}
 }
