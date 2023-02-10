@@ -1,12 +1,21 @@
 package com.bookstrap.model;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.bookstrap.model.bean.ShopEmployees;
+import com.bookstrap.model.bean.ShopStock;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Shops")
@@ -41,7 +50,16 @@ public class Shops {
 
 	@Column(name = "latitude")
 	private String latitude;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
+	private Set<ShopEmployees> shopEmployees = new LinkedHashSet<ShopEmployees>();
 
+	@JsonManagedReference
+	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
+	private Set<ShopStock> shopStocks = new LinkedHashSet<ShopStock>();
+	
+	
 	public byte[] getShopphoto() {
 		return shopphoto;
 	}
@@ -115,6 +133,14 @@ public class Shops {
 	}
 
 	public Shops() {
+	}
+
+	public Set<ShopEmployees> getShopEmployees() {
+		return shopEmployees;
+	}
+
+	public void setShopEmployees(Set<ShopEmployees> shopEmployees) {
+		this.shopEmployees = shopEmployees;
 	}
 
 }
