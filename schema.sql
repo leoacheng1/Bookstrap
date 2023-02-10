@@ -4,7 +4,7 @@ Create Table Members(
 	member_id int identity(1,1) primary key,
 	acccount nvarchar(max) not null,
 	password nvarchar(max) not null,
-	valid tinyint not null, --ÅçÃÒ¡A¦³¨S¦³°±Åv
+	valid tinyint not null, --é©—è­‰ï¼Œæœ‰æ²’æœ‰åœæ¬Š
 	member_level nvarchar(50)
 );
 
@@ -12,7 +12,7 @@ Create Table MemberDetails(
 	member_id int FOREIGN KEY REFERENCES Members(member_id) primary key,
 	member_name nvarchar(50),
 	photo varbinary,
-	sex tinyint, --©Ê§O
+	sex tinyint, --æ€§åˆ¥
 	email nvarchar(max),
 	cellphone nvarchar(max),
 	address nvarchar(max),
@@ -20,22 +20,22 @@ Create Table MemberDetails(
 ) ;
 Create Table BookDetails(
 	book_id int identity(1,1) primary key,
-	size nvarchar(50), --­«¶q
+	size nvarchar(50), --é‡é‡
 	pages_amount int,
-	book_intro nvarchar(max), --®ÑÂ²¤¶
-	grade nvarchar(50), --¤À¯Å: adult, child......
+	book_intro nvarchar(max), --æ›¸ç°¡ä»‹
+	grade nvarchar(50), --åˆ†ç´š: adult, child......
 );
 
 Create Table Books(
 	book_id int identity(1,1) primary key,
 	book_name nvarchar(max),
-	category nvarchar(max), --»y¨¥Ãş§O >> Ãş§O(eg. ¤¤¤å®Ñ >> ¾ú¥v) 
-	languages nvarchar(max), --»y¨¥Ãş§O
+	category nvarchar(max), --èªè¨€é¡åˆ¥ >> é¡åˆ¥(eg. ä¸­æ–‡æ›¸ >> æ­·å²) 
+	languages nvarchar(max), --èªè¨€é¡åˆ¥
 	author nvarchar(max),
 	publisher nvarchar(max),
 	publish_date Date,
-	book_photo varbinary, --«Ê­±¹Ï¤ù
-	discount int, --ex.79§é¡A¦s¦¨¾ã¼Æ79
+	book_photo varbinary, --å°é¢åœ–ç‰‡
+	discount int, --ex.79æŠ˜ï¼Œå­˜æˆæ•´æ•¸79
 	price int,
 	translator nvarchar(max),
 	bookDetail_id int references BookDetails(book_id)
@@ -49,7 +49,7 @@ Create Table Employees(
 	password nvarchar(max) not null,		
 	emp_name nvarchar(max),
 	sex tinyint,
-	emp_position nvarchar(max) --Â¾¦ì eg. ´¶³q­û¤u,¸g²z,.......
+	emp_position nvarchar(max) --è·ä½ eg. æ™®é€šå“¡å·¥,ç¶“ç†,.......
 );
 
 Create Table Shops(
@@ -64,18 +64,19 @@ Create Table Shops(
 	longitude nvarchar(max)
 );
 
-Create Table ShopEmployees(
-	emp_id int foreign key references Employees(emp_id),
-	shop_id int foreign key references Shops(shop_id),
-	salary int not null, --(¤ëÁ~)
-	title nvarchar(max), --(Â¾ºÙ: ©±ªø,­û¤u....)
-	PRIMARY KEY (emp_id,shop_id)
+create table ShopEmployees(
+	emp_id int primary key identity(1,1) not null,
+	emp_shopid int foreign key references Shops(shop_id),
+	emp_name nvarchar(50) not null,
+	emp_photo varbinary(max),
+	emp_title nvarchar(50) not null,
+	emp_salary int not null,
 )
 
 /*Create Table EmployeeWorkdays(
 	emp_id int foreign key references Employees(emp_id),
 	workday Date, 
-	worktime nvarchar(50) --¦­¯Z ±ß¯Z
+	worktime nvarchar(50) --æ—©ç­ æ™šç­
 )*/
 
 
@@ -90,10 +91,10 @@ Create Table Sales(
 	sale_id int not null identity(1,1) primary key,
 	address nvarchar(max),
 	delievery nvarchar(max),
-	payment nvarchar(max), --³f¨ì¥I´Ú, ½u¤W¥I´Ú
+	payment nvarchar(max), --è²¨åˆ°ä»˜æ¬¾, ç·šä¸Šä»˜æ¬¾
 	pay nvarchar(max), --linepay ... etc
 	weight int not null,
-	state nvarchar(50), --³B²z¤¤¡B¨ú®ø¡B¤w¥X³f
+	state nvarchar(50), --è™•ç†ä¸­ã€å–æ¶ˆã€å·²å‡ºè²¨
 	member_id int foreign key references Members(member_id)
 );
 
@@ -129,14 +130,41 @@ Create Table Comment(
 	comment_id int primary key identity,
 	member_id int foreign key references Members(member_id),
 	book_id int foreign key references Books(book_id),
-	content nvarchar(max), --¤º¤å
-	rating tinyint not null,  --¥´¤À eg.¬P¬P 1~5Áû¬P
-	favorite tinyint not null --³Ì·R 0:¨S¦³ 1:¦³
+	content nvarchar(max), --å…§æ–‡
+	rating tinyint not null,  --æ‰“åˆ† eg.æ˜Ÿæ˜Ÿ 1~5é¡†æ˜Ÿ
+	favorite tinyint not null --æœ€æ„› 0:æ²’æœ‰ 1:æœ‰
 );
 
-Create Table Visited( --°Ó«°´¿¸g¬İ¹L¥\¯à
+Create Table Visited( --å•†åŸæ›¾ç¶“çœ‹éåŠŸèƒ½
 	member_id int foreign key references Members(member_id),
 	book_id int foreign key references Books(book_id),
 	visit_date Date not null
 ) 
+--------------------------------æ’ç­æ–°å¢---------------------------------
+create table Shift(
+shift_id int primary key identity(1,1) not null,
+shift_class nvarchar(50) not null,
+shift_time nvarchar(50)not null,
+)
 
+create table Vacation(
+vacation_id int primary key identity(1,1) not null,
+vacation_class nvarchar(50) not null,
+)
+
+create table ShopEmployeesAttendance(
+attend_id int primary key identity(1,1) not null,
+attend_date date,
+attend_empid int foreign key references ShopEmployees(emp_id),
+attend_vacationid int foreign key references Vacation(vacation_id),
+attend_time decimal,
+attend_agree int,
+attend_salary int
+)
+
+create table ShopEmployeesSchedule(
+schedule_id int primary key identity(1,1) not null,
+schedule_date date,
+schedule_empid int foreign key references ShopEmployees(emp_id),
+schedule_shiftid int foreign key references Shift(shift_id),
+)
