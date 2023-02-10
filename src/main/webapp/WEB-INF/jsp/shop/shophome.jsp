@@ -1,67 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
-
-    <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-      <meta charset="UTF-8">
-      <link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet" />
-      <title>Insert title here</title>
-      <style>
-        table,
-        td,
-        tr {
-          border: 1px solid #333;
-        }
-      </style>
-    </head>
-
-
-    <body>
-
-      <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-      <script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
-      <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
-      <button id="shopinsert">新增分店</button>
-      <button id="shopshowall">瀏覽全部分店</button>
-      <div id="view">
-        <table>
-          <thead>
-            <tr>
-              <th >書店ID</th>
-              <th >書店名</th>
-              <th>地址</th>
-              <th >電話</th>
-              <th >開店時間</th>
-              <th >打烊時間</th>
-              <th >經度</th>
-              <th >緯度</th>
-              <th >圖片</th>
-              <th >修改</th>
-              <th >刪除</th>
-            </tr>
-          </thead>
-          <tbody id="shoptb">
-            <jstl:forEach items="${shopList}" var="oneShop">
-              <tr>
-                <td>${oneShop.id}</td>
-                <td>${oneShop.shopName}</td>
-                <td>${oneShop.shopAddress}</td>
-                <td>${oneShop.shopPhone}</td>
-                <td>${oneShop.shopOpenHour}</td>
-                <td>${oneShop.shopcloseHour}</td>
-                <td>${oneShop.longitude}</td>
-                <td>${oneShop.latitude}</td>
-                <td><img alt="" src="${contextRoot}/shops/id?id=${oneShop.id}" /></td>
-                <td>修改</td>
-                <td>刪除</td>
-              </tr>
-            </jstl:forEach>
-          </tbody>
-        </table>
-       <script>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet" />
+<title>Insert title here</title>
+<style>
+table, td, tr {
+	border: 1px solid #333;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>一個標題？！</h2>
+	<button class="btn btn-primary" id="shopinsert">新增分店</button>
+	<button class="btn btn-primary" id="shopshowall">瀏覽全部分店</button>
+	<div id="view"></div>
+</div>
+	<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+	<script type="text/javascript"
+		src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript"
+		src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+	<script>
       //   $.ajax({
       //     url:" http://localhost:8080/Bookstrap/shops/allshopslist",
       //     method: 'GET',
@@ -90,8 +55,8 @@
       //     }
       //   })
       // </script>
-        <!-- ////////////////// 渲染insert  ///////////////////////// -->
-        <!-- <div class="container"><form id="ajaxForm">
+	<!-- ////////////////// 渲染insert  ///////////////////////// -->
+	<!-- <div class="container"><form id="ajaxForm">
           <label class="form-label">店名</label>       
           <input type="text" class="form-control" name="shopName" id="shopNameInput">
           <label class="form-label">地址</label>
@@ -110,8 +75,8 @@
           <input type="file" name="shopphoto" id="shopphotoInput"/><br>
           <button type="submit" class="btn btn-primary" id="myButton">送出</button></div></form> -->
 
-        <!-- ////////////////// 渲染allshop  ///////////////////////// -->
-        <!-- <table>
+	<!-- ////////////////// 渲染allshop  ///////////////////////// -->
+	<!-- <table>
           <thead>
             <tr>
                 <th >書店ID</th>
@@ -137,26 +102,17 @@
           </tr>
         </tbody>
         </table> -->
+	<!-- </div> -->
 
-      </div>
-
-
-
-
-
-
-      <script>
+	<script>
         const output = document.querySelector('#view')
         const insertreqUrl = 'http://localhost:8080/Bookstrap/shops/add';
-       
+
         ////////////////// 渲染insert  /////////////////////////
         $('#shopinsert').click(function htmlMaker(data) {
           output.innerHTML = '<div class="container"><form id="ajaxForm"><label class="form-label">店名</label>       <input type="text" class="form-control" name="shopName" id="shopNameInput"><label class="form-label">地址</label><input type="text" class="form-control" name="shopAddress" id="shopAddressInput"><label class="form-label">電話</label><input type="text" class="form-control"  name="shopPhone"id="shopPhoneInput"><label class="form-label" >開店時間</label>  <input type="time" class="form-control"  name="shopOpenHour" id="shopOpenHourInput" min="00:00" max="24:00" required><label class="form-label">打烊時間</label> <input type="time" class="form-control" id="shopcloseHourInput" name="shopcloseHour" min="00:00" max="24:00" required>    <label class="form-label">經度</label><input type="text" class="form-control" name="longitude" id="longitudeInput"><label class="form-label">緯度</label>   <input type="text" class="form-control" name="latitude" id="latitudeInput"> <label  for="file" class="form-label">店面照片:</label><input type="file" name="shopphoto" id="shopphotoInput"/><br><button type="submit" class="btn btn-primary" id="myButton">送出</button></div></form>';
           insertshop();
         })
-
-
-
 
         ////////////////// jQuery AJAX 送insert資料  /////////////////////////
         function insertshop() {
@@ -172,9 +128,6 @@
             let latitude = document.getElementById('latitudeInput').value
             let shopphoto = document.getElementById('shopphotoInput').files[0];
 
-
-
-
             let formData = new FormData();
             formData.append("shopName", shopName);
             formData.append("shopAddress", shopAddress);
@@ -184,7 +137,6 @@
             formData.append("longitude", longitude);
             formData.append("latitude", latitude);
             formData.append("shopphoto", shopphoto);
-
 
             axios({
               url: 'http://localhost:8080/Bookstrap/shops/postAjax',
@@ -218,23 +170,60 @@
           })
         }
 
-
-
         ////////////////// jQuery AJAX showall  /////////////////////////
+        $('#shopshowall').click(function (e) {
+          document.getElementById('view').innerHTML = "";
 
-        // $('#shopshowall').click(function (e) {
-        //   output.innerHTML = ""
-        //   output.innerHTML = 
-        // })
+          $.ajax({
+            url: "http://localhost:8080/Bookstrap/shops/allshopslist2",
+            method: 'GET',
+            success: function (response) {
+              console.log(response)
+              htmlMaker(response)
+            },
+            error: function (err) {
+              console.log(err)
+            }
+          })
+        })
 
-
-
-
-
-
+        function htmlMaker(shopList) {
+          let str = '<table class="table table-hover">'
+            + '<thead>'
+            + '<tr>'
+            + ' <th>書店ID</th>'
+            + ' <th>書店名</th>'
+            + ' <th>地址</th>'
+            + ' <th>電話</th>'
+            + ' <th>開店時間</th>'
+            + ' <th>打烊時間</th>'
+            + ' <th>經度</th>'
+            + ' <th>緯度</th>'
+            + ' <th>圖片</th>'
+            + ' <th>修改</th>'
+            + ' <th>刪除</th>'
+            + ' </tr>'
+            + ' </thead>'
+            + '<tbody>';
+          shopList.forEach((element, index) => {
+            str += '<tr>'
+              + '<td>' + element.id + '</td>'
+              + '<td>' + element.shopName + '</td>'
+              + '<td>' + element.shopAddress + '</td>'
+              + '<td>' + element.shopPhone + '</td>'
+              + '<td>' + element.shopOpenHour + '</td>'
+              + '<td>' + element.shopcloseHour + '</td>'
+              + '<td>' + element.latitude + '</td>'
+              + '<td>' + element.longitude + '</td>'
+              + '<td><img alt="" src="http://localhost:8080/Bookstrap/shops/id?id=' +element.id + '"/></td>'
+              + '<td><button class="btn btn-primary">修改</button></td>'
+              + '<td><button class="btn btn-danger">刪除</button></td>'
+              + '</tr>'
+          });
+          str += '</tbody></table>';
+          document.getElementById('view').innerHTML = str;
+        };
       </script>
+</body>
 
-
-    </body>
-
-    </html>
+</html>
