@@ -1,0 +1,5 @@
+2023/02/07 Books新增欄位translator
+2023/02/07 Shops新增欄位close_hour
+2023/02/08 Shops新增欄位shop_photo, latitude, longitude
+2023/02/08 Books 新增Bookdetail_id 關聯BookDetail主鍵欄位
+2/10 新增(table Comment) comment_id int primary key identity
