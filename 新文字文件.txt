@@ -1,12 +1,12 @@
 Test Test
 
-<<<<<<< HEAD
+
 
 new master
 
 Test
-=======
+
 new master
 
 13:59
->>>>>>> master
+
