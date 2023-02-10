@@ -5,32 +5,67 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Shops")
+@Table(name = "Shops")
 public class Shops {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="shop_id")
+	@Column(name = "shop_id")
 	private Integer id;
-	
-	@Column(name="shop_name")
+
+	@Column(name = "shop_name")
 	private String shopName;
-	
-	@Column(name="address")
+
+	@Column(name = "address")
 	private String shopAddress;
-	
-	@Column(name="phone")
+
+	@Column(name = "phone")
 	private String shopPhone;
-	
-	@Column(name="open_hour")
+
+	@Column(name = "open_hour")
 	private String shopOpenHour;
-	
-	@Column(name="close_hour")
+
+	@Column(name = "close_hour")
 	private String shopcloseHour;
-	
+
+	@Lob
+	@Column(name = "shop_photo")
+	private byte[] shopphoto;
+
+	@Column(name = "longitude")
+	private String longitude;
+
+	@Column(name = "latitude")
+	private String latitude;
+
+	public byte[] getShopphoto() {
+		return shopphoto;
+	}
+
+	public void setShopphoto(byte[] shopphoto) {
+		this.shopphoto = shopphoto;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
 	public String getShopcloseHour() {
 		return shopcloseHour;
 	}
