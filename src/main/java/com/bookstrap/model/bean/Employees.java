@@ -1,3 +1,5 @@
+
+
 package com.bookstrap.model.bean;
 
 import java.util.List;
@@ -20,6 +22,9 @@ public class Employees {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="emp_id")
 	private Integer empId;
+	
+	@Column(name = "emp_photo")
+	private byte[] empPhoto;
 	
 	@Column(name="account")
 	private String account;
