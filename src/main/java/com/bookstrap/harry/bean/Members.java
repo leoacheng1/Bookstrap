@@ -32,7 +32,7 @@ public class Members {
 	private Integer memberValid;
 	
 	@Column(name = "member_level")
-	private String memberLevel;
+	private Integer memberLevel;
 
 	//雙向，去找memberDetails有本類別屬性的參考變數
 	@OneToOne(mappedBy ="member")
@@ -145,11 +145,11 @@ public class Members {
 		this.memberValid = memberValid;
 	}
 
-	public String getMemberLevel() {
+	public Integer getMemberLevel() {
 		return memberLevel;
 	}
 
-	public void setMemberLevel(String memberLevel) {
+	public void setMemberLevel(Integer memberLevel) {
 		this.memberLevel = memberLevel;
 	}
 	
