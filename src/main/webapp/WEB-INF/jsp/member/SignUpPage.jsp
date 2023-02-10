@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
-    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>  
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -31,7 +30,7 @@
               <h3 class="my-auto ps-2 ">註冊資訊</h3>
             </div>
 
-              <form:form class="row " action="${ConTextRoot}/Bookstrap/member/post" modelAttribute="member">
+              <form class="row " action="${ConTextRoot}/Bookstrap/member/post" method="post">
 
                 <!-- 左  頭 -->
                 <div class="col border-end mb-5">
@@ -57,10 +56,10 @@
                       <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="0" hidden name="membervalid"/>
+                      <input type="text" class="form-control" id="exampleDatepicker1"  value="1" hidden name="memberValid"/>
 					
 					<div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="1" hidden name="memberlevel"/>
+                      <input type="text" class="form-control" id="exampleDatepicker1"  value="1" hidden name="memberLevel"/>
                                         
                   </div>
 
@@ -120,7 +119,7 @@
 
                 <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
 
-              </form:form>
+              </form>
 
             </div>
           </div>

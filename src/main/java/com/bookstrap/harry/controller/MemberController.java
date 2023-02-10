@@ -2,6 +2,7 @@ package com.bookstrap.harry.controller;
 
 import java.sql.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,10 @@ import com.bookstrap.harry.service.MemberService;
 
 @Controller
 public class MemberController {
-	
+	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
 	private MemberDdetailService memberDetailService;
 
 	@GetMapping("/member/signin")
@@ -39,7 +41,7 @@ public class MemberController {
 			@RequestParam("memberEmail") String memberAccount, 
 			@RequestParam("memberEmail") String memberEmail, 
 			@RequestParam("memberPassword") String memberPassword, 
-			@RequestParam("membervalid") Integer memberValid,
+			@RequestParam("memberValid") Integer memberValid,
 			@RequestParam("memberLevel") Integer memberLevel,
 			@RequestParam("memberSex") Integer memberSex,
 			@RequestParam("memberBirthday") Date memberBirthday,
@@ -58,23 +60,15 @@ public class MemberController {
 		memberDetail.setMemberBirthday(memberBirthday);
 		memberDetail.setMemberPhone(memberPhone);
 		memberDetail.setMemberAddress(memberAddress);
-							
-	return null;
+		memberService.insertMember(member);
+		Integer rMemberId = member.getMemberId();
+		System.out.println("rId: " + rMemberId);
+		memberDetail.setMemberId(rMemberId);
+		memberDetailService.insertMemberDetails(memberDetail);
+	return "member/TestSuccess";
 	}
+
 	
-	
-//	//在jsp裡接到Spring form表單裡 modelAttribute="" 接到的資料
-//	@PostMapping("/member/post")
-//	public String insertMember(@ModelAttribute Members member, 
-//			@ModelAttribute MemberDetails memberDetail, Model m) {
-//				memberService.insertMember(member);
-//				memberDetailService.insertMemberDetails(memberDetail);
-//				Members member2 = new Members();
-//				MemberDetails memberDetail = new MemberDetails();
-//				m.addAttribute("member", member2);
-//				m.addAttribute("memberDetail", memberDetail);
-//				
-//				return null;
-//	}
+
 	
 }
