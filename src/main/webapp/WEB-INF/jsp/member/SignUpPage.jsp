@@ -66,7 +66,7 @@
                       <div class="mb-4">
 
                         <select class="select" name="memberSex"> 
-                          <option value="selected" selected disabled>請選取性別</option>
+                          <option value="0" selected disabled>請選取性別</option>
                           <option value="1">男</option>
                           <option value="2">女</option>
                           <option value="3">其他</option>
