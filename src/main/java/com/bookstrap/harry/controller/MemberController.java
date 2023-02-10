@@ -66,9 +66,9 @@ public class MemberController {
 	//在jsp裡接到Spring form表單裡 modelAttribute="" 接到的資料
 	@PostMapping("/member/post")
 	public String insertMember(@ModelAttribute Members member, 
-			@ModelAttribute MemberDetails modelDetail, Model m) {
+			@ModelAttribute MemberDetails memberDetail, Model m) {
 				memberService.insertMember(member);
-				memberDetailService.insertMemberDetails(modelDetail);
+				memberDetailService.insertMemberDetails(memberDetail);
 				Members member2 = new Members();
 				MemberDetails memberDetail = new MemberDetails();
 				m.addAttribute("member", member2);

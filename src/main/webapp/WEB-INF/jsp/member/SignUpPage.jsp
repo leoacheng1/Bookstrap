@@ -31,7 +31,7 @@
               <h3 class="my-auto ps-2 ">註冊資訊</h3>
             </div>
 
-              <form:form class="row " action="">
+              <form:form class="row " action="${ConTextRoot}/Bookstrap/member/post" modelAttribute="member">
 
                 <!-- 左  頭 -->
                 <div class="col border-end mb-5">
