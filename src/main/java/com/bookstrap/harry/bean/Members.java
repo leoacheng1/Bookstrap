@@ -62,6 +62,9 @@ public class Members {
 	}
 
 
+	public Members(String mAccount) {
+		this.memberAccount = mAccount;
+	}
 
 	public List<ShoppingCarts> getShoppingCarts() {
 		return shoppingCarts;

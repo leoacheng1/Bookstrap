@@ -50,12 +50,12 @@ public class MemberService {
 	
 	
 	public boolean checkLogin (Members member) {
-		
-		
-		
+					
 		return checkDao.checkLogin(member);
-		
-		
+					}
+	
+	public Members useEmailFindId(String memberEmail) {
+	return 	mDao.findIdByEmail(memberEmail);
 	}
 	
 }

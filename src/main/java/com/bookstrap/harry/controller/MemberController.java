@@ -121,11 +121,32 @@ public class MemberController {
 			return "member/SignInPage";
 		}
 		
-		boolean status = memberService.checkLogin(new Members(memberEmail, memberPassword));
+		Members logInmember = new Members(memberEmail, memberPassword);
+		
+		
+		
+				
+		boolean status = memberService.checkLogin(logInmember);
+		
+		//要先得到由Email找出的Id
+		Members mEmail = memberService.useEmailFindId(memberEmail);
+		Integer result = mEmail.getMemberId();
+		
+		System.out.println("ID: " + result);
+		//還要再去資料庫要資料 要寫dao 與 service 透過 id 回傳MemberDetail 中的Name
+		
+		
+//		memberDetailService.findMemberDetailsById(null);
+		
+		
+		MemberDetails logInmemberDetails = new MemberDetails(result);
+		String name = logInmemberDetails.getMemberName();
 
 		if(status) {
-			session.setAttribute("userAccount", memberEmail);
-			session.setAttribute("userPassword", memberPassword);
+			session.setAttribute("member", logInmember);
+			
+			session.setAttribute("memberName", name);
+			
 			return "member/TestSuccess";
 		}
 		errors.put("msg", "username or password is not correct");		

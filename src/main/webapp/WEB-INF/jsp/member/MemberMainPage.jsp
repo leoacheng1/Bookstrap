@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Test</title>
+<title>Member main</title>
 </head>
 <body>
-<h1>Success  ${memberName}</h1>
+<h1>Member main</h1>
+<p>Hi ${userAccount}</p>
+
+
 </body>
 </html>
