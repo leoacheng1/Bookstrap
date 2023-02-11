@@ -56,4 +56,12 @@ public class MemberDdetailService {
 		}
 		return null;
 	}
-}
+	
+		public MemberDetails useIdFindName(Integer memberId) {
+			
+			return memberDetailDao.useIdFindName(memberId);
+		}
+	}
+	
+	
+

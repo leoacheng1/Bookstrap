@@ -1,9 +1,13 @@
 package com.bookstrap.harry.controller;
 
+import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
@@ -27,8 +32,10 @@ public class MemberController {
 	private MemberDdetailService memberDetailService;
 
 	@GetMapping("/member/signin")
-	public String memberSignIn() {
-
+	public String memberSignIn(HttpSession session) {
+		if(session.getAttribute("member") != null) {
+			return "redirect:/member/main";
+		}
 		return "member/SignInPage";
 	}
 
@@ -133,25 +140,45 @@ public class MemberController {
 		Integer result = mEmail.getMemberId();
 		
 		System.out.println("ID: " + result);
+		
 		//還要再去資料庫要資料 要寫dao 與 service 透過 id 回傳MemberDetail 中的Name
+		MemberDetails idFindName = memberDetailService.useIdFindName(result);
+		String memberName = idFindName.getMemberName();
 		
+		System.out.println("Name: " + memberName);
 		
-//		memberDetailService.findMemberDetailsById(null);
-		
-		
-		MemberDetails logInmemberDetails = new MemberDetails(result);
-		String name = logInmemberDetails.getMemberName();
-
 		if(status) {
 			session.setAttribute("member", logInmember);
 			
-			session.setAttribute("memberName", name);
+			session.setAttribute("memberName", memberName);
 			
-			return "member/TestSuccess";
+			return "redirect:main";
 		}
 		errors.put("msg", "username or password is not correct");		
 		return "member/TestFail";
 
+	}
+	
+	@GetMapping("/member/main")
+	public String toMemberMain(HttpSession session) {
+		if (session.getAttribute("member") != null) {
+			return "member/MemberMainPage";
+		}
+				
+		return "member/SignInPage";
+	}
+	
+	
+	@GetMapping("/member/logout")
+	public String logOut(HttpSession session) {
+				
+		if(session.getAttribute("member") != null) {
+			session.invalidate();
+			
+			return "redirect:/index";
+				}
+		return "member/SignInPage";
+			
 	}
 
 }
