@@ -30,7 +30,7 @@ private String memberName;
 
 @Lob
 @Column(name = "photo")
-private byte memberPhoto;
+private byte[] memberPhoto;
 
 @Column(name = "sex")
 private Integer memberSex;
@@ -99,13 +99,13 @@ public void setMemberName(String memberName) {
 
 
 
-public byte getMemberPhoto() {
+public byte[] getMemberPhoto() {
 	return memberPhoto;
 }
 
 
 
-public void setMemberPhoto(byte memberPhoto) {
+public void setMemberPhoto(byte[] memberPhoto) {
 	this.memberPhoto = memberPhoto;
 }
 

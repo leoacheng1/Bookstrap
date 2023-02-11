@@ -54,7 +54,7 @@ prefix="jstl"%>
 
         <div class="container d-flex mx-auto my-auto justify-content-end">
           <a href="${contextRoot}/shopping/cart" class="text-light me-5"
-            >購物車
+            ><i class="fa-solid fa-cart-shopping"></i>購物車
           </a>
           <a
             href="${contextRoot}/member/signin"
