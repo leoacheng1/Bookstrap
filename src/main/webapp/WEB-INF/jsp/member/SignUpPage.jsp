@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <section class="vh-100 gradient-custom" style="background-color: rgb(26, 24, 28);">
+  <section class="gradient-custom section-custom-hight section-custom-width"  >
     
 
     <div class="container py-5 h-100">
@@ -23,7 +23,8 @@
           <div class="card rounded-3">
             <img src="${contextRoot}/signupbackground/bg.png" class="w-100 "
               style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
-            <div class="card-body p-4 p-md-5">
+            
+              <div class="card-body p-4 p-md-5">
 
               <div class="d-flex mb-4">
               <a href="${contextRoot}/index"><img src="${contextRoot}/logo/logo2.png" width="70px" class="my-auto"></a>
