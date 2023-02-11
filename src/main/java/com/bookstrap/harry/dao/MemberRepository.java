@@ -6,4 +6,5 @@ import com.bookstrap.harry.bean.Members;
 
 public interface MemberRepository extends JpaRepository<Members, Integer> {
 
+
 }

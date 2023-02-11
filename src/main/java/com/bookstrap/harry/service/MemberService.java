@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.dao.CheckLogin;
 import com.bookstrap.harry.dao.MemberRepository;
 
 @Service
@@ -17,6 +18,8 @@ public class MemberService {
 	@Autowired
 	private MemberRepository mDao;
 	
+	@Autowired
+	private CheckLogin checkDao;
 	
 	public Members insertMember(Members member) {
 		return mDao.save(member);
@@ -43,6 +46,16 @@ public class MemberService {
 	
 	public List<Members> findAllMember(){
 		return mDao.findAll();
+	}
+	
+	
+	public boolean checkLogin (Members member) {
+		
+		
+		
+		return checkDao.checkLogin(member);
+		
+		
 	}
 	
 }
