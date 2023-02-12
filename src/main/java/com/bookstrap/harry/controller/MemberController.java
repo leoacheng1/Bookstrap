@@ -1,22 +1,25 @@
 package com.bookstrap.harry.controller;
 
-import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
@@ -180,5 +183,68 @@ public class MemberController {
 		return "member/SignInPage";
 			
 	}
+	
+//	//First: Get the page of edition target
+//	@GetMapping("/member/edit")
+//	public String editMember(@RequestParam("memberId") Integer memberId, Model m) {
+//		Members findById = memberService.findById(memberId);
+//		MemberDetails findMemberDetailsById = memberDetailService.findMemberDetailsById(memberId);
+//		//When add ModelAttribute, that need spriing's form tag to get attribute.
+//		m.addAttribute("member", findById);
+//		m.addAttribute("memberDetails", findMemberDetailsById);
+//		
+//		return "member/EditMember";
+//	}
+//	
+//	
+//	//Need spring's form; the spring's form:input need path="memberId" (for example)
+//	@PutMapping("/member/edit")
+//	public String sendEditedMember(@ModelAttribute("member") Members member, 
+//			@ModelAttribute("memberDetails") MemberDetails memberdetail, Model m) {
+//		memberService.insertMember(member);
+//		
+//		
+//		memberDetailService.insertMemberDetails(memberdetail);
+//		return "redirect:/member/MemberMainPage";
+//	}
+
+	
+	//First: Get the page of edition target
+		@GetMapping("/member/edit")
+		public String editMember(@RequestParam("memberId") Integer memberId, ModelMap map) {
+			Members findById = memberService.findById(memberId);
+			Integer id = findById.getMemberId();
+			System.out.println("ID: " + id);
+			MemberDetails findMemberDetailsById = memberDetailService.findMemberDetailsById(id);
+			System.out.println("Name: " + findMemberDetailsById.getMemberName());
+			//When add ModelAttribute, that need spriing's form tag to get attribute.
+			map.addAttribute("member", findById);
+			map.addAttribute("memberDetails", findMemberDetailsById);
+			
+			return "member/EditMember";
+		}
+		
+		
+		//Need spring's form; the spring's form:input need path="memberId" (for example)
+		@PutMapping("/member/edit")
+		public String sendEditedMember(@ModelAttribute("member") Members member, BindingResult resultMember, 
+				@ModelAttribute("memberDetails") MemberDetails memberdetails, BindingResult resultMemberdetail) {
+			memberService.insertMember(member);
+			
+			
+			memberDetailService.insertMemberDetails(memberdetails);
+			return "redirect:/member/main";
+		}
+		
+		@GetMapping("/member/getphoto")
+		public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId){
+			MemberDetails photoId = memberDetailService.getPhotoById(memberId);
+			byte[] photoFile = photoId.getMemberPhoto();
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(MediaType.IMAGE_JPEG);
+			
+			return new ResponseEntity<byte[]>(photoFile, header, HttpStatus.OK);
+		}
+	
 
 }

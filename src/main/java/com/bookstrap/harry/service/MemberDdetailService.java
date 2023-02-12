@@ -61,6 +61,20 @@ public class MemberDdetailService {
 			
 			return memberDetailDao.useIdFindName(memberId);
 		}
+		
+		public MemberDetails getPhotoById(Integer memberid) {
+			Optional<MemberDetails> op = memberDetailDao.findById(memberid);
+			
+			
+			if(op.isPresent()) {
+				
+				return op.get();
+			}
+			
+			return null;
+		}
+		
+		
 	}
 	
 	
