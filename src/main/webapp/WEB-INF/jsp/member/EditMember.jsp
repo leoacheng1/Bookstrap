@@ -29,14 +29,16 @@
     </tag:bind>
     
      
-    
+<!--     Account -->
     <tag:bind path="member.memberAccount">
     <input type="text" name="memberAccount"><br>
     </tag:bind>
     
+<!--     Password -->
     <tag:bind path="member.memberPassword">
     <input type="text" name="memberPassword"><br>
     </tag:bind>
+    
     
     <span>valid123</span> <br>
     <tag:bind path="member.memberValid">
@@ -50,38 +52,43 @@
 
    
     <tag:bind path="memberDetails.memberId">
-    <input type="text" name="dMemberId" readonly="readonly" value="${member.memberId}"><br>
+    <input type="text" name="dMemberId" readonly="readonly" value="${member.memberId}" hidden><br>
     </tag:bind>
     
-    
+<!--     Name -->
     <tag:bind path="memberDetails.memberName">
     <input type="text" name="memberName"><br>
     </tag:bind>
     
+<!--     photo -->
     <tag:bind path="memberDetails.memberPhoto">
     <img src="${contextRoot}/member/getphoto?memberId=${member.memberId}">
     <input type="file" name="memberPhoto"><br>
     </tag:bind>
     
+<!--     Gender -->
      <tag:bind path="memberDetails.memberSex">
     <input type="text" name="memberSex"><br>
     </tag:bind>
     
+<!--     Email -->
     <tag:bind path="memberDetails.memberEmail">
     <input type="text" name="memberEmail"><br>
     </tag:bind>
     
-        
+<!--     Phone     -->
       <tag:bind path="memberDetails.memberPhone">
     <input type="text" name="memberPhone"><br>
     </tag:bind>
     
+<!--     Address -->
      <tag:bind path="memberDetails.memberAddress">
     <input type="text" name="memberAddress" ><br>
     </tag:bind>
     
+
      <tag:bind path="memberDetails.memberBirthday">
-    <input type="date" name="memberBirthday" value="${memberDetails.memberBirthday}" readonly="readonly"><br>
+    <input type="date" name="memberBirthday" value="${memberDetails.memberBirthday}" readonly="readonly" hidden><br>
     </tag:bind>
     
     
