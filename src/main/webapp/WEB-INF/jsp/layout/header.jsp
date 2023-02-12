@@ -13,7 +13,7 @@ prefix="jstl"%>
   </head>
   <body>
     <header>
-      <div class="bg-custom d-flex pt-3 pb-3">
+      <div class="sticky-top bg-custom d-flex pt-3 pb-3">
         <div class="container d-flex justify-content-center">
           <img
             src="${contextRoot}/logo/logo2.png"
