@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookstrap.model.EmployeesRepository;
+import com.bookstrap.model.ShopEmployeesRepository;
+import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.ShopEmployees;
-import com.bookstrap.model.bean.ShopEmployeesRepository;
 
 @Service
 public class ShopEmployeesService {
@@ -23,7 +25,9 @@ public class ShopEmployeesService {
   }
 
   public ShopEmployees addShopEmployee(ShopEmployees shopEmployee) {
-    return sempDao.save(shopEmployee);
+	  Employees emp = new Employees();
+	  shopEmployee.setEmployee(emp);
+	  return sempDao.save(shopEmployee);
   }
 
   public ShopEmployees updateShopEmployee(ShopEmployees shopEmployee) {
