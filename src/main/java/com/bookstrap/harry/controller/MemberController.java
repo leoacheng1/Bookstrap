@@ -147,9 +147,13 @@ public class MemberController {
 			// 還要再去資料庫要資料 要寫dao 與 service 透過 id 回傳MemberDetail 中的Name
 			MemberDetails idFindName = memberDetailService.useIdFindName(result);
 			String memberName = idFindName.getMemberName();
+			
+		
 
 			System.out.println("Name: " + memberName);
-
+			
+			session.setAttribute("memberId", result);
+			
 			session.setAttribute("member", logInmember);
 
 			session.setAttribute("memberName", memberName);
@@ -164,8 +168,11 @@ public class MemberController {
 
 	@GetMapping("/member/main")
 	public String toMemberMain(HttpSession session) {
+		
 		if (session.getAttribute("member") != null) {
-			return "member/MemberMainPage";
+			
+			
+			return "member/Main/MemberMainPage";
 		}
 
 		return "member/SignInPage";
@@ -175,9 +182,8 @@ public class MemberController {
 	public String logOut(HttpSession session) {
 
 		if (session.getAttribute("member") != null) {
-			session.invalidate();
-
-			return "redirect:/index";
+					session.invalidate();
+		return "redirect:/index";
 		}
 		return "member/SignInPage";
 
@@ -207,6 +213,7 @@ public class MemberController {
 //		return "redirect:/member/MemberMainPage";
 //	}
 
+	////////////////////
 	// First: Get the page of edition target
 	@GetMapping("/member/edit")
 	public String editMember(@RequestParam("memberId") Integer memberId, ModelMap map) {
@@ -219,7 +226,7 @@ public class MemberController {
 		map.addAttribute("member", findById);
 		map.addAttribute("memberDetails", findMemberDetailsById);
 
-		return "member/EditMember";
+		return "member/Main/EditMember";
 	}
 
 	// Need spring's form; the spring's form:input need path="memberId" (for
@@ -232,7 +239,64 @@ public class MemberController {
 		memberDetailService.insertMemberDetails(memberdetails);
 		return "redirect:/member/main";
 	}
-
+//////////////////////
+	
+	@GetMapping("/member/information")
+			public String personalInfo() {
+					
+		
+			return "member/Main/MyInfo";
+		}
+	
+	@GetMapping("/member/editpasswordpage")
+	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m)  {
+		m.addAttribute("memberId", memberId);
+		System.out.println("MemberId3: " + memberId);
+	return "member/Main/EditPassword";
+	}
+	
+	@PostMapping("/member/editpassword")
+	public String editPassword(@RequestParam("oldPassword") String oldPassword, 
+			@RequestParam("newPassword") String newPassword, 
+			@RequestParam("re_Password") String re_Password, 
+			@RequestParam("memberId") Integer memberId, Model m) {
+		
+		Map<String, String> errors = new HashMap<String, String>();
+		m.addAttribute("errors", errors);
+		
+		Members member = memberService.findById(memberId);
+		System.out.println("old: " + oldPassword);
+		System.out.println("new: " + newPassword);
+		System.out.println("Re: " + re_Password);
+		System.out.println("memberPassword:" + member.getMemberPassword());
+		
+		if(oldPassword == member.getMemberPassword() && newPassword == re_Password) {
+			member.setMemberPassword(newPassword);
+			memberService.insertMember(member);
+			return "redirect:/member/main";
+		
+		}
+//		else if(oldPassword != member.getMemberPassword() || oldPassword == null){
+//			errors.put("WrongPassword", "請輸入正確之原有密碼");
+//		}else if(newPassword != re_Password || newPassword == null && re_Password ==null){
+//			errors.put("checkProblem", "新密碼與確認新密碼不符");
+//		}
+		
+		if(oldPassword != member.getMemberPassword() && oldPassword == null) {
+			
+			errors.put("WrongPassword", "請輸入正確之原有密碼");
+		}
+		
+		
+		if(newPassword != re_Password || newPassword == null || re_Password ==null) {
+			
+			errors.put("checkProblem", "新密碼與確認新密碼不符");
+		}
+		
+		return "member/TestFail";
+	}
+	
+	
 	@GetMapping("/member/getphoto")
 	public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId) {
 		MemberDetails photoId = memberDetailService.getPhotoById(memberId);
