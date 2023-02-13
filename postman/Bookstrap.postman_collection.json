@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "d2d216d0-af11-441b-a61c-46500b426a4b",
+		"name": "Bookstrap",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "addMember",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "memberName",
+							"value": "Bob",
+							"type": "default"
+						},
+						{
+							"key": "memberEmail",
+							"value": "Bob@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "memberPassword",
+							"value": "Abc1234",
+							"type": "default"
+						},
+						{
+							"key": "membervalid",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "memberLevel",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "memberSex",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "memberBirthday",
+							"value": "1991-01-01",
+							"type": "text"
+						},
+						{
+							"key": "memberPhone",
+							"value": "234456",
+							"type": "default"
+						},
+						{
+							"key": "memberCellPhone",
+							"value": "3234",
+							"type": "default"
+						},
+						{
+							"key": "memberAddress",
+							"value": "Gfddwe",
+							"type": "default"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/Bookstrap/member/post",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"member",
+						"post"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
