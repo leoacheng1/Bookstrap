@@ -43,8 +43,11 @@
   定價:<input type="text" name="price" id="priceInput" placeholder="請輸入定價"/><br/>
   尺寸:<input type="text" name="size" id="sizeInput" placeholder="請輸入尺寸"/><br/>
   頁數:<input type="text" name="pages" id="pagesInput" placeholder="請輸入頁數"/><br/>
-  簡介:<textarea cols="max" rows="max" name="intro" id="introInput" placeholder="請輸入簡介" ></textarea><br/>
-  分級:<input type="text" name="grade" id="gradeInput" placeholder="請輸入分級"/><br/>
+  簡介:<textarea cols="max" rows="max" name="intro" id="introInput" placeholder="請輸入簡介" style="width:350px;height:150px;"></textarea><br/>
+  分級:<select name="grade" id="gradeInput">
+        <option selected value="普通級">普通級</option>
+        <option value="限制級">限制級</option>
+      </select><br/>
   <button type="submit" id="myBtn" class="my-customer-data-btn btn btn-primary">送出</button>
   </form>  
 </div>
