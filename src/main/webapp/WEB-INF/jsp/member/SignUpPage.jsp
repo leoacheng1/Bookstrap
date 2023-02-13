@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <section class="h-custom" style="background-color: rgb(26, 24, 28);">
+  <section class="gradient-custom section-custom-hight section-custom-width"  >
     
 
     <div class="container py-5 h-100">
@@ -23,14 +23,15 @@
           <div class="card rounded-3">
             <img src="${contextRoot}/signupbackground/bg.png" class="w-100 "
               style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
-            <div class="card-body p-4 p-md-5">
+            
+              <div class="card-body p-4 p-md-5">
 
               <div class="d-flex mb-4">
               <a href="${contextRoot}/index"><img src="${contextRoot}/logo/logo2.png" width="70px" class="my-auto"></a>
               <h3 class="my-auto ps-2 ">註冊資訊</h3>
             </div>
 
-              <form class="row ">
+              <form class="row " action="${ConTextRoot}/Bookstrap/member/post" method="post">
 
                 <!-- 左  頭 -->
                 <div class="col border-end mb-5">
@@ -56,16 +57,20 @@
                       <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="0" hidden />
-
+                      <input type="text" class="form-control" id="exampleDatepicker1"  value="1" hidden name="memberValid"/>
+					
+					<div class="form-outline datepicker mb-3">
+                      <input type="text" class="form-control" id="exampleDatepicker1"  value="1" hidden name="memberLevel"/>
+                                        
+                  </div>
 
                       <div class="mb-4">
 
                         <select class="select" name="memberSex"> 
-                          <option value="1" selected disabled>請選取性別</option>
-                          <option value="male">男</option>
-                          <option value="female">女</option>
-                          <option value="other">其他</option>
+                          <option value="0" selected disabled>請選取性別</option>
+                          <option value="1">男</option>
+                          <option value="2">女</option>
+                          <option value="3">其他</option>
                         </select>
                         <br>
                           <label for="exampleDatepicker1" class="form-label">性別</label>
@@ -92,31 +97,20 @@
                     </div>
 
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <input type="text" class="form-control" id="exampleDatepicker1" name="memberPhone"/>
                       <label for="exampleDatepicker1" class="form-label">連絡電話</label>
                     </div>
 
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <input type="text" class="form-control" id="exampleDatepicker1" name="memberCellPhone"/>
                       <label for="exampleDatepicker1" class="form-label">手機號碼</label>
                     </div>
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" />
+                      <input type="text" class="form-control" id="exampleDatepicker1" name="memberAddress"/>
                       <label for="exampleDatepicker1" class="form-label">聯絡地址</label>
                     </div>
-                    <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1" disabled value="0" hidden />
-
-
-                     
-
-
-
-
-                      
-
-
-                    </div>
+                    
+                  
 
                   </div>
 

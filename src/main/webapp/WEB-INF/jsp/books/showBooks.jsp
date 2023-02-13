@@ -16,7 +16,7 @@
   <br/>
 	<h1>所有書籍頁面</h1>
   <br/>
-  <table class="text-center" width="1200px">
+  <table class="text-center" style="width:1200px">
     <thead>
       <tr>
         <th>書名</th>
@@ -29,12 +29,14 @@
         <th>封面圖片</th>
         <th>折扣</th>
         <th>定價</th>
+        <th>詳細資料</th>
         <th>更新</th>
 	    <th>刪除</th>
       </tr>
     </thead>
-  <jstl:forEach items="${list}" var="book">
-    <tr>
+    <tbody>
+    <jstl:forEach items="${list}" var="book">
+     <tr>
       <td>${book.name}</td>  
       <td>${book.author}</td>  
       <td>${book.translator}</td>  
@@ -42,14 +44,18 @@
       <td>${book.category}</td>  
       <td>${book.publisher}</td>  
       <td>${book.date}</td>  
-      <td><img style="width:200px;height:250px" src="${contextRoot}/books/id?id=${book.id}"></td>
+      <td><img style="width:100px;height:120px" src="${contextRoot}/books/id?id=${book.id}"></td>
       <td>${book.discount}</td>  
       <td>${book.price}</td>  
-      <td><a href="/HomeWork/GetBookByIDToUpdate?bookid=${bk.bookid}"><button class="btn btn-primary">更新</button></a>
-      <td><a href="/HomeWork/DeleteBookByID?bID=${bk.bookid}"><button class="btn btn-danger">刪除</button></a>     
-    </tr>
-  </jstl:forEach>
+      <td><button class="btn btn-info">詳細資料</button></td> 
+      <td><button class="edit-btn btn btn-primary" data-bkid="${book.id}">更新</button></td>     
+      <td><button class="delete-btn btn btn-danger"  data-bkid="${book.id}">刪除</button></td>
+     </tr>
+    </jstl:forEach>
+    </tbody>
 </table>
 </div>
+
+<script src="${contextRoot}/js/book/mix-book.js" type="text/javascript"></script>
 </body>
 </html>

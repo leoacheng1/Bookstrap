@@ -1,3 +1,4 @@
+
 package com.bookstrap.harry.bean;
 
 import javax.persistence.Column;
@@ -122,3 +123,4 @@ public class Sales {
 	}
 
 }
+

@@ -29,9 +29,9 @@ public class BookDetails {
 	@Column(name ="grade" )
 	private String grade;
 	
-//	@OneToOne(mappedBy = "Books")
-//	private Books books;
-//	
+	@OneToOne(mappedBy = "bookDetails")
+	private Books books;
+	
 	public BookDetails() {
 	}
 
@@ -75,12 +75,12 @@ public class BookDetails {
 		this.grade = grade;
 	}
 
-//	public Books getBooks() {
-//		return books;
-//	}
-//
-//	public void setBooks(Books books) {
-//		this.books = books;
-//	}
+	public Books getBooks() {
+		return books;
+	}
+
+	public void setBooks(Books books) {
+		this.books = books;
+	}
 
 }

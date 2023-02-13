@@ -32,7 +32,7 @@ public class Members {
 	private Integer memberValid;
 	
 	@Column(name = "member_level")
-	private String memberLevel;
+	private Integer memberLevel;
 
 	//雙向，去找memberDetails有本類別屬性的參考變數
 	@OneToOne(mappedBy ="member")
@@ -47,7 +47,73 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<Sales> sales;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private List<UserCoupon> userCoupon;
 	
+	
+	public Members() {
+	}
+	
+	
+	
+	public Members(String mAccount, String mPassword) {
+		this.memberAccount = mAccount;
+		this.memberPassword = mPassword;
+	}
+
+
+	public Members(String mAccount) {
+		this.memberAccount = mAccount;
+	}
+
+	public List<ShoppingCarts> getShoppingCarts() {
+		return shoppingCarts;
+	}
+
+
+
+	public void setShoppingCarts(List<ShoppingCarts> shoppingCarts) {
+		this.shoppingCarts = shoppingCarts;
+	}
+
+
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+
+
+
+	public List<Sales> getSales() {
+		return sales;
+	}
+
+
+
+	public void setSales(List<Sales> sales) {
+		this.sales = sales;
+	}
+
+
+
+	public List<UserCoupon> getUserCoupon() {
+		return userCoupon;
+	}
+
+
+
+	public void setUserCoupon(List<UserCoupon> userCoupon) {
+		this.userCoupon = userCoupon;
+	}
+
+
+
 	public MemberDetails getMemberDetails() {
 		return memberDetails;
 	}
@@ -56,8 +122,6 @@ public class Members {
 		this.memberDetails = memberDetails;
 	}
 
-	public Members() {
-	}
 
 	public Integer getMemberId() {
 		return memberId;
@@ -91,11 +155,11 @@ public class Members {
 		this.memberValid = memberValid;
 	}
 
-	public String getMemberLevel() {
+	public Integer getMemberLevel() {
 		return memberLevel;
 	}
 
-	public void setMemberLevel(String memberLevel) {
+	public void setMemberLevel(Integer memberLevel) {
 		this.memberLevel = memberLevel;
 	}
 	

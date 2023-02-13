@@ -49,6 +49,14 @@ public class Comment {
 	@JoinColumn(name = "book_id")
 	private Books book;
 	
+	public Integer getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(Integer commentId) {
+		this.commentId = commentId;
+	}
+
 	public Comment() {
 			}
 
@@ -110,3 +118,4 @@ public class Comment {
 	
 	
 }
+

@@ -2,7 +2,9 @@ package com.bookstrap.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bookstrap.model.BookDetails;
 import com.bookstrap.model.Books;
+import com.bookstrap.service.BookDetailsService;
 import com.bookstrap.service.BooksService;
 
 @Controller
@@ -26,6 +31,9 @@ public class BooksController {
 
 	@Autowired
 	private BooksService bService;
+	
+	@Autowired
+	private BookDetailsService dService;
 	
 	@GetMapping("/")
 	public String goToIndex() {
@@ -49,29 +57,51 @@ public class BooksController {
 			@RequestParam("category") String category,
 			@RequestParam("discount") Integer discount,
 			@RequestParam("price") Integer price,
-			@RequestParam("photo") MultipartFile photo,
-			RedirectAttributes redirectAttributes) {
+			@RequestParam("size") String size,
+			@RequestParam("pages") Integer pages,
+			@RequestParam("intro") String intro,
+			@RequestParam("grade") String grade,
+			@RequestParam("photo") MultipartFile photo) {
+		
 		try {
-	        Books newBook = new Books();
-		    newBook.setName(name);
-		    newBook.setAuthor(author);
-		    newBook.setTranslator(translator);
-		    newBook.setPublisher(publisher);
-		    newBook.setDate(date);
-		    newBook.setLanguages(languages);
-		    newBook.setCategory(category);
-		    newBook.setDiscount(discount);
-		    newBook.setPrice(price);
-			newBook.setPhoto(photo.getBytes());
-			bService.insert(newBook);
-			
-			return "/books/testIndex"; 
-		} catch (IOException e) {
-			e.printStackTrace();
-			redirectAttributes.addFlashAttribute("errorMsg","請重新新增");
-			return "/books/addBooks"; 
-		}
-
+	        	Books newBook = new Books();
+		    	newBook.setName(name);
+		    	newBook.setAuthor(author);
+		    	newBook.setTranslator(translator);
+		    	newBook.setPublisher(publisher);
+		    	newBook.setDate(date);
+		    	newBook.setLanguages(languages);
+		    	newBook.setCategory(category);
+		    	newBook.setDiscount(discount);
+		    	newBook.setPrice(price);
+				newBook.setPhoto(photo.getBytes());
+				
+				ArrayList<BookDetails> list = new ArrayList<>();
+				
+				BookDetails details = new BookDetails();
+				details.setSize(size);
+				details.setPages(pages);
+				details.setIntro(intro);
+				details.setGrade(grade);
+				details.setBooks(newBook);
+				
+				list.add(details);
+				
+				newBook.setBookDetails(details);
+				
+				bService.insert(newBook);
+				
+				return "/books/testIndex"; 
+			} catch (IOException e) {
+				e.printStackTrace();
+				return "/books/addBooks"; 
+			}
+	}
+	
+	@DeleteMapping("/books/delete")
+	public String deteleBookApi(@RequestParam("id") Integer id) {
+		bService.deleteById(id);
+		return "redirect:/books/all";
 	}
 	
 	@GetMapping("/books/all")
@@ -94,4 +124,24 @@ public class BooksController {
 		return new ResponseEntity<byte[]>(photofile,headers, HttpStatus.OK);
 	} 
 	
+	
+	@GetMapping("/books/details")
+	public List<BookDetails> getDetailsById(@RequestParam Integer Id) {
+//        BookDetails bookdetails = dService.getDetailsByID(Id);
+//        ArrayList<BookDetails> list = new ArrayList<>();
+//        bookdetails.getSize();
+//        bookdetails.getPages();
+//        bookdetails.getIntro();
+//        bookdetails.getGrade();
+//        list.add(bookdetails);
+        return dService.findById(Id);
+    
+//        bookdetails;
+		}
+	
+	
+	public String updateBookApi() {
+		
+	}
+
 }
