@@ -52,10 +52,16 @@ prefix="jstl"%>
           </button>
         </div>
 
-        <div class="container d-flex mx-auto my-auto justify-content-end">
-          <a href="${contextRoot}/shopping/cart" class="text-light me-5"
+
+        <div class="container d-flex mx-auto my-auto justify-content-center">
+          <a href="${contextRoot}/shopping/cart" class="text-light ms-2 me-5"
             ><i class="fa-solid fa-cart-shopping"></i>購物車
           </a>
+          
+          <jstl:set var="status" scope="session" value="${member}"/>
+          <jstl:choose>
+          
+          <jstl:when test="${member == null}">
           <a
             href="${contextRoot}/member/signin"
             class="text-light me-2 pe-2 border-light border-end"
@@ -66,6 +72,23 @@ prefix="jstl"%>
           <a href="${contextRoot}/member/signup" class="text-light me-5"
             >註冊會員
           </a>
+          </jstl:when>
+          
+          <jstl:otherwise>
+          <div class="nav-item text-nowrap ms-5"><a
+            href="${contextRoot}/member/signin"
+            class="text-light me-2 pe-2" style="text-decoration: none"
+          >
+          <i class="fa-regular fa-user me-1"></i>Hello ${memberName}</a>
+          </div>
+          <div class="nav-item text-nowrap ms-5">
+      		<a class=" px-3" href="${contextRoot}/member/logout" style="text-decoration: none; color: white;">登出</a>
+    		</div>
+          </jstl:otherwise>
+          
+          
+          </jstl:choose>
+          
         </div>
       </div>
     </header>
