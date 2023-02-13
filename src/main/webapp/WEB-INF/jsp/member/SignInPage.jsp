@@ -31,14 +31,24 @@
 										<input type="email" id="typeEmailX"
 											class="form-control form-control-lg" placeholder="註冊信箱"
 											name="memberEmail" />
-
 									</div>
+									<div>
+									${errors.Email}
+									</div>
+									
 
 									<div class="form-outline form-white mb-4">
 										<input type="password" id="typePasswordX"
 											class="form-control form-control-lg" placeholder="密碼" name="memberPassword"/>
 
 									</div>
+									<div>
+									${errors.Password}
+									</div>
+									<div>
+									${errors.msg}
+									</div>
+									
 
 									<p class="small mb-5 pb-lg-2">
 										<a class="text-white-50" href="#!">忘記密碼</a>

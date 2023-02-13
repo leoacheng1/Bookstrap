@@ -36,7 +36,7 @@ public class MemberController {
 
 	@GetMapping("/member/signin")
 	public String memberSignIn(HttpSession session) {
-		if(session.getAttribute("member") != null) {
+		if (session.getAttribute("member") != null) {
 			return "redirect:/member/main";
 		}
 		return "member/SignInPage";
@@ -88,6 +88,7 @@ public class MemberController {
 		if (memberBirthday == null || memberBirthday == sDate) {
 			errors.put("errBirthday;", "Birthday form is wrong");
 		}
+
 		if (memberEmail == null || memberEmail.length() == 0) {
 			errors.put("errEmail;", "Email is required!");
 		}
@@ -130,60 +131,58 @@ public class MemberController {
 		if (errors != null && !errors.isEmpty()) {
 			return "member/SignInPage";
 		}
-		
+
 		Members logInmember = new Members(memberEmail, memberPassword);
-		
-		
-		
-				
+
 		boolean status = memberService.checkLogin(logInmember);
-		
-		//要先得到由Email找出的Id
-		Members mEmail = memberService.useEmailFindId(memberEmail);
-		Integer result = mEmail.getMemberId();
-		
-		System.out.println("ID: " + result);
-		
-		//還要再去資料庫要資料 要寫dao 與 service 透過 id 回傳MemberDetail 中的Name
-		MemberDetails idFindName = memberDetailService.useIdFindName(result);
-		String memberName = idFindName.getMemberName();
-		
-		System.out.println("Name: " + memberName);
-		
-		if(status) {
+
+		if (status) {
+
+			// 要先得到由Email找出的Id
+			Members mEmail = memberService.useEmailFindId(memberEmail);
+			Integer result = mEmail.getMemberId();
+
+			System.out.println("ID: " + result);
+
+			// 還要再去資料庫要資料 要寫dao 與 service 透過 id 回傳MemberDetail 中的Name
+			MemberDetails idFindName = memberDetailService.useIdFindName(result);
+			String memberName = idFindName.getMemberName();
+
+			System.out.println("Name: " + memberName);
+
 			session.setAttribute("member", logInmember);
-			
+
 			session.setAttribute("memberName", memberName);
-			
+
 			return "redirect:main";
 		}
-		errors.put("msg", "username or password is not correct");		
-		return "member/TestFail";
+
+		errors.put("msg", "username or password is not correct");
+		return "member/SignInPage";
 
 	}
-	
+
 	@GetMapping("/member/main")
 	public String toMemberMain(HttpSession session) {
 		if (session.getAttribute("member") != null) {
 			return "member/MemberMainPage";
 		}
-				
+
 		return "member/SignInPage";
 	}
-	
-	
+
 	@GetMapping("/member/logout")
 	public String logOut(HttpSession session) {
-				
-		if(session.getAttribute("member") != null) {
+
+		if (session.getAttribute("member") != null) {
 			session.invalidate();
-			
+
 			return "redirect:/index";
-				}
+		}
 		return "member/SignInPage";
-			
+
 	}
-	
+
 //	//First: Get the page of edition target
 //	@GetMapping("/member/edit")
 //	public String editMember(@RequestParam("memberId") Integer memberId, Model m) {
@@ -208,43 +207,40 @@ public class MemberController {
 //		return "redirect:/member/MemberMainPage";
 //	}
 
-	
-	//First: Get the page of edition target
-		@GetMapping("/member/edit")
-		public String editMember(@RequestParam("memberId") Integer memberId, ModelMap map) {
-			Members findById = memberService.findById(memberId);
-			Integer id = findById.getMemberId();
-			System.out.println("ID: " + id);
-			MemberDetails findMemberDetailsById = memberDetailService.findMemberDetailsById(id);
-			System.out.println("Name: " + findMemberDetailsById.getMemberName());
-			//When add ModelAttribute, that need spriing's form tag to get attribute.
-			map.addAttribute("member", findById);
-			map.addAttribute("memberDetails", findMemberDetailsById);
-			
-			return "member/EditMember";
-		}
-		
-		
-		//Need spring's form; the spring's form:input need path="memberId" (for example)
-		@PutMapping("/member/edit")
-		public String sendEditedMember(@ModelAttribute("member") Members member, BindingResult resultMember, 
-				@ModelAttribute("memberDetails") MemberDetails memberdetails, BindingResult resultMemberdetail) {
-			memberService.insertMember(member);
-			
-			
-			memberDetailService.insertMemberDetails(memberdetails);
-			return "redirect:/member/main";
-		}
-		
-		@GetMapping("/member/getphoto")
-		public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId){
-			MemberDetails photoId = memberDetailService.getPhotoById(memberId);
-			byte[] photoFile = photoId.getMemberPhoto();
-			HttpHeaders header = new HttpHeaders();
-			header.setContentType(MediaType.IMAGE_JPEG);
-			
-			return new ResponseEntity<byte[]>(photoFile, header, HttpStatus.OK);
-		}
-	
+	// First: Get the page of edition target
+	@GetMapping("/member/edit")
+	public String editMember(@RequestParam("memberId") Integer memberId, ModelMap map) {
+		Members findById = memberService.findById(memberId);
+		Integer id = findById.getMemberId();
+		System.out.println("ID: " + id);
+		MemberDetails findMemberDetailsById = memberDetailService.findMemberDetailsById(id);
+		System.out.println("Name: " + findMemberDetailsById.getMemberName());
+		// When add ModelAttribute, that need spriing's form tag to get attribute.
+		map.addAttribute("member", findById);
+		map.addAttribute("memberDetails", findMemberDetailsById);
+
+		return "member/EditMember";
+	}
+
+	// Need spring's form; the spring's form:input need path="memberId" (for
+	// example)
+	@PutMapping("/member/edit")
+	public String sendEditedMember(@ModelAttribute("member") Members member, BindingResult resultMember,
+			@ModelAttribute("memberDetails") MemberDetails memberdetails, BindingResult resultMemberdetail) {
+		memberService.insertMember(member);
+
+		memberDetailService.insertMemberDetails(memberdetails);
+		return "redirect:/member/main";
+	}
+
+	@GetMapping("/member/getphoto")
+	public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId) {
+		MemberDetails photoId = memberDetailService.getPhotoById(memberId);
+		byte[] photoFile = photoId.getMemberPhoto();
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(MediaType.IMAGE_JPEG);
+
+		return new ResponseEntity<byte[]>(photoFile, header, HttpStatus.OK);
+	}
 
 }
