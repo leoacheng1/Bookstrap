@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+pageEncoding="UTF-8"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="jstl"%>
 
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
@@ -39,7 +40,81 @@ prefix="jstl"%>
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="${contextRoot}/css/index.css" />
+    <style>
+    .top_search_table {
+    padding-left: 50px;
+}
+
+.searchBar {
+    padding-left: 500px;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.ms-45 {
+    margin-left: 30px;
+}
+
+.logoFont {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.nav-link {
+   
+   position: relative;
+}
+
+
+
+.nav-link::after{
+   content: '';
+   opacity: 0;
+   transition: all 0.3s;
+   height: 3px;
+    width: 100%;
+    background-color: black;
+    position: absolute;
+       bottom: 0;
+    left: 0;
+}
+
+.nav-link:hover::after{
+    content: '';
+    opacity: 1;
+}
+
+.slick-prev:before {
+    color: black;
+}
+
+.slick-next::before {
+    color: black;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+.icon-text {
+    text-decoration: none;
+    color: black;
+}
+
+.icon-text:hover {
+    color: black;
+}
+
+.slider-title-en {
+    font-family: 'Roboto Slab', serif;
+}
+
+.bg-custom {
+    background-color: #5ea0cc;
+}
+</style>
   </head>
 
   <body>

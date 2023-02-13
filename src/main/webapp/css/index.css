@@ -27,29 +27,29 @@
    
 } */
 
-.nav-link {
+/* .nav-link { */
    
-   position: relative;
-}
+/*    position: relative; */
+/* } */
 
 
 
-.nav-link::after{
-   content: '';
-   opacity: 0;
-   transition: all 0.3s;
-   height: 3px;
-    width: 100%;
-    background-color: black;
-    position: absolute;
-       bottom: 0;
-    left: 0;
-}
+/* .nav-link::after{ */
+/*    content: ''; */
+/*    opacity: 0; */
+/*    transition: all 0.3s; */
+/*    height: 3px; */
+/*     width: 100%; */
+/*     background-color: black; */
+/*     position: absolute; */
+/*        bottom: 0; */
+/*     left: 0; */
+/* } */
 
-.nav-link:hover::after{
-    content: '';
-    opacity: 1;
-}
+/* .nav-link:hover::after{ */
+/*     content: ''; */
+/*     opacity: 1; */
+/* } */
 
 .slick-prev:before {
     color: black;

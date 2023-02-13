@@ -59,6 +59,13 @@ public MemberDetails() {
 
 
 
+public MemberDetails(Integer memberId) {
+	this.memberId = memberId;
+}
+
+
+
+
 public Members getMember() {
 	return member;
 }
