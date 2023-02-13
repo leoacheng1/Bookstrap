@@ -37,12 +37,27 @@
 
 					<div class="card mt-5">
 						<h5 class="card-header">密碼</h5>
+						
+						<form action="${contextRoot}/member/editpassword" method="post">
 						<div class="card-body">
-							<h5 class="card-title">Special title treatment</h5>
-							<p class="card-text">With supporting text below as a natural
-								lead-in to additional content.</p>
-							<a href="#" class="btn btn-primary">更新</a>
+
+							<input type="password" readonly name="memberId" name="memberId" value="${memberId}">
+							
+							<h5 class="card-title">請輸入舊密碼</h5>
+							<input type="password" name="oldPassword"/>
+							<br>
+							<h5 class="card-title mt-5">請輸入新密碼</h5>
+							<input type="password" name="newPassword"/>
+							<br>
+							<span>重新輸入新密碼</span>
+							<br>
+							<input type="password" name="re_Password"/>
+							<br>
+							<button class="btn btn-primary mt-3" type="submit">更新</button>
+							
 						</div>
+					</form>
+
 					</div>
 					
 					

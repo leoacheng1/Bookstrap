@@ -182,8 +182,7 @@ public class MemberController {
 	public String logOut(HttpSession session) {
 
 		if (session.getAttribute("member") != null) {
-			
-		
+					session.invalidate();
 		return "redirect:/index";
 		}
 		return "member/SignInPage";
@@ -244,18 +243,58 @@ public class MemberController {
 	
 	@GetMapping("/member/information")
 			public String personalInfo() {
-			
+					
+		
 			return "member/Main/MyInfo";
 		}
 	
 	@GetMapping("/member/editpasswordpage")
-	public String editPasswordpage(@ModelAttribute("memberId") Integer memberId) {
-		Members mId = memberService.findById(memberId);
-		
+	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m)  {
+		m.addAttribute("memberId", memberId);
+		System.out.println("MemberId3: " + memberId);
 	return "member/Main/EditPassword";
 	}
 	
-	
+	@PostMapping("/member/editpassword")
+	public String editPassword(@RequestParam("oldPassword") String oldPassword, 
+			@RequestParam("newPassword") String newPassword, 
+			@RequestParam("re_Password") String re_Password, 
+			@RequestParam("memberId") Integer memberId, Model m) {
+		
+		Map<String, String> errors = new HashMap<String, String>();
+		m.addAttribute("errors", errors);
+		
+		Members member = memberService.findById(memberId);
+		System.out.println("old: " + oldPassword);
+		System.out.println("new: " + newPassword);
+		System.out.println("Re: " + re_Password);
+		System.out.println("memberPassword:" + member.getMemberPassword());
+		
+		if(oldPassword == member.getMemberPassword() && newPassword == re_Password) {
+			member.setMemberPassword(newPassword);
+			memberService.insertMember(member);
+			return "redirect:/member/main";
+		
+		}
+//		else if(oldPassword != member.getMemberPassword() || oldPassword == null){
+//			errors.put("WrongPassword", "請輸入正確之原有密碼");
+//		}else if(newPassword != re_Password || newPassword == null && re_Password ==null){
+//			errors.put("checkProblem", "新密碼與確認新密碼不符");
+//		}
+		
+		if(oldPassword != member.getMemberPassword() && oldPassword == null) {
+			
+			errors.put("WrongPassword", "請輸入正確之原有密碼");
+		}
+		
+		
+		if(newPassword != re_Password || newPassword == null || re_Password ==null) {
+			
+			errors.put("checkProblem", "新密碼與確認新密碼不符");
+		}
+		
+		return "member/TestFail";
+	}
 	
 	
 	@GetMapping("/member/getphoto")
