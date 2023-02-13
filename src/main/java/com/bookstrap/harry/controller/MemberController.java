@@ -147,9 +147,13 @@ public class MemberController {
 			// 還要再去資料庫要資料 要寫dao 與 service 透過 id 回傳MemberDetail 中的Name
 			MemberDetails idFindName = memberDetailService.useIdFindName(result);
 			String memberName = idFindName.getMemberName();
+			
+		
 
 			System.out.println("Name: " + memberName);
-
+			
+			session.setAttribute("memberId", result);
+			
 			session.setAttribute("member", logInmember);
 
 			session.setAttribute("memberName", memberName);
@@ -164,8 +168,11 @@ public class MemberController {
 
 	@GetMapping("/member/main")
 	public String toMemberMain(HttpSession session) {
+		
 		if (session.getAttribute("member") != null) {
-			return "member/MemberMainPage";
+			
+			
+			return "member/Main/MemberMainPage";
 		}
 
 		return "member/SignInPage";
@@ -175,9 +182,9 @@ public class MemberController {
 	public String logOut(HttpSession session) {
 
 		if (session.getAttribute("member") != null) {
-			session.invalidate();
-
-			return "redirect:/index";
+			
+		
+		return "redirect:/index";
 		}
 		return "member/SignInPage";
 
@@ -207,6 +214,7 @@ public class MemberController {
 //		return "redirect:/member/MemberMainPage";
 //	}
 
+	////////////////////
 	// First: Get the page of edition target
 	@GetMapping("/member/edit")
 	public String editMember(@RequestParam("memberId") Integer memberId, ModelMap map) {
@@ -219,7 +227,7 @@ public class MemberController {
 		map.addAttribute("member", findById);
 		map.addAttribute("memberDetails", findMemberDetailsById);
 
-		return "member/EditMember";
+		return "member/Main/EditMember";
 	}
 
 	// Need spring's form; the spring's form:input need path="memberId" (for
@@ -232,7 +240,24 @@ public class MemberController {
 		memberDetailService.insertMemberDetails(memberdetails);
 		return "redirect:/member/main";
 	}
-
+//////////////////////
+	
+	@GetMapping("/member/information")
+			public String personalInfo() {
+			
+			return "member/Main/MyInfo";
+		}
+	
+	@GetMapping("/member/editpasswordpage")
+	public String editPasswordpage(@ModelAttribute("memberId") Integer memberId) {
+		Members mId = memberService.findById(memberId);
+		
+	return "member/Main/EditPassword";
+	}
+	
+	
+	
+	
 	@GetMapping("/member/getphoto")
 	public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId) {
 		MemberDetails photoId = memberDetailService.getPhotoById(memberId);
