@@ -1,6 +1,5 @@
 package com.bookstrap.model;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -53,13 +52,21 @@ public class Shops {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
-	private Set<ShopEmployees> shopEmployees = new LinkedHashSet<ShopEmployees>();
+	private Set<ShopEmployees> shopEmployees;
 
 	@JsonManagedReference
 	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
-	private Set<ShopStock> shopStocks = new LinkedHashSet<ShopStock>();
+	private Set<ShopStock> shopStocks;
 	
 	
+	public Set<ShopStock> getShopStocks() {
+		return shopStocks;
+	}
+
+	public void setShopStocks(Set<ShopStock> shopStocks) {
+		this.shopStocks = shopStocks;
+	}
+
 	public byte[] getShopphoto() {
 		return shopphoto;
 	}
