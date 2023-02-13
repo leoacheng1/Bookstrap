@@ -23,6 +23,9 @@ public class ShopEmployees {
 	@Id
 	@Column(name="shop_id")
 	private Integer shopId;
+	
+	@Column(name="emp_name")
+	private String empName;
 
 	@Column(name="salary")
 	private Integer salary;
@@ -89,6 +92,14 @@ public class ShopEmployees {
 
 	public void setShop(Shops shop) {
 		this.shop = shop;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
 	
 
