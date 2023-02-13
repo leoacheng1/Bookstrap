@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bookstrap.model.Books;
 //import com.bookstrap.model.Books;
 import com.bookstrap.model.Shops;
 import com.bookstrap.model.pk.ShopStockPK;
@@ -29,10 +30,10 @@ public class ShopStock {
 	@Column(name="amount")
 	private Integer Amount;
 	
-//	@JsonBackReference
-//	@JoinColumn(name="book_id")
-//	@ManyToOne
-//	private Books book; //book 那邊還沒接
+	@JsonBackReference
+	@JoinColumn(name="book_id", insertable=false, updatable=false)
+	@ManyToOne
+	private Books book; //book 那邊還沒接
 	
 	@JsonBackReference
 	@JoinColumn(name="shop_id", insertable=false, updatable=false)
