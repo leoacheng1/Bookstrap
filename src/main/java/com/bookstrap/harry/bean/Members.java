@@ -56,6 +56,16 @@ public class Members {
 	
 	
 	
+	public Members(String mAccount, String mPassword) {
+		this.memberAccount = mAccount;
+		this.memberPassword = mPassword;
+	}
+
+
+	public Members(String mAccount) {
+		this.memberAccount = mAccount;
+	}
+
 	public List<ShoppingCarts> getShoppingCarts() {
 		return shoppingCarts;
 	}
