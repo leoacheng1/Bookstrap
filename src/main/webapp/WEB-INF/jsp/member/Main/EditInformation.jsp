@@ -82,63 +82,48 @@
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-2">
 					<div class="container">
-						<h3 class="text-center">更新個人資料${member.memberId}</h3>
+						<h3 class="text-center">更新個人資料</h3>
 					</div>
 				</div>
 
 				<!-- /////// -->
+
 				<div class="container">
       <main>
         
-    
+       
+          
         <div class="row g-5">
         
           <div class="">
            
             
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" action="${contextRoot}/member/editinfo" novalidate method="post">
 
-              <div class="col-sm-6">
-                <label for="" class="form-label">帳號</label>
-                <div class="input-group has-validation">
-                  
-                  <input type="text" class="form-control" id="memberAccount" placeholder="${memberDetail.memberAccount}" readonly="readonly" name="memberAccount" value="${memberDetail.memberAccount}">
-                <div class="invalid-feedback">
-                    Your account is required.
-                  </div>
-                </div>
-              </div>
+           
 
               <div class="row g-3">
+               <input type="text" value="${memberId}" readonly hidden name="memberId">
+                
                 <div class="col-sm-6">
-                  <label for="lastName" class="form-label">姓名</label>
-                  <input type="text" class="form-control" id="lastName" placeholder="" value="" required name="memberName" value="${memberDetail.memberName}">
-                  <div class="invalid-feedback">
-                    Valid lastName name is required.
+                  <label for="memberName" class="form-label">電子郵件地址 <span class="text-muted">*</span></label>
+                  <input type="text" class="form-control" id="email" placeholder="請輸入姓名" required value="${memberDetail.memberName}" name="memberName">
+                 <div class="invalid-feedback">
+                    請輸入姓名
                   </div>
                 </div>
-    
-                <!-- <div class="col-sm-6">
-                  <label for="firstName" class="form-label">名</label>
-                  <input type="text" class="form-control" id="firstName" placeholder="" value="" required name="memberFirstName">
-                  <div class="invalid-feedback">
-                    Valid first name is required.
-                  </div>
-                </div> -->
-    
+                
                 <div class="col-sm-6">
-                  <label for="lastName" class="form-label">出生年月日</label>
-                  <input type="date" class="form-control" id="birthday" placeholder="" value="" required name="memberBirthday" value="${memberDetail.memberBirthday}">
-                  <div class="invalid-feedback">
-                    Valid lastName name is required.
+                  <label for="birthday" class="form-label">出生年月日 <span class="text-muted">*</span></label>
+                  <input type="date" class="form-control" id="birthday" placeholder="請輸入姓名" required value="${memberDetail.memberBirthday}" name="memberBirthday">
+                 <div class="invalid-feedback">
+                    請輸入出生年月日
                   </div>
                 </div>
-
-               
-    
+                       
                 <div class="col-12">
                   <label for="email" class="form-label">電子郵件地址 <span class="text-muted">(Optional)</span></label>
-                  <input type="email" class="form-control" id="email" placeholder="請輸入電子郵件地址" required value="${memberDetail.memberEmail}">
+                  <input type="email" class="form-control" id="email" placeholder="請輸入電子郵件地址" required value="${memberDetail.memberEmail}" name="memberEmail">
                  <div class="invalid-feedback">
                     請輸入電子郵件地址
                   </div>
@@ -146,7 +131,7 @@
     
                 <div class="col-12">
                   <label for="phone" class="form-label">聯絡電話</label>
-                  <input type="text" class="form-control" id="phone" placeholder="請輸入連絡電話" required name="memberPhone" value="${memberDetail.memberPhone}">
+                  <input type="text" class="form-control" id="phone" placeholder="請輸入連絡電話" required name="memberPhone" value="${memberDetail.memberPhone}" name="memberPhone">
                   <div class="invalid-feedback">
                     請輸入電話號碼
                   </div>
@@ -154,7 +139,7 @@
     
                 <div class="col-12">
                   <label for="address" class="form-label">連絡地址 <span class="text-muted">(Optional)</span></label>
-                  <input type="text" class="form-control" id="address" placeholder="請輸入聯絡地址" required name="memberAddress" value="${memberDetail.memberAddress}">
+                  <input type="text" class="form-control" id="address" placeholder="請輸入聯絡地址" required name="memberAddress" value="${memberDetail.memberAddress}" name="memberAddress">
                   <div class="invalid-feedback">
                     請輸入聯絡地址
                   </div>
@@ -162,9 +147,9 @@
     
                 <div class="col-md-5">
                   <label for="gender" class="form-label">性別</label>
-                  <select class="form-select" id="gender" required name="memberGender" value="${memberDetail.memberGender}">
+                  <select class="form-select" id="gender"  name="memberGender" value="${memberDetail.memberSex}">
                     <option value="">請選擇性別</option>
-                    <option value="1">男</option>
+                    <option value="1" >男</option>
                     <option value="2">女</option>
                     <option value="3">其他</option>
 
@@ -173,7 +158,7 @@
                     Please select a valid country.
                   </div>
                 </div>
-    
+              
                
              
     

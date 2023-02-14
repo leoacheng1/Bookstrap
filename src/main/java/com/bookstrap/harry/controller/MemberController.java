@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
@@ -27,6 +28,7 @@ import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 
 @Controller
+//@SessionAttributes("memberDetail")
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
@@ -157,7 +159,7 @@ public class MemberController {
 			session.setAttribute("memberName", memberName);
 			
 //			session.setAttribute("memberDetail", idFindName);
-				m.addAttribute("memberDetail", idFindName);
+//				m.addAttribute("memberDetail", idFindName);
 			return "redirect:main";
 		}
 
@@ -288,37 +290,46 @@ public class MemberController {
 
 	@PostMapping("/member/editinfopage")
 	public String toEditInfo(@RequestParam("memberId") Integer memberId,
-			@RequestParam("memberPassword") String memberPassword, Model m) {
+			@RequestParam("memberPassword") String memberPassword,Model m) {
 		Members member = memberService.findById(memberId);
-
-
-
+		MemberDetails memberDetail = memberDetailService.findMemberDetailsById(memberId);
+		
 		Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
 
 		if (memberPassword.equals(member.getMemberPassword()) && !memberPassword.equals(null)) {
+			
+			m.addAttribute("memberDetail", memberDetail);
+			
 			return "member/Main/EditInformation";
 		}
 		if (memberPassword.equals(null) || !memberPassword.equals(member.getMemberPassword())) {
 			errors.put("WrongPassword", "密碼不正確，請重新輸入");
 		}
-		return "member/Main/MyInfo";
+		
+				return "member/Main/MyInfo";
 	}
 
-//	@PostMapping("/member/editinfo")
-//	public String editInfo(@RequestParam("memberId") Integer memberId,
-//			@RequestParam("memberName") String memberName,
-//			@RequestParam("memberEmail") String memberEmail,
-//			@RequestParam("memberPhone") String memberPhone,
-//			@RequestParam("memberAddress") String memberAddress,
-//			@RequestParam("memberGender") Integer memberGender, 
-//			@ModelAttribute("memberDetail") MemberDetails detail) {
-//		
-//		MemberDetails memberdetail = memberDetailService.findMemberDetailsById(memberId);
-//		
-//		
-//		
-//	}
+	@PostMapping("/member/editinfo")
+	public String editInfo(@RequestParam("memberId") Integer memberId,
+			@RequestParam("memberName") String memberName,
+			@RequestParam("memberEmail") String memberEmail,
+			@RequestParam("memberPhone") String memberPhone,
+			@RequestParam("memberAddress") String memberAddress,
+			@RequestParam("memberGender") Integer memberGender, 
+			@ModelAttribute("memberDetail") MemberDetails detail) {
+		
+		MemberDetails memberdetail = memberDetailService.findMemberDetailsById(memberId);
+		memberdetail.setMemberName(memberName);
+		memberdetail.setMemberEmail(memberEmail);
+		memberdetail.setMemberPhone(memberPhone);
+		memberdetail.setMemberAddress(memberAddress);
+		memberdetail.setMemberSex(memberGender);
+		
+		memberDetailService.insertMemberDetails(memberdetail);
+		
+		return"member/Main/MyInfo";
+	}
 
 	@GetMapping("/member/getphoto")
 	public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId) {
