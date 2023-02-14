@@ -28,7 +28,10 @@
 
       </div>
 
-     
+      <div id="updateshop">
+
+      </div>
+
 
       <!-- 新增分店 -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -40,23 +43,32 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="ajaxForm"><label class="form-label">店名</label> <input type="text" class="form-control"
-                  name="shopName" id="shopNameInput"><label class="form-label">地址</label><input type="text"
-                  class="form-control" name="shopAddress" id="shopAddressInput"><label class="form-label">電話</label>
-                <inaput type="text" class="form-control" name="shopPhone" id="shopPhoneInput"><label
-                    class="form-label">開店時間</label> <input type="time" class="form-control" name="shopOpenHour"
-                    id="shopOpenHourInput" min="00:00" max="24:00" required><label class="form-label">打烊時間</label>
-                  <input type="time" class="form-control" id="shopcloseHourInput" name="shopcloseHour" min="00:00"
-                    max="24:00" required> <label class="form-label">經度</label><input type="text" class="form-control"
-                    name="longitude" id="longitudeInput"><label class="form-label">緯度</label> <input type="text"
-                    class="form-control" name="latitude" id="latitudeInput"> <label for="file"
-                    class="form-label">店面照片:</label><input type="file" name="shopphoto"
-                    id="shopphotoInput" /><br><button type="submit" class="btn btn-primary" id="myButton">送出</button>
+              <form id="ajaxForm">
+                <label class="form-label">店名</label>
+                <input type="text" class="form-control" name="shopName" id="shopNameInput">
+                <label class="form-label">地址</label>
+                <input type="text" class="form-control" name="shopAddress" id="shopAddressInput">
+                <label class="form-label">電話</label>
+                <input type="text" class="form-control" name="shopPhone" id="shopPhoneInput">
+                <label class="form-label">開店時間</label>
+                <input type="time" class="form-control" name="shopOpenHour" id="shopOpenHourInput" min="00:00"
+                  max="24:00" required>
+                <label class="form-label">打烊時間</label>
+                <input type="time" class="form-control" id="shopcloseHourInput" name="shopcloseHour" min="00:00"
+                  max="24:00" required>
+                <label class="form-label">經度</label>
+                <input type="text" class="form-control" name="longitude" id="longitudeInput">
+                <label class="form-label">緯度</label>
+                <input type="text" class="form-control" name="latitude" id="latitudeInput">
+                <label for="file" class="form-label">店面照片:</label>
+                <input type="file" name="shopphoto" id="shopphotoInput" /><br>
+                <button type="submit" class="btn btn-primary" id="myButton">送出</button>
               </form>
             </div>
           </div>
         </div>
       </div>
+
 
       <!-- 更新分店 -->
       <div class="modal fade" id="staticBackdropupdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -68,23 +80,33 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="ajaxForm"><label class="form-label">店名</label> <input type="text" class="form-control"
-                  name="shopName" id="shopNameInput"><label class="form-label">地址</label><input type="text"
-                  class="form-control" name="shopAddress" id="shopAddressInput"><label class="form-label">電話</label>
-                <inaput type="text" class="form-control" name="shopPhone" id="shopPhoneInput"><label
-                    class="form-label">開店時間</label> <input type="time" class="form-control" name="shopOpenHour"
-                    id="shopOpenHourInput" min="00:00" max="24:00" required><label class="form-label">打烊時間</label>
-                  <input type="time" class="form-control" id="shopcloseHourInput" name="shopcloseHour" min="00:00"
-                    max="24:00" required> <label class="form-label">經度</label><input type="text" class="form-control"
-                    name="longitude" id="longitudeInput"><label class="form-label">緯度</label> <input type="text"
-                    class="form-control" name="latitude" id="latitudeInput"> <label for="file"
-                    class="form-label">店面照片:</label><input type="file" name="shopphoto"
-                    id="shopphotoInput" /><br><button type="submit" class="btn btn-primary" id="myButton">送出</button>
+              <label class="form-label">id</label>
+              <input type="text" class="form-control" name="shopId" id="updateshopIdInput" value="" readonly="readonly">
+              <label class="form-label">店名</label>
+              <input type="text" class="form-control" name="shopName" id="updateshopNameInput" value="">
+              <label class="form-label">地址</label>
+              <input type="text" class="form-control" name="shopAddress" id="updateshopAddressInput">
+              <label class="form-label">電話</label>
+              <input type="text" class="form-control" name="shopPhone" id="updateshopPhoneInput">
+              <label class="form-label">開店時間</label>
+              <input type="time" class="form-control" name="shopOpenHour" id="updateshopOpenHourInput" min="00:00"
+                max="24:00" required>
+              <label class="form-label">打烊時間</label>
+              <input type="time" class="form-control" id="updateshopcloseHourInput" name="shopcloseHour" min="00:00"
+                max="24:00" required>
+              <label class="form-label">經度</label>
+              <input type="text" class="form-control" name="longitude" id="updatelongitudeInput">
+              <label class="form-label">緯度</label>
+              <input type="text" class="form-control" name="latitude" id="updatelatitudeInput">
+              <label for="file" class="form-label">店面照片:</label>
+              <input type="file" name="shopphoto" id="updateshopphotoInput" /><br>
+              <button type="submit" class="btn btn-primary" id="myupdateButton">送出</button>
               </form>
             </div>
           </div>
         </div>
       </div>
+
 
 
       <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
@@ -121,6 +143,10 @@
           formData.append("latitude", latitude);
           formData.append("shopphoto", shopphoto);
 
+
+          console.log(formData)
+
+
           axios({
             url: 'http://localhost:8080/Bookstrap/shops/postAjax',
             method: 'post',
@@ -138,12 +164,13 @@
 
 
         ////////////////// jQuery AJAX 送showallpage資料  /////////////////////////
-        $('#shopshowall').click(function (pageNumber) {
 
+
+        const showallBtn = document.getElementById('shopshowall');
+        showallBtn.addEventListener('click', function (pageNumber) {
           axios({
             url: 'http://localhost:8080/Bookstrap/shops/api/page2',
             method: 'get',
-
           })
             .then(res => {
 
@@ -159,7 +186,7 @@
 
 
         function htmlMaker(data) {
-          // console.log()
+          console.log(data.data)
 
           let msg_data = '<table class="table table-hover">'
             + '<thead>'
@@ -189,13 +216,22 @@
               + '<td>' + element.latitude + '</td>'
               + '<td>' + element.longitude + '</td>'
               + '<td><img alt="" src="http://localhost:8080/Bookstrap/shops/id?id=' + element.id + '"/></td>'
-              + '<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropupdate"> 修改</button></td>'
-              + '<td><button class=" delete-btn btn btn-danger"  data-msgid='+element.id +'>刪除</button></td>'
+              + '<td><button type="button"  id="edit-btn" '
+              + ' data-msgid=' + element.id
+              + ' data-msgshopName=' + element.shopName
+              + ' data-msgshopAddress=' + element.shopAddress
+              + ' data-msgshopPhone=' + element.shopPhone
+              + ' data-msgshopOpenHour=' + element.shopOpenHour
+              + ' data-msgshopcloseHour=' + element.shopcloseHour
+              + ' data-msglatitude=' + element.latitude
+              + ' data-msglongitude=' + element.longitude
+
+              + ' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropupdate"> 修改</button></td>'
+              + '<td><button class=" delete-btn btn btn-danger"  data-msgid=' + element.id + '>刪除</button></td>'
               + '</tr>'
           })
           msg_data += '</tbody></table>';
 
-          console.log('data.totalPages', data.data.totalPages)
 
           let totalPages = data.data.totalPages;
 
@@ -207,62 +243,136 @@
 
           view.innerHTML = msg_data
 
-
           let buttonsArray = document.getElementsByClassName('pageBtn');
-          console.log('buttonsArray', buttonsArray)
 
-  
-         
+
+
+
+          ////////////////// 修改  /////////////////////////
+
+          const editBtn = document.getElementsByClassName('btn');
+
+
+          for (i = 0; i <= editBtn.length - 1; i++) {
+            editBtn[i].addEventListener('click', function (e) {
+
+              let msgID = this.getAttribute('data-msgid');
+              let msgshopName = this.getAttribute('data-msgshopName');
+              let msgshopAddress = this.getAttribute('data-msgshopAddress');
+              let msgshopPhone = this.getAttribute('data-msgshopPhone');
+              let msgshopOpenHour = this.getAttribute('data-msgshopOpenHour');
+              let msgshopcloseHour = this.getAttribute('data-msgshopcloseHour');
+              let msglatitude = this.getAttribute('data-msglatitude');
+              let msglongitude = this.getAttribute('data-msglongitude');
+
+              document.getElementById('updateshopIdInput').value = msgID
+              document.getElementById('updateshopNameInput').value = msgshopName
+              document.getElementById('updateshopAddressInput').value = msgshopAddress
+              document.getElementById('updateshopPhoneInput').value = msgshopPhone
+              document.getElementById('updateshopOpenHourInput').value = msgshopOpenHour
+              document.getElementById('updateshopcloseHourInput').value = msgshopcloseHour
+              document.getElementById('updatelongitudeInput').value = msglatitude
+              document.getElementById('updatelatitudeInput').value = msglongitude
+
+
+            })
+          }
+
+          ////////////////// 刪除  /////////////////////////
+
+          const deleteBtn = document.getElementsByClassName("delete-btn");
+
+          for (i = 0; i < deleteBtn.length; i++) {
+            deleteBtn[i].addEventListener('click', function (e) {
+
+              console.log()
+              let msgID = this.getAttribute('data-msgid');
+
+              console.log("msgID:" + msgID)
+              sendDeleteAjax(msgID)
+            })
+          }
+
+          ////////////////// 頁數  /////////////////////////
+
+
           for (i = 0; i <= buttonsArray.length; i++) {
             buttonsArray[i].addEventListener('click', function (e) {
-              
+
               let pageNumber = this.getAttribute('data-page');
 
-              console.log('pageNumber:'+pageNumber)
+              console.log('pageNumber:' + pageNumber)
               loadThatPage(pageNumber)
             })
           }
-            const deleteBtn = document.getElementsByClassName("delete-btn");
-
-            for (i = 0; i < deleteBtn.length; i++) {
-              deleteBtn[i].addEventListener('click', function (e) {
-                let msgID = this.getAttribute('data-msgid');
-
-                console.log("msgID:" + msgID)
-                sendDeleteAjax(msgID)
-              })
-            }
-          
-
         }
+        ////////////////// jQuery AJAX 送修改分店資料  /////////////////////////
+        const updateBtn = document.getElementById('myupdateButton');
+        updateBtn.addEventListener('click', function (event) {
+          event.preventDefault();
+          let shopId = document.getElementById('updateshopIdInput').value
+          let shopName = document.getElementById('updateshopNameInput').value
+          let shopAddress = document.getElementById('updateshopAddressInput').value
+          let shopPhone = document.getElementById('updateshopPhoneInput').value
+          let shopOpenHour = document.getElementById('updateshopOpenHourInput').value
+          let shopcloseHour = document.getElementById('updateshopcloseHourInput').value
+          let longitude = document.getElementById('updatelongitudeInput').value
+          let latitude = document.getElementById('updatelatitudeInput').value
+          let shopphoto = document.getElementById('updateshopphotoInput').files[0];
+
+          let formData = new FormData();
+          formData.append("shopId", shopId);
+          formData.append("shopName", shopName);
+          formData.append("shopAddress", shopAddress);
+          formData.append("shopPhone", shopPhone);
+          formData.append("shopOpenHour", shopOpenHour);
+          formData.append("shopcloseHour", shopcloseHour);
+          formData.append("longitude", longitude);
+          formData.append("latitude", latitude);
+          formData.append("shopphoto", shopphoto);
+
+          console.log(formData)
+
+          axios({
+            url: 'http://localhost:8080/Bookstrap/shops/api/put',
+            method: 'put',
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" }
+          })
+            .then(res => {
+              console.log(res.data)
+              console.log('上傳成功')
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
 
         /////// 點 page button 發送的 ajax ////////
 
-        function loadThatPage(pageNumber){
-    
-    axios({
-     url:'http://localhost:8080/Bookstrap/shops/api/page',
-     method: 'get',
-     params:{
-         p: pageNumber
-     }
-    })
-    .then(res =>{
-      console.log(res)
-      htmlMaker(res)
-    })
-    .catch(err =>{
-     console.log(err)
-    })
- }
+        function loadThatPage(pageNumber) {
+
+          axios({
+            url: 'http://localhost:8080/Bookstrap/shops/api/page',
+            method: 'get',
+            params: {
+              p: pageNumber
+            }
+          })
+            .then(res => {
+              console.log(res)
+              htmlMaker(res)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
 
 
         ////////////////// jQuery AJAX deletebyid  /////////////////////////
 
 
         function sendDeleteAjax(msgID) {
-          // console.log("deleteBtn");
-
 
           axios({
             url: 'http://localhost:8080/Bookstrap/shops/api/delete',
@@ -288,10 +398,12 @@
               window.location.href = 'http://localhost:8080/Bookstrap/shops/shophome'
             })
         }
+        //     <!-- 更新分店 -->
+        function updatehtmlmaker(msgID) {
 
 
 
-
+        }
 
       </script>
     </body>

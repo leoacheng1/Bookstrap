@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -107,6 +108,8 @@ public class ShopsController {
 		
 		Page<Shops> page = shService.getshopByPage(pageNumber);
 		
+		
+		
 		return page;
 	}
 	
@@ -119,7 +122,28 @@ public class ShopsController {
 		return page;
 	}
 	
-
+	@ResponseBody
+	@PutMapping("/shops/api/put")
+	public Shops updateMessageApi(
+			@RequestParam("shopId") Integer shopId,
+			@RequestParam("shopName") String shopName,
+			@RequestParam("shopAddress") String shopAddress, @RequestParam("shopPhone") String shopPhone,
+			@RequestParam("shopOpenHour") String shopOpenHour, @RequestParam("shopcloseHour") String shopcloseHour,
+			@RequestParam("longitude") String longitude, @RequestParam("latitude") String latitude,
+			@RequestParam("shopphoto") MultipartFile shopphoto) {
+		try {
+			byte[] shopphotobytes = shopphoto.getBytes();
+			Shops updatedMsg = shService.updateShopById(shopId, shopName, shopAddress, shopPhone, shopOpenHour, shopcloseHour, shopphotobytes, longitude, latitude);
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	
+		return null;
+		
+	}
+	
 	@GetMapping("/shops/shophome")
 	public String mixMessagePage(@RequestParam(name = "p",defaultValue = "1") Integer pageNumber, Model model) {
 		Page<Shops> page = shService.getshopByPage(pageNumber);
