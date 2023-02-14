@@ -1,6 +1,12 @@
 package com.bookstrap.imafraid.controller;
 
-public class BlogController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
-	public String 
+@Controller
+public class BlogController {
+	@GetMapping("/blog/blogIndex")
+	public String goToIndex() {
+		return "/blog/blogIndex";
+	}
 }
