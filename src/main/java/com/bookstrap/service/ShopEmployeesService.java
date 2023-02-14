@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bookstrap.model.EmployeesRepository;
 import com.bookstrap.model.ShopEmployeesRepository;
 import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.ShopEmployees;
@@ -24,9 +23,7 @@ public class ShopEmployeesService {
     return sempDao.findById(id).orElse(null);
   }
 
-  public ShopEmployees addShopEmployee(ShopEmployees shopEmployee) {
-	  Employees emp = new Employees();
-	  shopEmployee.setEmployee(emp);
+  public ShopEmployees insertShopEmployee(ShopEmployees shopEmployee) {
 	  return sempDao.save(shopEmployee);
   }
 
