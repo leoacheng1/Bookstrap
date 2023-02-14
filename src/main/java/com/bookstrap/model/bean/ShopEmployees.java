@@ -80,18 +80,7 @@ public class ShopEmployees{
 	public void setShop(Shops shop) {
 		this.shop = shop;
 	}
-<<<<<<< HEAD
-=======
 
-	public String getEmpName() {
-		return empName;
-	}
-
-	public void setEmpName(String empName) {
-		this.empName = empName;
-	}
-	
->>>>>>> origin/williamcool
 
 
 	public String getEmpName() {
@@ -142,9 +131,5 @@ public class ShopEmployees{
 	public void setEmployee(Employees employee) {
 		this.employee = employee;
 	}
-
-
-
-
 
 }
