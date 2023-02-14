@@ -21,7 +21,7 @@ import com.bookstrap.service.ShopEmployeesService;
 		public String uploadPage() {
 			return "semps/home";
 		}
-
+	  
 	  @PostMapping("/semps/insert")
 	  public ShopEmployees addShopEmployee(@RequestBody ShopEmployees shopEmployee) {
 		 return sempService.addShopEmployee(shopEmployee);
