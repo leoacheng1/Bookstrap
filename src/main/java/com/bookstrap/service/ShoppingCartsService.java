@@ -27,7 +27,7 @@ public class ShoppingCartsService {
 		  return false;
 	}
 	
-	public ShoppingCarts findBooksByMemberId(Integer memberId) {
+	public ShoppingCarts findOrdersByMemberId(Integer memberId) {
 		Optional<ShoppingCarts> optional = scDao.findById(memberId);
 		
 		if(optional.isPresent()) {
@@ -35,4 +35,6 @@ public class ShoppingCartsService {
 		}
 		return null;
 	}
+	
+	
 }
