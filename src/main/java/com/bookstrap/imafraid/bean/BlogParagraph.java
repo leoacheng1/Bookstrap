@@ -20,6 +20,8 @@ public class BlogParagraph {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "paragraph_id")
 	private Integer paragraphId;
+	@Column(name = "paragraph_title")
+	private String paragraphTitle;
 	@Column(name = "paragraphdiv01")
 	private String paragraphdiv01;
 	@Column(name = "paragraphdiv02")
@@ -37,6 +39,12 @@ public class BlogParagraph {
 	}
 	public void setParagraphId(Integer paragraphId) {
 		this.paragraphId = paragraphId;
+	}
+	public String getParagraphTitle() {
+		return paragraphTitle;
+	}
+	public void setParagraphTitle(String paragraphTitle) {
+		this.paragraphTitle = paragraphTitle;
 	}
 	public String getParagraphdiv01() {
 		return paragraphdiv01;
