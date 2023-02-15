@@ -17,9 +17,9 @@ public class MemberAdmiController {
 	private MemberDdetailService memberDetailService;
 	
 	
-	@GetMapping("memberadmi/main")
+	@GetMapping("/memberadmi/main")
 	public String toAdmiMember() {
-		return "member/Admi/MemberAdmiMain";
+		return "member/Admi/template";
 	}
 	
 }
