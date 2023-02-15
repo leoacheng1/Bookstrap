@@ -1,12 +1,16 @@
 package com.bookstrap.harry.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +30,7 @@ import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
+import com.bookstrap.harry.service.SendEmailService;
 
 @Controller
 //@SessionAttributes("memberDetail")
@@ -36,6 +41,9 @@ public class MemberController {
 	@Autowired
 	private MemberDdetailService memberDetailService;
 
+	@Autowired
+	private SendEmailService emailService;
+	
 	@GetMapping("/member/signin")
 	public String memberSignIn(HttpSession session) {
 		if (session.getAttribute("member") != null) {
@@ -59,7 +67,8 @@ public class MemberController {
 			@RequestParam("memberValid") Integer memberValid, @RequestParam("memberLevel") Integer memberLevel,
 			@RequestParam("memberSex") Integer memberSex, @RequestParam("memberBirthday") Date memberBirthday,
 			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPhone") String memberCellPhone,
-			@RequestParam("memberAddress") String memberAddress, Model m) {
+			@RequestParam("memberAddress") String memberAddress, Model m,
+			HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
 
 		java.util.Date jDate = new java.util.Date();
 		long time = jDate.getTime();
@@ -112,8 +121,18 @@ public class MemberController {
 		System.out.println("rId: " + rMemberId);
 		memberDetail.setMemberId(rMemberId);
 		memberDetailService.insertMemberDetails(memberDetail);
+		
+		String siteURL = Utility.getSiteURL(request);
+		memberService.sendVertificationEnail(member, memberDetail, siteURL);
+		
 		return "member/TestSuccess";
 	}
+	
+//	@EventListener()
+//	public void sendEmail() {
+//		
+//	}
+	
 
 	@PostMapping("/member/checklogin")
 	public String checkLogin(@RequestParam("memberEmail") String memberEmail,

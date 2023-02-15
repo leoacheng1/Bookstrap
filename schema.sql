@@ -5,6 +5,7 @@ Create Table Members(
 	acccount nvarchar(max) not null,
 	password nvarchar(max) not null,
 	valid tinyint not null, --驗證，有沒有停權
+	vertification_code nvarchar(255),
 	member_level nvarchar(50)
 );
 

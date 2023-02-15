@@ -33,6 +33,9 @@ public class Members {
 	
 	@Column(name = "member_level")
 	private Integer memberLevel;
+	
+	@Column(name = "vertification_code")
+	private String vertificationCode;
 
 	//雙向，去找memberDetails有本類別屬性的參考變數
 	@OneToOne(mappedBy ="member")
@@ -56,6 +59,18 @@ public class Members {
 	
 	
 	
+	public String getVertificationCode() {
+		return vertificationCode;
+	}
+
+
+
+	public void setVertificationCode(String vertificationCode) {
+		this.vertificationCode = vertificationCode;
+	}
+
+
+
 	public Members(String mAccount, String mPassword) {
 		this.memberAccount = mAccount;
 		this.memberPassword = mPassword;
