@@ -26,7 +26,7 @@
             <div
               class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-2">
               <div class="container">
-                <h3 class="text-center"> 我的帳戶 ${memberId}</h3>
+                <h3 class="text-center"> 我的帳戶</h3>
               </div>
             </div>
 

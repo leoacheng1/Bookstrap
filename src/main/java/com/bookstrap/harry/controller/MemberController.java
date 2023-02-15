@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
@@ -27,6 +28,7 @@ import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 
 @Controller
+//@SessionAttributes("memberDetail")
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
@@ -115,7 +117,7 @@ public class MemberController {
 
 	@PostMapping("/member/checklogin")
 	public String checkLogin(@RequestParam("memberEmail") String memberEmail,
-			@RequestParam("memberPassword") String memberPassword, HttpSession session) {
+			@RequestParam("memberPassword") String memberPassword, HttpSession session, Model m) {
 
 		Map<String, String> errors = new HashMap<String, String>();
 		session.setAttribute("errors", errors);
@@ -147,17 +149,17 @@ public class MemberController {
 			// 還要再去資料庫要資料 要寫dao 與 service 透過 id 回傳MemberDetail 中的Name
 			MemberDetails idFindName = memberDetailService.useIdFindName(result);
 			String memberName = idFindName.getMemberName();
-			
-		
 
 			System.out.println("Name: " + memberName);
-			
+
 			session.setAttribute("memberId", result);
-			
+
 			session.setAttribute("member", logInmember);
 
 			session.setAttribute("memberName", memberName);
-
+			
+//			session.setAttribute("memberDetail", idFindName);
+//				m.addAttribute("memberDetail", idFindName);
 			return "redirect:main";
 		}
 
@@ -168,10 +170,9 @@ public class MemberController {
 
 	@GetMapping("/member/main")
 	public String toMemberMain(HttpSession session) {
-		
+
 		if (session.getAttribute("member") != null) {
-			
-			
+
 			return "member/Main/MemberMainPage";
 		}
 
@@ -182,8 +183,8 @@ public class MemberController {
 	public String logOut(HttpSession session) {
 
 		if (session.getAttribute("member") != null) {
-					session.invalidate();
-		return "redirect:/index";
+			session.invalidate();
+			return "redirect:/index";
 		}
 		return "member/SignInPage";
 
@@ -214,89 +215,122 @@ public class MemberController {
 //	}
 
 	////////////////////
-	// First: Get the page of edition target
-	@GetMapping("/member/edit")
-	public String editMember(@RequestParam("memberId") Integer memberId, ModelMap map) {
-		Members findById = memberService.findById(memberId);
-		Integer id = findById.getMemberId();
-		System.out.println("ID: " + id);
-		MemberDetails findMemberDetailsById = memberDetailService.findMemberDetailsById(id);
-		System.out.println("Name: " + findMemberDetailsById.getMemberName());
-		// When add ModelAttribute, that need spriing's form tag to get attribute.
-		map.addAttribute("member", findById);
-		map.addAttribute("memberDetails", findMemberDetailsById);
-
-		return "member/Main/EditMember";
-	}
-
-	// Need spring's form; the spring's form:input need path="memberId" (for
-	// example)
-	@PutMapping("/member/edit")
-	public String sendEditedMember(@ModelAttribute("member") Members member, BindingResult resultMember,
-			@ModelAttribute("memberDetails") MemberDetails memberdetails, BindingResult resultMemberdetail) {
-		memberService.insertMember(member);
-
-		memberDetailService.insertMemberDetails(memberdetails);
-		return "redirect:/member/main";
-	}
+//	// First: Get the page of edition target
+//	@GetMapping("/member/edit")
+//	public String editMember(@RequestParam("memberId") Integer memberId, ModelMap map) {
+//		Members findById = memberService.findById(memberId);
+//		Integer id = findById.getMemberId();
+//		System.out.println("ID: " + id);
+//		MemberDetails findMemberDetailsById = memberDetailService.findMemberDetailsById(id);
+//		System.out.println("Name: " + findMemberDetailsById.getMemberName());
+//		// When add ModelAttribute, that need spriing's form tag to get attribute.
+//		map.addAttribute("member", findById);
+//		map.addAttribute("memberDetails", findMemberDetailsById);
+//
+//		return "member/Main/EditMember";
+//	}
+//
+//	// Need spring's form; the spring's form:input need path="memberId" (for
+//	// example)
+//	@PutMapping("/member/edit")
+//	public String sendEditedMember(@ModelAttribute("member") Members member, BindingResult resultMember,
+//			@ModelAttribute("memberDetails") MemberDetails memberdetails, BindingResult resultMemberdetail) {
+//		memberService.insertMember(member);
+//
+//		memberDetailService.insertMemberDetails(memberdetails);
+//		return "redirect:/member/main";
+//	}
 //////////////////////
-	
+
 	@GetMapping("/member/information")
-			public String personalInfo() {
-					
-		
-			return "member/Main/MyInfo";
-		}
-	
+	public String personalInfo() {
+		return "member/Main/MyInfo";
+	}
+
 	@GetMapping("/member/editpasswordpage")
-	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m)  {
+	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m) {
 		m.addAttribute("memberId", memberId);
 		System.out.println("MemberId3: " + memberId);
-	return "member/Main/EditPassword";
+		return "member/Main/EditPassword";
 	}
-	
+
 	@PostMapping("/member/editpassword")
-	public String editPassword(@RequestParam("oldPassword") String oldPassword, 
-			@RequestParam("newPassword") String newPassword, 
-			@RequestParam("re_Password") String re_Password, 
+	public String editPassword(@RequestParam("oldPassword") String oldPassword,
+			@RequestParam("newPassword") String newPassword, @RequestParam("re_Password") String re_Password,
 			@RequestParam("memberId") Integer memberId, Model m) {
-		
+
 		Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
-		
+
 		Members member = memberService.findById(memberId);
 		System.out.println("old: " + oldPassword);
 		System.out.println("new: " + newPassword);
 		System.out.println("Re: " + re_Password);
 		System.out.println("memberPassword:" + member.getMemberPassword());
-		
-		if(oldPassword == member.getMemberPassword() && newPassword == re_Password) {
+
+		if (oldPassword.equals(member.getMemberPassword()) && newPassword.equals(re_Password)) {
 			member.setMemberPassword(newPassword);
 			memberService.insertMember(member);
 			return "redirect:/member/main";
-		
+
 		}
-//		else if(oldPassword != member.getMemberPassword() || oldPassword == null){
-//			errors.put("WrongPassword", "請輸入正確之原有密碼");
-//		}else if(newPassword != re_Password || newPassword == null && re_Password ==null){
-//			errors.put("checkProblem", "新密碼與確認新密碼不符");
-//		}
-		
-		if(oldPassword != member.getMemberPassword() && oldPassword == null) {
-			
+
+		if (!oldPassword.equals(member.getMemberPassword()) || oldPassword.equals(null) || oldPassword.isEmpty()) {
+
 			errors.put("WrongPassword", "請輸入正確之原有密碼");
 		}
-		
-		
-		if(newPassword != re_Password || newPassword == null || re_Password ==null) {
-			
+
+		if (!newPassword.equals(re_Password) || newPassword.equals(null) || re_Password.equals(null)) {
+
 			errors.put("checkProblem", "新密碼與確認新密碼不符");
 		}
-		
-		return "member/TestFail";
+
+		return "member/Main/EditPassword";
 	}
-	
-	
+
+	@PostMapping("/member/editinfopage")
+	public String toEditInfo(@RequestParam("memberId") Integer memberId,
+			@RequestParam("memberPassword") String memberPassword,Model m) {
+		Members member = memberService.findById(memberId);
+		MemberDetails memberDetail = memberDetailService.findMemberDetailsById(memberId);
+		
+		Map<String, String> errors = new HashMap<String, String>();
+		m.addAttribute("errors", errors);
+
+		if (memberPassword.equals(member.getMemberPassword()) && !memberPassword.equals(null)) {
+			
+			m.addAttribute("memberDetail", memberDetail);
+			
+			return "member/Main/EditInformation";
+		}
+		if (memberPassword.equals(null) || !memberPassword.equals(member.getMemberPassword())) {
+			errors.put("WrongPassword", "密碼不正確，請重新輸入");
+		}
+		
+				return "member/Main/MyInfo";
+	}
+
+	@PostMapping("/member/editinfo")
+	public String editInfo(@RequestParam("memberId") Integer memberId,
+			@RequestParam("memberName") String memberName,
+			@RequestParam("memberEmail") String memberEmail,
+			@RequestParam("memberPhone") String memberPhone,
+			@RequestParam("memberAddress") String memberAddress,
+			@RequestParam("memberGender") Integer memberGender, 
+			@ModelAttribute("memberDetail") MemberDetails detail) {
+		
+		MemberDetails memberdetail = memberDetailService.findMemberDetailsById(memberId);
+		memberdetail.setMemberName(memberName);
+		memberdetail.setMemberEmail(memberEmail);
+		memberdetail.setMemberPhone(memberPhone);
+		memberdetail.setMemberAddress(memberAddress);
+		memberdetail.setMemberSex(memberGender);
+		
+		memberDetailService.insertMemberDetails(memberdetail);
+		
+		return"member/Main/MyInfo";
+	}
+
 	@GetMapping("/member/getphoto")
 	public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId) {
 		MemberDetails photoId = memberDetailService.getPhotoById(memberId);
