@@ -7,7 +7,8 @@
 <script src="${contextRoot}/eddie/js/popper.min.js"></script>
 <script src="${contextRoot}/eddie/js/adminlte.min.js"></script> -->
 <script src="http://localhost:8080/Bookstrap/eddie/js/jquery-3.6.3.min.js"></script>
-<script src="http://localhost:8080/Bookstrap/eddie/js/jquery.overlayScrollbars.min.js"></script>
+<!-- <script type="module" src="http://localhost:8080/Bookstrap/eddie/js/popper.min.js"></script> -->
 <script src="http://localhost:8080/Bookstrap/js/bootstrap.bundle.min.js"></script>
-<script src="http://localhost:8080/Bookstrap/eddie/js/popper.min.js"></script>
+<script src="http://localhost:8080/Bookstrap/eddie/js/jquery.overlayScrollbars.min.js"></script>
 <script src="http://localhost:8080/Bookstrap/eddie/js/adminlte.min.js"></script>
+<script src="http://localhost:8080/Bookstrap/eddie/js/layoutfix.js"></script>

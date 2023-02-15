@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 
-  <a href="index3.html" class="brand-link">
-    <img src="http://localhost:8080/Bookstrap/logo/logo2.png" class="brand-image img-circle elevation-3"
+  <a href="${contextRoot}/backend/index" class="brand-link"> 
+    <img src="${contextRoot}/logo/logo2.png" class="brand-image img-circle elevation-3"
       style="opacity: .8">
     <span class="brand-text font-weight-light">Bookstrap</span>
   </a>
@@ -11,7 +13,7 @@
 
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="http://localhost:8080/Bookstrap/employee/photo/${sessionScope.empAccount}" class="img-circle elevation-2">
+        <img src="${contextRoot}/employee/photo/${sessionScope.empAccount}" class="img-circle elevation-2">
       </div>
       <div class="info">
         <a href="#" class="d-block">Hello, ${sessionScope.empName}</a>
@@ -45,7 +47,7 @@
 
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <%@ include file="./navLinks/ownernav.jsp" %> 
+        <%@ include file="../sidebarlinks/ownerlinks.jsp" %> 
       </ul>
     </nav>
 

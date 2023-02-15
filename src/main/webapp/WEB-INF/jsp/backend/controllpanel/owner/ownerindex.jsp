@@ -12,7 +12,7 @@
         class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
         <div class="wrapper">
             <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
-            <%@ include file="/WEB-INF/jsp/backend/layout/ownersidebar.jsp" %>
+            <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/ownersidebar.jsp" %>
             <div class="content-wrapper">
                 <div class="content-header">
                     <!-- 標題位置 -->
@@ -23,6 +23,14 @@
                 </section>
             </div>
         </div>
+<!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <div class="p-3">
+      <!-- Content of the sidebar goes here -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
         <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
     </body>
 

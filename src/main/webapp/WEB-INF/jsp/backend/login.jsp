@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
   <!DOCTYPE html>
   <html lang="en">
 
@@ -12,11 +13,11 @@
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="http://localhost:8080/Bookstrap/eddie/css/all.min.css">
+    <link rel="stylesheet" href="${contextRoot}/eddie/css/all.min.css">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="http://localhost:8080/Bookstrap/eddie/css/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="${contextRoot}/eddie/css/icheck-bootstrap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="http://localhost:8080/Bookstrap/eddie/css/adminlte.min.css">
+    <link rel="stylesheet" href="${contextRoot}/eddie/css/adminlte.min.css">
   </head>
 
   <body class="login-page" style="min-height: 464px;">
@@ -28,7 +29,7 @@
         </div>
         <div class="card-body">
           <p class="login-box-msg" style="color: red;">${error}</p>
-          <form action="http://localhost:8080/Bookstrap/backend/login" method="post">
+          <form action="${contextRoot}/backend/login" method="post">
             <div class="input-group mb-3">
               <input name="level" type="hidden" value=""/>
               <input type="text" class="form-control" placeholder="Username" id="account" name="account">
@@ -76,24 +77,24 @@
     <!-- /.login-box -->
 
     <!-- jQuery -->
-    <script src="http://localhost:8080/Bookstrap/eddie/js/jquery-3.6.3.min.js"></script>
+    <script src="${contextRoot}/eddie/js/jquery-3.6.3.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="http://localhost:8080/Bookstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="http://localhost:8080/Bookstrap/eddie/js/adminlte.min.js"></script>
+    <script src="${contextRoot}/eddie/js/adminlte.min.js"></script>
 
     <script>
       const accountInfo = {
         'admin': {
-          username: "Elizabeth",
+          username: "admin",
           password: "123456"
         },
         'owner': {
-          username: "Robert",
+          username: "owner",
           password: "12345"
         },
         'employee': {
-          username: "Tom",
+          username: "employee",
           password: "1234"
         }
       }
