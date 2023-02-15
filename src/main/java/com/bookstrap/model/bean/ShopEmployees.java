@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
@@ -33,6 +34,7 @@ public class ShopEmployees{
 	@Column(name="emp_name")
 	private String empName;
 
+	@Lob
 	@Column(name="emp_photo")
 	private byte[] empPhoto;
 	

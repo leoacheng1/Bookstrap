@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookstrap.model.ShopEmployeesRepository;
+import com.bookstrap.model.Shops;
+import com.bookstrap.model.ShopsRepository;
 import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.ShopEmployees;
 
@@ -14,6 +16,9 @@ public class ShopEmployeesService {
 
   @Autowired
   private ShopEmployeesRepository sempDao;
+  
+  @Autowired
+  private ShopsRepository sDao;
 
   public List<ShopEmployees> getAllShopEmployees() {
     return sempDao.findAll();
@@ -23,7 +28,12 @@ public class ShopEmployeesService {
     return sempDao.findById(id).orElse(null);
   }
 
-  public ShopEmployees insertShopEmployee(ShopEmployees shopEmployee) {
+  public ShopEmployees addShopEmployee(ShopEmployees shopEmployee) {
+	  Integer shopId = shopEmployee.getEmpShopid();
+	  Shops shop = sDao.findById(shopId).get();
+	  Employees emp = new Employees();
+	  shopEmployee.setEmployee(emp);
+	  shopEmployee.setShop(shop);
 	  return sempDao.save(shopEmployee);
   }
 
