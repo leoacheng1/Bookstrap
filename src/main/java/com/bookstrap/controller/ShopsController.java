@@ -30,8 +30,6 @@ public class ShopsController {
 	@Autowired
 	private ShopsService shService;
 
-
-
 	@ResponseBody
 	@PostMapping("/shops/add")
 	public String insert(@RequestBody Shops sh) {
@@ -47,7 +45,6 @@ public class ShopsController {
 //		
 //        return "shop/shophome";
 //	}
-	
 
 	@ResponseBody
 	@PostMapping("/shops/postAjax")
@@ -84,8 +81,6 @@ public class ShopsController {
 		return mav;
 	}
 
-	
-
 	// get one photo contentType 要注意
 	@GetMapping("/shops/id")
 	public ResponseEntity<byte[]> getPhotoById(@RequestParam Integer id) {
@@ -99,61 +94,63 @@ public class ShopsController {
 		return new ResponseEntity<byte[]>(photofile, headers, HttpStatus.OK);
 
 	}
-	
 
-	
 	@ResponseBody
 	@GetMapping("/shops/api/page")
-	public Page<Shops> showMessageByPageAjax(@RequestParam(name = "p",defaultValue = "1") Integer pageNumber) {
-		
+	public Page<Shops> showMessageByPageAjax(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber) {
+
 		Page<Shops> page = shService.getshopByPage(pageNumber);
-		
-		
-		
+
 		return page;
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/shops/api/page2")
-	public Page<Shops> showMessageByPageAjax2(@RequestParam(name = "p",defaultValue = "1") Integer pageNumber) {
-		
+	public Page<Shops> showMessageByPageAjax2(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber) {
+
 		Page<Shops> page = shService.getshopByPage(1);
-		
+
 		return page;
 	}
-	
+
 	@ResponseBody
 	@PutMapping("/shops/api/put")
-	public Shops updateMessageApi(
-			@RequestParam("shopId") Integer shopId,
-			@RequestParam("shopName") String shopName,
+	public Shops updateMessageApi(@RequestParam("shopId") Integer shopId, @RequestParam("shopName") String shopName,
 			@RequestParam("shopAddress") String shopAddress, @RequestParam("shopPhone") String shopPhone,
 			@RequestParam("shopOpenHour") String shopOpenHour, @RequestParam("shopcloseHour") String shopcloseHour,
 			@RequestParam("longitude") String longitude, @RequestParam("latitude") String latitude,
 			@RequestParam("shopphoto") MultipartFile shopphoto) {
 		try {
 			byte[] shopphotobytes = shopphoto.getBytes();
-			Shops updatedMsg = shService.updateShopById(shopId, shopName, shopAddress, shopPhone, shopOpenHour, shopcloseHour, shopphotobytes, longitude, latitude);
-		} 
-		catch (IOException e) {
+			Shops updatedMsg = shService.updateShopById(shopId, shopName, shopAddress, shopPhone, shopOpenHour,
+					shopcloseHour, shopphotobytes, longitude, latitude);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-	
+
 		return null;
-		
+
 	}
-	
+
 	@GetMapping("/shops/shophome")
-	public String mixMessagePage(@RequestParam(name = "p",defaultValue = "1") Integer pageNumber, Model model) {
+	public String mixMessagePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
 		Page<Shops> page = shService.getshopByPage(pageNumber);
 		model.addAttribute("page", page);
 		return "shop/shophome";
 	}
-	
+
 	@DeleteMapping("/shops/api/delete")
 	public String deleteshopsApi(@RequestParam("msgId") Integer msgId) {
 		shService.deleteshopsbById(msgId);
 		return "redirect:/shop/shophome";
+	}
+	
+	@ResponseBody
+	@GetMapping("/shops/addressshopslist")
+	public List<Shops> findShopByAddress(String address) {
+
+		List<Shops> shlist = shService.findShopByAddress(address);
+
+		return shlist;
 	}
 }

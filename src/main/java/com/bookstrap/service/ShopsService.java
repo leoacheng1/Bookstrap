@@ -76,4 +76,7 @@ public class ShopsService {
 		
 		return null;
 	}
+	public List<Shops> findShopByAddress(String address) {
+		return sDao.findShopsLike(address);
+	}
 }

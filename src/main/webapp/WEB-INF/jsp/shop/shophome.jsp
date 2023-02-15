@@ -24,13 +24,22 @@
       <button id="shopshowall">分店主頁</button>
 
       <h2>一個標題？！</h2>
+
+      <div class="row mt-5">
+        <div class="col-md-5 mx-auto">
+            
+            <div class="input-group">
+                <input class="form-control border rounded-pill" type="search" value="search" id="example-search-input">
+            </div>
+        </div>
+    </div>
+    <br>
+
       <div id="view">
 
       </div>
 
-      <div id="updateshop">
-
-      </div>
+      
 
 
       <!-- 新增分店 -->
@@ -403,6 +412,87 @@
 
 
 
+        }
+        ////////////////// jQuery AJAX 模糊收尋  /////////////////////////
+
+        const likeButtom=document.getElementById('example-search-input')
+        likeButtom.addEventListener('keyup',function(e){
+          console.log("okok")
+          let inputaddress =document.getElementById('example-search-input').value
+          console.log("inputaddress="+inputaddress)
+          axios({
+            url: 'http://localhost:8080/Bookstrap/shops/addressshopslist',
+            method: 'get',
+            params: {
+              address: inputaddress
+            }
+          })
+            .then(res => {
+              console.log(res)
+              view.innerHTML = ""
+              likehtmlMaker(res)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+        function likehtmlMaker(data) {
+          console.log(data.data)
+        
+          let msg_data = '<table class="table table-hover">'
+            + '<thead>'
+            + '<tr>'
+            + ' <th>書店ID</th>'
+            + ' <th>書店名</th>'
+            + ' <th>地址</th>'
+            + ' <th>電話</th>'
+            + ' <th>開店時間</th>'
+            + ' <th>打烊時間</th>'
+            + ' <th>經度</th>'
+            + ' <th>緯度</th>'
+            + ' <th>圖片</th>'
+            + ' <th>修改</th>'
+            + ' <th>刪除</th>'
+            + ' </tr>'
+            + ' </thead>'
+            + '<tbody>';
+          data.data.forEach(element => {
+            msg_data += '<tr>'
+              + '<td>' + element.id + '</td>'
+              + '<td>' + element.shopName + '</td>'
+              + '<td>' + element.shopAddress + '</td>'
+              + '<td>' + element.shopPhone + '</td>'
+              + '<td>' + element.shopOpenHour + '</td>'
+              + '<td>' + element.shopcloseHour + '</td>'
+              + '<td>' + element.latitude + '</td>'
+              + '<td>' + element.longitude + '</td>'
+              + '<td><img alt="" src="http://localhost:8080/Bookstrap/shops/id?id=' + element.id + '"/></td>'
+              + '<td><button type="button"  id="edit-btn" '
+              + ' data-msgid=' + element.id
+              + ' data-msgshopName=' + element.shopName
+              + ' data-msgshopAddress=' + element.shopAddress
+              + ' data-msgshopPhone=' + element.shopPhone
+              + ' data-msgshopOpenHour=' + element.shopOpenHour
+              + ' data-msgshopcloseHour=' + element.shopcloseHour
+              + ' data-msglatitude=' + element.latitude
+              + ' data-msglongitude=' + element.longitude
+
+              + ' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropupdate"> 修改</button></td>'
+              + '<td><button class=" delete-btn btn btn-danger"  data-msgid=' + element.id + '>刪除</button></td>'
+              + '</tr>'
+          })
+          msg_data += '</tbody></table>';
+
+
+          // let totalPages = data.data.totalPages;
+
+          // for (let i = 1; i <= totalPages; i++) {
+          //   msg_data += '<button class="pageBtn" data-page="' + i + '">' + i + '</button>'
+          // }
+
+          let view = document.getElementById('view')
+
+          view.innerHTML = msg_data
         }
 
       </script>
