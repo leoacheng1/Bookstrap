@@ -34,7 +34,7 @@ Create Table Books(
 	author nvarchar(max),
 	publisher nvarchar(max),
 	publish_date Date,
-	book_photo varbinary, --封面圖片
+	book_photo varbinary(max), --封面圖片
 	discount int, --ex.79折，存成整數79
 	price int,
 	translator nvarchar(max),
