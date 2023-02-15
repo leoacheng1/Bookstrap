@@ -45,8 +45,8 @@ Create Table Books(
 
 Create Table Employees(
 	emp_id int identity(1,1) primary key,
-	acccount nvarchar(max) not null,
-	password nvarchar(max) not null,		
+	account nvarchar(max) ,
+	password nvarchar(max) ,		
 	emp_name nvarchar(max),
 	sex tinyint,
 	emp_photo varbinary(max),

@@ -3,6 +3,7 @@ package com.bookstrap.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,7 +19,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstrap.harry.bean.Comment;
+import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Books")
@@ -61,12 +64,16 @@ public class Books {
 	@Column(name = "translator")
 	private String translator;
 	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "")
-//	private BookDetails bookDetails;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "bookDetail_id")
+	private BookDetails bookDetails;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<Comment> comment;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="book", cascade = CascadeType.ALL)
+	private Set<ShopStock> shopStocks;
 	
 	public List<Comment> getComment() {
 		return comment;
@@ -165,6 +172,22 @@ public class Books {
 
 	public void setTranslator(String translator) {
 		this.translator = translator;
+	}
+
+	public BookDetails getBookDetails() {
+		return bookDetails;
+	}
+
+	public void setBookDetails(BookDetails bookDetails) {
+		this.bookDetails = bookDetails;
+	}
+
+	public Set<ShopStock> getShopStocks() {
+		return shopStocks;
+	}
+
+	public void setShopStocks(Set<ShopStock> shopStocks) {
+		this.shopStocks = shopStocks;
 	}
 
 }
