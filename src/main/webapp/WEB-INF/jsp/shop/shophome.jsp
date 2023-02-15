@@ -27,19 +27,19 @@
 
       <div class="row mt-5">
         <div class="col-md-5 mx-auto">
-            
-            <div class="input-group">
-                <input class="form-control border rounded-pill" type="search" value="search" id="example-search-input">
-            </div>
+
+          <div class="input-group">
+            <input class="form-control border rounded-pill" type="search" value="search" id="example-search-input">
+          </div>
         </div>
-    </div>
-    <br>
+      </div>
+      <br>
 
       <div id="view">
 
       </div>
 
-      
+
 
 
       <!-- 新增分店 -->
@@ -90,7 +90,7 @@
             </div>
             <div class="modal-body">
               <label class="form-label">id</label>
-              <input type="text" class="form-control" name="shopId" id="updateshopIdInput" value="" readonly="readonly">
+              <input type="text" class="form-control" name="shopId" id="updateshopIdInput" value="" readonly="readonly" disabled>
               <label class="form-label">店名</label>
               <input type="text" class="form-control" name="shopName" id="updateshopNameInput" value="">
               <label class="form-label">地址</label>
@@ -415,11 +415,11 @@
         }
         ////////////////// jQuery AJAX 模糊收尋  /////////////////////////
 
-        const likeButtom=document.getElementById('example-search-input')
-        likeButtom.addEventListener('keyup',function(e){
+        const likeButtom = document.getElementById('example-search-input')
+        likeButtom.addEventListener('keyup', function (e) {
           console.log("okok")
-          let inputaddress =document.getElementById('example-search-input').value
-          console.log("inputaddress="+inputaddress)
+          let inputaddress = document.getElementById('example-search-input').value
+          console.log("inputaddress=" + inputaddress)
           axios({
             url: 'http://localhost:8080/Bookstrap/shops/addressshopslist',
             method: 'get',
@@ -438,7 +438,7 @@
         })
         function likehtmlMaker(data) {
           console.log(data.data)
-        
+
           let msg_data = '<table class="table table-hover">'
             + '<thead>'
             + '<tr>'
@@ -484,15 +484,57 @@
           msg_data += '</tbody></table>';
 
 
-          // let totalPages = data.data.totalPages;
 
-          // for (let i = 1; i <= totalPages; i++) {
-          //   msg_data += '<button class="pageBtn" data-page="' + i + '">' + i + '</button>'
-          // }
 
           let view = document.getElementById('view')
 
           view.innerHTML = msg_data
+
+          ////////////////// 修改  /////////////////////////
+
+          const editBtn = document.getElementsByClassName('btn');
+
+
+          for (i = 0; i <= editBtn.length - 1; i++) {
+            editBtn[i].addEventListener('click', function (e) {
+
+              let msgID = this.getAttribute('data-msgid');
+              let msgshopName = this.getAttribute('data-msgshopName');
+              let msgshopAddress = this.getAttribute('data-msgshopAddress');
+              let msgshopPhone = this.getAttribute('data-msgshopPhone');
+              let msgshopOpenHour = this.getAttribute('data-msgshopOpenHour');
+              let msgshopcloseHour = this.getAttribute('data-msgshopcloseHour');
+              let msglatitude = this.getAttribute('data-msglatitude');
+              let msglongitude = this.getAttribute('data-msglongitude');
+
+              document.getElementById('updateshopIdInput').value = msgID
+              document.getElementById('updateshopNameInput').value = msgshopName
+              document.getElementById('updateshopAddressInput').value = msgshopAddress
+              document.getElementById('updateshopPhoneInput').value = msgshopPhone
+              document.getElementById('updateshopOpenHourInput').value = msgshopOpenHour
+              document.getElementById('updateshopcloseHourInput').value = msgshopcloseHour
+              document.getElementById('updatelongitudeInput').value = msglatitude
+              document.getElementById('updatelatitudeInput').value = msglongitude
+
+
+            })
+          }
+
+          ////////////////// 刪除  /////////////////////////
+
+          const deleteBtn = document.getElementsByClassName("delete-btn");
+
+          for (i = 0; i < deleteBtn.length; i++) {
+            deleteBtn[i].addEventListener('click', function (e) {
+
+              console.log()
+              let msgID = this.getAttribute('data-msgid');
+
+              console.log("msgID:" + msgID)
+              sendDeleteAjax(msgID)
+            })
+          }
+ Q
         }
 
       </script>
