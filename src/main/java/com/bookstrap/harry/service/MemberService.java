@@ -42,16 +42,15 @@ public class MemberService {
 		return mDao.save(member);
 	}
 
-	public void sendVertificationEnail(Members member, MemberDetails memberDetail) throws UnsupportedEncodingException, MessagingException {
+	public void sendVertificationEnail(Members member, MemberDetails memberDetail,String siteURL) throws UnsupportedEncodingException, MessagingException {
 			String subject = "請確認您的註冊信箱";
 			String senderName = "BookStrap team";
 			String mailContent ="<p>"+ memberDetail.getMemberName() 
 					+ "您好" + "</p>";
 			mailContent += "<p>請進入連結以認證註冊信箱地址:</p>";
 			
-//			這裡用localhost充當
-			String verifyURL = "http://localhost:8080/Bookstrap" + "/member/verify?code=" + member.getVertificationCode();
-			mailContent +="<h3><a href=\"" + verifyURL + "\">驗證</a></h3>";
+			String vertifyURL = siteURL + "/vertify?code=" + member.getVertificationCode();
+			mailContent +="<h3><a href=\"" + vertifyURL + "\">驗證</a></h3>";
 			mailContent +="<p>BookStrap team</p>";
 	
 			MimeMessage message = mailSender.createMimeMessage();
@@ -63,17 +62,6 @@ public class MemberService {
 			
 			mailSender.send(message);
 	
-	}
-	
-	
-	
-	public Members findByVerifyCode(String code) {
-		return mDao.findByVerifyCode(code);
-	}
-	
-	public Integer insertMemberValid(Integer valid, Integer memberId) {
-		return mDao.updateMemberValid(valid, memberId);
-				
 	}
 
 	public boolean deleteMemberById(Integer memberId) {
@@ -114,26 +102,9 @@ public class MemberService {
 
 		return checkDao.checkLogin(member);
 	}
-	
-	public Integer checkValid(Members member) {
-		return checkDao.checkValid(member);
-	}
 
 	public Members useEmailFindId(String memberEmail) {
 		return mDao.findIdByEmail(memberEmail);
-	}
-	
-	
-	
-	public boolean verify(String verificationCode) {
-		Members member = mDao.findByVerificationCode(verificationCode);
-	
-		if(member == null) {
-			return false;
-		}else {
-			return true;
-		}
-	
 	}
 
 }

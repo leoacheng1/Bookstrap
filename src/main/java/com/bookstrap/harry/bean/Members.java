@@ -57,19 +57,8 @@ public class Members {
 	public Members() {
 	}
 	
-	public Members(String mAccount, String mPassword) {
-		this.memberAccount = mAccount;
-		this.memberPassword = mPassword;
-	}
 	
 	
-	
-	
-	public Members(Integer memberId) {
-		super();
-		this.memberId = memberId;
-	}
-
 	public String getVertificationCode() {
 		return vertificationCode;
 	}
@@ -82,6 +71,10 @@ public class Members {
 
 
 
+	public Members(String mAccount, String mPassword) {
+		this.memberAccount = mAccount;
+		this.memberPassword = mPassword;
+	}
 
 
 	public Members(String mAccount) {
