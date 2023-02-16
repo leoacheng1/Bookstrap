@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +26,10 @@ public class BookDetailsService {
 		dDao.save(details);
 	}
 	
+	public List<BookDetails> getAllDetails() {
+		return dDao.findAll();
+	}
+	
 	public BookDetails getDetailsByID(Integer id) {
         Optional<BookDetails> optional = dDao.findById(id);
 		
@@ -30,6 +38,15 @@ public class BookDetailsService {
 		}
 		
 		return null;
+	}
+	
+	public Page<BookDetails> getBookByPage(Integer pageNumber){
+		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "id");
+		
+		Page<BookDetails> page = dDao.findAll(pgb);
+		
+		return page;
+		
 	}
 	
 	public BookDetails uploadById(Integer id,String size,Integer pages,String intro,String grade) {
@@ -50,6 +67,5 @@ public class BookDetailsService {
 	public List<BookDetails> findById(Integer id) {
 		dDao.findById(id);
 		return null;
-		
 	}
 }

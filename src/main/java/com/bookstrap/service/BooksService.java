@@ -1,16 +1,18 @@
 package com.bookstrap.service;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.bookstrap.model.BookDetails;
+import com.bookstrap.model.BookDetailsRepository;
 import com.bookstrap.model.Books;
 import com.bookstrap.model.BooksRepository;
 
@@ -21,43 +23,54 @@ public class BooksService {
 	@Autowired
 	private BooksRepository bDao;
 	
+	private BookDetailsRepository dDao;
+
 	public void insert(Books book) {
 		bDao.save(book);
 	}
-	
+
 	public void deleteById(Integer id) {
 		bDao.deleteById(id);
 	}
-	
-	public List<Books> findAllBooks(){
+
+	public List<Books> findAllBooks() {
 		return bDao.findAll();
 	}
-	
+
+	public Page<Books> getBookByPage(Integer pageNumber) {
+		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "id");
+
+		Page<Books> page = bDao.findAll(pgb);
+		return page;
+
+	}
+
 	public Books getBookById(Integer id) {
 		Optional<Books> optional = bDao.findById(id);
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			return optional.get();
 		}
-		
+
 		return null;
 	}
-	
+
 	public Books getDetailIdByBookId(Integer id) {
 		Optional<Books> optional = bDao.findById(id);
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			return optional.get();
 		}
 		return null;
 	}
-	
-	public Books uploadById(Integer id,String name,String author,String translator,String publisher,
-			                 Date date,String languages,String category,Integer discount,
-			                 Integer price,MultipartFile photo) throws IOException {
-		Optional<Books> optional = bDao.findById(id);
+
+	public Books uploadById(Integer id, String name, String author, String translator, String publisher, Date date,
+			String languages, String category, Integer discount, Integer price, byte[] photo) {
 		
-		if(optional.isPresent()) {
+		System.out.println(photo);
+		Optional<Books> optional = bDao.findById(id);
+
+		if (optional.isPresent()) {
 			Books book = optional.get();
 			book.setName(name);
 			book.setAuthor(author);
@@ -68,10 +81,15 @@ public class BooksService {
 			book.setCategory(category);
 			book.setDiscount(discount);
 			book.setPrice(price);
-            book.setPhoto(photo.getBytes());
+            book.setPhoto(photo);
+			System.out.println("有這筆資料");
 			return book;
 		}
 		System.out.println("沒有這筆資料");
 		return null;
+	}
+	
+	public void testDeleteDetailById(Integer id) {
+		dDao.deleteById(id);
 	}
 }

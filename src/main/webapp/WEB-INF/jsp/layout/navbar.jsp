@@ -37,24 +37,21 @@ prefix="jstl"%>
               >
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="${contextRoot}/books/page">所有書籍</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="${contextRoot}/books/add">新增書籍</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="${contextRoot}/books/all">所有書籍</a>
+              <a class="nav-link disabled" href="${contextRoot}/books/update">disabled</a>
             </li>
-            <li class="nav-item"><a class="nav-link disabled">Disabled</a></li>
           </ul>
         </div>
       </div>
     </nav>
-    <script
-      type="text/javascript"
-      src="${contextRoot}/js/bootstrap.bundle.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="${contextRoot}/js/jquery-3.6.3.min.js"
-    ></script>
-    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    
+<script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
   </body>
 </html>

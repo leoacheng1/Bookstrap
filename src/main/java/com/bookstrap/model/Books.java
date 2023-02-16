@@ -60,21 +60,21 @@ public class Books {
 	
 	@Column(name = "translator")
 	private String translator;
-	
+//	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bookDetail_id")
 	private BookDetails bookDetails;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-	private List<Comment> comment;
-	
-	public List<Comment> getComment() {
-		return comment;
-	}
-
-	public void setComment(List<Comment> comment) {
-		this.comment = comment;
-	}
+//	
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+//	private List<Comment> comment;
+//	
+//	public List<Comment> getComment() {
+//		return comment;
+//	}
+//
+//	public void setComment(List<Comment> comment) {
+//		this.comment = comment;
+//	}
 
 	public Books() {
 	}
