@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.ShoppingCartsRepository;
+import com.bookstrap.model.pk.ShoppingCartsPK;
 
 @Service
 @Transactional
@@ -19,7 +20,7 @@ public class ShoppingCartsService {
 	public ShoppingCarts insertBooks(ShoppingCarts cart) {
 		return scDao.save(cart);
 	}
-	public boolean deleteBooksByMemberId(Integer memberId) {
+	public boolean deleteBooksByMemberId(ShoppingCartsPK memberId) {
 		  if(memberId != null) {
 			  scDao.deleteById(memberId);
 			  return true;
@@ -27,7 +28,7 @@ public class ShoppingCartsService {
 		  return false;
 	}
 	
-	public ShoppingCarts findBooksByMemberId(Integer memberId) {
+	public ShoppingCarts findOrdersByMemberId(ShoppingCartsPK memberId) {
 		Optional<ShoppingCarts> optional = scDao.findById(memberId);
 		
 		if(optional.isPresent()) {
@@ -35,4 +36,6 @@ public class ShoppingCartsService {
 		}
 		return null;
 	}
+	
+	
 }

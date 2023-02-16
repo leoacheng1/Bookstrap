@@ -15,7 +15,7 @@ import com.bookstrap.model.Books;
 import com.bookstrap.model.pk.ShoppingCartsPK;
 
 @Entity
-@Table(name = "ShoppingCart")
+@Table(name = "ShoppingCarts")
 @IdClass(ShoppingCartsPK.class)
 public class ShoppingCarts implements Serializable {
 
