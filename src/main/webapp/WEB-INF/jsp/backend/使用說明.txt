@@ -5,3 +5,18 @@
 連結部分放在layout的sidebarlinks裡面(adminlinks, employeelinks, ownerlinks) 請依照權限以及功能，修改或增減裡面連結的內容和網址
 
 額外的css,js部分請自行增加在功能頁面之中，要注意這個版型是bootstrap4為基礎，bootstrap5相關語法有可能需要更改為bootstrap4的。
+
+另外登入首頁為/backend/login，支援一鍵輸入登入資訊，請先在employee資料表新增三種權限腳色
+
+        'admin': {
+          account: "admin",
+          password: "123456"
+        },
+        'owner': {
+         account: "owner",
+          password: "12345"
+        },
+        'employee': {
+          account: "employee",
+          password: "1234"
+        }
