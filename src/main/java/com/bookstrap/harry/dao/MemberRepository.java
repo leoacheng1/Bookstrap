@@ -9,18 +9,18 @@ import com.bookstrap.harry.bean.Members;
 
 public interface MemberRepository extends JpaRepository<Members, Integer> {
 
-	@Query(value = "SELECT*FROM Members WHERE acccount = :mAccount", nativeQuery = true)
+	@Query(value = "SELECT * FROM Members WHERE acccount = :mAccount", nativeQuery = true)
 	public Members findIdByEmail(@Param("mAccount") String memberEmail);
 	
 	
 	@Query("SELECT m FROM Members m WHERE m.vertificationCode = ?1")
 	public Members findByVerificationCode(String code);
 	
-	@Query(value = "SELECT*FROM Members WHERE vertification_code = :mCode", nativeQuery = true)
+	@Query(value = "SELECT * FROM Members WHERE vertification_code = :mCode", nativeQuery = true)
 	public Members findByVerifyCode(@Param("mCode") String code);
 	
 	@Modifying
-	@Query(value = "UPDATE Members SET valid = :mValid WHERE member_id = :mId", nativeQuery = true)
+	@Query(value = "UPDATE Members SET memberValid = :mValid WHERE memberId = :mId")
 	public Integer updateMemberValid(@Param("mValid") Integer valid, @Param("mId") Integer memberId);
 	
 	
