@@ -1,3 +1,4 @@
+//
 //package com.bookstrap.harry.controller;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,11 @@
 //	@Autowired
 //	private MemberDdetailService memberDetailService;
 //	
-//	
-//	@GetMapping("/memberadmi/main")
+//
+//	@GetMapping("memberadmi/main")
 //	public String toAdmiMember() {
-//		return "member/Admi/template";
+//		return "member/Admi/MemberAdmiMain";
 //	}
 //	
 //}
+
