@@ -5,6 +5,7 @@ Create Table Members(
 	acccount nvarchar(max) not null,
 	password nvarchar(max) not null,
 	valid tinyint not null, --驗證，有沒有停權
+	vertification_code nvarchar(255),
 	member_level nvarchar(50)
 );
 
@@ -34,7 +35,7 @@ Create Table Books(
 	author nvarchar(max),
 	publisher nvarchar(max),
 	publish_date Date,
-	book_photo varbinary, --封面圖片
+	book_photo varbinary(max), --封面圖片
 	discount int, --ex.79折，存成整數79
 	price int,
 	translator nvarchar(max),

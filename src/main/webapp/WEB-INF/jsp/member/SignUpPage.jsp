@@ -57,7 +57,7 @@
                       <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
                     <div class="form-outline datepicker mb-3">
-                      <input type="text" class="form-control" id="exampleDatepicker1"  value="1" hidden name="memberValid"/>
+                      <input type="text" class="form-control" id="exampleDatepicker1"  value="0" hidden name="memberValid"/>
 					
 					<div class="form-outline datepicker mb-3">
                       <input type="text" class="form-control" id="exampleDatepicker1"  value="1" hidden name="memberLevel"/>
