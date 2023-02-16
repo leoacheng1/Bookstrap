@@ -38,6 +38,9 @@ public class ShopEmployeesService {
   }
 
   public ShopEmployees updateShopEmployee(ShopEmployees shopEmployee) {
+	  Integer shopId = shopEmployee.getEmpShopid();
+	  Shops shop = sDao.findById(shopId).get();
+	  shopEmployee.setShop(shop);
     return sempDao.save(shopEmployee);
   }
 

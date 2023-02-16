@@ -19,12 +19,29 @@
            <option value="3">wefewf</option>
            <option value="4">sfbgbny</option>
          </select><br/></label>
-<!-- 	</label><input type="text" name="empShopid" ><br> -->
 	<label>員工姓名:</label><input type="text" name="empName" ><br>
-	<label>上傳員工照片:</label><input type="file" name="empPhoto" accept="image/*"><br>
+	<label>上傳員工照片:</label><input type="file" id="empPhotoInput" name="empPhoto" accept="image/*"><br>
 	<label>員工薪資:</label><input type="text" name="empSalary" ><br>
 	<label>員工職稱:</label><input type="text" name="empTitle" ><br>
 	<input type="submit" value="上傳">
 </form>
+
+<div id="empPhotoPreview"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $("#empPhotoInput").change(function() {
+    var file = this.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(event) {
+      $("#empPhotoPreview").html('<img src="' + event.target.result + '">');
+    }
+  });
+});
+</script>
+
+
 </body>
 </html>

@@ -24,12 +24,21 @@
 		<jstl:forEach items="${empList}" var="showemp">
 			<tr>
 				<td>${showemp.empId}</td>
-				<td>${showemp.empShopid}</td>
+				<td>${showemp.shop.shopName}</td>
 				<td>${showemp.empName}</td>
 				<td><img width="100px"
 					src="${contextRoot}/sempsphoto/id?id=${showemp.empId}"></td>
 				<td>${showemp.empSalary}</td>
 				<td>${showemp.empTitle}</td>
+				<td><form action="${contextRoot}/semps/upload" method="get">
+						<input name="id" type="hidden" value="${showemp.empId}" /> <input
+							type="submit" class="btn btn-info btn-sm" value="編輯" />
+					</form></td>
+				<td><form action="${contextRoot }/messages/delete" method="post">
+						<input name="_method" type="hidden" value="delete" /> <input
+							name="id" type="hidden" value="${showemp.empId}" /> <input
+							type="submit" class="btn btn-danger btn-sm" value="刪除" />
+					</form></td>
 			</tr>
 
 		</jstl:forEach>
