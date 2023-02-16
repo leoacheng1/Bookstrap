@@ -1,12 +1,16 @@
 package com.bookstrap.harry.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +30,7 @@ import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
+import com.bookstrap.harry.service.SendEmailService;
 
 @Controller
 //@SessionAttributes("memberDetail")
@@ -36,6 +41,9 @@ public class MemberController {
 	@Autowired
 	private MemberDdetailService memberDetailService;
 
+	@Autowired
+	private SendEmailService emailService;
+	
 	@GetMapping("/member/signin")
 	public String memberSignIn(HttpSession session) {
 		if (session.getAttribute("member") != null) {
@@ -59,7 +67,8 @@ public class MemberController {
 			@RequestParam("memberValid") Integer memberValid, @RequestParam("memberLevel") Integer memberLevel,
 			@RequestParam("memberSex") Integer memberSex, @RequestParam("memberBirthday") Date memberBirthday,
 			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPhone") String memberCellPhone,
-			@RequestParam("memberAddress") String memberAddress, Model m) {
+			@RequestParam("memberAddress") String memberAddress, Model m,
+			HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
 
 		java.util.Date jDate = new java.util.Date();
 		long time = jDate.getTime();
@@ -112,8 +121,26 @@ public class MemberController {
 		System.out.println("rId: " + rMemberId);
 		memberDetail.setMemberId(rMemberId);
 		memberDetailService.insertMemberDetails(memberDetail);
+		
+		memberService.sendVertificationEnail(member, memberDetail);
+		
 		return "member/TestSuccess";
 	}
+	
+//	@ResponseBody
+//	@GetMapping("/member/checkaccount")
+//	public boolean checkAccount(@RequestParam("memberEmail") String memberAccount) {
+//		
+//		boolean account = memberService.checkAccount(memberAccount);
+//		
+//		if(account) {
+//			
+//			return true;
+//		}
+//		
+//		return false;
+//	}
+	
 
 	@PostMapping("/member/checklogin")
 	public String checkLogin(@RequestParam("memberEmail") String memberEmail,
@@ -135,10 +162,15 @@ public class MemberController {
 		}
 
 		Members logInmember = new Members(memberEmail, memberPassword);
-
+		
+//		Integer valid = logInmember.getMemberValid();
+		
 		boolean status = memberService.checkLogin(logInmember);
-
-		if (status) {
+		Integer valid = memberService.checkValid(logInmember);
+		System.out.println("V:" + valid);
+		
+		
+		if (status && valid == 1) {
 
 			// 要先得到由Email找出的Id
 			Members mEmail = memberService.useEmailFindId(memberEmail);
@@ -162,10 +194,34 @@ public class MemberController {
 //				m.addAttribute("memberDetail", idFindName);
 			return "redirect:main";
 		}
+		
+		if (status && valid == 0) {
+			return "member/VertifyStatus";
+		}
 
+		
 		errors.put("msg", "username or password is not correct");
 		return "member/SignInPage";
 
+	}
+	
+	@GetMapping("/member/verify")
+	public String verify(@RequestParam("code") String code, Model m, HttpSession session) {
+		boolean verified = memberService.verify(code);
+		
+		Members member = memberService.findByVerifyCode(code);
+		Integer memberValid = member.getMemberValid();
+		System.out.println("MemberV: " + memberValid);
+		
+				member.setMemberValid(1);
+			Integer newValid =	member.getMemberValid();
+			System.out.println("newV: " + newValid);
+		memberService.insertMemberValid(newValid, memberValid);
+		
+
+		String pageTitle = verified ? "驗證成功" : "驗證失敗";
+		m.addAttribute("pageTitle", pageTitle);
+		return "member/" + (verified ? "VerifySuccess" : "VerifyFail");
 	}
 
 	@GetMapping("/member/main")
@@ -249,6 +305,7 @@ public class MemberController {
 
 	@GetMapping("/member/editpasswordpage")
 	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m) {
+		//因為session有直接設memberId所以在jsp頁面可透過${memberId}得到，並且放在input標籤中，且命名memberId既可在此方法由@RequestParam("memberId")得到
 		m.addAttribute("memberId", memberId);
 		System.out.println("MemberId3: " + memberId);
 		return "member/Main/EditPassword";
