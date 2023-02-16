@@ -14,6 +14,7 @@ public class CheckLogin {
 	@Autowired
 	private SessionFactory factory;
 
+//	@SuppressWarnings("unused")
 	public boolean checkLogin(Members member) {
 		Session session = factory.openSession();
 		String querySring = "from Members m where m.memberAccount = :mEmail and m.memberPassword = :mPassword";
@@ -24,12 +25,23 @@ public class CheckLogin {
 		result.setParameter("mPassword", member.getMemberPassword());
 
 		Members uniqueResult = result.uniqueResult();
-
-		if (uniqueResult != null) {
+		
+		
+		session.close();
+		
+		
+		if(uniqueResult != null) {
 			return true;
 		}
-
+		
+				
 		return false;
+		
+//		if(uniqueResult == null) {
+//			return false;
+//		}
+
+		
 
 	}
 
