@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
@@ -120,9 +121,18 @@ public class MemberController {
 		return "member/TestSuccess";
 	}
 	
-//	@EventListener()
-//	public void sendEmail() {
+//	@ResponseBody
+//	@GetMapping("/member/checkaccount")
+//	public boolean checkAccount(@RequestParam("memberEmail") String memberAccount) {
 //		
+//		boolean account = memberService.checkAccount(memberAccount);
+//		
+//		if(account) {
+//			
+//			return true;
+//		}
+//		
+//		return false;
 //	}
 	
 

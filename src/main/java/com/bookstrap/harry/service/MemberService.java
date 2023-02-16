@@ -123,7 +123,9 @@ public class MemberService {
 		return mDao.findIdByEmail(memberEmail);
 	}
 	
-	
+//	public boolean checkAccount(String memberEmail) {
+//		return mDao.findEmailByid(memberEmail);
+//	}
 	
 	public boolean verify(String verificationCode) {
 		Members member = mDao.findByVerificationCode(verificationCode);
