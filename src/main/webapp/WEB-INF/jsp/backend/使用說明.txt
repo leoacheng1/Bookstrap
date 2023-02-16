@@ -20,3 +20,4 @@
           account: "employee",
           password: "1234"
         }
+其餘請參考adminLTE3的文件: https://adminlte.io/themes/v3/
