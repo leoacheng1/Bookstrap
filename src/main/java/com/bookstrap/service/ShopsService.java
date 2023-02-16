@@ -79,4 +79,11 @@ public class ShopsService {
 	public List<Shops> findShopByAddress(String address) {
 		return sDao.findShopsLike(address);
 	}
+	
+	public Shops findShopByid(Integer id) {
+		
+		Optional<Shops> optional = sDao.findById(id);
+		
+		return optional.get();
+	}
 }

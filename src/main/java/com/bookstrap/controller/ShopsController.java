@@ -153,4 +153,14 @@ public class ShopsController {
 
 		return shlist;
 	}
+	
+	
+	@ResponseBody
+	@GetMapping("/shops/addressshopslist1")
+	public Shops findShopByid(Integer id) {
+
+		Shops shlist = shService.findShopByid( id);
+
+		return shlist;
+	}
 }

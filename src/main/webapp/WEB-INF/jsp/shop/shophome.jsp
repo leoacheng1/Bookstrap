@@ -35,10 +35,11 @@
       </div>
       <br>
 
+      <div class="container">
       <div id="view">
 
       </div>
-
+    </div>
 
 
 
@@ -90,7 +91,8 @@
             </div>
             <div class="modal-body">
               <label class="form-label">id</label>
-              <input type="text" class="form-control" name="shopId" id="updateshopIdInput" value="" readonly="readonly" disabled>
+              <input type="text" class="form-control" name="shopId" id="updateshopIdInput" value="" readonly="readonly"
+                disabled>
               <label class="form-label">店名</label>
               <input type="text" class="form-control" name="shopName" id="updateshopNameInput" value="">
               <label class="form-label">地址</label>
@@ -133,6 +135,9 @@
         const uploadBtn = document.getElementById('myButton');
         uploadBtn.addEventListener('click', function (event) {
           event.preventDefault();
+
+
+
           let shopName = document.getElementById('shopNameInput').value
           let shopAddress = document.getElementById('shopAddressInput').value
           let shopPhone = document.getElementById('shopPhoneInput').value
@@ -169,6 +174,14 @@
             .catch(err => {
               console.log(err)
             })
+          document.getElementById('shopNameInput').innerHTML = ""
+          document.getElementById('shopAddressInput').innerHTML = ""
+          document.getElementById('shopPhoneInput').innerHTML = ""
+          document.getElementById('shopOpenHourInput').innerHTML = ""
+          document.getElementById('shopcloseHourInput').innerHTML = ""
+          document.getElementById('longitudeInput').innerHTML = ""
+          document.getElementById('latitudeInput').innerHTML = ""
+          document.getElementById('shopphotoInput').innerHTML = ""
         })
 
 
@@ -534,7 +547,7 @@
               sendDeleteAjax(msgID)
             })
           }
- Q
+
         }
 
       </script>
