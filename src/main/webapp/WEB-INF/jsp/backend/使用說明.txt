@@ -1,0 +1,7 @@
+頁面在controllpanel底下分成三種view的資料夾: admin, employee, owner 
+
+可以依照使用者登入權限去裡面新增功能(什麼權限能使用的頁面就新增在什麼資料夾底下,請copy該權限頁面的index來做更改)
+
+連結部分放在layout的sidebarlinks裡面(adminlinks, employeelinks, ownerlinks) 請依照權限以及功能，修改或增減裡面連結的內容和網址
+
+額外的css,js部分請自行增加在功能頁面之中，要注意這個版型是bootstrap4為基礎，bootstrap5相關語法有可能需要更改為bootstrap4的。
