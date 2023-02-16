@@ -43,7 +43,6 @@ public class BackendNormal {
 	
 	@GetMapping("backend/logout")
 	public String logOut(HttpSession session) {
-		System.out.println("hiihihihihihih");
 		session.invalidate();
 		return "redirect:http://localhost:8080/Bookstrap/backend/login";
 	}
