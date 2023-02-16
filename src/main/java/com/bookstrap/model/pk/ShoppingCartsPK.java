@@ -16,7 +16,6 @@ public class ShoppingCartsPK implements Serializable {
 	}
 
 	public ShoppingCartsPK(Integer memberId, Integer bookId) {
-		super();
 		this.memberId = memberId;
 		this.bookId = bookId;
 	}
