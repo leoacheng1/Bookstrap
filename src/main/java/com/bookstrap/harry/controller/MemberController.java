@@ -196,12 +196,18 @@ public class MemberController {
 			return "redirect:main";
 		}
 		
+		if(!status) {
+			errors.put("msg", "username or password is not correct");
+			System.out.println("status: " + status);
+			return"member/SignInPage";
+		}
+		
 		if (status && valid == 0) {
 			return "member/VertifyStatus";
 		}
 		
 		
-		System.out.println("status: " + status);
+		
 		errors.put("msg", "username or password is not correct");
 		return "member/SignInPage";
 
