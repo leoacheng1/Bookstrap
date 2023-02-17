@@ -115,9 +115,9 @@ public class MemberService {
 		return checkDao.checkLogin(member);
 	}
 	
-	public Integer checkValid(Members member) {
-		return checkDao.checkValid(member);
-	}
+//	public Integer checkValid(Members member) {
+//		return checkDao.checkLogin(member);
+//	}
 
 	public Members useEmailFindId(String memberEmail) {
 		return mDao.findIdByEmail(memberEmail);
