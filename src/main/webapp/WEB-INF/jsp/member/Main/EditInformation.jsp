@@ -147,7 +147,7 @@
     
                 <div class="col-md-5">
                   <label for="gender" class="form-label">性別</label>
-                  <select class="form-select" id="gender"  name="memberGender" value="${memberDetail.memberSex}">
+                  <select class="form-select" id="gender"  name="memberGender" value="${memberDetail.memberSex}" required>
                     <option value="">請選擇性別</option>
                     <option value="1" >男</option>
                     <option value="2">女</option>
