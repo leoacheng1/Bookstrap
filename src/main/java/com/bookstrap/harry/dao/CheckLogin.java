@@ -15,7 +15,7 @@ public class CheckLogin {
 	private SessionFactory factory;
 
 //	@SuppressWarnings("unused")
-	public boolean checkLogin(Members member) {
+	public Integer checkLogin(Members member) {
 		Session session = factory.openSession();
 		String querySring = "from Members m where m.memberAccount = :mEmail and m.memberPassword = :mPassword";
 
@@ -30,12 +30,13 @@ public class CheckLogin {
 		session.close();
 		
 		
-		if(uniqueResult != null) {
-			return true;
+		if(uniqueResult == null) {
+			return null;
 		}
 		
+		Integer mValid = uniqueResult.getMemberValid();
 				
-		return false;
+		return mValid;
 		
 //		if(uniqueResult == null) {
 //			return false;
@@ -45,36 +46,21 @@ public class CheckLogin {
 
 	}
 
-	public Integer checkValid(Members member) {
+//	public Integer checkValid(Members member) {
+//
+//		Session session = factory.openSession();
+//		String querySring = "from Members m where m.memberAccount = :mEmail and m.memberPassword = :mPassword";
+//
+//		Query<Members> result = session.createQuery(querySring, Members.class);
+//
+//		result.setParameter("mEmail", member.getMemberAccount());
+//		result.setParameter("mPassword", member.getMemberPassword());
+//
+//		Members uniqueResult = result.uniqueResult();
+//		Integer valid = uniqueResult.getMemberValid();
+//		return valid;
+//
+//	}
 
-		Session session = factory.openSession();
-		String querySring = "from Members m where m.memberAccount = :mEmail and m.memberPassword = :mPassword";
-
-		Query<Members> result = session.createQuery(querySring, Members.class);
-
-		result.setParameter("mEmail", member.getMemberAccount());
-		result.setParameter("mPassword", member.getMemberPassword());
-
-		Members uniqueResult = result.uniqueResult();
-		Integer valid = uniqueResult.getMemberValid();
-		return valid;
-
-	}
-
-//		public Integer checkValid(Members member) {
-//			
-//			Session session = factory.openSession();
-//			String querySring = "from Members m where m.memberValid = :mValid";
-//			
-//			Query<Members> result = session.createQuery(querySring, Members.class);
-//			result.setParameter("mValid", member.getMemberValid());
-//			System.out.println("check V:" + member.getMemberValid());
-//			Members uniqueResult = result.uniqueResult();
-//			Integer valid = uniqueResult.getMemberValid();
-//			
-//			
-//			return valid;
-//			
-//		}
 
 }

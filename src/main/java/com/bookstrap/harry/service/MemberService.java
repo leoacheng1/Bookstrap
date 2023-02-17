@@ -110,7 +110,7 @@ public class MemberService {
 		return null;
 	}
 
-	public boolean checkLogin(Members member) {
+	public Integer checkLogin(Members member) {
 
 		return checkDao.checkLogin(member);
 	}
