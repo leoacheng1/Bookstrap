@@ -36,7 +36,7 @@ public class Employees {
 	private String empName;
 	
 	@Column(name="sex")
-	private byte sex;
+	private Byte sex;
 	
 	@Column(name="emp_position")
 	private String empPosition;
@@ -81,11 +81,11 @@ public class Employees {
 		this.empName = empName;
 	}
 
-	public byte getSex() {
+	public Byte getSex() {
 		return sex;
 	}
 
-	public void setSex(byte sex) {
+	public void setSex(Byte sex) {
 		this.sex = sex;
 	}
 

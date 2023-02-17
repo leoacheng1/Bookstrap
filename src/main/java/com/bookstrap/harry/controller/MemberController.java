@@ -41,8 +41,6 @@ public class MemberController {
 	@Autowired
 	private MemberDdetailService memberDetailService;
 
-	@Autowired
-	private SendEmailService emailService;
 	
 	@GetMapping("/member/signin")
 	public String memberSignIn(HttpSession session) {
@@ -165,12 +163,13 @@ public class MemberController {
 		
 //		Integer valid = logInmember.getMemberValid();
 		
-		boolean status = memberService.checkLogin(logInmember);
-		Integer valid = memberService.checkValid(logInmember);
-		System.out.println("V:" + valid);
+		Integer status = memberService.checkLogin(logInmember);
+		System.out.println("SSSSSSSStatus:" + status);
 		
-		
-		if (status && valid == 1) {
+		if(status == null) {
+			errors.put("msg", "username or password is not correct");
+			return "member/SignInPage";
+		}else if (status == 1) {
 
 			// 要先得到由Email找出的Id
 			Members mEmail = memberService.useEmailFindId(memberEmail);
@@ -194,18 +193,9 @@ public class MemberController {
 //				m.addAttribute("memberDetail", idFindName);
 			System.out.println("status: " + status);
 			return "redirect:main";
-		}
-		
-		if(!status) {
-			errors.put("msg", "username or password is not correct");
-			System.out.println("status: " + status);
-			return"member/SignInPage";
-		}
-		
-		if (status && valid == 0) {
+		} else if (status == 0) {
 			return "member/VertifyStatus";
 		}
-		
 		
 		
 		errors.put("msg", "username or password is not correct");

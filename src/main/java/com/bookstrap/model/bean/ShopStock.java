@@ -33,7 +33,7 @@ public class ShopStock {
 	@JsonBackReference
 	@JoinColumn(name="book_id", insertable=false, updatable=false)
 	@ManyToOne
-	private Books book; //book 那邊還沒接
+	private Books book; 
 	
 	@JsonBackReference
 	@JoinColumn(name="shop_id", insertable=false, updatable=false)
@@ -67,13 +67,13 @@ public class ShopStock {
 		Amount = amount;
 	}
 
-//	public Books getBook() {
-//		return book;
-//	}
-//
-//	public void setBook(Books book) {
-//		this.book = book;
-//	}
+	public Books getBook() {
+		return book;
+	}
+
+	public void setBook(Books book) {
+		this.book = book;
+	}
 
 	public Shops getShop() {
 		return shop;
