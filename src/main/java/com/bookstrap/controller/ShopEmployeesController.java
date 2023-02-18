@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -111,10 +112,9 @@ public class ShopEmployeesController {
 
 	}
 
-//	@PutMapping("/semps/upload")
-//	public String sendEditMessages(@ModelAttribute("shopemployees") ShopEmployees msg) {
-//
-//		sempService.addShopEmployee(msg);
-//		return "shopemployees/home";
-//	}
+	@DeleteMapping("semps/delete")
+	public String deleteShopEmployeeById(@RequestParam("id") Integer id) {
+		sempService.deleteShopEmployee(id);
+		return "redirect:/semps/all";
+	}
 }

@@ -34,9 +34,9 @@
 						<input name="id" type="hidden" value="${showemp.empId}" /> <input
 							type="submit" class="btn btn-info btn-sm" value="編輯" />
 					</form></td>
-				<td><form action="${contextRoot }/messages/delete" method="post">
+				<td><form action="${contextRoot }/semps/delete" method="post">
 						<input name="_method" type="hidden" value="delete" /> <input
-							name="id" type="hidden" value="${showemp.empId}" /> <input
+							name="id" type="text" value="${showemp.empId}" /> <input
 							type="submit" class="btn btn-danger btn-sm" value="刪除" />
 					</form></td>
 			</tr>
