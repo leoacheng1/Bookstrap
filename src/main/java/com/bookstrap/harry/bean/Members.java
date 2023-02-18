@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -55,9 +53,6 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<UserCoupon> userCoupon;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "auth_provider")
-	private AuthenticationProvider authProvider;
 	
 	public Members() {
 	}
@@ -75,17 +70,6 @@ public class Members {
 		this.memberId = memberId;
 	}
 
-	
-	
-	
-	public AuthenticationProvider getAuthProvider() {
-		return authProvider;
-	}
-
-	public void setAuthProvider(AuthenticationProvider authProvider) {
-		this.authProvider = authProvider;
-	}
-
 	public String getVertificationCode() {
 		return vertificationCode;
 	}
@@ -96,7 +80,10 @@ public class Members {
 		this.vertificationCode = vertificationCode;
 	}
 
-	
+
+
+
+
 	public Members(String mAccount) {
 		this.memberAccount = mAccount;
 	}
