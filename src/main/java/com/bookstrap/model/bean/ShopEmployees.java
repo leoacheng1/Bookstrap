@@ -134,8 +134,4 @@ public class ShopEmployees{
 		this.employee = employee;
 	}
 
-
-
-
-
 }
