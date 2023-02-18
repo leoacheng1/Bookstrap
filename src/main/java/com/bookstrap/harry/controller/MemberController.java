@@ -298,6 +298,7 @@ public class MemberController {
 
 	@GetMapping("/member/information")
 	public String personalInfo() {
+		//用if()判斷是否為google
 		return "member/Main/MyInfo";
 	}
 
