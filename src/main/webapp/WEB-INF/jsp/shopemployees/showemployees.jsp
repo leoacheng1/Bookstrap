@@ -15,7 +15,7 @@
 	<table>
 		<tr>
 			<th>員工編號</th>
-			<th>員工店鋪編號</th>
+			<th>員工分店</th>
 			<th>員工姓名</th>
 			<th>員工照片</th>
 			<th>員工薪資</th>
@@ -36,7 +36,7 @@
 					</form></td>
 				<td><form action="${contextRoot }/semps/delete" method="post">
 						<input name="_method" type="hidden" value="delete" /> <input
-							name="id" type="text" value="${showemp.empId}" /> <input
+							name="id" type="hidden" value="${showemp.empId}" /> <input
 							type="submit" class="btn btn-danger btn-sm" value="刪除" />
 					</form></td>
 			</tr>

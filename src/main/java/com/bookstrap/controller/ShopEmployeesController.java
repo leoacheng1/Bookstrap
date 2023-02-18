@@ -19,14 +19,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bookstrap.model.Shops;
 import com.bookstrap.model.bean.ShopEmployees;
 import com.bookstrap.service.ShopEmployeesService;
+import com.bookstrap.service.ShopsService;
 
 @Controller
 public class ShopEmployeesController {
 
 	@Autowired
 	private ShopEmployeesService sempService;
+	
+	@Autowired
+	private ShopsService sService;
 
 	@GetMapping("/semps/home")
 	public String uploadPage() {
@@ -84,9 +89,10 @@ public class ShopEmployeesController {
 
 	@GetMapping("/semps/upload")
 	public String uploadShopEmployeesPage(@RequestParam("id") Integer id, Model model) {
-
+		List<Shops> s0 = sService.findAllShop();
 		ShopEmployees s1 = sempService.getShopEmployeeById(id);
 		model.addAttribute("shopemployees", s1);
+		model.addAttribute("shopid",s0);
 		return "shopemployees/uploademployees";
 	}
 

@@ -16,12 +16,22 @@
 	<form:form action="${contextRoot}/semps/upload"
 		modelAttribute="shopemployees" method="put" enctype="multipart/form-data">
 
-		<form:input type="text" path="empId"></form:input>
-		<form:input type="text" path="shop.id"></form:input>
-		<form:input class="form-control" path="empName" /><br/>
-		<form:input type="file" class="form-control" path="empPhoto" /><br/>
-		<form:input class="form-control" path="empSalary" /><br/>
-		<form:input class="form-control" path="empTitle" /><br/>
+		<form:input type="hidden" path="empId"></form:input><br/>
+		員工分店<form:select path="shop.id">
+			<jstl:forEach items="${shopid}" var="shopid">
+			<option value="${shopid.id}">${shopid.shopName}</option>
+			</jstl:forEach>
+<%--            <option selected value="${shop.id}"></option> --%>
+<!--            <option value="1">abc</option> -->
+<!--            <option value="2">acb</option> -->
+<!--            <option value="3">wefewf</option> -->
+<!--            <option value="4">sfbgbny</option> -->
+         </form:select><br/>
+<%-- 		員工分店<form:input type="text" path="shop.id"></form:input><br/> --%>
+		員工姓名<form:input class="form-control" path="empName" /><br/>
+		員工照片<form:input type="file" class="form-control" path="empPhoto" /><br/>
+		員工薪資<form:input class="form-control" path="empSalary" /><br/>
+		員工職稱<form:input class="form-control" path="empTitle" /><br/>
 		<button type="submit" class="btn btn-outline-primary">修改送出</button>
 
 	</form:form>

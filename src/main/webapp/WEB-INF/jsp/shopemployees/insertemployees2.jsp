@@ -13,7 +13,7 @@
 <body>
 <form action="${contextRoot}/semps/insertemployee" method="post" enctype="multipart/form-data">
 	
-	<label>員工分店編號:<select name="empShopid">
+	<label>員工分店:<select name="empShopid">
            <option selected value="1">abc</option>
            <option value="2">acb</option>
            <option value="3">wefewf</option>

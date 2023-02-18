@@ -1,9 +1,11 @@
 package com.bookstrap.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.model.ShopEmployeesRepository;
 import com.bookstrap.model.Shops;
@@ -12,6 +14,7 @@ import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.ShopEmployees;
 
 @Service
+@Transactional
 public class ShopEmployeesService {
 
   @Autowired
@@ -25,6 +28,9 @@ public class ShopEmployeesService {
   }
 
   public ShopEmployees getShopEmployeeById(int id) {
+//	  Optional<ShopEmployees> semp = sempDao.findById(id);
+//	  ShopEmployees shopId = semp.get();
+//	  return shopId;
     return sempDao.findById(id).orElse(null);
   }
 
@@ -45,7 +51,7 @@ public class ShopEmployeesService {
   }
 
   public void deleteShopEmployee(int id) {
-	  sempDao.deleteById(id);
+	  sempDao.deleteByIdQuery(id);
   }
 }
 
