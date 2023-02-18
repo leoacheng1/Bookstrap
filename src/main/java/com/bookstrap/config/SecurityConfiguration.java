@@ -13,34 +13,33 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
     
-	 @Bean
-	    public UserDetailsService userDetailsService() {
-	        return new ShopmeUserDetailsService();
-	    }
-	 
+//	@Bean
+//    public UserDetailsService userDetailsService() {
+//        return new ShopmeUserDetailsService();
+//    } 
+	
+	
 	    @Bean
 	    public BCryptPasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();
 	    }
 	
-	@Bean
-    public SecurityFilterChain  filterChain(HttpSecurity http) throws Exception {
-		 http.authorizeRequests().antMatchers("/login").permitAll()
-         .antMatchers("/users/**", "/settings/**").hasAuthority("Admin")
-         .hasAnyAuthority("Admin", "Editor", "Salesperson")
-         .hasAnyAuthority("Admin", "Editor", "Salesperson", "Shipper")
-         .anyRequest().authenticated()
-         .and().formLogin()
-         .loginPage("/login")
-             .usernameParameter("email")
-             .permitAll()
-         .and()
-         .rememberMe().key("AbcdEfghIjklmNopQrsTuvXyz_0123456789")
-         .and()
-         .logout().permitAll();
-
- http.headers().frameOptions().sameOrigin();
-		
+//	    @Bean 
+//	    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//	       http.authorizeRequests()
+//	         .anyRequest().authenticated()
+//	         .and().httpBasic();
+//	       return http.build();
+//	   }
+//	@Bean
+//    public SecurityFilterChain  filterChain(HttpSecurity http) throws Exception {
+//		http.authorizeRequests()
+//	      .anyRequest().authenticated()
+//	      .and().httpBasic();
+//	    return http.build();
+//         
+//
+//		
 		//		http.csrf()
 //		 .disable()
 //		 .authorizeRequests()
@@ -59,17 +58,17 @@ public class SecurityConfiguration {
 //		 .and()
 //		 .sessionManagement()
 //		 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
+//		
 //		 http
 //	        .authorizeRequests()
 //	        .anyRequest()
 //	        .authenticated()
 //	        .and().formLogin().disable()  // <-- 停用預設登入頁面
 //	        .httpBasic(); // <--保留HTTP Basic驗證
-
-		 return http.build();
-		 
-    }
+//
+//		 return http.build();
+//		 
+//    }
      
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
