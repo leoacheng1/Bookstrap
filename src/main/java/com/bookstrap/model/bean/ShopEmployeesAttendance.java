@@ -11,7 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "ShopEmployeesAttendance")
@@ -32,6 +36,8 @@ public class ShopEmployeesAttendance {
 	private ShopEmployees attSemps;
 
 	@Column(name = "attend_date")
+//	@DateTimeFormat(pattern = "yyyy/MM/dd")
+//	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
 	private Date attDate;
 
 	@Column(name = "attend_vacation")
@@ -55,6 +61,14 @@ public class ShopEmployeesAttendance {
 
 	public void setAttId(Integer attId) {
 		this.attId = attId;
+	}
+
+	public Integer getAttSempid() {
+		return attSempid;
+	}
+
+	public void setAttSempid(Integer attSempid) {
+		this.attSempid = attSempid;
 	}
 
 	public ShopEmployees getAttSemps() {
@@ -105,7 +119,6 @@ public class ShopEmployeesAttendance {
 		this.attSalary = attSalary;
 	}
 
-	
 
 	
 }
