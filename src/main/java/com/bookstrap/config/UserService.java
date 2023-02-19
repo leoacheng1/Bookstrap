@@ -25,6 +25,8 @@ public class UserService {
 			Members newMember = new Members();
 			newMember.setMemberAccount(userEmail);
 			newMember.setMemberValid(1);  //要用5代表Google?
+			newMember.setMemberLevel(1);
+			newMember.setMemberPassword(userEmail);
 			newMember.setAuthProvider(AuthenticationProvider.GOOGLE);
 			uDao.save(newMember);
 		}

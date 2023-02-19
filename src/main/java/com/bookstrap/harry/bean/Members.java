@@ -199,11 +199,6 @@ public class Members {
 		this.memberLevel = memberLevel;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+		
+		
 }
