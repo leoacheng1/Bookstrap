@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,6 +38,10 @@ public class Members {
 	
 	@Column(name = "vertification_code")
 	private String vertificationCode;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "auth_provider")
+	private AuthenticationProvider authProvider;
 
 	//雙向，去找memberDetails有本類別屬性的參考變數
 	@OneToOne(mappedBy ="member")
@@ -83,6 +89,14 @@ public class Members {
 
 
 
+
+	public AuthenticationProvider getAuthProvider() {
+		return authProvider;
+	}
+
+	public void setAuthProvider(AuthenticationProvider authProvider) {
+		this.authProvider = authProvider;
+	}
 
 	public Members(String mAccount) {
 		this.memberAccount = mAccount;
