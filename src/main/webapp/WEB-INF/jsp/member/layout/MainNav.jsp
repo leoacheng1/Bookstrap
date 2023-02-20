@@ -17,7 +17,7 @@
             <li class="nav-item">
                 <br>
                 <br>
-              <a class="nav-link " aria-current="page" href="#">
+              <a class="nav-link " aria-current="page" href="${contextRoot}/member/main">
                 <span data-feather="home" class="align-text-bottom"></span>
                 我的帳戶
               </a>
@@ -35,7 +35,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="${contextRoot}/member/information">
                 <span data-feather="users" class="align-text-bottom"></span>
                 個人資訊
               </a>
