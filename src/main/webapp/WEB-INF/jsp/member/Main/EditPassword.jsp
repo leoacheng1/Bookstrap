@@ -37,32 +37,30 @@
 
 					<div class="card mt-5">
 						<h5 class="card-header">密碼</h5>
-						
-						<form action="${contextRoot}/member/editpassword" method="post">
-						<div class="card-body">
 
-							<input type="password" readonly name="memberId" name="memberId" value="${memberId}" hidden>
-							
-							<h5 class="card-title">請輸入舊密碼</h5>
-							<input type="password" name="oldPassword"/>
-							<span>${errors.WrongPassword}</span>
-							<br>
-							<h5 class="card-title mt-5">請輸入新密碼</h5>
-							<input type="password" name="newPassword"/>
-							<br>
-							<span>重新輸入新密碼</span>
-							<br>
-							<input type="password" name="re_Password"/>
-							<span>${errors.checkProblem}</span>
-							<br>
-							<button class="btn btn-primary mt-3" type="submit">更新</button>
-							
-						</div>
-					</form>
+						<form action="${contextRoot}/member/editpassword" method="post">
+							<div class="card-body">
+
+								<input type="password" readonly name="memberId" name="memberId"
+									value="${memberId}" hidden>
+
+								<h5 class="card-title">請輸入舊密碼</h5>
+								<input type="password" name="oldPassword" /> <span>${errors.WrongPassword}</span>
+								<br>
+								<h5 class="card-title mt-5">請輸入新密碼</h5>
+								<input type="password" name="newPassword" /> <span>${errors.NoPassword}</span>
+								<br> <br>
+								<h5>確認新密碼</h5>
+								<input type="password" name="re_Password" /> <span>${errors.checkProblem}</span>
+								<br>
+								<button class="btn btn-primary mt-3" type="submit">更新</button>
+
+							</div>
+						</form>
 
 					</div>
-					
-					
+
+
 
 
 				</div>

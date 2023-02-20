@@ -22,7 +22,7 @@
 						<div class="card-body p-5 text-center">
 
 							<div class="mb-md-5 mt-md-4 pb-5">
-
+								<a href="${contextRoot}/oauth2/authorization/google">Continue with Google</a>
 								<form action="${contextRoot}/member/checklogin" method="post">
 									<h2 class="fw-bold mb-2 text-uppercase">登入</h2>
 									<p class="text-white-50 mb-5">請出入帳號以及密碼!</p>
