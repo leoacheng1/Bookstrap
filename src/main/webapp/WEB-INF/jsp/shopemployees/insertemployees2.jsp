@@ -14,10 +14,10 @@
 <form action="${contextRoot}/semps/insertemployee" method="post" enctype="multipart/form-data">
 	
 	<label>員工分店:<select name="empShopid">
-           <option selected value="1">麥當勞</option>
-           <option value="2">肯德基</option>
-           <option value="3">漢堡王</option>
-           <option value="4">摩斯漢堡</option>
+           <option selected value="1">abc</option>
+           <option value="2">acb</option>
+           <option value="3">wefewf</option>
+           <option value="4">sfbgbny</option>
          </select><br/></label>
 	<label>員工姓名:</label><input type="text" name="empName" ><br>
 	<label>上傳員工照片:</label><input type="file" id="empPhotoInput" name="empPhoto" accept="image/*"><br>
