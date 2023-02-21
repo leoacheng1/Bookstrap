@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="MailCategory")
 public class MailCategory {
@@ -23,7 +25,8 @@ public class MailCategory {
 	private String categoryName;
 	
 	
-	@OneToMany(mappedBy = "mailCategory", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "mailCategory")
+	@JsonBackReference
 	private Set<Mail> mails;
 	
 	public Integer getCategoryId() {

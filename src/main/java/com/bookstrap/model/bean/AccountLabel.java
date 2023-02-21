@@ -11,6 +11,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.annotation.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="AccountLabel")
 public class AccountLabel {
@@ -24,6 +26,7 @@ public class AccountLabel {
 	private String labelName;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "account_id")
 	private MailAccount mailAccount;
 	
@@ -32,6 +35,38 @@ public class AccountLabel {
 	private Integer accountId;
 	
 	public AccountLabel() {
+	}
+
+	public Integer getLabelId() {
+		return labelId;
+	}
+
+	public void setLabelId(Integer labelId) {
+		this.labelId = labelId;
+	}
+
+	public String getLabelName() {
+		return labelName;
+	}
+
+	public void setLabelName(String labelName) {
+		this.labelName = labelName;
+	}
+
+	public MailAccount getMailAccount() {
+		return mailAccount;
+	}
+
+	public void setMailAccount(MailAccount mailAccount) {
+		this.mailAccount = mailAccount;
+	}
+
+	public Integer getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Integer accountId) {
+		this.accountId = accountId;
 	}
 
 }

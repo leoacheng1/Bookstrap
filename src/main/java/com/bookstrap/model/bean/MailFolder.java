@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="MailFolder")
 public class MailFolder {
@@ -23,7 +25,8 @@ public class MailFolder {
 	@Column(name="folder_name")
 	private String folderName;
 	
-	@OneToMany(mappedBy="mailFolder", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="mailFolder")
+	@JsonBackReference
 	private Set<Mail> mail;
 	
 	public Integer getFolderId() {

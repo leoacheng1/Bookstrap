@@ -45,6 +45,7 @@ public class Employees {
 	@PrimaryKeyJoinColumn
 	private ShopEmployees shopEmployee;
 
+
 	public Employees() {
 		
 	}

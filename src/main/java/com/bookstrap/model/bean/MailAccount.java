@@ -2,6 +2,7 @@ package com.bookstrap.model.bean;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="MailAccount")
@@ -34,13 +37,22 @@ public class MailAccount {
 	@JoinColumn(name = "employee_id")
 	private Employees employee;
 	
-	@OneToMany(mappedBy = "mailAccount")
+	@JsonManagedReference
+	@OneToMany(mappedBy = "mailAccount", cascade = CascadeType.ALL)
 	private Set<AccountLabel> accountLabels;
-	
 	
 	
 	public MailAccount() {
 	}
+	
+	public Set<AccountLabel> getAccountLabels() {
+		return accountLabels;
+	}
+
+	public void setAccountLabels(Set<AccountLabel> accountLabels) {
+		this.accountLabels = accountLabels;
+	}
+
 
 	public Integer getAccountId() {
 		return accountId;
