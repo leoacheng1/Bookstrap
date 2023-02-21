@@ -8,7 +8,7 @@ import com.bookstrap.harry.bean.Members;
 
 public interface UserRepository extends JpaRepository<Members, Integer> {
 
-	@Query(value = "SELECT * FROM Members WHERE acccount = :userEmail", nativeQuery = true)
+	@Query(value = "SELECT acccount FROM Members WHERE acccount = :userEmail", nativeQuery = true)
 	public Members getMemberAccountByUserEmail(@Param("userEmail") String userEmail);
 	
 //	@Query("from Members where memberAccount = :userEmail")
