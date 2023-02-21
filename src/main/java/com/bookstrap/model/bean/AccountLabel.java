@@ -1,5 +1,7 @@
 package com.bookstrap.model.bean;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,9 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Transient;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -33,6 +35,10 @@ public class AccountLabel {
 	@Column(name = "account_id")
 	@Transient
 	private Integer accountId;
+	
+	@OneToMany(mappedBy = "label")
+	@JsonBackReference
+	private Set<MailLabel> mailLabel;
 	
 	public AccountLabel() {
 	}
@@ -68,5 +74,15 @@ public class AccountLabel {
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
+
+	public Set<MailLabel> getMailLabel() {
+		return mailLabel;
+	}
+
+	public void setMailLabel(Set<MailLabel> mailLabel) {
+		this.mailLabel = mailLabel;
+	}
+
+
 
 }

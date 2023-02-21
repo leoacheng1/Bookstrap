@@ -19,10 +19,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
-import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -70,7 +71,7 @@ public class Mail {
 			mailTime = new Date();
 		}
 	}
-	//  ==========================RELATION COLUMNS==========================// 
+	//  ==========================RELATION COLUMNS==========================  // 
 	@Column(name = "folder_id")
 	@Transient
 	private Integer folderId;
@@ -92,6 +93,11 @@ public class Mail {
 	@OneToMany(mappedBy = "mail")
 	@JsonManagedReference
 	private Set<MailAttachment> mailAttachment;
+	
+	@OneToMany(mappedBy = "mail")
+	@JsonBackReference
+	private Set<MailLabel> mailLabels;
+	
 	
 	public Mail() {
 	}
@@ -207,6 +213,14 @@ public class Mail {
 
 	public void setMailAttachment(Set<MailAttachment> mailAttachment) {
 		this.mailAttachment = mailAttachment;
+	}
+
+	public Set<MailLabel> getMailLabels() {
+		return mailLabels;
+	}
+
+	public void setMailLabels(Set<MailLabel> mailLabels) {
+		this.mailLabels = mailLabels;
 	}
 	
 }
