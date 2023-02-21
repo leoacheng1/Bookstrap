@@ -41,8 +41,6 @@ public class MemberController {
 	@Autowired
 	private MemberDdetailService memberDetailService;
 
-	@Autowired
-	private SendEmailService emailService;
 	
 	@GetMapping("/member/signin")
 	public String memberSignIn(HttpSession session) {
@@ -156,7 +154,7 @@ public class MemberController {
 		if (memberPassword == null || memberPassword.length() == 0) {
 			errors.put("Password", "password is required");
 		}
-
+				
 		if (errors != null && !errors.isEmpty()) {
 			return "member/SignInPage";
 		}
@@ -165,12 +163,13 @@ public class MemberController {
 		
 //		Integer valid = logInmember.getMemberValid();
 		
-		boolean status = memberService.checkLogin(logInmember);
-		Integer valid = memberService.checkValid(logInmember);
-		System.out.println("V:" + valid);
+		Integer status = memberService.checkLogin(logInmember);
+		System.out.println("SSSSSSSStatus:" + status);
 		
-		
-		if (status && valid == 1) {
+		if(status == null) {
+			errors.put("msg", "username or password is not correct");
+			return "member/SignInPage";
+		}else if (status == 1) {
 
 			// 要先得到由Email找出的Id
 			Members mEmail = memberService.useEmailFindId(memberEmail);
@@ -192,13 +191,12 @@ public class MemberController {
 			
 //			session.setAttribute("memberDetail", idFindName);
 //				m.addAttribute("memberDetail", idFindName);
+			System.out.println("status: " + status);
 			return "redirect:main";
-		}
-		
-		if (status && valid == 0) {
+		} else if (status == 0) {
 			return "member/VertifyStatus";
 		}
-
+		
 		
 		errors.put("msg", "username or password is not correct");
 		return "member/SignInPage";
@@ -300,6 +298,7 @@ public class MemberController {
 
 	@GetMapping("/member/information")
 	public String personalInfo() {
+		//用if()判斷是否為google
 		return "member/Main/MyInfo";
 	}
 
@@ -325,16 +324,20 @@ public class MemberController {
 		System.out.println("Re: " + re_Password);
 		System.out.println("memberPassword:" + member.getMemberPassword());
 
-		if (oldPassword.equals(member.getMemberPassword()) && newPassword.equals(re_Password)) {
+		if (oldPassword.equals(member.getMemberPassword()) && newPassword.equals(re_Password) && newPassword.length() != 0 || re_Password.length() != 0) {
 			member.setMemberPassword(newPassword);
 			memberService.insertMember(member);
 			return "redirect:/member/main";
 
 		}
-
+		
 		if (!oldPassword.equals(member.getMemberPassword()) || oldPassword.equals(null) || oldPassword.isEmpty()) {
 
 			errors.put("WrongPassword", "請輸入正確之原有密碼");
+		}
+		
+		if(newPassword.length() == 0 || re_Password.length() == 0) {
+			errors.put("NoPassword", "請輸入新密碼");
 		}
 
 		if (!newPassword.equals(re_Password) || newPassword.equals(null) || re_Password.equals(null)) {
