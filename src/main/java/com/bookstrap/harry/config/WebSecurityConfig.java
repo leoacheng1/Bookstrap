@@ -1,4 +1,4 @@
-package com.bookstrap.config;
+package com.bookstrap.harry.config;
 
 import java.io.IOException;
 
@@ -23,7 +23,14 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
-	 
+	 //因為@configuration的關係，在建立起本class時間上不同的問題
+	private UserService uService;
+	
+	   @Autowired
+	    public WebSecurityConfig(UserService uService) {
+	        this.uService = uService;
+	    }
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().and().csrf().disable().authorizeRequests()
@@ -46,16 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .userService(oauthUserService).and()
                     .successHandler(new AuthenticationSuccessHandler() {
                     	 
-                        @Override //36:00
+                        @Override 
                         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                 Authentication authentication) throws IOException, ServletException {
                  
                             CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
                  
-                            UserService uService = new UserService();
                             System.out.println("Email: " + oauthUser.getEmail());
                             uService.processOAuthPostLogin(oauthUser.getEmail());
-//                            userService.processOAuthPostLogin(oauthUser.getEmail());
                            
                             
                             String mName = oauthUser.getName();
