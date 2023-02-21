@@ -45,7 +45,15 @@ public class ShopsController {
 //		
 //        return "shop/shophome";
 //	}
+	
+	
+	@GetMapping("/shops/shopmap")
+	public String gomapshop() {
 
+        return "shop/shopmap";
+	}
+	
+	
 	@ResponseBody
 	@PostMapping("/shops/postAjax")
 	public String postAjaxUpload(@RequestParam("shopName") String shopName,
