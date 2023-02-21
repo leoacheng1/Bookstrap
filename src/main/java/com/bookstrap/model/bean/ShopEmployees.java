@@ -1,17 +1,23 @@
 package com.bookstrap.model.bean;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.bookstrap.model.Shops;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="ShopEmployees")
@@ -33,6 +39,7 @@ public class ShopEmployees{
 	@Column(name="emp_name")
 	private String empName;
 
+	@Lob
 	@Column(name="emp_photo")
 	private byte[] empPhoto;
 	
@@ -46,6 +53,10 @@ public class ShopEmployees{
 	@JoinColumn(name="emp_id")
 	@MapsId
 	private Employees employee;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="attSemps", cascade = CascadeType.ALL)
+	private List<ShopEmployeesAttendance> attendances;
 
 
 	public ShopEmployees() {
@@ -130,6 +141,16 @@ public class ShopEmployees{
 
 	public void setEmployee(Employees employee) {
 		this.employee = employee;
+	}
+
+
+	public List<ShopEmployeesAttendance> getAttendances() {
+		return attendances;
+	}
+
+
+	public void setAttendances(List<ShopEmployeesAttendance> attendances) {
+		this.attendances = attendances;
 	}
 
 }
