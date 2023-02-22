@@ -189,7 +189,8 @@ public class MemberController {
 			@RequestParam("memberPassword") String memberPassword, HttpSession session, Model m) {
 
 		Map<String, String> errors = new HashMap<String, String>();
-		session.setAttribute("errors", errors);
+//		session.setAttribute("errors", errors);
+		m.addAttribute("errors", errors);
 
 		if (memberEmail == null || memberEmail.length() == 0) {
 			errors.put("Email", "Email is required");
