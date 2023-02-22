@@ -41,7 +41,8 @@
             </select><br />
             出版社:<input type="text" name="publisher" id="publisherInput" value="${book.publisher}" /><br />
             出版日期:<input type="date" name="date" id="dateInput" value="${book.date}" /><br />
-            封面圖片:<input type="file" name="photo" id="photoInput" value="${book.photo}" /><br />
+            封面圖片:<img style="width:100px;height:120px" src="${contextRoot}/books/id?id=${book.id}" id="previewImg">
+            <input type="file" name="photo" id="photoInput" /><br />
             折扣:<input type="text" name="discount" id="discountInput" value="${book.discount}" /><br />
             定價:<input type="text" name="price" id="priceInput" value="${book.price}" /><br />
           </form>
@@ -99,14 +100,12 @@
             formdata.append("grade", grade);
 
             console.log(formdata)
-
-
             console.log("author:" + author)
             console.log("pages:" + pages)
             console.log("photo:" + photo)
             axios({
               method: 'put',
-              url: 'http://localhost:8080/Bookstrap/books/only',
+              url: 'http://localhost:8080/Bookstrap/books/update',
               data: formdata,
               headers: { "Content-Type": "multipart/form-data" }
             })
@@ -121,6 +120,21 @@
 
           })
 
+
+          $("#photoInput").change(function(){
+            readURL(this);
+          });
+
+          function readURL(input){
+            if(input.files && input.files[0]){
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                $("#previewImg").attr('src', e.target.result);
+
+              }
+              reader.readAsDataURL(input.files[0]);
+            }
+          }
         </script>
         <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
       </body>

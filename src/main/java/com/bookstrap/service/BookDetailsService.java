@@ -32,12 +32,13 @@ public class BookDetailsService {
 	
 	public BookDetails getDetailsByID(Integer id) {
         Optional<BookDetails> optional = dDao.findById(id);
-		
-		if(optional.isPresent()) {
-			return optional.get();
-		}
-		
-		return null;
+
+//		if(optional.isPresent()) {
+//			return optional.get();
+//		}
+//		
+//		return null;
+		return optional.get();
 	}
 	
 	public Page<BookDetails> getBookByPage(Integer pageNumber){

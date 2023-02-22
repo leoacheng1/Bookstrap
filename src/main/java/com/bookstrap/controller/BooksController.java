@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -114,14 +115,35 @@ public class BooksController {
 	
 	@ResponseBody
 	@GetMapping("/books/alldetails")
-	public List<BookDetails> showAllDetails(@RequestParam("id") Integer id) {
-		BookDetails detail = dService.getDetailsByID(id);
-		String size = detail.getSize();
-		System.out.println(size);
-		List<BookDetails> list = new ArrayList<>();
-		list.add(detail);
+	public BookDetails showAllDetails(Integer id) {
+//		BookDetails detail = 	
+		BookDetails dService2 = dService.getDetailsByID(id);
+//	
+//		List<BookDetails> list = new ArrayList<>();
+//		List<Stirng> dList = new ArrayList<>();
+//		list.add(dService2);
+//		for (BookDetails books:list) {
+//			System.out.println(books.getSize());
+//			System.out.println(books.getIntro());
+//			System.out.println(books.getGrade());
+//			System.out.println(books.getPages());
+//			String size=books.getSize();
+//			String intro=books.getIntro();
+//			String grade=books.getGrade();
+//			String pages=books.getPages().toString();
+//			
+//			dList.add(size);
+//			dList.add(intro);
+//			dList.add(grade);
+//			dList.add(pages);
+//		}
+		return	dService2;
+//		String size = detail.getSize();
+//		System.out.println(size);
+//		List<BookDetails> list = new ArrayList<>();
+//		list.add(detail);
+//		
 		
-		return  null;
 	}
 
 	@ResponseBody
@@ -178,48 +200,6 @@ public class BooksController {
 		return new ResponseEntity<byte[]>(photofile, headers, HttpStatus.OK);
 	}
 
-	@ResponseBody
-	@GetMapping("/books/details")
-	public ArrayList<BookDetails> getDetailsById(@RequestParam Integer id) {
-		BookDetails bookdetails = dService.getDetailsByID(id);
-		ArrayList<BookDetails> list = new ArrayList<>();
-		
-		String size = bookdetails.getSize();
-		Integer pages = bookdetails.getPages();
-		String intro = bookdetails.getIntro();
-		String grade = bookdetails.getGrade();
-		list.add(bookdetails);
-//		System.out.println("size:"+size);
-//		System.out.println("pages:"+pages);
-//		System.out.println("intro:"+intro);
-//		System.out.println("grade:"+grade);
-		return list;
-
-
-	}
-
-//	@PutMapping("/books/put")
-//	public String updateBook(@RequestParam("id") Integer id,
-//			@RequestParam("name") String name,
-//			@RequestParam("author") String author,
-//			@RequestParam("translator") String translator,
-//			@RequestParam("publisher") String publisher,
-//			@RequestParam("date") Date date,
-//			@RequestParam("languages") String languages,
-//			@RequestParam("category") String category,
-//			@RequestParam("discount") Integer discount,
-//			@RequestParam("price") Integer price,
-//			@RequestParam("size") String size,
-//			@RequestParam("pages") Integer pages,
-//			@RequestParam("intro") String intro,
-//			@RequestParam("grade") String grade,
-//			@RequestParam("photo") MultipartFile photo,Model model) throws IOException {
-//		Books book = bService.uploadById(id, name, author, translator, publisher, date, languages, category, discount, price, photo);
-//		BookDetails detail = dService.uploadById(id, size, pages, intro, grade);
-//		model.addAttribute("book",book);
-//		model.addAttribute("detail",detail);
-//		return "";
-//	}
 
 	// 跳轉至修改書籍頁面
 	@GetMapping("/books/edit")
@@ -233,8 +213,8 @@ public class BooksController {
 	
     // update
 	@ResponseBody
-	@PutMapping("/books/only")
-	public String test(@RequestParam("id") Integer id, @RequestParam("name") String name,
+	@PutMapping("/books/update")
+	public String updateBookById(@RequestParam("id") Integer id, @RequestParam("name") String name,
 			@RequestParam("author") String author, @RequestParam("translator") String translator,
 			@RequestParam("publisher") String publisher, @RequestParam("date") Date date,
 			@RequestParam("languages") String languages, @RequestParam("category") String category,
@@ -245,7 +225,6 @@ public class BooksController {
 
 		try {
 			byte[] photoBytes = photo.getBytes();
-			System.out.println(photoBytes);
 			Books book = bService.uploadById(id, name, author, translator, publisher, date, languages, category,
 					discount, price, photoBytes);
 			BookDetails detail = dService.uploadById(id, size, pages, intro, grade);
@@ -255,9 +234,6 @@ public class BooksController {
 		return null;
 	}
 	
-	public String test(Integer id) {
-		bService.testDeleteDetailById(id);
-		return null;
-	}
+	
 
 }

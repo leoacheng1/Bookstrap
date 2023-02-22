@@ -58,14 +58,23 @@
         <a href="${contextRoot}/books/edit?id=${book.id}">
           <button id="edit-btn" class="edit-btn btn btn-primary" data-bkid="${book.id}">更新</button>
         </a>
+       
       </td>     
       <td>
         <button class="delete-btn btn btn-danger"  data-bkid="${book.id}">刪除</button>
       </td>
     </tr>
-    </jstl:forEach>
+    <tbody id="bbody" class="${book.id}" body-bkid="${book.id}">  
+ 
     </tbody>
+    </jstl:forEach>
+
+    </tbody>
+   
 </table>
+<div id="bbody" class="${book.id}" >  
+
+</div>
 
 <jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
   <jstl:choose>

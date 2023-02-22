@@ -28,59 +28,63 @@ function sendDeleteAjax(bkID) {
     })
 }
 
-//////  詳細資料鍵  //////
+
+//////////////  詳細資料鍵  /////////////////
 const detailBtn = document.getElementsByClassName('detail-btn');
 console.log(detailBtn.length)
 for( i=0 ; i<=detailBtn.length ;  i++){
-  detailBtn[i].addEventListener('click',function(e){
+  detailBtn[i].addEventListener('click',(function(e){
     let bkID = this.getAttribute('data-bkid');
     console.log(bkID)
     getDetails(bkID);
-  })
+  }))
 }
+
 function getDetails(bkID){
   axios({
       url:'http://localhost:8080/Bookstrap/books/alldetails',
       method:'get',
-      responseType:'text',
       params:{
           id:bkID
       }
   })
   .then(res=>{
-      console.log(res.data)
-      // htmlMaker(res.data)
+      // console.log(res)
+      htmlMaker(res)
   })
   .catch(err=>{
       console.log(err)
   })
 }
-function htmlMaker(data){
-  console.log(data.data)
-    // let table = document.createElement('table')
-    // let thead = document.createElement('thead')
-    // let tr = document.createElement('tr')
-    // let th = document.createElement('th')
-    // table.innerHTML = "<table>"
-    // thead.innerHTML = "<thead>"
-    // tr.innerHTML = "<tr>"
-    // th.innerHTML = "<th>尺寸<th>"
-    // th.innerHTML = "<th>頁數<th>"
-    // th.innerHTML = "<th>簡介<th>"
-    // th.innerHTML = "<th>分級<th>"
-    // tr.innerHTML = "</tr>"
-    // thead.innerHTML = "</thead>"
-    // data.forEach((element,index)=> {
-    //     let tbody = document.createElement('tbody')
-    //     let td = document.createElement('td')
-    //     div.innerHTML += "<div> id: "+element.id+"</div>"
-    //     div.innerHTML += "<div> 名字: "+element.name+"</div>"
-    //     div.innerHTML += "<div> 會員等級: "+element.level+"</div>"
-    //     output.append(div)
-    // });
-    // table.innerHTML = "</table>"
-}
 
+function htmlMaker(data){
+  let bookmsg=""
+  bookmsg='<tr>'
+ +' <td colspan="2" id="sizeInput">尺寸</td>'
+ +' <td colspan="2" id="pagesInput">頁數</td>'
+ +' <td colspan="5" id="introInput">簡介</td>'
+ +' <td colspan="2" id="gradeInput">分級</td>'
+ +' <td colspan="2" id="crossInput"><button type="button" class="btn-close" aria-label="Close"></button></td>'
+//  +' <td colspan="2" id="crossInput"><buttom><img style="width:15px;height:15px" src="../book/cross.png"></button></td>'
+ +' </tr>'
+ +' <tr>'
+ +' <td colspan="2" id="size">'+data.data.size+'</td>'
+ +' <td colspan="2" id="pages">'+data.data.pages+'</td>'
+ +' <td colspan="5" id="intro">'+data.data.intro+'</td>'
+ +' <td colspan="2" id="grade">'+data.data.grade+'</td>'
+ +' <td colspan="2" id="clear"></td>'
+ +' </tr>'
+
+  let cancel =document.querySelector(`[body-bkid='${data.data.id}']`)
+  cancel.innerHTML=bookmsg
+  
+  const clearBtn = document.getElementById('crossInput');
+  clearBtn.addEventListener('click',function(e){
+    console.log("crossInput get")
+  cancel.innerHTML=""
+  
+  })
+}
 
 
 /////  所有書籍鍵  ////

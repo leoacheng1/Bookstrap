@@ -89,7 +89,4 @@ public class BooksService {
 		return null;
 	}
 	
-	public void testDeleteDetailById(Integer id) {
-		dDao.deleteById(id);
-	}
 }
