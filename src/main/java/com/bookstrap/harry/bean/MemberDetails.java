@@ -25,8 +25,11 @@ public class MemberDetails {
 @Column(name = "member_id" )
 private Integer memberId;
 
-@Column(name = "member_name")
-private String memberName;
+@Column(name = "member_lastname")
+private String memberLastName;
+
+@Column(name = "member_firstname")
+private String memberFirstName;
 
 @Lob
 @Column(name = "photo")
@@ -94,15 +97,34 @@ public void setMemberId(Integer memberId) {
 
 
 
-public String getMemberName() {
-	return memberName;
+
+
+
+public String getMemberLastName() {
+	return memberLastName;
 }
 
 
 
-public void setMemberName(String memberName) {
-	this.memberName = memberName;
+
+public void setMemberLastName(String memberLastName) {
+	this.memberLastName = memberLastName;
 }
+
+
+
+
+public String getMemberFirstName() {
+	return memberFirstName;
+}
+
+
+
+
+public void setMemberFirstName(String memberFirstName) {
+	this.memberFirstName = memberFirstName;
+}
+
 
 
 

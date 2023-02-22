@@ -24,12 +24,22 @@ public class UserService {
 		if(memberAccount == null) {
 			Members newMember = new Members();
 			newMember.setMemberAccount(userEmail);
-			newMember.setMemberValid(1);  //要用5代表Google?
+			newMember.setMemberValid(1);  
 			newMember.setMemberLevel(1);
 			newMember.setMemberPassword(userEmail);
 			newMember.setAuthProvider(AuthenticationProvider.GOOGLE);
 			uDao.save(newMember);
 		}
+		
+	}
+	
+	public Members findPasswordByEmail(String userEmail) {
+		Members member = uDao.getMemberAccountByUserEmail(userEmail);
+		
+		member.getMemberAccount();
+		member.getMemberPassword();
+		uDao.save(member);
+		return member;
 		
 	}
 	
