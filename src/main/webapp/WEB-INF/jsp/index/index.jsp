@@ -277,44 +277,44 @@ body {
             <nav>
                 <!-- <span class="fs-4">即將上架</span> <br /> -->
                 <div class="d-flex align-items-center align-middle">
-                    <img src="logo/logo2.png" width="4%" class="" />
-                    <p class="ms-2 fs-4 my-auto">即將上架</p>
+                    
+                    <p class="ms-2 fs-4 my-auto mb-2">即將上架</p>
                 </div>
                 <div class="nav nav-tabs" id=" nav-tab" role="tablist">
                     <!-- 要改改這裡的data-bs-target="#..." -->
                     <!-- id 中間名稱 改  新書推薦t1 內附類別 i1、 i2 依此類推-->
                     <button
-                        class="nav-link active border border-2 border-dark rounded-0 border-top-0 border-bottom-0 text-dark"
+                        class="btn btn-light rounded-0  active"
                         id="nav-t1i1-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i1" type="button" role="button"
                         aria-controls="nav-t1i1" aria-selected="true">
                         中文
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t1i2-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i2" type="button" role="tab"
                         aria-controls="nav-t1i2" aria-selected="false">
                         外文
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t1i3-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i3" type="button" role="tab"
                         aria-controls="nav-t1i3" aria-selected="false">
                         人氣小說
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t1i4-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i4" type="button" role="tab"
                         aria-controls="nav-t1i4" aria-selected="false">
                         雜誌新刊
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t1i5-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i5" type="button" role="tab"
                         aria-controls="nav-t1i5" aria-selected="false">
                         人氣小說
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t1i6-tab" data-bs-toggle="tab" data-bs-target="#nav-t1i6" type="button" role="tab"
                         aria-controls="nav-t1i6" aria-selected="false">
                         創意生活
@@ -435,7 +435,136 @@ body {
                 </div>
             </div>
         </div>
-        <!-- 新書推薦 尾 -->
+        <!-- 即將上架 尾 -->
+
+
+        <!-- 本月熱銷 頭 (寫死 僅供參考)-->
+
+ <div class="container mt-5 mb-5">
+    <nav>
+
+        <div class="d-flex align-items-center">
+            
+            <p class="ms-2 fs-4 my-auto">本月熱銷</p>
+        </div>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <!-- 要改改這裡的data-bs-target="#..." -->
+            <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
+            <button
+                class="btn btn-light rounded-0 active"
+                id="nav-t3i1-tab" data-bs-toggle="tab" data-bs-target="#nav-t3i1" type="button" role="button"
+                aria-controls="nav-t3i1" aria-selected="true">
+                中文
+            </button>
+            <button
+                class="btn btn-light rounded-0 "
+                id="nav-t3i2-tab" data-bs-toggle="tab" data-bs-target="#nav-t3i2" type="button" role="tab"
+                aria-controls="nav-t3i2" aria-selected="false">
+                外文
+            </button>
+            <button
+                class="btn btn-light rounded-0 e"
+                id="nav-t3i3-tab" data-bs-toggle="tab" data-bs-target="#nav-t3i3" type="button" role="tab"
+                aria-controls="nav-t3i3" aria-selected="false">
+                人氣小說
+            </button>
+            <button
+                class="btn btn-light rounded-0 "
+                id="nav-t3i4-tab" data-bs-toggle="tab" data-bs-target="#nav-t3i4" type="button" role="tab"
+                aria-controls="nav-t3i4" aria-selected="false">
+                雜誌新刊
+            </button>
+            <button
+                class="btn btn-light rounded-0 "
+                id="nav-t3i5-tab" data-bs-toggle="tab" data-bs-target="#nav-t3i5" type="button" role="tab"
+                aria-controls="nav-t3i5" aria-selected="false">
+                人氣小說
+            </button>
+            <button
+                class="btn btn-light rounded-0 "
+                id="nav-t3i6-tab" data-bs-toggle="tab" data-bs-target="#nav-t3i6" type="button" role="tab"
+                aria-controls="nav-t3i6" aria-selected="false">
+                創意生活
+            </button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <!-- nav-home 改此id -->
+        <div class="tab-pane fade show active" id="nav-t3i1" role="tabpanel" aria-labelledby="nav-home-tab"
+            tabindex="0">
+            <div class="container">
+                <div class="homeslider">
+                    <div class="slider">
+                        <img src="sildePage/i1.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i2.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i3.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i1.jpg" />
+                    </div>
+                    <div class="slider">
+                        <img src="sildePage/i2.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i3.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i1.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i2.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i3.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i1.jpg" />
+                    </div>
+                    <div class="slider">
+                        <img src="sildePage/i2.jpg" />
+                    </div>
+
+                    <div class="slider">
+                        <img src="sildePage/i3.jpg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-t3i2" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            t3i2
+        </div>
+        <div class="tab-pane fade" id="nav-t3i3" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+            t3i3
+        </div>
+
+        <div class="tab-pane fade" id="nav-t3i4" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+            t3i4
+        </div>
+
+        <div class="tab-pane fade" id="nav-t3i5" role="tabpanel" aria-labelledby="nav-disabled-tab"
+            tabindex="0">
+            t3i5
+        </div>
+
+        <div class="tab-pane fade" id="nav-t3i6" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+            t3i6
+        </div>
+    </div>
+</div>
+
+<!-- 本月熱銷 尾 -->
 
 
         <!-- 推薦卡1 top -->
@@ -510,48 +639,48 @@ body {
 
         <!-- 新書推薦 頭 (寫死 僅供參考)-->
 
-        <div class="container mt-5 ">
+        <div class="container mt-5 mb-5">
             <nav>
 
                 <div class="d-flex align-items-center">
-                    <img src="logo/logo2.png" width="4%" alt="" />
+                    
                     <p class="ms-2 fs-4 my-auto">新書推薦</p>
                 </div>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <!-- 要改改這裡的data-bs-target="#..." -->
                     <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
                     <button
-                        class="nav-link active border border-2 border-dark rounded-0 border-top-0 border-bottom-0 text-dark"
+                        class="btn btn-light rounded-0 active"
                         id="nav-t2i1-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i1" type="button" role="button"
                         aria-controls="nav-t2i1" aria-selected="true">
                         中文
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t2i2-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i2" type="button" role="tab"
                         aria-controls="nav-t2i2" aria-selected="false">
                         外文
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 e"
                         id="nav-t2i3-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i3" type="button" role="tab"
                         aria-controls="nav-t2i3" aria-selected="false">
                         人氣小說
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t2i4-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i4" type="button" role="tab"
                         aria-controls="nav-t2i4" aria-selected="false">
                         雜誌新刊
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t2i5-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i5" type="button" role="tab"
                         aria-controls="nav-t2i5" aria-selected="false">
                         人氣小說
                     </button>
                     <button
-                        class="nav-link border border-2 border-dark rounded-0 border-top-0 border-bottom-0 border-start-0 text-dark"
+                        class="btn btn-light rounded-0 "
                         id="nav-t2i6-tab" data-bs-toggle="tab" data-bs-target="#nav-t2i6" type="button" role="tab"
                         aria-controls="nav-t2i6" aria-selected="false">
                         創意生活
@@ -637,14 +766,18 @@ body {
         <!-- 新書推薦 尾 -->
 
 
+
+ 
+
+
+
         <!-- 推薦卡2 top -->
-        <div class="container mt-5
-        ">
-        <h4 class="mb-4">Bookstrap library</h4>
         <div class="container mt-5">
+        <h4 class="mb-5 mt-5">Bookstrap library</h4>
+        <div class="container ">
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 <div class="col">
-                    <div class="card pb-3 pe-3"">
+                    <div class="card pb-3 pe-3 shadow border-light">
                         <img src="ad1/3.webp" class="card-img-top w-50 mx-auto" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
@@ -658,7 +791,7 @@ body {
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card pb-3 pe-3"">
+                    <div class="card pb-3 pe-3 shadow border-light">
                         <img src="ad1/4.webp" class="card-img-top w-50 mx-auto" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
@@ -672,7 +805,7 @@ body {
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card pb-3 pe-3"">
+                    <div class="card pb-3 pe-3 shadow border-light">
                         <img src="ad1/5.webp" class="card-img-top w-50 mx-auto" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
@@ -686,7 +819,7 @@ body {
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card pb-3 pe-3">
+                    <div class="card pb-3 pe-3 shadow border-light">
                         <img src="ad1/6.webp" class="card-img-top w-50 mx-auto" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
@@ -707,8 +840,8 @@ body {
 
 
 
+        <footer class="text-muted mt-5 border border-2 border-bottom-0 border-start-0 border-end-0">
         <div class="container">
-            <footer class="text-muted mt-5 border border-2 border-bottom-0 border-start-0 border-end-0">
                 <p class="float-right justify-content-center">
                     ##########Test only############ 客戶服務專線：02-26535588
                     傳真：02-27885008 服務時間：週一~五 8:00~19:00，週六~日、例假日
@@ -721,8 +854,8 @@ body {
                     <a href="">服務條款</a>
                     <a href="" class="ms-2">隱私全政策</a>
                 </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
 
         <!-- //////////////js///////////// -->
         <script src="js/bootstrap.bundle.min.js"></script>

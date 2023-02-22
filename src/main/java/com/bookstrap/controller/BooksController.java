@@ -113,38 +113,37 @@ public class BooksController {
 		return mav;
 	}
 	
-	@ResponseBody
-	@GetMapping("/books/alldetails")
-	public BookDetails showAllDetails(Integer id) {
-//		BookDetails detail = 	
-		BookDetails dService2 = dService.getDetailsByID(id);
-//	
-//		List<BookDetails> list = new ArrayList<>();
-//		List<Stirng> dList = new ArrayList<>();
-//		list.add(dService2);
-//		for (BookDetails books:list) {
-//			System.out.println(books.getSize());
-//			System.out.println(books.getIntro());
-//			System.out.println(books.getGrade());
-//			System.out.println(books.getPages());
-//			String size=books.getSize();
-//			String intro=books.getIntro();
-//			String grade=books.getGrade();
-//			String pages=books.getPages().toString();
-//			
-//			dList.add(size);
-//			dList.add(intro);
-//			dList.add(grade);
-//			dList.add(pages);
-//		}
-		return	dService2;
-//		String size = detail.getSize();
-//		System.out.println(size);
-//		List<BookDetails> list = new ArrayList<>();
-//		list.add(detail);
-//		
+	@GetMapping("/books/id")
+	public ResponseEntity<byte[]> getBookById(@RequestParam Integer id){
+		Books book1 = bService.getBookById(id);
+		byte[] photofile = book1.getPhoto();
 		
-	}
+		HttpHeaders headers = new HttpHeaders();
+		
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		          
+		return new ResponseEntity<byte[]>(photofile,headers, HttpStatus.OK);
+	} 
+	
+	
+	@GetMapping("/books/details")
+	public List<BookDetails> getDetailsById(@RequestParam Integer Id) {
+//        BookDetails bookdetails = dService.getDetailsByID(Id);
+//        ArrayList<BookDetails> list = new ArrayList<>();
+//        bookdetails.getSize();
+//        bookdetails.getPages();
+//        bookdetails.getIntro();
+//        bookdetails.getGrade();
+//        list.add(bookdetails);
+        return dService.findById(Id);
+    
+//        bookdetails;
+		}
+	
+	
+//	public String updateBookApi() {
+//		
+//	}
 
 	@ResponseBody
 	@GetMapping("/books/api/page")

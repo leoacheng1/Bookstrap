@@ -6,27 +6,27 @@
 
     <head>
       <meta charset="UTF-8">
-      <title>Member main</title>
+      <title>Orders</title>
 
     </head>
 
     <body>
 
-      <jsp:include page="layout/MainHeader.jsp"></jsp:include>
+      <jsp:include page="../layout/MainHeader.jsp"></jsp:include>
 
 
 
       <div class="container-fluid">
         <div class="row">
 
-          <jsp:include page="layout/MainNav.jsp"></jsp:include>
+          <jsp:include page="../layout/MainNav.jsp"></jsp:include>
 
 
           <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div
               class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-2">
               <div class="container">
-                <h3 class="text-center"> 我的帳戶 </h3>
+                <h3 class="text-center"> 我的訂單 </h3>
               </div>
             </div>
 
@@ -99,4 +99,4 @@
         crossorigin="anonymous"></script>
       <script src="${contextRoot}/js/dashboard.js"></script>
 
-    </html>
+    </html>>

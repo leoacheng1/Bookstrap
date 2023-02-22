@@ -2,27 +2,27 @@
 
 package com.bookstrap.model.bean;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="Employees")
 public class Employees {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="emp_id")
 	private Integer empId;
 	
+	@Lob
 	@Column(name = "emp_photo")
 	private byte[] empPhoto;
 	
@@ -36,14 +36,14 @@ public class Employees {
 	private String empName;
 	
 	@Column(name="sex")
-	private byte sex;
+	private Byte sex;
 	
 	@Column(name="emp_position")
 	private String empPosition;
 	
-	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "employee")
-	private List<ShopEmployees> shopEmployees;
+	@OneToOne(mappedBy="employee", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private ShopEmployees shopEmployee;
 
 	public Employees() {
 		
@@ -81,11 +81,11 @@ public class Employees {
 		this.empName = empName;
 	}
 
-	public byte getSex() {
+	public Byte getSex() {
 		return sex;
 	}
 
-	public void setSex(byte sex) {
+	public void setSex(Byte sex) {
 		this.sex = sex;
 	}
 
@@ -97,11 +97,20 @@ public class Employees {
 		this.empPosition = empPosition;
 	}
 
-	public List<ShopEmployees> getShopEmployees() {
-		return shopEmployees;
+	public byte[] getEmpPhoto() {
+		return empPhoto;
 	}
 
-	public void setShopEmployees(List<ShopEmployees> shopEmployees) {
-		this.shopEmployees = shopEmployees;
-	}	
+	public void setEmpPhoto(byte[] empPhoto) {
+		this.empPhoto = empPhoto;
+	}
+
+	public ShopEmployees getShopEmployee() {
+		return shopEmployee;
+	}
+
+	public void setShopEmployee(ShopEmployees shopEmployee) {
+		this.shopEmployee = shopEmployee;
+	}
+	
 }

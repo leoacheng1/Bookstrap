@@ -118,21 +118,7 @@
                   </div>
                 </div>
 
-                <!-- 密碼應另設視窗 -->
-                <div class="col-12">
-                <!-- <label for="" class="form-label">密碼</label> -->
-                <div class="input-group has-validation">
-                  
-                  <input type="password" class="form-control" id="memberAccount" placeholder="password" name="memberPassword" hidden>
-                <div class="invalid-feedback">
-                    請輸入密碼
-                  </div>
-                </div>
-              </div>
-
-             
-<!-- 密碼應另設視窗 -->
-
+               
     
                 <div class="col-12">
                   <label for="email" class="form-label">電子郵件地址 <span class="text-muted">(Optional)</span></label>
