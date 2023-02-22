@@ -6,7 +6,8 @@ Create Table Members(
 	password nvarchar(max) not null,
 	valid tinyint not null, --驗證，有沒有停權
 	vertification_code nvarchar(255),
-	member_level nvarchar(50)
+	member_level nvarchar(50),
+	reset_password_token nvarchar(45)
 );
 
 Create Table MemberDetails(
