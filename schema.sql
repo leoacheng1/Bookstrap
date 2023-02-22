@@ -11,7 +11,8 @@ Create Table Members(
 
 Create Table MemberDetails(
 	member_id int FOREIGN KEY REFERENCES Members(member_id) primary key,
-	member_name nvarchar(50),
+	member_lastname nvarchar(50) not null,
+	member_firstname nvarchar(50) not null,
 	photo varbinary,
 	sex tinyint, --性別
 	email nvarchar(max),

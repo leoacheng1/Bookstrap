@@ -42,10 +42,10 @@ public class MemberService {
 		return mDao.save(member);
 	}
 
-	public void sendVertificationEnail(Members member, MemberDetails memberDetail) throws UnsupportedEncodingException, MessagingException {
+	public void sendVertificationEnail(Members member) throws UnsupportedEncodingException, MessagingException {
 			String subject = "請確認您的註冊信箱";
 			String senderName = "BookStrap team";
-			String mailContent ="<p>"+ memberDetail.getMemberName() 
+			String mailContent ="<p>"+ member.getMemberAccount()
 					+ "您好" + "</p>";
 			mailContent += "<p>請進入連結以認證註冊信箱地址:</p>";
 			
@@ -57,7 +57,7 @@ public class MemberService {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message);
 			helper.setFrom("bookstrap157@gmail.com", senderName);
-			helper.setTo(memberDetail.getMemberEmail());
+			helper.setTo(member.getMemberAccount());
 			helper.setSubject(subject);
 			helper.setText(mailContent, true);
 			
@@ -137,5 +137,31 @@ public class MemberService {
 		}
 	
 	}
+	
+	
+	
+	
+//	public void sendVertificationEnail(Members member, MemberDetails memberDetail) throws UnsupportedEncodingException, MessagingException {
+//		String subject = "請確認您的註冊信箱";
+//		String senderName = "BookStrap team";
+//		String mailContent ="<p>"+ memberDetail.getMemberName() 
+//				+ "您好" + "</p>";
+//		mailContent += "<p>請進入連結以認證註冊信箱地址:</p>";
+//		
+////		這裡用localhost充當
+//		String verifyURL = "http://localhost:8080/Bookstrap" + "/member/verify?code=" + member.getVertificationCode();
+//		mailContent +="<h3><a href=\"" + verifyURL + "\">驗證</a></h3>";
+//		mailContent +="<p>BookStrap team</p>";
+//
+//		MimeMessage message = mailSender.createMimeMessage();
+//		MimeMessageHelper helper = new MimeMessageHelper(message);
+//		helper.setFrom("bookstrap157@gmail.com", senderName);
+//		helper.setTo(memberDetail.getMemberEmail());
+//		helper.setSubject(subject);
+//		helper.setText(mailContent, true);
+//		
+//		mailSender.send(message);
+//
+//}
 
 }
