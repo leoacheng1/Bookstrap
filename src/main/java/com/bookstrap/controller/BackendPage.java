@@ -18,12 +18,12 @@ public class BackendPage {
 	private EmployeesService empService;
 
 	@GetMapping("/backend/login")
-	public String LoginPage() {
+	public String loginPage() {
 		return "/backend/login";
 	}
 
 	@GetMapping("backend/index")
-	public String IndexPage(HttpSession session, Model m) {
+	public String indexPage(HttpSession session, Model m) {
 		if (session.getAttribute("empAccount") == null) {
 			m.addAttribute("error", "請先登入");
 			return "backend/login";
@@ -44,9 +44,15 @@ public class BackendPage {
 			return "backend/login";
 		}
 	}
+	
+	//Mail related pages
+	@GetMapping("/backend/composemail")
+	public String composeMail() {
+		return "/backend/controllpanel/owner/mail/writemail";
+	}
 
 	@GetMapping("/backend/template")
-	public String TemplatePage() {
+	public String templatePage() {
 		return "/backend/layout/template";
 	}
 

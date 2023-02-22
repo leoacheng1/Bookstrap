@@ -35,6 +35,12 @@ public class MailAttachment {
 	@Column(name = "attachment_file")
 	private byte[] attachmentFile;
 	
+	@Column(name = "attachment_name")
+	private String attachmentName;
+	
+	@Column(name = "attachment_type")
+	private String attachmentType;
+	
 	public MailAttachment() {
 	}
 
@@ -68,6 +74,22 @@ public class MailAttachment {
 
 	public void setMailId(Integer mailId) {
 		this.mailId = mailId;
+	}
+
+	public String getAttachmentName() {
+		return attachmentName;
+	}
+
+	public String getAttachmentType() {
+		return attachmentType;
+	}
+
+	public void setAttachmentName(String attachmentName) {
+		this.attachmentName = attachmentName;
+	}
+
+	public void setAttachmentType(String attachmentType) {
+		this.attachmentType = attachmentType;
 	}
 
 }

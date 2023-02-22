@@ -6,6 +6,7 @@ package com.bookstrap.model.bean;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,11 +39,11 @@ public class Mail {
 	
 	@OneToOne
 	@JoinColumn(name = "mail_from")
-	private Employees employeeFrom;
+	private MailAccount accountFrom;
 	
 	@OneToOne
 	@JoinColumn(name = "mail_to")
-	private Employees employeeTo;
+	private MailAccount accountTo;
 	
 	@Temporal(TemporalType.TIMESTAMP) // sql.Date這個不用寫
 	@Column(name = "mail_time")
@@ -111,20 +112,20 @@ public class Mail {
 		this.mailId = mailId;
 	}
 
-	public Employees getEmployeeFrom() {
-		return employeeFrom;
+	public MailAccount getAccountFrom() {
+		return accountFrom;
 	}
 
-	public void setEmployeeFrom(Employees employeeFrom) {
-		this.employeeFrom = employeeFrom;
+	public MailAccount getAccountTo() {
+		return accountTo;
 	}
 
-	public Employees getEmployeeTo() {
-		return employeeTo;
+	public void setAccountFrom(MailAccount accountFrom) {
+		this.accountFrom = accountFrom;
 	}
 
-	public void setEmployeeTo(Employees employeeTo) {
-		this.employeeTo = employeeTo;
+	public void setAccountTo(MailAccount accountTo) {
+		this.accountTo = accountTo;
 	}
 
 	public Date getMailTime() {

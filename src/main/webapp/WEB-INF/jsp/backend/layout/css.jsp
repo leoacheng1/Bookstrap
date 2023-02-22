@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="${contextRoot}/eddie/css/adminlte.min.css"> 
 -->
 
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
 <link rel="stylesheet" href="http://localhost:8080/Bookstrap/eddie/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://localhost:8080/Bookstrap/eddie/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="http://localhost:8080/Bookstrap/eddie/css/all.min.css"> 
