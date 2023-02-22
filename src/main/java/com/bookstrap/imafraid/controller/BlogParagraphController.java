@@ -1,13 +1,18 @@
 package com.bookstrap.imafraid.controller;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookstrap.imafraid.bean.BlogParagraph;
 import com.bookstrap.imafraid.model.BlogParagraphRepository;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Controller
 public class BlogParagraphController {
@@ -40,4 +45,15 @@ public class BlogParagraphController {
 	public BlogParagraph insert2(@RequestBody BlogParagraph para2) {
 		return BlogParaDao.save(para2);
 	}
+	@ResponseBody
+	@DeleteMapping
+	public String deleteById(Integer id) {
+		
+		try { BlogParaDao.deleteById(id);
+		}catch(EmptyResultDataAccessException e) {
+			
+			return "查無此筆文章";
+		}
+		return "成功刪除";
 	}
+}
