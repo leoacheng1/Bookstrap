@@ -64,9 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                            
                             
                             String mName = oauthUser.getName();
+                            String mEmail = oauthUser.getEmail();
                             
 //                          request.setAttribute("mName", mName);
-                            request.getRequestDispatcher("/google/get?mName="+ mName).forward(request, response);
+                            request.getRequestDispatcher("/google/get?mEmail="+ mEmail).forward(request, response);
                 //讓gmail帳號進入之後再新曾基本資料
 //                            response.sendRedirect("/Bookstrap/index");
                         }

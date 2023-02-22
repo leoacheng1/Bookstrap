@@ -218,9 +218,7 @@ public class MemberController {
 			Integer result2 = mEmail2.getMemberId();
 			session.setAttribute("memberId", result2);
 			return "redirect:/member/registrationpage";
-					}
-		
-		else if (status == 2) {
+					} else if (status == 2) {
 
 			// 要先得到由Email找出的Id
 			Members mEmail = memberService.useEmailFindId(memberEmail);
