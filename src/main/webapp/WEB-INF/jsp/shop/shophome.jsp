@@ -35,11 +35,11 @@
       </div>
       <br>
 
-      <div class="container">
+
       <div id="view">
 
       </div>
-    </div>
+
 
 
 
@@ -67,9 +67,10 @@
                 <input type="time" class="form-control" id="shopcloseHourInput" name="shopcloseHour" min="00:00"
                   max="24:00" required>
                 <label class="form-label">經度</label>
-                <input type="text" class="form-control" name="longitude" id="longitudeInput">
-                <label class="form-label">緯度</label>
-                <input type="text" class="form-control" name="latitude" id="latitudeInput">
+                <input type="text" class="form-control" name="longitude" id="longitudeInput" readonly="readonly"
+                  disabled>
+                <label class="form-label" >緯度</label>
+                <input type="text" class="form-control" name="latitude" id="latitudeInput" readonly="readonly" disabled>
                 <label for="file" class="form-label">店面照片:</label>
                 <input type="file" name="shopphoto" id="shopphotoInput" /><br>
                 <button type="submit" class="btn btn-primary" id="myButton">送出</button>
@@ -106,13 +107,16 @@
               <input type="time" class="form-control" id="updateshopcloseHourInput" name="shopcloseHour" min="00:00"
                 max="24:00" required>
               <label class="form-label">經度</label>
-              <input type="text" class="form-control" name="longitude" id="updatelongitudeInput">
+              <input type="text" class="form-control" name="longitude" id="updatelongitudeInput" readonly="readonly"
+                disabled>
               <label class="form-label">緯度</label>
-              <input type="text" class="form-control" name="latitude" id="updatelatitudeInput">
+              <input type="text" class="form-control" name="latitude" id="updatelatitudeInput" readonly="readonly"
+                disabled>
               <label for="file" class="form-label">店面照片:</label>
               <input type="file" name="shopphoto" id="updateshopphotoInput" /><br>
               <button type="submit" class="btn btn-primary" id="myupdateButton">送出</button>
               </form>
+
             </div>
           </div>
         </div>
@@ -123,6 +127,7 @@
       <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
       <script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
       <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+
       <script>
         const output = document.querySelector('#view')
         const insertreqUrl = 'http://localhost:8080/Bookstrap/shops/add';
@@ -135,7 +140,6 @@
         const uploadBtn = document.getElementById('myButton');
         uploadBtn.addEventListener('click', function (event) {
           event.preventDefault();
-
 
 
           let shopName = document.getElementById('shopNameInput').value
@@ -174,15 +178,10 @@
             .catch(err => {
               console.log(err)
             })
-          document.getElementById('shopNameInput').innerHTML = ""
-          document.getElementById('shopAddressInput').innerHTML = ""
-          document.getElementById('shopPhoneInput').innerHTML = ""
-          document.getElementById('shopOpenHourInput').innerHTML = ""
-          document.getElementById('shopcloseHourInput').innerHTML = ""
-          document.getElementById('longitudeInput').innerHTML = ""
-          document.getElementById('latitudeInput').innerHTML = ""
-          document.getElementById('shopphotoInput').innerHTML = ""
+
         })
+
+
 
 
         ////////////////// jQuery AJAX 送showallpage資料  /////////////////////////
@@ -550,7 +549,77 @@
 
         }
 
+        ////////////////// google map api  找經緯度  /////////////////////////
+
+        const googleadressBtn = document.getElementById('shopAddressInput');
+
+        const googleadressBtn2 = document.getElementById('updateshopAddressInput');
+
+        googleadressBtn2.addEventListener('keyup', function (e) {
+
+          const address = document.getElementById('updateshopAddressInput').value
+
+          console.log(address)
+
+          googlemap2(address)
+        })
+
+
+        googleadressBtn.addEventListener('keyup', function (e) {
+
+          const address = document.getElementById('shopAddressInput').value
+
+          console.log(address)
+
+          googlemap(address)
+
+        })
+
+
+        function googlemap(address) {
+
+
+          const geocoder = new google.maps.Geocoder();
+
+          geocoder.geocode({ address: address }, function (results, status) {
+            if (status === "OK") {
+
+              var latitude = results[0].geometry.location.lat();
+              var longitude = results[0].geometry.location.lng();
+
+              console.log("latitude" + latitude)
+              console.log("longitude" + longitude)
+              document.getElementById('longitudeInput').value = longitude
+              document.getElementById('latitudeInput').value = latitude
+
+            }
+          })
+        }
+
+
+        function googlemap2(address) {
+
+
+          const geocoder = new google.maps.Geocoder();
+
+          geocoder.geocode({ address: address }, function (results, status) {
+            if (status === "OK") {
+
+              var latitude = results[0].geometry.location.lat();
+              var longitude = results[0].geometry.location.lng();
+
+              console.log("latitude" + latitude)
+              console.log("longitude" + longitude)
+              document.getElementById('updatelongitudeInput').value = longitude
+              document.getElementById('updatelatitudeInput').value = latitude
+
+            }
+          })
+        }
+
       </script>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0pg7HeK2NczdqZQCbjfdkzNlErFJZTVg&callback=googlemap"></script>
     </body>
 
 

@@ -79,14 +79,13 @@ public class ShopsController {
 			return "失敗，IO 的問題";
 		}
 	}
-
+	@ResponseBody
 	@GetMapping("/shops/allshopslist")
-	public ModelAndView listHouse(ModelAndView mav) {
+	public List<Shops> listHouse() {
 
 		List<Shops> shopList = shService.findAllShop();
-		mav.setViewName("shop/shophome");
-		mav.getModel().put("shopList", shopList);
-		return mav;
+
+		return shopList;
 	}
 
 	// get one photo contentType 要注意

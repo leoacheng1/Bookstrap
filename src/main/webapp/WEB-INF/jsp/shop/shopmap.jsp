@@ -13,57 +13,89 @@
             <h1>My First Google Map</h1>
 
             <div id="googleMap" style="width: 1000px;height:500px;"></div>
+            <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+            <script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+            <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+
+
 
             <script>
+
+
+
                 function initMap() {
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                        var userLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
-                        console.log('我的位置：', userLocation);
-                        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
-                        var mapProp = {
-                            center: userLocation,
-                            zoom: 15
-                        };
-
-                        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
-                        var marker = new google.maps.Marker({
-                            position: userLocation,
-                            map: map,
-                            title: 'You are here'
-                        });
-
-
-                        const address = "新北市新店區中正路362號";
-
-                        const geocoder = new google.maps.Geocoder();
-
-                        geocoder.geocode({ address: address }, function (results, status) {
-                            if (status === "OK") {
-
-                                var latitude = results[0].geometry.location.lat();
-                                var longitude = results[0].geometry.location.lng();
-                               
-                                console.log("latitude"+latitude)
-                                console.log("longitude"+longitude)
-                            }
-                        })
-
-
+                    axios({
+                        url: 'http://localhost:8080/Bookstrap/shops/allshopslist',
+                        method: 'get',
                     })
+                        .then(res => {
+                            console.log(res.data)
+                            showMap(res.data)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
                 }
 
 
+                function showMap(data) {
+                    var location = [];
+                    data.forEach(element => {
+                        var latitude = parseFloat(element.latitude)
+                        var longitude = parseFloat(element.longitude)
+                        const myLatLng = { lat: latitude, lng: longitude };
+                        location.push(myLatLng);
+                    })
+
+                    var lat, lon;
+                    var promise1 = new Promise(function (resolve, reject) {
+                        navigator.geolocation.getCurrentPosition(function (pos) {
+                            lat = pos.coords.latitude
+                            lon = pos.coords.longitude
+                            resolve({ lat, lon })
+                        })
+                    })
+
+                    promise1.then(function (value) {
+                        console.log("promise:" + value.lat, value.lon)
+                   
+
+                        var lat=value.lat
+                        var lon=value.lon
+
+                        var mapProp2 = {
+                            center:{ lat: lat, lng: lon },
+                            zoom: 14
+                        };
+
+                        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp2);
+                        var icon = "../shoppic/libicon.png";
+
+                        marker = new google.maps.Marker({
+                                position:{ lat: lat, lng: lon },
+                                map: map,
+                                
+                            })
+
+                        for (i = 0; i < location.length; i++) {
+                            marker = new google.maps.Marker({
+                                position: location[i],
+                                map: map,
+                                icon: icon
+                            })
+                        }
 
 
+                    })
+
+
+
+                }
             </script>
 
             <script
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0pg7HeK2NczdqZQCbjfdkzNlErFJZTVg&callback=initMap"></script>
-            <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-            <script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
-            <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+
 
         </body>
 
