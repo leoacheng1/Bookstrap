@@ -1,18 +1,20 @@
 package com.bookstrap.imafraid.controller;
 
-import org.hibernate.internal.build.AllowSysOut;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookstrap.imafraid.bean.BlogParagraph;
 import com.bookstrap.imafraid.model.BlogParagraphRepository;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 @Controller
 public class BlogParagraphController {
@@ -46,6 +48,21 @@ public class BlogParagraphController {
 		return BlogParaDao.save(para2);
 	}
 	@ResponseBody
+	@GetMapping("/blog/{id}")
+	public BlogParagraph getBlogParaById(@PathVariable Integer id) {
+		Optional<BlogParagraph> op = BlogParaDao.findById(id);
+		
+		if(op.isPresent()) {
+			return op.get();
+		}
+		BlogParagraph responseBlogPara = new BlogParagraph();
+		responseBlogPara.setParagraphTitle("沒有這篇文章");
+		
+		return responseBlogPara;
+	}
+	
+	
+	@ResponseBody
 	@DeleteMapping
 	public String deleteById(Integer id) {
 		
@@ -56,4 +73,6 @@ public class BlogParagraphController {
 		}
 		return "成功刪除";
 	}
+	
+//	public String updateBlogParaById(@RequestParam Integer id, @RequestParam String paragraphdiv01) {}
 }
