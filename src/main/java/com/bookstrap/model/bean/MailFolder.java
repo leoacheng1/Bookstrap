@@ -2,7 +2,6 @@ package com.bookstrap.model.bean;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="MailFolder")
@@ -28,6 +28,11 @@ public class MailFolder {
 	@OneToMany(mappedBy="mailFolder")
 	@JsonBackReference
 	private Set<Mail> mail;
+	
+	@OneToMany(mappedBy="mailFolder")
+	@JsonManagedReference
+	private Set<AccountFolder> accountFolders;
+	
 	
 	public Integer getFolderId() {
 		return folderId;
@@ -54,6 +59,14 @@ public class MailFolder {
 	}
 
 	public MailFolder() {
+	}
+
+	public Set<AccountFolder> getAccountFolders() {
+		return accountFolders;
+	}
+
+	public void setAccountFolders(Set<AccountFolder> accountFolders) {
+		this.accountFolders = accountFolders;
 	}
 
 }

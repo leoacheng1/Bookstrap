@@ -41,6 +41,9 @@ public class MailAccount {
 	@OneToMany(mappedBy = "mailAccount", cascade = CascadeType.ALL)
 	private Set<AccountLabel> accountLabels;
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "mailAccount", cascade = CascadeType.ALL)
+	private Set<AccountFolder> accountFolders;
 	
 	public MailAccount() {
 	}
@@ -92,6 +95,14 @@ public class MailAccount {
 
 	public void setEmployee(Employees employee) {
 		this.employee = employee;
+	}
+
+	public Set<AccountFolder> getAccountFolders() {
+		return accountFolders;
+	}
+
+	public void setAccountFolders(Set<AccountFolder> accountFolders) {
+		this.accountFolders = accountFolders;
 	}
 
 }
