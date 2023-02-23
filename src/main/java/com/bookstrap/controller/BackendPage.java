@@ -51,6 +51,12 @@ public class BackendPage {
 		return "/backend/controllpanel/owner/mail/writemail";
 	}
 
+	@GetMapping("/backend/inbox")
+	public String inbox() {
+		return "/backend/controllpanel/owner/mail/inbox";
+	}
+	
+	
 	@GetMapping("/backend/template")
 	public String templatePage() {
 		return "/backend/layout/template";

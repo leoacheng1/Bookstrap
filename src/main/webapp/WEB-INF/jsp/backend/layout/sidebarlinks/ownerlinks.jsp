@@ -140,21 +140,15 @@
 		</a>
 		<ul class="nav nav-treeview">
 		  <li class="nav-item">
-			<a href="../mailbox/mailbox.html" class="nav-link">
+			<a href="/Bookstrap/backend/inbox" class="nav-link">
 			  <i class="far fa-circle nav-icon"></i>
-			  <p>查看郵件</p>
+			  <p>收件夾</p>
 			</a>
 		  </li>
 		  <li class="nav-item">
 			<a href="/Bookstrap/backend/composemail" class="nav-link">
 			  <i class="far fa-circle nav-icon"></i>
 			  <p>撰寫郵件</p>
-			</a>
-		  </li>
-		  <li class="nav-item">
-			<a href="../mailbox/read-mail.html" class="nav-link active">
-			  <i class="far fa-circle nav-icon"></i>
-			  <p>Read</p>
 			</a>
 		  </li>
 		</ul>

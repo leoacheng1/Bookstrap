@@ -9,6 +9,7 @@ $(document).ready(function () {
  */
 function addEvents() {
   document.getElementById("sendMail").addEventListener("click", sendEmail);
+  document.getElementById("draftBtn").addEventListener("click", draftEmail);
   $("#attachments").change(inputEffect);
 }
 
@@ -71,6 +72,27 @@ function getRawFileType(file) {
   }
 }
 
+function deleteAttachmentBtn() {
+  const filenum = $(this).parents('li').attr('data-filenum');
+  $(this).parents('li').remove();
+  let files = document.getElementById('attachments').files;
+  let temp = new DataTransfer();
+  for (let i = 0; i < files.length; i++) {
+    if (i != filenum) {
+      temp.items.add(files[i]);
+    }
+  }
+  $.each($("#fileplace").children('li'), function(){
+    let num = $(this).attr('data-filenum');
+    if (num > filenum){
+      $(this).attr('data-filenum',Number(num) - 1);
+    }
+  });
+  document.getElementById('attachments').files = temp.files;
+  // const newFiles = Array.from(document.querySelector('#attachments').files).splice(filenum,1);
+  // document.querySelector('#attachments').files = newFiles;
+}
+
 /**
  * everything for generating input block.
  * @returns 
@@ -80,7 +102,8 @@ function inputEffect() {
   let files = this.files;
   let maxLength = Math.max.apply(Math, $.map(files, function (el) { return el.name.length }));
   let totalSize = 0;
-  for (file of files) {
+  for (let i = 0; i < files.length; i++) {
+    let file = files[i];
     totalSize += file.size;
     if (totalSize > 32 * 1024 * 1024) {
       $("#attachments").val("");
@@ -95,10 +118,10 @@ function inputEffect() {
     objectURL = URL.createObjectURL(file);
 
     //generate block that holds input file preview
-    let box = $(`#${info.rawType}_template`).clone(true).removeAttr('id');
+    let box = $(`#${info.rawType}_template`).clone(true).removeAttr('id').attr("data-filenum", i);
     box.find(".mailbox-attachment-name").html(box.find(".mailbox-attachment-name").html()+ info.fileName);
     box.find(".filesize").html(info.fileSize);
-
+    box.find(".remove-attachment").click(deleteAttachmentBtn);
     //add preview for image, or url for files
     if (info.rawType == "image") {
       box.find('img').attr("src",objectURL);
@@ -108,7 +131,12 @@ function inputEffect() {
     $("#fileplace").append(box);
   }
 }
-
+function clearEditArea(){
+  $('.note-editable.card-block').empty();
+  $('[name="mailTo"]').val("");
+  $('[name="mailSubject"]').val("");
+  document.getElementById('attachments').files = null;
+}
 /**
  * sendEmail to our server
  * @param {Event} event - input as callback function for addEventListener
@@ -124,14 +152,53 @@ function sendEmail(event){
   formData.append("mailTo", mailTo);
   formData.append("mailSubject", subject);
   formData.append("mailContent", content);
-  formData.append("starred", 0);
-  formData.append("important", 0);
-  formData.append("hasread", 0);
   for(f of files){
     formData.append("file",f);
   }
   axios({
     url : "http://localhost:8080/Bookstrap/mail/api/post",
+    method: "post",
+    data: formData,
+    headers: {
+      "Content-Type" : "multipart/form-data"
+    }
+
+})
+.then(res => {
+  console.log(res.data);
+  Swal.fire(
+    'Good job!',
+    'You clicked the button!',
+    'success'
+  )
+  clearEditArea()
+  // location.reload();
+})
+.catch(err => console.log(err));
+$('#sendModal').modal('hide')
+}
+
+
+/**
+ * sendEmail to our server, put it in draft folder 
+ * @param {Event} event - input as callback function for addEventListener
+ */
+function draftEmail(event){
+  event.preventDefault();
+  let mailTo = $('[name="mailTo"]').val();
+  let subject = $('[name="mailSubject"]').val();
+  let content = $('.note-editable.card-block').html();
+  let files = document.getElementById('attachments').files;
+
+  let formData = new FormData();
+  formData.append("mailTo", mailTo);
+  formData.append("mailSubject", subject);
+  formData.append("mailContent", content);
+  for(f of files){
+    formData.append("file",f);
+  }
+  axios({
+    url : "http://localhost:8080/Bookstrap/mail/api/draft",
     method: "post",
     data: formData,
     headers: {
@@ -147,4 +214,3 @@ function sendEmail(event){
 .catch(err => console.log(err));
 $('#sendModal').modal('hide')
 }
-

@@ -4,9 +4,10 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>撰寫郵件</title>
     <!--版型需要的css -->
     <link rel="stylesheet" href="/Bookstrap/eddie/css/summernote-bs4.min.css">
+    <link rel="stylesheet" href="/Bookstrap/eddie/css/sweetalert2.min.css">
     <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
     <style>
       .remove-attachment{
@@ -40,12 +41,12 @@
               <div class="container-fluid">
                 <div class="row mb-2">
                   <div class="col-sm-6">
-                    <h1>Compose</h1>
+                    <h1>撰寫郵件</h1>
                   </div>
                   <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                      <li class="breadcrumb-item"><a href="#">Home</a></li>
-                      <li class="breadcrumb-item active">Compose</li>
+                      <li class="breadcrumb-item"><a href="#">個人信箱</a></li>
+                      <li class="breadcrumb-item active">撰寫郵件</li>
                     </ol>
                   </div>
                 </div>
@@ -61,7 +62,7 @@
 
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title">Folders</h3>
+                        <h3 class="card-title">郵件匣</h3>
 
                         <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -73,39 +74,35 @@
                         <ul class="nav nav-pills flex-column">
                           <li class="nav-item active">
                             <a href="#" class="nav-link">
-                              <i class="fas fa-inbox"></i> Inbox
-                              <span class="badge bg-primary float-right">12</span>
+                              <i class="fas fa-inbox"></i> 收件匣
+                              <span class="badge bg-primary float-right">20</span>
                             </a>
                           </li>
                           <li class="nav-item">
                             <a href="#" class="nav-link">
-                              <i class="far fa-envelope"></i> Sent
+                              <i class="far fa-envelope"></i> 已寄出
+                              <span class="badge bg-success float-right">8</span>
                             </a>
                           </li>
                           <li class="nav-item">
                             <a href="#" class="nav-link">
-                              <i class="far fa-file-alt"></i> Drafts
+                              <i class="far fa-file-alt"></i> 草稿
+                              <span class="badge bg-warning float-right">2</span>
                             </a>
                           </li>
                           <li class="nav-item">
                             <a href="#" class="nav-link">
-                              <i class="fas fa-filter"></i> Junk
-                              <span class="badge bg-warning float-right">65</span>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="#" class="nav-link">
-                              <i class="far fa-trash-alt"></i> Trash
+                              <i class="far fa-trash-alt"></i> 回收桶
+                              <span class="badge bg-danger float-right">32</span>
                             </a>
                           </li>
                         </ul>
                       </div>
                       <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                     <div class="card">
                       <div class="card-header">
-                        <h3 class="card-title">Labels</h3>
+                        <h3 class="card-title">類別</h3>
 
                         <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -117,13 +114,40 @@
                       <div class="card-body p-0">
                         <ul class="nav nav-pills flex-column">
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-danger"></i> Important</a>
+                            <a class="nav-link" href="#"><i class="far fa-circle text-danger"></i>一般信件</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-warning"></i> Promotions</a>
+                            <a class="nav-link" href="#"><i class="far fa-circle text-warning"></i>工作指派</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-primary"></i> Social</a>
+                            <a class="nav-link" href="#"><i class="far fa-circle text-primary"></i>公司訊息</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <div class="card">
+                      <div class="card-header">
+                        <h3 class="card-title">標籤</h3>
+
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body p-0">
+                        <ul class="nav nav-pills flex-column">
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="far fa-circle text-danger"></i>自訂標籤一</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="far fa-circle text-warning"></i>自訂標籤二</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="far fa-circle text-primary"></i>自訂標籤三</a>
                           </li>
                         </ul>
                       </div>
@@ -295,6 +319,7 @@
       <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
         <script src="/Bookstrap/eddie/js/summernote-bs4.min.js"></script>
         <script src="/Bookstrap/eddie/js/axios.min.js"></script>
+        <script src="/Bookstrap/eddie/js/sweetalert2.all.min.js"></script>
         <script src="/Bookstrap/eddie/js/mail/composemail.js"></script>
   </body>
 

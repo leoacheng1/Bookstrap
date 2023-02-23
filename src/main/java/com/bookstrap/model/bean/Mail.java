@@ -6,13 +6,14 @@ package com.bookstrap.model.bean;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -57,14 +58,6 @@ public class Mail {
 	@Column(name = "mail_content")
 	private String mailContent;
 	
-	@Column(name = "starred")
-	private Byte starred;
-	
-	@Column(name = "important")
-	private Byte important;
-	
-	@Column(name = "hasread")
-	private Byte hasread;
 
 	@PrePersist //things to do before  into persistent state
 	public void onCreate() {
@@ -73,155 +66,131 @@ public class Mail {
 		}
 	}
 	//  ==========================RELATION COLUMNS==========================  // 
-	@Column(name = "folder_id")
-	@Transient
-	private Integer folderId;
-	
-	@Column(name = "category_id")
-	@Transient
-	private Integer categoryId;
-	
-	@ManyToOne
-	@JsonManagedReference
-	@JoinColumn(name = "category_id")
-	private MailCategory mailCategory;
-	
-	@ManyToOne
-	@JsonManagedReference
-	@JoinColumn(name="folder_id")
-	private MailFolder mailFolder;
 	
 	@OneToMany(mappedBy = "mail")
 	@JsonManagedReference
 	private Set<MailAttachment> mailAttachment;
 	
 	@OneToMany(mappedBy = "mail")
-	@JsonBackReference
-	private Set<MailLabel> mailLabels;
+	@JsonManagedReference
+	private Set<AccountMail> accountMails;
+	
+	@ManyToMany
+	@JoinTable(name = "MailAccountLabel", joinColumns = {@JoinColumn(name="mail_id", referencedColumnName = "mail_id")},
+	inverseJoinColumns = {@JoinColumn(name = "label_id", referencedColumnName = "label_id")})
+	private Set<AccountLabel> accountLabels;
 	
 	
 	public Mail() {
 	}
 //===================GETTERS AND SETTERS =====================//
 
+
+
 	public Integer getMailId() {
 		return mailId;
 	}
 
-	public void setMailId(Integer mailId) {
-		this.mailId = mailId;
-	}
+
 
 	public MailAccount getAccountFrom() {
 		return accountFrom;
 	}
 
+
+
 	public MailAccount getAccountTo() {
 		return accountTo;
 	}
 
-	public void setAccountFrom(MailAccount accountFrom) {
-		this.accountFrom = accountFrom;
-	}
 
-	public void setAccountTo(MailAccount accountTo) {
-		this.accountTo = accountTo;
-	}
 
 	public Date getMailTime() {
 		return mailTime;
 	}
 
-	public void setMailTime(Date mailTime) {
-		this.mailTime = mailTime;
-	}
+
 
 	public String getMailSubject() {
 		return mailSubject;
 	}
 
-	public void setMailSubject(String mailSubject) {
-		this.mailSubject = mailSubject;
-	}
+
 
 	public String getMailContent() {
 		return mailContent;
 	}
 
-	public void setMailContent(String mailContent) {
-		this.mailContent = mailContent;
-	}
 
-	public Byte getStarred() {
-		return starred;
-	}
-
-	public void setStarred(Byte starred) {
-		this.starred = starred;
-	}
-
-	public Byte getImportant() {
-		return important;
-	}
-
-	public void setImportant(Byte important) {
-		this.important = important;
-	}
-
-	public Byte getHasread() {
-		return hasread;
-	}
-
-	public void setHasread(Byte hasread) {
-		this.hasread = hasread;
-	}
-
-	public Integer getFolderId() {
-		return folderId;
-	}
-
-	public void setFolderId(Integer folderId) {
-		this.folderId = folderId;
-	}
-
-	public Integer getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(Integer categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public MailCategory getMailCategory() {
-		return mailCategory;
-	}
-
-	public void setMailCategory(MailCategory mailCategory) {
-		this.mailCategory = mailCategory;
-	}
-
-	public MailFolder getMailFolder() {
-		return mailFolder;
-	}
-
-	public void setMailFolder(MailFolder mailFolder) {
-		this.mailFolder = mailFolder;
-	}
 
 	public Set<MailAttachment> getMailAttachment() {
 		return mailAttachment;
 	}
 
+
+
+	public void setMailId(Integer mailId) {
+		this.mailId = mailId;
+	}
+
+
+
+	public void setAccountFrom(MailAccount accountFrom) {
+		this.accountFrom = accountFrom;
+	}
+
+
+
+	public void setAccountTo(MailAccount accountTo) {
+		this.accountTo = accountTo;
+	}
+
+
+
+	public void setMailTime(Date mailTime) {
+		this.mailTime = mailTime;
+	}
+
+
+
+	public void setMailSubject(String mailSubject) {
+		this.mailSubject = mailSubject;
+	}
+
+
+
+	public void setMailContent(String mailContent) {
+		this.mailContent = mailContent;
+	}
+
+
+
 	public void setMailAttachment(Set<MailAttachment> mailAttachment) {
 		this.mailAttachment = mailAttachment;
 	}
 
-	public Set<MailLabel> getMailLabels() {
-		return mailLabels;
+
+
+	public Set<AccountMail> getAccountMails() {
+		return accountMails;
 	}
 
-	public void setMailLabels(Set<MailLabel> mailLabels) {
-		this.mailLabels = mailLabels;
+
+
+	public void setAccountMails(Set<AccountMail> accountMails) {
+		this.accountMails = accountMails;
+	}
+
+
+
+	public Set<AccountLabel> getAccountLabels() {
+		return accountLabels;
+	}
+
+
+
+	public void setAccountLabels(Set<AccountLabel> accountLabels) {
+		this.accountLabels = accountLabels;
 	}
 	
 }

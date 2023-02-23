@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="MailFolder")
@@ -25,13 +24,10 @@ public class MailFolder {
 	@Column(name="folder_name")
 	private String folderName;
 	
-	@OneToMany(mappedBy="mailFolder")
-	@JsonBackReference
-	private Set<Mail> mail;
 	
 	@OneToMany(mappedBy="mailFolder")
-	@JsonManagedReference
-	private Set<AccountFolder> accountFolders;
+	@JsonBackReference
+	private Set<AccountMail> accountMails;
 	
 	
 	public Integer getFolderId() {
@@ -50,23 +46,17 @@ public class MailFolder {
 		this.folderName = folderName;
 	}
 
-	public Set<Mail> getMail() {
-		return mail;
-	}
-
-	public void setMail(Set<Mail> mail) {
-		this.mail = mail;
-	}
-
 	public MailFolder() {
 	}
 
-	public Set<AccountFolder> getAccountFolders() {
-		return accountFolders;
+	public Set<AccountMail> getAccountMails() {
+		return accountMails;
 	}
 
-	public void setAccountFolders(Set<AccountFolder> accountFolders) {
-		this.accountFolders = accountFolders;
+	public void setAccountMails(Set<AccountMail> accountMails) {
+		this.accountMails = accountMails;
 	}
+
+
 
 }

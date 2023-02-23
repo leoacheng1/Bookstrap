@@ -12,6 +12,7 @@ import javax.persistence.Transient;
 
 import com.bookstrap.model.Shops;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="ShopEmployees")

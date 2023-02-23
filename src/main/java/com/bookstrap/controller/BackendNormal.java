@@ -1,6 +1,7 @@
 package com.bookstrap.controller;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -60,7 +60,7 @@ public class BackendNormal {
 	@ResponseBody
 	public Employees insertEmployee(@RequestParam("empPhoto") MultipartFile photoFile,
 			@RequestParam("empName") String empName, @RequestParam("account") String account,
-			@RequestParam("password") String password, @RequestParam("sex") Byte sex,
+			@RequestParam("password") String password, @RequestParam("sex") Short sex,
 			@RequestParam("empPosition") String empPosition, RedirectAttributes redirectAttributes) throws IOException {
 		Employees newEmp = new Employees();
 		newEmp.setAccount(account);
@@ -76,11 +76,18 @@ public class BackendNormal {
 	@ResponseBody
 	public Mail InsertMail(MailDto mail, HttpSession session) throws IOException {
 		String username = (String) session.getAttribute("empAccount");
-//		System.out.println(username);
 		Employees emp = empService.findByUsername(username);
 		MailAccount account = mailService.findByEmployees(emp);
-//		System.out.println(account.getAccount());
-		return mailService.insertMail(account,mail);
+		System.out.println(account.getAccount());
+		return mailService.sendMail(account,mail);
 	}
-
+	
+	@PostMapping("mail/api/allmail")
+	@ResponseBody
+	public Set<Mail> getAllMail(HttpSession session) {
+		Integer empId = (Integer) session.getAttribute("empId");
+		Employees employee = empService.findById(empId);
+		MailAccount account = mailService.findByEmployees(employee);
+		return null;
+}
 }

@@ -2,7 +2,6 @@ package com.bookstrap.model.bean;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +26,7 @@ public class MailCategory {
 	
 	@OneToMany(mappedBy = "mailCategory")
 	@JsonBackReference
-	private Set<Mail> mails;
+	private Set<AccountMail> accountMails;
 	
 	public Integer getCategoryId() {
 		return categoryId;
@@ -48,14 +47,13 @@ public class MailCategory {
 		this.categoryName = categoryName;
 	}
 
-
-	public Set<Mail> getMails() {
-		return mails;
+	public Set<AccountMail> getAccountMails() {
+		return accountMails;
 	}
 
 
-	public void setMails(Set<Mail> mails) {
-		this.mails = mails;
+	public void setAccountMails(Set<AccountMail> accountMails) {
+		this.accountMails = accountMails;
 	}
 
 

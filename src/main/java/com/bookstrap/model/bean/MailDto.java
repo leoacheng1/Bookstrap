@@ -18,14 +18,6 @@ public class MailDto implements Serializable{
 	@JsonProperty("mailContent")
 	private String mailContent;
 	
-	@JsonProperty("starred")
-	private Byte starred;
-	
-	@JsonProperty("important")
-	private Byte important;
-	
-	@JsonProperty("hasread")
-	private Byte hasread;
 	
 	private MultipartFile[] file;
 	public MailDto() {
@@ -44,17 +36,7 @@ public class MailDto implements Serializable{
 		return mailContent;
 	}
 
-	public Byte getStarred() {
-		return starred;
-	}
 
-	public Byte getImportant() {
-		return important;
-	}
-
-	public Byte getHasread() {
-		return hasread;
-	}
 
 
 
@@ -70,17 +52,8 @@ public class MailDto implements Serializable{
 		this.mailContent = mailContent;
 	}
 
-	public void setStarred(Byte starred) {
-		this.starred = starred;
-	}
 
-	public void setImportant(Byte important) {
-		this.important = important;
-	}
-
-	public void setHasread(Byte hasread) {
-		this.hasread = hasread;
-	}
+	
 
 	public MultipartFile[] getFile() {
 		return file;

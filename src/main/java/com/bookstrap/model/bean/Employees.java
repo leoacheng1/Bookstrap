@@ -13,6 +13,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Employees")
 public class Employees {
@@ -36,7 +39,7 @@ public class Employees {
 	private String empName;
 	
 	@Column(name="sex")
-	private Byte sex;
+	private Short sex;
 	
 	@Column(name="emp_position")
 	private String empPosition;
@@ -82,11 +85,11 @@ public class Employees {
 		this.empName = empName;
 	}
 
-	public Byte getSex() {
+	public Short getSex() {
 		return sex;
 	}
 
-	public void setSex(Byte sex) {
+	public void setSex(Short sex) {
 		this.sex = sex;
 	}
 

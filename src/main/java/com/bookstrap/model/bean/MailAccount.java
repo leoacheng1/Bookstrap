@@ -31,7 +31,7 @@ public class MailAccount {
 	private String password;
 	
 	@Column(name = "activated")
-	private Byte activated;
+	private Short activated;
 	
 	@OneToOne
 	@JoinColumn(name = "employee_id")
@@ -43,7 +43,7 @@ public class MailAccount {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "mailAccount", cascade = CascadeType.ALL)
-	private Set<AccountFolder> accountFolders;
+	private Set<AccountMail> accountMails;
 	
 	public MailAccount() {
 	}
@@ -81,11 +81,11 @@ public class MailAccount {
 		this.password = password;
 	}
 
-	public Byte getActivated() {
+	public Short getActivated() {
 		return activated;
 	}
 
-	public void setActivated(Byte activated) {
+	public void setActivated(Short activated) {
 		this.activated = activated;
 	}
 
@@ -97,12 +97,12 @@ public class MailAccount {
 		this.employee = employee;
 	}
 
-	public Set<AccountFolder> getAccountFolders() {
-		return accountFolders;
+	public Set<AccountMail> getAccountMails() {
+		return accountMails;
 	}
 
-	public void setAccountFolders(Set<AccountFolder> accountFolders) {
-		this.accountFolders = accountFolders;
+	public void setAccountMails(Set<AccountMail> accountMails) {
+		this.accountMails = accountMails;
 	}
-
+	
 }

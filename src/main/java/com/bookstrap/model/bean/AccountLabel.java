@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -36,9 +36,10 @@ public class AccountLabel {
 	@Transient
 	private Integer accountId;
 	
-	@OneToMany(mappedBy = "label")
+	@ManyToMany(mappedBy = "accountLabels")
 	@JsonBackReference
-	private Set<MailLabel> mailLabel;
+	private Set<Mail> mails;
+	
 	
 	public AccountLabel() {
 	}
@@ -75,14 +76,13 @@ public class AccountLabel {
 		this.accountId = accountId;
 	}
 
-	public Set<MailLabel> getMailLabel() {
-		return mailLabel;
+	public Set<Mail> getMails() {
+		return mails;
 	}
 
-	public void setMailLabel(Set<MailLabel> mailLabel) {
-		this.mailLabel = mailLabel;
+	public void setMails(Set<Mail> mails) {
+		this.mails = mails;
 	}
-
 
 
 }

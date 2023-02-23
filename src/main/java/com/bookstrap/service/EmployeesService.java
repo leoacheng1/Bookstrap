@@ -35,5 +35,13 @@ public class EmployeesService {
 	public Employees insertEmployee(Employees emp) {
 		return empDao.save(emp);
 	}
+	
+	public Employees findById(Integer empId) {
+		Optional<Employees> emp = empDao.findById(empId);
+		if (emp.isEmpty()) {
+			return null;
+		}
+		return emp.get();
+	}
 
 }
