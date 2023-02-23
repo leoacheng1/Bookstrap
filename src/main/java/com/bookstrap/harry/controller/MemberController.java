@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bookstrap.harry.bean.MemberDetails;
@@ -170,19 +171,19 @@ public class MemberController {
 		return "redirect:/member/main";
 	}
 
-//	@ResponseBody
-//	@GetMapping("/member/checkaccount")
-//	public boolean checkAccount(@RequestParam("memberEmail") String memberAccount) {
-//		
-//		boolean account = memberService.checkAccount(memberAccount);
-//		
-//		if(account) {
-//			
-//			return true;
-//		}
-//		
-//		return false;
-//	}
+	@ResponseBody
+	@GetMapping("/member/checkaccount")
+	public boolean checkAccount(@RequestParam("memberEmail") String memberAccount) {
+		
+		boolean account = memberService.checkAccount(memberAccount);
+		
+		if(account) {
+			
+			return true;
+		}
+		
+		return false;
+	}
 
 	@PostMapping("/member/checklogin")
 	public String checkLogin(@RequestParam("memberEmail") String memberEmail,

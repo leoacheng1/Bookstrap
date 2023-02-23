@@ -38,7 +38,6 @@ public class MemberService {
 		String randomCode = RandomString.make(64);
 		member.setVertificationCode(randomCode);
 
-//		sendVertificationEnail(member);
 
 		return mDao.save(member);
 	}
@@ -121,9 +120,9 @@ public class MemberService {
 		return mDao.findIdByEmail(memberEmail);
 	}
 
-//	public boolean checkAccount(String memberEmail) {
-//		return mDao.findEmailByid(memberEmail);
-//	}
+	public boolean checkAccount(String memberEmail) {
+		return mDao.findAccountByEmail(memberEmail);
+	}
 
 	public boolean verify(String verificationCode) {
 		Members member = mDao.findByVerificationCode(verificationCode);

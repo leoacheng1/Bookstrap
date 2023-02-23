@@ -37,7 +37,7 @@
                   <!-- md改input寬 -->
                  
                     <div class="form-outline datepicker mb-3">
-                      <input type="email" class="form-control" id="exampleDatepicker1" name="memberEmail" required/>
+                      <input type="email" class="form-control" id="memberEmail" name="memberEmail" required/>
                       <label for="exampleDatepicker1" class="form-label" required>電子郵件地址</label>
                     </div>
                         <div style="color: red;">
@@ -69,7 +69,7 @@
 
                   </div>
 
-                  <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
+                  <button type="submit" class="btn btn-success btn-lg mb-1" id="submitButton">Submit</button>
                   
                 </div>
                

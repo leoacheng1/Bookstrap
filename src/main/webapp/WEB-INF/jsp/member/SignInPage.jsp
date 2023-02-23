@@ -12,7 +12,7 @@
 <title>會員登入</title>
 </head>
 <body>
-	<section class="vh-100 gradient-custom">
+	<section class="gradient-custom">
 		<div class="container py-5 h-100">
 			<div
 				class="row d-flex justify-content-center align-items-center h-100">
