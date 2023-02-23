@@ -1,5 +1,6 @@
 package com.bookstrap.imafraid.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,9 +63,14 @@ public class BlogParagraphController {
 		return responseBlogPara;
 	}
 	
+	public List<BlogParagraph> findAllBlogParagraph(){
+		return BlogParaDao.findAll();
+	}
+	
+	
 	
 	@ResponseBody
-	@DeleteMapping
+	@DeleteMapping("blog/delete")
 	public String deleteById(Integer id) {
 		
 		try { BlogParaDao.deleteById(id);
@@ -73,6 +80,15 @@ public class BlogParagraphController {
 		}
 		return "成功刪除";
 	}
-	
-//	public String updateBlogParaById(@RequestParam Integer id, @RequestParam String paragraphdiv01) {}
-}
+	@ResponseBody
+	@PutMapping("blog/update")
+	public String updateBlogParaById(@RequestParam("id") Integer id, @RequestParam("paragraphdiv01") String paragraphdiv01) {
+			Optional<BlogParagraph> op = BlogParaDao.findById(id);
+			if(op.isPresent()) {
+				BlogParagraph bp = op.get();
+				bp.setParagraphdiv01(paragraphdiv01);
+				return "修改完成";
+			}
+			return "沒有這筆資料";
+			}
+	}
