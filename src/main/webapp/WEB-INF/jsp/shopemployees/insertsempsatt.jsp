@@ -14,21 +14,24 @@
 <h1>這是請假簽核頁面</h1>
 <body>
 	<form action="${contextRoot}/sempsatt/insert" method="post">
-		<label for="attSempid">Employee ID:</label>
+		<label for="attSempid">員工編號:</label>
 		<input type="number" id="attSempid" name="attSempid"><br><br>
-			<label for="attDate">Attendance Date:</label>
+			<label for="attDate">請假日期:</label>
 	<input type="date" id="attDate" name="attDate"><br><br>
 
-	<label for="attVacation">Vacation:</label>
+	<label for="attVacation">請假假別:</label>
 	<input type="text" id="attVacation" name="attVacation"><br><br>
+	
+	<label for="">請假事由:</label>
+	<input type="text" id="attReason" name="attReason"><br><br>
 
-	<label for="attTime">Attendance Time:</label>
-	<input type="number" id="attTime" name="attTime" step="0.01"><br><br>
+	<label for="attTime">請假時數:</label>
+	<input type="number" id="attTime" name="attTime" step="1"><br><br>
 
-	<label for="attAgree">Agree:</label>
-	<input type="text" id="attAgree" name="attAgree"><br><br>
+	<label for="attAgree"></label>
+	<input type="hidden" id="attAgree" name="attAgree" value="已提交">
 
-	<input type="submit" value="Add Attendance">
+	<input type="submit" value="提交假單">
 </form>
 		
 </body>

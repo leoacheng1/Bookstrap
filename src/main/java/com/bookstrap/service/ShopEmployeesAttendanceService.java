@@ -36,6 +36,9 @@ public class ShopEmployeesAttendanceService {
 	}
 
 	public void updateShopEmployeesAttendance(ShopEmployeesAttendance shopEmployeesAttendance) {
+		Integer sempattId = shopEmployeesAttendance.getAttSempid();
+		ShopEmployees semps = sempDao.findById(sempattId).get();
+		shopEmployeesAttendance.setAttSemps(semps);
 		sempattDao.save(shopEmployeesAttendance);
 	}
 

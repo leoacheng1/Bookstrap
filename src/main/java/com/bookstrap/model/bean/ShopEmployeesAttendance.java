@@ -1,5 +1,6 @@
 package com.bookstrap.model.bean;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,21 +37,22 @@ public class ShopEmployeesAttendance {
 	private ShopEmployees attSemps;
 
 	@Column(name = "attend_date")
-//	@DateTimeFormat(pattern = "yyyy/MM/dd")
-//	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
-	private Date attDate;
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	private LocalDate attDate;
 
 	@Column(name = "attend_vacation")
 	private String attVacation;
 
+	@Column(name = "attend_reason")
+	private String attReason;
+	
 	@Column(name = "attend_time")
-	private Double attTime;
+	private Integer attTime;
 
 	@Column(name = "attend_agree")
 	private String attAgree;
 
-	@Column(name = "attend_salary")
-	private Integer attSalary;
 
 	public ShopEmployeesAttendance() {
 	}
@@ -79,11 +81,11 @@ public class ShopEmployeesAttendance {
 		this.attSemps = attSemps;
 	}
 
-	public Date getAttDate() {
+	public LocalDate getAttDate() {
 		return attDate;
 	}
 
-	public void setAttDate(Date attDate) {
+	public void setAttDate(LocalDate attDate) {
 		this.attDate = attDate;
 	}
 
@@ -95,11 +97,11 @@ public class ShopEmployeesAttendance {
 		this.attVacation = attVacation;
 	}
 
-	public Double getAttTime() {
+	public Integer getAttTime() {
 		return attTime;
 	}
 
-	public void setAttTime(Double attTime) {
+	public void setAttTime(Integer attTime) {
 		this.attTime = attTime;
 	}
 
@@ -111,13 +113,15 @@ public class ShopEmployeesAttendance {
 		this.attAgree = attAgree;
 	}
 
-	public Integer getAttSalary() {
-		return attSalary;
+	public String getAttReason() {
+		return attReason;
 	}
 
-	public void setAttSalary(Integer attSalary) {
-		this.attSalary = attSalary;
+	public void setAttReason(String attReason) {
+		this.attReason = attReason;
 	}
+
+	
 
 
 	
