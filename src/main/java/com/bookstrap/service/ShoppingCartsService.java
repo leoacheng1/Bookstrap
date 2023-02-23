@@ -1,6 +1,6 @@
 package com.bookstrap.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,23 +16,9 @@ public class ShoppingCartsService {
 	@Autowired
 	private ShoppingCartsRepository scDao;
 	
-	public ShoppingCarts insertBooks(ShoppingCarts cart) {
-		return scDao.save(cart);
-	}
-	public boolean deleteBooksByMemberId(Integer memberId) {
-		  if(memberId != null) {
-			  scDao.deleteById(memberId);
-			  return true;
-		  } 
-		  return false;
+	
+	public List<ShoppingCarts> findCartsByMemberId(Integer memberId) {
+		return scDao.findCartsByMemberId(memberId);
 	}
 	
-	public ShoppingCarts findBooksByMemberId(Integer memberId) {
-		Optional<ShoppingCarts> optional = scDao.findById(memberId);
-		
-		if(optional.isPresent()) {
-			return optional.get();
-		}
-		return null;
-	}
 }

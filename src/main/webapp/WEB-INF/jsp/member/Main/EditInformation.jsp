@@ -106,8 +106,15 @@
                <input type="text" value="${memberId}" readonly hidden name="memberId">
                 
                 <div class="col-sm-6">
-                  <label for="memberName" class="form-label">電子郵件地址 <span class="text-muted">*</span></label>
-                  <input type="text" class="form-control" id="email" placeholder="請輸入姓名" required value="${memberDetail.memberName}" name="memberName">
+                  <label for="memberName" class="form-label">姓 <span class="text-muted">*</span></label>
+                  <input type="text" class="form-control" id="email" placeholder="請輸入姓名" required value="${memberDetail.memberLastName}" name="memberName">
+                 <div class="invalid-feedback">
+                    請輸入姓名
+                  </div>
+                </div>
+                 <div class="col-sm-6">
+                  <label for="memberName" class="form-label">名 <span class="text-muted">*</span></label>
+                  <input type="text" class="form-control" id="email" placeholder="請輸入姓名" required value="${memberDetail.memberFirstName}" name="memberName">
                  <div class="invalid-feedback">
                     請輸入姓名
                   </div>

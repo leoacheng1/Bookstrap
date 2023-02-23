@@ -41,7 +41,9 @@ public class MemberDdetailService {
 		return memberDetailDao.save(memberDatil);
 	}
 	
-	public MemberDetails updateMemberDetails(Integer memberId, String memberName, Integer memberSex, String memberEmail, String memberCellPhone, String memberAddress, Date memberbirthday) {
+	public MemberDetails updateMemberDetails(Integer memberId, 
+			String memberLastName, String memberFirstName, Integer memberSex, String memberEmail, 
+			String memberCellPhone, String memberAddress, Date memberbirthday) {
 		Optional<MemberDetails> op = memberDetailDao.findById(memberId);
 	
 		if(op.isPresent()) {
@@ -49,8 +51,9 @@ public class MemberDdetailService {
 				memberDetail.setMemberAddress(memberAddress);
 				memberDetail.setMemberBirthday(memberbirthday);
 				memberDetail.setMemberEmail(memberEmail);
-				memberDetail.setMemberName(memberName);
-				memberDetail.setMemberPhone(memberName);
+				memberDetail.setMemberLastName(memberLastName);
+				memberDetail.setMemberFirstName(memberFirstName);
+				memberDetail.setMemberPhone(memberCellPhone);
 				memberDetail.setMemberSex(memberSex);
 				return memberDetail;
 		}

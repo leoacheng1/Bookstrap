@@ -5,14 +5,14 @@
     <head>
         <meta charset="UTF-8">
         <title>Welcome</title>
-        <%@ include file="./css.jsp" %>
+        <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
     </head>
 
     <body
         class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
         <div class="wrapper">
-            <%@ include file="./nav.jsp" %>
-            <%@ include file="./sidebar.jsp" %>
+            <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
+            <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/templatesidebar.jsp" %>
             <div class="content-wrapper">
                 <div class="content-header">
                     <!-- 標題位置 -->
@@ -22,7 +22,8 @@
                     <!-- 寫東西的地方 -->
                 </section>
             </div>
-        <%@ include file="./js.jsp" %>
+        </div>
+        <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
     </body>
 
     </html>

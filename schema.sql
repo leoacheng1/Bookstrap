@@ -5,12 +5,15 @@ Create Table Members(
 	acccount nvarchar(max) not null,
 	password nvarchar(max) not null,
 	valid tinyint not null, --驗證，有沒有停權
-	member_level nvarchar(50)
+	vertification_code nvarchar(255),
+	member_level nvarchar(50),
+	reset_password_token nvarchar(45)
 );
 
 Create Table MemberDetails(
 	member_id int FOREIGN KEY REFERENCES Members(member_id) primary key,
-	member_name nvarchar(50),
+	member_lastname nvarchar(50) not null,
+	member_firstname nvarchar(50) not null,
 	photo varbinary,
 	sex tinyint, --性別
 	email nvarchar(max),
@@ -34,7 +37,7 @@ Create Table Books(
 	author nvarchar(max),
 	publisher nvarchar(max),
 	publish_date Date,
-	book_photo varbinary, --封面圖片
+	book_photo varbinary(max), --封面圖片
 	discount int, --ex.79折，存成整數79
 	price int,
 	translator nvarchar(max),

@@ -8,6 +8,6 @@ import com.bookstrap.harry.bean.MemberDetails;
 
 public interface MemberDetailRepository extends JpaRepository<MemberDetails, Integer> {
 
-	@Query(value = "SELECT*FROM MemberDetails Where member_id =:mId", nativeQuery = true)
+	@Query(value = "SELECT * FROM MemberDetails Where member_id =:mId", nativeQuery = true)
 	public MemberDetails useIdFindName(@Param("mId") Integer memberId);
 }
