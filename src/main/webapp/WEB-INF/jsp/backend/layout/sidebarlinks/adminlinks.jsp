@@ -31,7 +31,7 @@
 	  </a>
 	  <ul class="nav nav-treeview" style="display: none;">
 		<li class="nav-item">
-		  <a href="pages/tables/simple.html" class="nav-link">
+		  <a href="http://localhost:8080/Bookstrap/shops/shophome" class="nav-link">
 			<i class="far fa-circle nav-icon"></i>
 			<p>功能1</p>
 		  </a>
