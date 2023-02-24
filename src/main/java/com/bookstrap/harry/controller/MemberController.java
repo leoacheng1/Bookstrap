@@ -361,9 +361,13 @@ public class MemberController {
 //////////////////////
 
 	@GetMapping("/member/information")
-	public String personalInfo() {
+	public String personalInfo(HttpSession session) {
 		// 用if()判斷是否為google
+		if (session.getAttribute("member") != null) {
 		return "member/Main/MyInfo";
+		}
+		
+		return "/member/editpassword";
 	}
 
 	@GetMapping("/member/editpasswordpage")
