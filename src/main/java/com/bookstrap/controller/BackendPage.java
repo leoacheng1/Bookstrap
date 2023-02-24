@@ -6,23 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bookstrap.model.bean.Employees;
 import com.bookstrap.service.EmployeesService;
 
 @Controller
+@RequestMapping("/backend")
 public class BackendPage {
 	@Autowired
 	private EmployeesService empService;
 
-	@GetMapping("/backend/login")
+	@GetMapping("/login")
 	public String loginPage() {
 		return "/backend/login";
 	}
 
-	@GetMapping("backend/index")
+	@GetMapping("/index")
 	public String indexPage(HttpSession session, Model m) {
 		if (session.getAttribute("empAccount") == null) {
 			m.addAttribute("error", "請先登入");
@@ -46,18 +45,18 @@ public class BackendPage {
 	}
 	
 	//Mail related pages
-	@GetMapping("/backend/composemail")
+	@GetMapping("/composemail")
 	public String composeMail() {
 		return "/backend/controllpanel/owner/mail/writemail";
 	}
 
-	@GetMapping("/backend/inbox")
+	@GetMapping("/inbox")
 	public String inbox() {
 		return "/backend/controllpanel/owner/mail/inbox";
 	}
 	
 	
-	@GetMapping("/backend/template")
+	@GetMapping("/template")
 	public String templatePage() {
 		return "/backend/layout/template";
 	}

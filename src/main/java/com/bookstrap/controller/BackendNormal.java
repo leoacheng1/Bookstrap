@@ -1,6 +1,7 @@
 package com.bookstrap.controller;
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bookstrap.model.bean.AccountMail;
 import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.Mail;
 import com.bookstrap.model.bean.MailAccount;
@@ -30,6 +32,7 @@ public class BackendNormal {
 	
 	@Autowired
 	private MailService mailService;
+	
 
 	@PostMapping("backend/login")
 	public String loginCheck(@RequestParam("account") String account, @RequestParam("password") String password,
@@ -82,12 +85,19 @@ public class BackendNormal {
 		return mailService.sendMail(account,mail);
 	}
 	
-	@PostMapping("mail/api/allmail")
+	@GetMapping("mail/api/allmail")
 	@ResponseBody
 	public Set<Mail> getAllMail(HttpSession session) {
 		Integer empId = (Integer) session.getAttribute("empId");
 		Employees employee = empService.findById(empId);
 		MailAccount account = mailService.findByEmployees(employee);
-		return null;
-}
+		System.out.println(account.getAccountId());
+		Set<AccountMail> accountMails = mailService.findAllInInbox(account);
+		LinkedHashSet<Mail> mails = new LinkedHashSet<Mail>();
+		for (AccountMail accountMail : accountMails) {
+			mails.add(accountMail.getMail());
+		}
+		return mails;
+	}
+	
 }

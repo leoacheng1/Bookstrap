@@ -197,7 +197,7 @@
                           <div class="table-responsive mailbox-messages">
                             <table class="table table-hover table-striped">
                               <tbody>
-                              <tr class="mailrow">
+                              <tr class="mailrowTemplate">
                                 <td>
                                   <div class="icheck-primary">
                                     <input type="checkbox" value="" id="check1">
@@ -207,8 +207,7 @@
                                 <td class="mailbox-star"><a href="#"><i class="fas fa-star text-secondary"></i></a></td>
                                 <td class="mailbox-important"><a href="#"><i class="fa fa-bookmark text-secondary"></i></a></td>
                                 <td class="mailbox-name"><a href="read-mail.html">馬保國</a></td>
-                                <td class="mailbox-subject">混元太極功法
-                                </td>
+                                <td class="mailbox-subject"><a href="${contextRoot}">混元太極功法</a></td>
                                 <td class="mailbox-attachment"></td>
                                 <td class="mailbox-date">5 mins ago</td>
                               </tr>

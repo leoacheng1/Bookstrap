@@ -47,6 +47,14 @@ public class MailService {
 		return mailAccountDao.findByEmployee(employee);
 	}
 	
+	public Set<AccountMail> findAllInInbox(MailAccount mailAccount) {
+		Set<AccountMail> accountMails = accountMailDao.findByMailAccountAndMailfrom(mailAccount, (short)0);
+		for (AccountMail accountMail : accountMails) {
+			System.out.println(accountMail.getMail().getMailSubject());
+		}
+		return accountMails;
+	}
+	
 	public Mail sendMail(MailAccount mailFrom,MailDto mailDto) throws IOException {
 		MultipartFile[] files = mailDto.getFile();
 		MailAccount mailTo = mailAccountDao.findByAccount(mailDto.getMailTo());
