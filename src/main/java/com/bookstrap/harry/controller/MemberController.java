@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -172,17 +173,22 @@ public class MemberController {
 	}
 
 	@ResponseBody
-	@GetMapping("/member/checkaccount")
-	public boolean checkAccount(@RequestParam("memberEmail") String memberAccount) {
+	@PostMapping("/member/checkaccount")
+	public Map<String,String> checkAccount(@RequestParam(value = "memberEmail") String memberAccount,
+			Model m) {
+		Members account = memberService.checkAccount(memberAccount);
+		Map<String, String> errors = new HashMap<String, String>();
+	    HashMap<String, String> map = new HashMap<>();
+	    
 		
-		boolean account = memberService.checkAccount(memberAccount);
-		
-		if(account) {
-			
-			return true;
+		if(account != null) {
+			errors.put("AccountWrong", "此帳號已被註冊");
+			map.put("response", "此帳號已被註冊");
+			return map;
 		}
-		
-		return false;
+		m.addAttribute("Account", "此帳號可以被註冊");
+		map.put("response", "此帳號可以被註冊");
+		return map;
 	}
 
 	@PostMapping("/member/checklogin")

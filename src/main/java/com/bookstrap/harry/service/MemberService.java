@@ -120,7 +120,7 @@ public class MemberService {
 		return mDao.findIdByEmail(memberEmail);
 	}
 
-	public boolean checkAccount(String memberEmail) {
+	public Members checkAccount(String memberEmail) {
 		return mDao.findAccountByEmail(memberEmail);
 	}
 
@@ -155,7 +155,7 @@ public class MemberService {
 	public void updatePassword(Members member, String newPassword) {
 //		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //		String encodePassword = passwordEncoder.encode(newPassword);
-		
+		member.setMemberValid(2); //不知道要不要加?
 		member.setMemberPassword(newPassword);
 		member.setResetPasswordToken(null);
 		//16:29

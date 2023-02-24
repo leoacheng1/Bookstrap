@@ -10,6 +10,8 @@
 
 <link rel="stylesheet" href="${contextRoot}/css/bootstrap.css">
 <link rel="stylesheet" href="${contextRoot}/css/SignUp.css">
+<link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css.map" type="application/octet-stream">
+<link rel="stylesheet" href="${contextRoot}/css/bootstrap.css.map" type="application/octet-stream">
 </head>
 <body>
   <section class="gradient-custom section-custom-hight section-custom-width">
@@ -41,16 +43,21 @@
                       <label for="exampleDatepicker1" class="form-label" required>電子郵件地址</label>
                     </div>
                         <div style="color: red;">
-                        ${errors.AccountWrong}
+                        
                         </div>
+                        <div style="color: green;">
+                        
+                        </div>
+                    
+                        
                         <br>
                     <div class="form-outline datepicker mb-3">
-                      <input type="password" class="form-control" id="exampleDatepicker1" name="memberPassword" required/>
+                      <input type="password" class="form-control"  name="memberPassword" required/>
                       <label for="exampleDatepicker1" class="form-label" >密碼</label>
                     </div>
                         <br>
                     <div class="form-outline datepicker mb-3">
-                      <input type="password" class="form-control" id="exampleDatepicker1" name="re_memberPassword" required/>
+                      <input type="password" class="form-control"  name="re_memberPassword" required/>
                       <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
                     <div style="color: red;">
@@ -83,7 +90,10 @@
       </div>
     </div>
   </section>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/form-validation.js"></script>
+  <script  src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+  <script  src="${contextRoot}/js/form-validation.js"></script>
+  <script  src="${contextRoot}/js/member/CheckAccount.js"></script>
+  <script  src="${contextRoot}/js/member/axios.min.js"></script>
+  
 </body>
 </html>

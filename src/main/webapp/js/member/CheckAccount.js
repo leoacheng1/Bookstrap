@@ -1,17 +1,30 @@
-const button =  document.getElementById('submitButton');
 
-button.addEventListener('blur', e =>{
+const accountInput = document.getElementById('memberEmail');
+console.log(accountInput);
+accountInput.addEventListener('blur', e => {
 
-let inputEmail = document.getElementById('memberEmail')
+    let String = document.getElementById('memberEmail').value;
+                console.log(String);
 
-let requestUrl = 'http://localhost:8080/member/checkaccount'
+    let formData = new FormData();
+    formData.append("memberEmail", String);    
 
-axios({
-    method:'post',
-    url: requestUrl,
-    data: {
-        id:requestUrl
-    }
+checkAccount(formData);
+
+
+
 })
 
-} )
+function checkAccount(json){
+
+    let requestUrl = 'http://localhost:8080/Bookstrap/member/checkaccount';
+
+    axios.post(requestUrl, json)
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.error(err);
+    })
+
+}
