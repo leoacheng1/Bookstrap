@@ -20,7 +20,7 @@
       <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 
 <div class="content-wrapper">
-<div class="container">
+<div>
 <div class="content-header">
   <br/>
 	<h1>所有書籍</h1>
@@ -28,7 +28,7 @@
 </div>
 <div id="output"></div>
   
-<table class="text-center" style="width:1200px">
+<table class="text-center" style="width:1450px">
     <thead>
       <tr>
         <th>書名</th>
@@ -72,7 +72,7 @@
         <button class="delete-btn btn btn-danger"  data-bkid="${book.id}">刪除</button>
       </td>
     </tr>
-    <tbody id="bbody" class="${book.id}" body-bkid="${book.id}">  
+    <tbody id="bbody" class="${book.id} text-center" style="width:1500px"" body-bkid="${book.id}">  
  
     </tbody>
     </jstl:forEach>

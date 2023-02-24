@@ -3,8 +3,10 @@ package com.bookstrap.model;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 
 public interface BooksRepository extends JpaRepository<Books, Integer> {
@@ -17,5 +19,9 @@ public interface BooksRepository extends JpaRepository<Books, Integer> {
 	
 	@Query(value = "select * from Books where (languages =:languages) and (category =:category)",nativeQuery = true)
 	public  List<Books> getBookBySelector(@Param("languages") String languages,@Param("category")String category);
+	
+//	@Modifying
+//	@Query(value = "from Books where languages in (:languages) and category in (:category)")
+//	public  List<Books> getBookBySelector(@Param("languages") String languages,@Param("category")String category);
 	
 }

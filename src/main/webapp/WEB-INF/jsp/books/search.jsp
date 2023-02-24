@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,6 +90,11 @@
   fieldset{
     border: 1px dotted #E0E0E0
   }
+  .card{
+    
+    float: left;
+
+  }
 </style>
 </head>
 <body>
@@ -97,74 +102,78 @@
 
 <div class="container">
  <br/>  
-
  <fieldset>
   <legend>請選擇條件</legend>
   <div class="st1">
       <div class="st1">
-        <br>
-        <label for="" class="t1">語言:</label>
-        <label>
-          <input type="checkbox" name="hobby" value="全部">全部
-        </label>
-        <label>
-            <input type="checkbox" name="hobby" value="中文">中文
-        </label>
-        <label>
-            <input type="checkbox" name="hobby" value="外文">外文
-        </label>
-      </div>   
+          <br>
+          <label for="" class="t1">語言:</label>
+          <label>
+              <input type="checkbox" name="hobby" value="全部" id="allL">全部
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="中文" id="chinese">中文
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="外文" id="foreign">外文
+          </label>
+      </div>
       <br>
-    <div class="st1">
-      <label for="" class="t1">類別:</label>
-      <label>
-        <input type="checkbox" name="hobby" value="全部">全部
-      </label>
-      <label>
-          <input type="checkbox" name="hobby" value="哲學">哲學
-      </label>
-      <label>
-          <input type="checkbox" name="hobby" value="宗教">宗教
-      </label>
-      <label>
-          <input type="checkbox" name="hobby" value="科學">科學
-      </label>
-      <label>
-          <input type="checkbox" name="hobby" value="應用科學">應用科學
-      </label>
-      <label>
-        <input type="checkbox" name="hobby" value="社會科學">社會科學
-      </label>
-      <label>
-        <input type="checkbox" name="hobby" value="歷史">歷史
-      </label>
-      <label>
-        <input type="checkbox" name="hobby" value="地理">地理
-      </label>
-      <label>
-        <input type="checkbox" name="hobby" value="語言文學">語言文學
-      </label>
-      <label>
-        <input type="checkbox" name="hobby" value="藝術">藝術
-      </label>
-      <label>
-        <input type="checkbox" name="hobby" value="其他">其他
-      </label>
-    </div>   
+      <div class="st1">
+          <label for="" class="t1">類別:</label>
+          <label>
+              <input type="checkbox" name="hobby" value="全部" id="allC">全部
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="哲學" id="philosophy">哲學
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="宗教" id="religion">宗教
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="科學" id="science">科學
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="應用科學" id="appliedScience">應用科學
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="社會科學" id="socialScience">社會科學
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="歷史" id="history">歷史
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="地理" id="geography">地理
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="語言文學" id="foreignLan">語言文學
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="藝術" id="Art">藝術
+          </label>
+          <label>
+              <input type="checkbox" name="hobby" value="其他" id="other">其他
+          </label>
+      </div>
   </div>
 </fieldset>
-<br/>
+<br />
 <div class="sub">
-  <input type="submit" value="送出">
+  <input type="submit" id="submitBtnnnn" value="送出">
   <input type="reset" value="清除">
+</div> 
 </div>
+<div id="console"> 
 
- </div>
+</div>
 <script>
-    
-
-
+  
+  
+  
 </script>
+<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+<script type="text/javascript" src="js/slick.js"></script>
+<script src="${contextRoot}/js/book/search.js" type="text/javascript"></script>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 </body>
 </html>

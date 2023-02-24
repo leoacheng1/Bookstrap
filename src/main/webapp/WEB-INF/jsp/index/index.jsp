@@ -110,9 +110,11 @@
             <div class="container-fluid d-flex mt-2 mb-2 justify-content-center ">
                 <div class="top_search_table">
                     <ul class="nav">
+
                         <li class="nav-item searchArea" id="searchArea">
                             <a class="nav-link active-2 text-dark fs-5 me-5 " aria-current="page"
-                            data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">條件搜尋
+                                 href="${contextRoot}/books/search">
+                                條件搜尋
                             </a>
                         </li>
                         <li class="nav-item">
@@ -134,71 +136,72 @@
                 </div>
             </div>
 
-              <div class="collapse" id="collapseExample">
-                <div class="card card-body container">
-                    <fieldset>
-                        <legend>請選擇條件</legend>
-                        <div class="st1">
+            <form action="${contextRoot}/books/getbook" method="post" >
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body container">
+                        <fieldset>
+                            <legend>請選擇條件</legend>
                             <div class="st1">
-                              <br>
-                              <label for="" class="t1">語言:</label>
-                              <label>
-                                <input type="checkbox" name="hobby" value="全部" id="allL">全部
-                              </label>
-                              <label>
-                                  <input type="checkbox" name="hobby" value="中文" id="chinese">中文
-                              </label>
-                              <label>
-                                  <input type="checkbox" name="hobby" value="外文" id="foreign">外文
-                              </label>
-                            </div>   
-                            <br>
-                          <div class="st1">
-                            <label for="" class="t1">類別:</label>
-                            <label>
-                                <input type="checkbox" name="hobby" value="全部" id="allC">全部
-                            </label>
-                            <label>
-                                <input type="checkbox" name="hobby" value="哲學" id="philosophy">哲學
-                            </label>
-                            <label>
-                                <input type="checkbox" name="hobby" value="宗教" id="religion">宗教
-                            </label>
-                            <label>
-                                <input type="checkbox" name="hobby" value="科學" id="science">科學
-                            </label>
-                            <label>
-                                <input type="checkbox" name="hobby" value="應用科學" id="appliedScience">應用科學
-                            </label>
-                            <label>
-                              <input type="checkbox" name="hobby" value="社會科學" id="socialScience">社會科學
-                            </label>
-                            <label>
-                              <input type="checkbox" name="hobby" value="歷史" id="history">歷史
-                            </label>
-                            <label>
-                              <input type="checkbox" name="hobby" value="地理" id="philosophy">地理
-                            </label>
-                            <label>
-                              <input type="checkbox" name="hobby" value="語言文學" id="geography">語言文學
-                            </label>
-                            <label>
-                              <input type="checkbox" name="hobby" value="藝術" id="Art">藝術
-                            </label>
-                            <label>
-                              <input type="checkbox" name="hobby" value="其他" id="other">其他
-                            </label>
-                          </div>   
+                                <div class="st1">
+                                    <br>
+                                    <label for="" class="t1">語言:</label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="全部" id="allL">全部
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="中文" id="chinese">中文
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="外文" id="foreign">外文
+                                    </label>
+                                </div>
+                                <br>
+                                <div class="st1">
+                                    <label for="" class="t1">類別:</label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="全部" id="allC">全部
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="哲學" id="philosophy">哲學
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="宗教" id="religion">宗教
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="科學" id="science">科學
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="應用科學" id="appliedScience">應用科學
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="社會科學" id="socialScience">社會科學
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="歷史" id="history">歷史
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="地理" id="philosophy">地理
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="語言文學" id="geography">語言文學
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="藝術" id="Art">藝術
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" name="hobby" value="其他" id="other">其他
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br />
+                        <div class="sub">
+                            <input type="submit" id="submitBtnnnn" value="送出">
+                            <input type="reset" value="清除">
                         </div>
-                      </fieldset>
-                      <br/>
-                      <div class="sub">
-                        <input type="submit" id="submitBtnnnn" value="送出">
-                        <input type="reset" value="清除">
-                      </div>
+                    </div>
                 </div>
-              </div>
-
+            </form>
 
             <!-- <div id="booksearch" class="container"></div> -->
 
@@ -878,7 +881,7 @@
 
             <!-- //////////////js///////////// -->
             <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
-            <script src="${contextRoot}/js/book/search.js" type="text/javascript"></script>
+           
             <script type="text/javascript" src="js/slick.js"></script>
             <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 
@@ -915,9 +918,9 @@
                 });
 
                 /////////////////////////////  條件搜尋  ////////////////////////////////
-   
-            
-                </script>
+
+
+            </script>
         </body>
 
         </html>

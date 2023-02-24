@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -231,10 +232,17 @@ public class BooksController {
 	@ResponseBody
 	@GetMapping("/books/getbook")
 	public List<Books> getBookBySelector(@RequestParam("languages")String languages, @RequestParam("category") String category) {
-//		bService.getBookBySelector(languages, category);
-		
-		System.out.println("搜索成功");
-		return bService.getBookBySelector(languages, category);
+		System.out.println("controller  languages:"+languages+"category:"+category);
+		List<Books> list = bService.getBookBySelector(languages, category);
+		if(list==null) {
+			System.out.println("nai");
+		}
+		else {
+			System.out.println("aaaaaa");
+		}
+		return list;
 	}
+	
+
 	
 }

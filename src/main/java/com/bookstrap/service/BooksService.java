@@ -98,8 +98,12 @@ public class BooksService {
 	}
 	
 	public List<Books> getBookBySelector(String languages,String category){
-		System.out.println(languages);
-		System.out.println(category);
+		System.out.println("service  languages:"+languages+"category:"+category);
+		if(bDao.getBookBySelector(languages, category)==null) {
+			System.out.println("no thing");
+		}else {
+			System.out.println("a ru");
+		}
 		return bDao.getBookBySelector(languages, category);
 	}
 }
