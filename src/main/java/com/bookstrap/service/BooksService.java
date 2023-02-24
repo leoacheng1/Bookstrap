@@ -38,7 +38,7 @@ public class BooksService {
 	}
 
 	public Page<Books> getBookByPage(Integer pageNumber) {
-		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "id");
+		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.DESC, "id");
 
 		Page<Books> page = bDao.findAll(pgb);
 		return page;
@@ -89,4 +89,17 @@ public class BooksService {
 		return null;
 	}
 	
+	public List<Books> findBookLikeSelector(String name) {
+        return bDao.findBookLikeSelector(name);
+	}
+	
+	public List<Books> findBookBySelector(String languages) {
+        return bDao.findBookBySelector(languages);
+	}
+	
+	public List<Books> getBookBySelector(String languages,String category){
+		System.out.println(languages);
+		System.out.println(category);
+		return bDao.getBookBySelector(languages, category);
+	}
 }

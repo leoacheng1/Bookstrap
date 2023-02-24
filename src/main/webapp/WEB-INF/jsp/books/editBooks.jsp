@@ -1,21 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
 
-      <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
-      <!DOCTYPE html>
-      <html>
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!--版型需要的css -->
+<title>修改書籍</title>
+<%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
+<link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="${contextRoot}/css/index.css" />
+</head>
 
-      <head>
-        <meta charset="UTF-8">
-        <title>修改書籍</title>
-      </head>
+<body class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
+  <div class="wrapper">
+      <!--上面導覽列 -->
+      <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %> 
+      <!-- 左邊導覽列 -->
+      <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 
-      <body>
-        <jsp:include page="../layout/navbar.jsp"></jsp:include>
+<div class="content-wrapper">
+<jsp:include page="../layout/navbar.jsp"></jsp:include>
+<div class="container">
 
-        <div class="container">
-          <br />
+          <br/>
           <h1>修改書籍</h1>
           <br />
           <form action="${contextRoot}/books/edit" method="put" enctype="multipart/form-data" modelAttribute="book"
@@ -50,7 +60,7 @@
           <form action="${contextRoot}/books/edit" method="put" var="detail" modelAttribute="detail">
             <input type="hidden" name="id"></input>
             尺寸:<input type="text" name="size" id="sizeInput" value="${detail.size}" /><br />
-            頁數:<input type="text" name="pages" id="pagesInput" value="${detail.pages}" /><br />
+            頁數:<input type="text" name="pages" id="pagesInput" value="${detail.pages}"/><br />
             簡介:<textarea cols="max" rows="max" name="intro" id="introInput" value="${detail.intro}"
               style="width:350px;height:150px;"></textarea><br />
             分級:<select name="grade" id="gradeInput" value="${detail.grade}">
@@ -61,6 +71,10 @@
           </form>
 
         </div>
+        <!--右側彈跳式功能列 -->
+<%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+<!--版型需要的js-->
+<%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
         <script>
           const mybuttom = document.getElementById('myBtn')
           mybuttom.addEventListener('click', function (e) {
@@ -112,7 +126,6 @@
               .then(res => {
                 console.log("okok")
                 window.location.href = 'http://localhost:8080/Bookstrap/books/page';
-
               })
               .catch(err => {
                 console.log(err)
@@ -120,7 +133,7 @@
 
           })
 
-
+/////////////  預覽圖片  ///////////////
           $("#photoInput").change(function(){
             readURL(this);
           });
@@ -130,13 +143,18 @@
               var reader = new FileReader();
               reader.onload = function (e) {
                 $("#previewImg").attr('src', e.target.result);
-
+              console.log("OK")
               }
               reader.readAsDataURL(input.files[0]);
             }
           }
+          
         </script>
-        <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
+<script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
       </body>
 
       </html>

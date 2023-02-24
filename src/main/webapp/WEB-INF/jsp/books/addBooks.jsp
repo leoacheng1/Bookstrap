@@ -9,13 +9,21 @@
 <head>
 <meta charset="UTF-8">
 <title>新增書籍</title>
+<%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
 </head>
 <body>
-<jsp:include page="../layout/navbar.jsp"></jsp:include>
+<body class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
+   <div class="wrapper">
+<!--上面導覽列 -->
+<%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %> 
+<!-- 左邊導覽列 -->
+<%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 
+<div class="content-wrapper">
 <div class="container">
+<div class="content-header">
   <br/>
-	<h1>新增書籍頁面</h1>
+	<h1>新增書籍</h1>
   <br/>
   <form action="${contextRoot}/books/post" method="post" enctype="multipart/form-data">
   書名:<input type="text"  name="name" id="nameInput" placeholder="請輸入書名"/><br/>
@@ -49,8 +57,18 @@
         <option selected value="普通級">普通級</option>
         <option value="限制級">限制級</option>
       </select><br/>
-  <button type="submit" id="myBtn" class="my-customer-data-btn btn btn-primary">送出</button>
+  <button type="submit" id="myBtn" class="my-customer-data-btn btn btn-info">送出</button>
   </form>  
 </div>
+</div>
+</div>
+</div>
+<!--右側彈跳式功能列 -->
+<%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+<!--版型需要的js-->
+<%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+<script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 </body>
 </html>

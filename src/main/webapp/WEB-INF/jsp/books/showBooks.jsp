@@ -8,16 +8,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>show Books Page</title>
+<title>所有書籍</title>
+<!--版型需要的css -->
+<%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
 </head>
-<body>
-<jsp:include page="../layout/navbar.jsp"></jsp:include>
+<body class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
+  <div class="wrapper">
+      <!--上面導覽列 -->
+      <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %> 
+      <!-- 左邊導覽列 -->
+      <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 
+<div class="content-wrapper">
 <div class="container">
+<div class="content-header">
   <br/>
-	<h1>所有書籍頁面</h1>
+	<h1>所有書籍</h1>
   <br/>
-<!-- <button id="showAllBooks">所有書籍</button> -->
+</div>
 <div id="output"></div>
   
 <table class="text-center" style="width:1200px">
@@ -41,16 +49,16 @@
     <tbody>
     <jstl:forEach items="${page.content}" var="book" >
      <tr>
-      <td>${book.name}</td>  
-      <td>${book.author}</td>  
-      <td>${book.translator}</td>  
-      <td>${book.languages}</td>  
-      <td>${book.category}</td>  
-      <td>${book.publisher}</td>  
-      <td>${book.date}</td>  
+      <td><jstl:out value="${book.name}"/></td> 
+      <td><jstl:out value="${book.author}"/></td> 
+      <td><jstl:out value="${book.translator}"/></td>   
+      <td><jstl:out value="${book.languages}"/></td>   
+      <td><jstl:out value="${book.category}"/></td>   
+      <td><jstl:out value="${book.publisher}"/></td>   
+      <td><jstl:out value="${book.date}"/></td>   
       <td><img style="width:100px;height:120px" src="${contextRoot}/books/id?id=${book.id}"></td>
-      <td>${book.discount}</td>  
-      <td>${book.price}</td>  
+      <td><jstl:out value="${book.discount}"/></td>  
+      <td><jstl:out value="${book.price}"/></td> 
       <td>
         <button id="detail-btn" class="detail-btn btn btn-info" data-bkid="${book.id}">詳細資料</button>
       </td> 
@@ -72,9 +80,7 @@
     </tbody>
    
 </table>
-<div id="bbody" class="${book.id}" >  
 
-</div>
 
 <jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
   <jstl:choose>
@@ -92,11 +98,19 @@
   </jstl:if>
 </jstl:forEach>
 </div>
-
-
+</div>
+</div>
+<!--右側彈跳式功能列 -->
+<%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+<!--版型需要的js-->
+<%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
 <script>
 
 </script>
 <script src="${contextRoot}/js/book/mix-book.js" type="text/javascript"></script>
+<script src="${contextRoot}/js/book/search.js" type="text/javascript"></script>
+<script src="${contextRoot}/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 </body>
 </html>

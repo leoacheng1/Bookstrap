@@ -34,13 +34,6 @@ prefix="jstl"%>
         <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
 
         <div class="input-group d-flex mx-auto my-auto">
-          <select class="form-select w-20 d" id="inputGroupSelect01">
-            <option selected>全部</option>
-            <option value="1">書籍</option>
-            <option value="2">電子書</option>
-            <option value="3">語言</option>
-            <option value="4">somethingElse</option>
-          </select>
 
           <input
             type="text"

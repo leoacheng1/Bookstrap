@@ -43,6 +43,11 @@ public class BooksController {
 	public String goToIndex() {
 		return "/books/testIndex";
 	}
+	
+	@GetMapping("/books/search")
+	public String goSearch() {
+		return "/books/search";
+	}
 
 	// 跳轉至新增頁面
 	@GetMapping("/books/add")
@@ -90,7 +95,7 @@ public class BooksController {
 
 			bService.insert(newBook);
 
-			return "/books/testIndex";
+			return "redirect:/books/page";
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "/books/addBooks";
@@ -113,6 +118,15 @@ public class BooksController {
 		return mav;
 	}
 	
+	//  找詳細資料
+	@ResponseBody
+	@GetMapping("/books/alldetails")
+	public BookDetails showAllDetails(Integer id) {
+		BookDetails details = dService.getDetailsByID(id);
+		return	details;	
+	}
+	
+	// 透過id找圖片
 	@GetMapping("/books/id")
 	public ResponseEntity<byte[]> getBookById(@RequestParam Integer id){
 		Books book1 = bService.getBookById(id);
@@ -139,11 +153,6 @@ public class BooksController {
     
 //        bookdetails;
 		}
-	
-	
-//	public String updateBookApi() {
-//		
-//	}
 
 	@ResponseBody
 	@GetMapping("/books/api/page")
@@ -152,18 +161,6 @@ public class BooksController {
 		Page<Books> page = bService.getBookByPage(pageNumber);
 
 		return page;
-	}
-
-	@ResponseBody
-	@GetMapping("/books/api/page2")
-	public List<Books> showBookByPageAjax2(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber) {
-		Page<BookDetails> page1 = dService.getBookByPage(1);
-		List<BookDetails> page11 = page1.getContent();
-
-		Page<Books> page2 = bService.getBookByPage(1);
-		List<Books> page22 = page2.getContent();
-
-		return page22;
 	}
 
 	// 分頁功能
@@ -184,21 +181,6 @@ public class BooksController {
 
 		return page;
 	}
-
-	// 透過id找圖片
-	@GetMapping("/books/id")
-	public ResponseEntity<byte[]> getBookById(@RequestParam Integer id) {
-		Books book1 = bService.getBookById(id);
-
-		byte[] photofile = book1.getPhoto();
-
-		HttpHeaders headers = new HttpHeaders();
-
-		headers.setContentType(MediaType.IMAGE_JPEG);
-
-		return new ResponseEntity<byte[]>(photofile, headers, HttpStatus.OK);
-	}
-
 
 	// 跳轉至修改書籍頁面
 	@GetMapping("/books/edit")
@@ -232,7 +214,27 @@ public class BooksController {
 		}
 		return null;
 	}
-	
-	
 
+	@ResponseBody
+	@GetMapping("/books/like")
+	public List<Books> findBookLikeSelector(@RequestParam("name") String name) {
+		return bService.findBookLikeSelector(name);
+	}
+	
+	@ResponseBody
+	@GetMapping("/books/selector")
+	public List<Books> findBookBySelector(@RequestParam("languages") String languages) {
+		System.out.println("搜索成功");
+		return bService.findBookBySelector(languages);
+	}
+	
+	@ResponseBody
+	@GetMapping("/books/getbook")
+	public List<Books> getBookBySelector(@RequestParam("languages")String languages, @RequestParam("category") String category) {
+//		bService.getBookBySelector(languages, category);
+		
+		System.out.println("搜索成功");
+		return bService.getBookBySelector(languages, category);
+	}
+	
 }
