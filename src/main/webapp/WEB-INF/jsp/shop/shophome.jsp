@@ -35,7 +35,8 @@
           max-width: 80%;
           height: auto;
         }
-        .pageButton{
+
+        .pageButton {
           padding-bottom: 300px;
         }
       </style>
@@ -111,7 +112,8 @@
               <label class="form-label">緯度</label>
               <input type="text" class="form-control" name="latitude" id="latitudeInput" readonly="readonly" disabled>
               <label for="file" class="form-label">店面照片:</label>
-              <input type="file" name="shopphoto" id="shopphotoInput" /><br>
+              <input type="file" name="shopphoto" id="shopphotoInput" />
+              <img id="preview_progressbarTW_img" src="#" /><br>
               <button type="submit" class="btn btn-primary" id="myButton">送出</button>
             </form>
           </div>
@@ -153,6 +155,7 @@
               disabled>
             <label for="file" class="form-label">店面照片:</label>
             <input type="file" name="shopphoto" id="updateshopphotoInput" /><br>
+            <img id="preview_progressbarTW_img2" src="#" /><br>
             <button type="submit" class="btn btn-primary" id="myupdateButton">送出</button>
             </form>
           </div>
@@ -163,12 +166,31 @@
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     <script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js  "></script>
+    
     <script>
       const output = document.querySelector('#view')
       const insertreqUrl = 'http://localhost:8080/Bookstrap/shops/add';
 
       ////////////////// jQuery AJAX 送insert資料  /////////////////////////
+      // const socket = new WebSocket('ws://localhost:8080');
+     
+      $("#shopphotoInput").change(function () {
+        //當檔案改變後，做一些事 
+        readURL(this);   // this代表<input id="imgInp">
+      });
+
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $("#preview_progressbarTW_img").attr('src', e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
 
       const uploadBtn = document.getElementById('myButton');
       uploadBtn.addEventListener('click', function (event) {
@@ -210,6 +232,8 @@
               .then(res => {
 
                 htmlMaker(res)
+
+
               })
               .catch(err => {
                 console.log(err)
@@ -357,6 +381,20 @@
       }
 
       ////////////////// jQuery AJAX 送修改分店資料  /////////////////////////
+      $("#updateshopphotoInput").change(function () {
+        //當檔案改變後，做一些事 
+        readURL1(this);   // this代表<input id="imgInp">
+      });
+
+      function readURL1(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $("#preview_progressbarTW_img2").attr('src', e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
 
       const updateBtn = document.getElementById('myupdateButton');
       updateBtn.addEventListener('click', function (event) {
@@ -400,6 +438,9 @@
               .then(res => {
 
                 htmlMaker(res)
+
+
+
               })
               .catch(err => {
                 console.log(err)
@@ -646,6 +687,9 @@
         })
       }
 
+
+
+     
     </script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0pg7HeK2NczdqZQCbjfdkzNlErFJZTVg&callback=googlemap"></script>

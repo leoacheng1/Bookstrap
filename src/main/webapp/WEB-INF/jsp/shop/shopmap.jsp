@@ -16,11 +16,21 @@
             <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
             <script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
             <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
 
 
 
             <script>
+                const socket = new WebSocket('ws://localhost:8080');
 
+                // When a message is received over the WebSocket connection
+                socket.addEventListener('message', (event) => {
+                    // Get the URL from the message
+                    const url = event.data;
+
+                    // Use the URL to execute the desired action
+                    window.location.href = url;
+                });
 
 
                 function initMap() {
@@ -58,13 +68,13 @@
 
                     promise1.then(function (value) {
                         console.log("promise:" + value.lat, value.lon)
-                   
 
-                        var lat=value.lat
-                        var lon=value.lon
+
+                        var lat = value.lat
+                        var lon = value.lon
 
                         var mapProp2 = {
-                            center:{ lat: lat, lng: lon },
+                            center: { lat: lat, lng: lon },
                             zoom: 14
                         };
 
@@ -72,10 +82,10 @@
                         var icon = "../shoppic/libicon.png";
 
                         marker = new google.maps.Marker({
-                                position:{ lat: lat, lng: lon },
-                                map: map,
-                                
-                            })
+                            position: { lat: lat, lng: lon },
+                            map: map,
+
+                        })
 
                         for (i = 0; i < location.length; i++) {
                             marker = new google.maps.Marker({
@@ -84,13 +94,14 @@
                                 icon: icon
                             })
                         }
+                        var numMarkers = marker.length;
 
+                        console.log('標記數量：', numMarkers);
 
                     })
-
-
-
                 }
+
+
             </script>
 
             <script
