@@ -42,10 +42,10 @@
                       <input type="email" class="form-control" id="memberEmail" name="memberEmail" required/>
                       <label for="exampleDatepicker1" class="form-label" required>電子郵件地址</label>
                     </div>
-                        <div style="color: red;">
+                        <div style="color: red;" class="accountExist">
                         
                         </div>
-                        <div style="color: green;">
+                        <div style="color: green;" class="accountNotExist">
                         
                         </div>
                     
@@ -94,6 +94,8 @@
   <script  src="${contextRoot}/js/form-validation.js"></script>
   <script  src="${contextRoot}/js/member/CheckAccount.js"></script>
   <script  src="${contextRoot}/js/member/axios.min.js"></script>
+
+  
   
 </body>
 </html>

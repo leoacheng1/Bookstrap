@@ -183,11 +183,11 @@ public class MemberController {
 		
 		if(account != null) {
 			errors.put("AccountWrong", "此帳號已被註冊");
-			map.put("response", "此帳號已被註冊");
+			map.put("response", "Y");
 			return map;
 		}
 		m.addAttribute("Account", "此帳號可以被註冊");
-		map.put("response", "此帳號可以被註冊");
+		map.put("response", "N");
 		return map;
 	}
 
