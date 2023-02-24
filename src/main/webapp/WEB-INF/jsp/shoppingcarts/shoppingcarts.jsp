@@ -2,9 +2,9 @@
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form"
 prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="jstl"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+prefix="c"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
+<c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
   <head>
@@ -45,42 +45,25 @@ prefix="jstl"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
   <body>
     <jsp:include page="../layout/header.jsp"></jsp:include>
     <div class="container">
-     <jstl:forEach var="message" items="${page.content}">
-            <div class="card">
-              <div class="card-header">
-                顯示訊息 時間:
-                <span>
-                  <fmt:formatDate
-                    value="${message.added}"
-                    pattern="yyyy-MM-dd HH:mm:ss"
-                  />
-                </span>
-              </div>
-              <div class="card-body">
-                <h2>${message.text}</h2>
-                <br />
-                <div class="edit-place" style="display: flex">
-                  <form action="${contextRoot}/message/edit" method="get">
-                    <input name="id" type="hidden" value="${message.id}" />
-                    <input
-                      type="submit"
-                      class="btn btn-info btn-sm"
-                      value="編輯"
-                    />
-                  </form>
-                  <form action="${contextRoot}/message/delete" method="post">
-                    <input name="_method" type="hidden" value="delete" />
-                    <input name="id" type="hidden" value="${message.id}" />
-                    <input
-                      type="submit"
-                      class="btn btn-danger btn-sm"
-                      value="刪除"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-          </jstl:forEach>
+     <h1>購物車清單</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>商品名稱</th>
+                <th>數量</th>
+                <th>價格</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="cartItem" items="${cartItemList}">
+                <tr>
+                    <td>${cartItem.bookId}</td>
+                    <td>${cartItem.amount}</td>
+                    <td>${cartItem.memberId}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
     
     </div>
   </body>
