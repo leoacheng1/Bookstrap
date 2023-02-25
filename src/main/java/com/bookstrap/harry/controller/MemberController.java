@@ -46,10 +46,10 @@ public class MemberController {
 	@Autowired
 	private MemberUserDetailService muService;
 
-	@GetMapping("/member/registrationpage")
-	public String registrationpage() {
-		return"member/Registration";
-	}
+//	@GetMapping("/member/registrationpage")
+//	public String registrationpage() {
+//		return"member/Registration";
+//	}
 	
 	// Registration 1
 
@@ -62,18 +62,20 @@ public class MemberController {
 		Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
 
-		if (memberAccount == null || memberAccount.length() == 0) {
+		if (memberAccount == null || memberAccount.length() == 0 ) {
 			errors.put("AccountWrong", "請輸入符合格式的電子郵件地址");
 		}
-
-		if (memberPassword == null || memberPassword.length() == 0 && memberPassword != memberRePassword) {
+			if (memberPassword == null || memberPassword.length() == 0 && memberPassword != memberRePassword) {
 			errors.put("PasswordWrong", "密碼不正確");
+			System.out.println("eeeeeeeeerrrror");
 		}
 			
 		
 		if (errors != null && !errors.isEmpty()) {
-			return "member/SignUpPage";
-		}else {
+			return "redirect:/guest/signup";
+		}
+		
+
 		
 		Members member = new Members();
 		member.setMemberAccount(memberAccount);
@@ -85,7 +87,7 @@ public class MemberController {
 		memberService.sendVertificationEnail(member);
 		
 		return "member/RegistSuccess";
-		}
+		
 	}
 
 	// Registration 2
@@ -227,8 +229,7 @@ public class MemberController {
 
 			System.out.println("Name: " + memberName);
 			
-			///////
-			muService.loadUserByUsername(memberEmail);
+			
 
 			session.setAttribute("memberId", result);
 

@@ -47,14 +47,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
     	http.httpBasic().and().csrf().disable().authorizeRequests()
         .antMatchers("/","/login","/oauth/**").authenticated()
-        .antMatchers("/member/**").hasAnyAuthority("USER")
+//        .antMatchers("/member/**").hasAnyAuthority("USER")
         .anyRequest()
         .permitAll()
         
         .and()
         	.formLogin()
-        		.defaultSuccessUrl("/member/main")
-        		.loginPage("/guest/signin")
+//        		.defaultSuccessUrl("/member/main")
+//        		.loginPage("/guest/signin")
 //        		.failureUrl("/guest/signinerror")
 //        .permitAll()
         

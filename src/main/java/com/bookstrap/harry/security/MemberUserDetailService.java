@@ -14,13 +14,13 @@ import com.bookstrap.harry.dao.MemberRepository;
 public class MemberUserDetailService implements UserDetailsService{
 
 	@Autowired
-	private MemberRepository memberdao;
+	private MemberRepository memberDao;
 	
 	
 	@Override
 	public UserDetails loadUserByUsername(String memberEmail) throws UsernameNotFoundException {
 		
-		final Members member = memberdao.findAccountByEmail(memberEmail);
+		final Members member = memberDao.findAccountByEmail(memberEmail);
 		if (member == null) {
 			throw new UsernameNotFoundException(memberEmail);
 		}
