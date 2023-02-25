@@ -30,32 +30,21 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.security.MemberUserDetailService;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 import com.bookstrap.harry.service.SendEmailService;
 
 @Controller
-//@SessionAttributes("memberDetail")
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
 	@Autowired
 	private MemberDdetailService memberDetailService;
-
-	@GetMapping("/member/signin")
-	public String memberSignIn(HttpSession session) {
-		if (session.getAttribute("member") != null) {
-			return "redirect:/member/main";
-		}
-		return "member/SignInPage";
-	}
-
-	@GetMapping("/member/signup")
-	public String memberSignUp() {
-
-		return "member/SignUpPage";
-	}
+	
+	@Autowired
+	private MemberUserDetailService muService;
 
 	@GetMapping("/member/registrationpage")
 	public String registrationpage() {
@@ -237,6 +226,9 @@ public class MemberController {
 			String memberName = idFindName.getMemberFirstName();
 
 			System.out.println("Name: " + memberName);
+			
+			///////
+			muService.loadUserByUsername(memberEmail);
 
 			session.setAttribute("memberId", result);
 

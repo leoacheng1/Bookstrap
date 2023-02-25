@@ -37,7 +37,7 @@ public class GoogleController {
 		String uEmail = user.getMemberAccount();
 		String uPassword = user.getMemberPassword();
 		Members loginUser = new Members(uEmail, uPassword);
-		user.setMemberValid(1);
+//		user.setMemberValid(1);
 		Integer status = memberService.checkLogin(loginUser);
 		
 		
