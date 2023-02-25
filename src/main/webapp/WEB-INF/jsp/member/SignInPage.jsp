@@ -25,7 +25,7 @@
 								
 								<form action="${contextRoot}/member/checklogin" method="post">
 									<h2 class="fw-bold mb-2 text-uppercase">登入</h2>
-									<p class="text-white-50 mb-5">請出入帳號以及密碼!</p>
+									<p class="text-white-50 mb-5">請輸入帳號以及密碼!</p>
 
 									<div class="form-outline form-white mb-4">
 										<input type="email" id="typeEmailX"

@@ -80,13 +80,11 @@ public class MemberController {
 		if (memberPassword == null || memberPassword.length() == 0 && memberPassword != memberRePassword) {
 			errors.put("PasswordWrong", "密碼不正確");
 		}
-
-	
-		
+			
 		
 		if (errors != null && !errors.isEmpty()) {
 			return "member/SignUpPage";
-		}
+		}else {
 		
 		Members member = new Members();
 		member.setMemberAccount(memberAccount);
@@ -97,8 +95,8 @@ public class MemberController {
 		memberService.insertMember(member);
 		memberService.sendVertificationEnail(member);
 		
-		
 		return "member/RegistSuccess";
+		}
 	}
 
 	// Registration 2

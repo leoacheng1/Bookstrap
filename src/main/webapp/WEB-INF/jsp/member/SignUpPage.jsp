@@ -39,8 +39,8 @@
                   <!-- md改input寬 -->
                  
                     <div class="form-outline datepicker mb-3">
-                      <input type="email" class="form-control" id="memberEmail" name="memberEmail" required/>
-                      <label for="exampleDatepicker1" class="form-label" required>電子郵件地址</label>
+                      <input type="email" class="form-control" id="memberEmail" name="memberEmail" />
+                      <label for="exampleDatepicker1" class="form-label" >電子郵件地址</label>
                     </div>
                         <div style="color: red;" class="accountExist">
                         
@@ -52,12 +52,12 @@
                         
                         <br>
                     <div class="form-outline datepicker mb-3">
-                      <input type="password" class="form-control"  name="memberPassword" required/>
+                      <input type="password" class="form-control"  name="memberPassword" />
                       <label for="exampleDatepicker1" class="form-label" >密碼</label>
                     </div>
                         <br>
                     <div class="form-outline datepicker mb-3">
-                      <input type="password" class="form-control"  name="re_memberPassword" required/>
+                      <input type="password" class="form-control"  name="re_memberPassword" />
                       <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
                     <div style="color: red;">
