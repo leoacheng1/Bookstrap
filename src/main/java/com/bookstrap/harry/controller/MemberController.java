@@ -214,7 +214,8 @@ public class MemberController {
 			Members mEmail2 = memberService.useEmailFindId(memberEmail);
 			Integer result2 = mEmail2.getMemberId();
 			session.setAttribute("memberId", result2);
-			return "redirect:/member/registrationpage";
+			session.setAttribute("member", mEmail2);
+			return "member/Registration";
 					} else if (status == 2) {
 
 			// 要先得到由Email找出的Id
@@ -280,7 +281,7 @@ public class MemberController {
 	@GetMapping("/member/main")
 	public String toMemberMain(HttpSession session) {
 
-		if (session.getAttribute("member") != null) {
+		if (session.getAttribute("memberId") != null) {
 
 			return "member/Main/MemberMainPage";
 		}
@@ -362,11 +363,14 @@ public class MemberController {
 	}
 
 	@GetMapping("/member/editpasswordpage")
-	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m) {
+	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m, HttpSession session) {
 		// 因為session有直接設memberId所以在jsp頁面可透過${memberId}得到，並且放在input標籤中，且命名memberId既可在此方法由@RequestParam("memberId")得到
+		if(session.getAttribute("member") != null) {
 		m.addAttribute("memberId", memberId);
 		System.out.println("MemberId3: " + memberId);
 		return "member/Main/EditPassword";
+		}
+		return"redirect:/guest/signin";
 	}
 
 	@PostMapping("/member/editpassword")
