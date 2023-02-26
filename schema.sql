@@ -16,6 +16,7 @@ Create Table MemberDetails(
 	member_firstname nvarchar(50) not null,
 	photo varbinary,
 	gender_id tinyint foreign key references Gender(gender_id), --性別
+	sex tinyint,
 	email nvarchar(max),
 	cellphone nvarchar(max),
 	address nvarchar(max),
@@ -26,6 +27,11 @@ CREATE TABLE Gender(
 gender_id tinyint primary key not null identity(1,1),
 gender nvarchar(5)
 );
+
+INSERT INTO Gender (gender) VALUES
+('男'),
+('女'),
+('其他');
 
 Create Table BookDetails(
 	book_id int identity(1,1) primary key,
