@@ -57,7 +57,7 @@
 
               <li class="nav-header">會員管理</li>
               <li class="nav-item">
-                <a href="${contextRoot}/member/admin/allmember" class="nav-link">
+                <a href="${contextRoot}/admin/get/allmember" class="nav-link">
                 <i class="nav-icon fas fa-calendar-alt"></i>
                 <p>
                   查詢所有會員
