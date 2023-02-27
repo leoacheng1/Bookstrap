@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ManyToAny;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -35,6 +36,7 @@ private String memberLastName;
 @Column(name = "member_firstname")
 private String memberFirstName;
 
+@JsonIgnore
 @Lob
 @Column(name = "photo")
 private byte[] memberPhoto;

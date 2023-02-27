@@ -48,7 +48,7 @@ public class GoogleController {
 			Members mEmail2 = memberService.useEmailFindId(mEmail);
 			Integer result2 = mEmail2.getMemberId();
 			session.setAttribute("memberId", result2);
-			return "redirect:/member/registrationpage";
+			return "member/Registration";
 					}else if (status == 2) {
 
 						// 要先得到由Email找出的Id
@@ -73,7 +73,7 @@ public class GoogleController {
 
 						System.out.println("status: " + status);
 						
-						return "redirect:main";
+						return "redirect:/member/main";
 						
 					} else if (status == 0) {
 						return "member/VertifyStatus";

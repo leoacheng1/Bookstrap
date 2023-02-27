@@ -136,7 +136,7 @@
 
                     <div class="col-12 ">
                     	<spring:bind path="member.memberValid">
-                        <input hidden type="text" class="form-control" id="memberValid" name="memberValid" value="1"/>
+                        <input hidden type="text" class="form-control" id="memberValid" name="memberValid" value="2"/>
                     	</spring:bind>
                     </div>
 

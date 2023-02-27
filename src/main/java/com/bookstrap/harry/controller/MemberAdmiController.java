@@ -120,8 +120,9 @@ public class MemberAdmiController {
 		member.setMemberPassword(memberPassword);
 		member.setMemberValid(memberValid);
 		member.setMemberLevel(memberLevel);
-		memberService.insertMember(member);
+		Members member2 = memberService.insertMember(member);
 		
+		memberDetail.setMemberId(member2.getMemberId());
 		memberDetail.setMemberAddress(memberAddress);
 		memberDetail.setMemberBirthday(memberBirthday);
 		memberDetail.setMemberEmail(memberEmail);

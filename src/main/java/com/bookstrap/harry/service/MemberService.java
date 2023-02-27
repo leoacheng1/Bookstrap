@@ -179,8 +179,8 @@ public class MemberService {
 
 	
 	public void updatePassword(Members member, String newPassword) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String encodePassword = passwordEncoder.encode(newPassword);
+
+		String encodePassword = CipherUtils.getStringSHA512(newPassword);
 		
 		member.setMemberValid(2); //不知道要不要加?
 		member.setMemberPassword(encodePassword);

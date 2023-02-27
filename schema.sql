@@ -14,7 +14,7 @@ Create Table MemberDetails(
 	member_id int FOREIGN KEY REFERENCES Members(member_id) primary key,
 	member_lastname nvarchar(50) not null,
 	member_firstname nvarchar(50) not null,
-	photo varbinary,
+	photo varbinary(max),
 	gender_id tinyint foreign key references Gender(gender_id), --性別
 	sex tinyint,
 	email nvarchar(max),

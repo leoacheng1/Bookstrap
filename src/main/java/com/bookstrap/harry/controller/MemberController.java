@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.security.CipherUtils;
 import com.bookstrap.harry.security.MemberUserDetailService;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
@@ -375,7 +376,8 @@ public class MemberController {
 
 	@PostMapping("/member/editpassword")
 	public String editPassword(@RequestParam("oldPassword") String oldPassword,
-			@RequestParam("newPassword") String newPassword, @RequestParam("re_Password") String re_Password,
+			@RequestParam("newPassword") String newPassword, 
+			@RequestParam("re_Password") String re_Password,
 			@RequestParam("memberId") Integer memberId, Model m) {
 
 		Map<String, String> errors = new HashMap<String, String>();
@@ -386,25 +388,29 @@ public class MemberController {
 		System.out.println("new: " + newPassword);
 		System.out.println("Re: " + re_Password);
 		System.out.println("memberPassword:" + member.getMemberPassword());
-
-		if (oldPassword.equals(member.getMemberPassword()) && newPassword.equals(re_Password)
-				&& newPassword.length() != 0 || re_Password.length() != 0) {
+		
+		String encryptOldPassword = CipherUtils.getStringSHA512(oldPassword);
+		String encryptNewPassword = CipherUtils.getStringSHA512(newPassword);
+		String encryptReNewPassword = CipherUtils.getStringSHA512(re_Password);
+		
+		if (encryptOldPassword.equals(member.getMemberPassword()) && encryptNewPassword.equals(encryptReNewPassword)
+				&& encryptNewPassword.length() != 0 || encryptReNewPassword.length() != 0) {
 			member.setMemberPassword(newPassword);
 			memberService.insertMember(member);
 			return "redirect:/member/main";
 
 		}
 
-		if (!oldPassword.equals(member.getMemberPassword()) || oldPassword.equals(null) || oldPassword.isEmpty()) {
+		if (!encryptOldPassword.equals(member.getMemberPassword()) || encryptOldPassword.equals(null) || encryptOldPassword.isEmpty()) {
 
 			errors.put("WrongPassword", "請輸入正確之原有密碼");
 		}
 
-		if (newPassword.length() == 0 || re_Password.length() == 0) {
+		if (encryptNewPassword.length() == 0 || encryptReNewPassword.length() == 0) {
 			errors.put("NoPassword", "請輸入新密碼");
 		}
 
-		if (!newPassword.equals(re_Password) || newPassword.equals(null) || re_Password.equals(null)) {
+		if (!encryptNewPassword.equals(encryptReNewPassword) || encryptNewPassword.equals(null) || encryptReNewPassword.equals(null)) {
 
 			errors.put("checkProblem", "新密碼與確認新密碼不符");
 		}
@@ -417,17 +423,21 @@ public class MemberController {
 			@RequestParam("memberPassword") String memberPassword, Model m) {
 		Members member = memberService.findById(memberId);
 		MemberDetails memberDetail = memberDetailService.findMemberDetailsById(memberId);
-
+		
+		 String encryPassword= CipherUtils.getStringSHA512(memberPassword);
+		
+		
+		
 		Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
 
-		if (memberPassword.equals(member.getMemberPassword()) && !memberPassword.equals(null)) {
+		if (encryPassword.equals(member.getMemberPassword()) && !encryPassword.equals(null)) {
 
 			m.addAttribute("memberDetail", memberDetail);
 
 			return "member/Main/EditInformation";
 		}
-		if (memberPassword.equals(null) || !memberPassword.equals(member.getMemberPassword())) {
+		if (encryPassword.equals(null) || !encryPassword.equals(member.getMemberPassword())) {
 			errors.put("WrongPassword", "密碼不正確，請重新輸入");
 		}
 
