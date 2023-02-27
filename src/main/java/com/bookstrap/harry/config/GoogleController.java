@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.security.CipherUtils;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 
@@ -36,9 +37,12 @@ public class GoogleController {
 		
 		String uEmail = user.getMemberAccount();
 		String uPassword = user.getMemberPassword();
+		System.out.println("GGGGGoogle controller: " + uPassword);
+		
+		
 		Members loginUser = new Members(uEmail, uPassword);
-//		user.setMemberValid(1);
-		Integer status = memberService.checkLogin(loginUser);
+		
+		Integer status = memberService.checkLogin2(loginUser);
 		
 		
 		if (status == null) {

@@ -129,11 +129,21 @@ public class MemberService {
 		String encodePassword = CipherUtils.getStringSHA512(memberPassword);
 		System.out.println("Before en:" + memberPassword);
 		
-		member.setMemberPassword(encodePassword);
 		
 		
 		System.out.println("after enc" + encodePassword);
 		member.setMemberPassword(encodePassword);
+			
+		return checkDao.checkLogin(member);
+	}
+	
+	public Integer checkLogin2(Members member) {
+		String memberPassword = member.getMemberPassword();
+		System.out.println("Before en:" + memberPassword);
+		
+		member.setMemberPassword(memberPassword);
+		
+		
 			
 		return checkDao.checkLogin(member);
 	}
