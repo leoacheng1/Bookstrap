@@ -1,16 +1,24 @@
 
 package com.bookstrap.harry.controller;
 
+import java.io.IOException;
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
@@ -21,56 +29,124 @@ import com.bookstrap.harry.service.MemberService;
 public class MemberAdmiController {
 
 	@Autowired
-	private MemberService memberService; 
-	
+	private MemberService memberService;
+
 	@Autowired
 	private MemberDdetailService memberDetailService;
-	
 
 	@GetMapping("/admin/main")
 	public String toAdmiMember() {
 		return "member/Admi/MemberAdmiMain";
 	}
-	
-	//member/admin/allmember?p=
-	//在此addAttribut的page名為page，在jsp中用foreach來使用
-	//顯示內容 <jstl:forEach var="messages" items="${page.content}">
-	//顯示頁數 <jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+
+	// member/admin/allmember?p=
+	// 在此addAttribut的page名為page，在jsp中用foreach來使用
+	// 顯示內容 <jstl:forEach var="messages" items="${page.content}">
+	// 顯示頁數 <jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
 	@GetMapping("/admin/get/allmember")
-	public String getAllmembers(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
-			Model m) {
+	public String getAllmembers(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
 		Page<MemberDetails> page = memberDetailService.getMemberByPage(pageNumber);
 		m.addAttribute("page", page);
-		
-		
+
 		return "member/Admi/AdminAllMember";
 	}
-	
+
 	@GetMapping("/admin/post/memberpage")
-	public String addMemberPage(Model m) {
+	public String addMemberPage(ModelMap map) {
 		Members member = new Members();
 		MemberDetails memberDetail = new MemberDetails();
-		
-		m.addAttribute("member", member);
-		m.addAttribute("memberDetail", memberDetail);
-		
+		map.addAttribute("member", member);
+		map.addAttribute("memberDetail", memberDetail);
+
 		return "member/Admi/AdminAddMember";
 	}
-	
-	
+
 	@PostMapping("/admin/post/member")
-	public String addMember(@ModelAttribute("member") Members member,
-			@ModelAttribute("memberDetail") MemberDetails memberDetails,
-			BindingResult br) {
-		if(br.hasErrors()) {
-			return "member/Admi/AdminAddMember";
+	public String addMember(@RequestParam("memberEmail") String memberEmail,
+			@RequestParam("memberPassword") String memberPassword,
+			@RequestParam("re_memberPassword") String memberRePassword,
+			@RequestParam("memberValid") Integer memberValid, 
+			@RequestParam("memberLevel") Integer memberLevel,
+			@RequestParam("memberLastName") String memberLastName, 
+			@RequestParam("memberFirstName") String memberFirstName,
+			@RequestParam("memberPhone") String memberPhone, 
+			@RequestParam("memberAddress") String memberAddress,
+			@RequestParam("memberBirthday") Date memberBirthday, 
+			@RequestParam("memberSex") Integer memberSex,
+			@RequestParam("memberPhoto") MultipartFile memberPhoto, Model m) throws IOException {
+		Map<String, String> errors = new HashMap<>();
+		m.addAttribute("errors", errors);
+
+		if (memberEmail == null || memberEmail.length() == 0) {
+			errors.put("errorEmail", "Email is require!");
+		}
+
+		if (memberPassword == null || memberPassword.length() == 0 && memberPassword != memberRePassword) {
+			errors.put("errorPassword", "Password is require!");
 		}
 		
+		if(memberLastName == null || memberLastName.length() == 0) {
+			errors.put("errorLastName", "LastName is require!");
+		}
+		
+		if(memberFirstName == null || memberFirstName.length() == 0) {
+			errors.put("errorFirstName", "FirstName is require!");
+		}
+		
+		if(memberPhone == null || memberPhone.length() ==0) {
+			errors.put("errorPhone", "Phone is require!");
+		}
+		
+		if(memberAddress == null || memberAddress.length() ==0) {
+			errors.put("errorAddress", "Address is require!");
+		}
+		
+		if(memberBirthday == null) {
+			errors.put("errorBirthday", "Birthday is require!");
+		}
+		
+		if(memberSex == null || memberSex == 0) {
+			errors.put("errorSex", "Gender is require!");
+		}
+		
+		if (errors != null && !errors.isEmpty()) {
+			return "redirect:/admin/post/memberpage";
+		}
+		
+		Members member = new Members();
+		MemberDetails memberDetail = new MemberDetails();
+
+		member.setMemberAccount(memberEmail);
+		member.setMemberPassword(memberPassword);
+		member.setMemberValid(memberValid);
+		member.setMemberLevel(memberLevel);
+		memberService.insertMember(member);
+		
+		memberDetail.setMemberAddress(memberAddress);
+		memberDetail.setMemberBirthday(memberBirthday);
+		memberDetail.setMemberEmail(memberEmail);
+		memberDetail.setMemberLastName(memberLastName);
+		memberDetail.setMemberFirstName(memberFirstName);
+		memberDetail.setMemberSex(memberSex);
+		memberDetail.setMemberPhone(memberPhone);
+
+		byte[] photo = memberPhoto.getBytes();
+		memberDetail.setMemberPhoto(photo);
 		
 		
-		return null;
+		
+		memberDetailService.insertMemberDetails(memberDetail);
+//		LinkedList<MemberDetails> listPhoto = new LinkedList<>();
+//		for(MultipartFile photo : memberPhoto) {
+//			MemberDetails mPhoto = new MemberDetails();
+//			byte[] photoBytes = photo.getBytes();
+//			mPhoto.setMemberPhoto(photoBytes);
+//		}
+		
+
+		return "redirect:/admin/get/allmember";
 	}
-	
+
 //	@ModelAttribute("member")
 //	public void commonData(Model m){
 //		Members member = new Members();
@@ -84,6 +160,5 @@ public class MemberAdmiController {
 //		
 //		m.addAttribute("memberDetail", memberDetail);
 //	}
-	
-}
 
+}

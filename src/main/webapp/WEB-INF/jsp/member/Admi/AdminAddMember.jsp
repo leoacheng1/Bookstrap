@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
  <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
   <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />    
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,19 +81,25 @@
             <h3 class="mb-4 fw-bold">新增會員</h3>
         <h5 class="mb-2 fw-bold">請輸入以下資訊:</h5>
         <br>
-       <form:form modelAttribute= "member,memberDetail" >
-                <div class="needs-validation row g-3" novalidate>
+       <form class="needs-validation" action="${contextRoot}/admin/post/member" method="post" enctype="multipart/form-data">
+                <div class="row g-3" novalidate>
                     <div class="col-sm-6">
-                        <label for="lastName" class="form-label">姓<span class="text-muted">*</span></label>
-                        <form:input path="memberDetail.memberLastName" name="memberLastName" type="text" class="form-control" id="lastName" placeholder="請輸入姓氏"/>
+                        <label for="lastName" class="form-label">姓<span class="">*</span></label>
+                        
+                        <spring:bind path="memberDetail.memberLastName">
+                        <input name="memberLastName" type="text" class="form-control" id="lastName" placeholder="請輸入姓氏" required/>
+                       </spring:bind>
+                       
                         <div class="invalid-feedback">
                             Valid lastName name is required.
                         </div>
                     </div>
 
                     <div class="col-sm-6">
-                        <label for="firstName" class="form-label">名<span class="text-muted">*</span></label>
-                        <form:input path="memberDetail.memberFirstName" name="memberFirstName" type="text" class="form-control" id="firstName" placeholder="請輸入名字"/>
+                        <label for="firstName" class="form-label">名<span class="">*</span></label>
+                        <spring:bind path="memberDetail.memberFirstName">
+                        <input name="memberFirstName" type="text" class="form-control" id="firstName" placeholder="請輸入名字" required/>
+                        </spring:bind>
                         <div class="invalid-feedback">
                             Valid first name is required.
                         </div>
@@ -99,74 +107,87 @@
 
 
                     <div class="col-12">
-                        <label for="email" class="form-label">電子信箱<span class="text-muted">*</span></label>
-                        <form:input path="memberDetail.memberEmail" name="memberEmail" type="text" class="form-control" id="memberEmail" placeholder="請輸入電子信箱地址"/>
+                        <label for="email" class="form-label">電子信箱<span class="">*</span></label>
+                        <spring:bind path="memberDetail.memberEmail">
+                        <input name="memberEmail" type="email" class="form-control bg-light" id="memberEmail" placeholder="請輸入電子信箱地址" required/>
+                        </spring:bind>
                         <div class="invalid-feedback">
                             請輸入電子信箱地址
                         </div>
                     </div>
 
                     <div class="col-12">
-                        <label for="password" class="form-label">密碼<span class="text-muted">*</span></label>
-                        <form:input path="member.memberPassword" name="memberPassword" type="text" class="form-control" id="memberPassword" placeholder="請輸入密碼"/>
+                        <label for="password" class="form-label">密碼<span class="">*</span></label>
+                        <spring:bind path="member.memberPassword">
+                        <input name="memberPassword" type="password" class="form-control" id="memberPassword" placeholder="請輸入密碼" required/>
+                        </spring:bind>
                         <div class="invalid-feedback">
                             請輸入密碼
                         </div>
                     </div>
 
                     <div class="col-12">
-                        <label for="re_password" class="form-label">確認密碼<span class="text-muted">*</span></label>
-                        <input  name="re_memberPassword" type="text" class="form-control" id="re_memberPassword" placeholder="確認密碼"/>
+                        <label for="re_password" class="form-label">確認密碼<span class="">*</span></label>
+                        <input  name="re_memberPassword" type="password" class="form-control" id="re_memberPassword" placeholder="確認密碼" required/>
                         <div class="invalid-feedback">
                             確認密碼
                         </div>
                     </div>
 
                     <div class="col-12 ">
-                        <form:hidden path="member.memberValid" type="text" class="form-control" id="memberValid" name="memberValid" value="1"/>
-                    	form
+                    	<spring:bind path="member.memberValid">
+                        <input hidden type="text" class="form-control" id="memberValid" name="memberValid" value="1"/>
+                    	</spring:bind>
                     </div>
 
                     <div class="col-12 ">
-                        <form:hidden path="member.memberLevel" type="text" class="form-control" id="memberLevel" name="memberLevel" value="1"/>
+                    	<spring:bind path="member.memberLevel">    
+                        	<input hidden type="text" class="form-control" id="memberLevel" name="memberLevel" value="1"/>
+                    	</spring:bind>
                     </div>
                     <hr class="bg-white">
 
                     <div class="col-12">
-                        <label for="phone" class="form-label">聯絡電話<span class="text-muted">*</span></label>
-                        <form:input path="memberDetail.memberPhone" type="text" class="form-control" id="phone" placeholder="請輸入連絡電話" 
-                          name="memberPhone"/>  
+                        <label for="phone" class="form-label">聯絡電話<span class="">*</span></label>
+                       <spring:bind path="memberDetail.memberPhone">
+                        <input type="text" class="form-control" id="phone" placeholder="請輸入連絡電話" 
+                          name="memberPhone" required/>  
+                          </spring:bind>
                       <div class="invalid-feedback"> 
                            請輸入電話號碼 
                          </div> 
                     </div> 
 
                     <div class="col-12">
-                        <label for="address" class="form-label">連絡地址 <span class="text-muted">*</span></label>
-                        <form:input path="memberDetail.memberAddress" type="text" class="form-control" id="address" placeholder="請輸入聯絡地址"/>
-                        
+                        <label for="address" class="form-label">連絡地址 <span class="">*</span></label>
+                        <spring:bind path="memberDetail.memberAddress">
+                        <input type="text" name="memberAddress" class="form-control" id="address" placeholder="請輸入聯絡地址" required/>
+                        </spring:bind>
                         <div class="invalid-feedback">
                             請輸入聯絡地址
                         </div>
                     </div>
 
                     <div class="col-5">
-                        <label for="birthday" class="form-label">出生年月日 <span class="text-muted">*</span></label>
-                        <form:input path="memberDetail.memberBirthday" type="date" class="form-control" id="birthdy" name="memberBirthday"/>
+                        <label for="birthday" class="form-label">出生年月日 <span class="">*</span></label>
+                        <spring:bind path="memberDetail.memberBirthday">
+                        <input type="date" class="form-control" id="birthdy" name="memberBirthday" required/>
+                        </spring:bind>
                         <div class="invalid-feedback">
                             請選擇出生年月日
                         </div>
                     </div>
                     
                     <div class="col-md-2">
-                        <label for="gender" class="form-label">性別<span class="text-muted">*</span></label>
-                        <form:select path="memberDetail.memberSex" class="form-select" id="gender" name="memberSex">
-	                        <form:option value="">請選擇性別</form:option>
-	                        <form:option value="1">男</form:option>
-	                        <form:option value="2">女</form:option>
-	                        <form:option value="3">其他</form:option>
-                        </form:select>
-                        
+                        <label for="gender" class="form-label">性別<span class="">*</span></label>
+                        <spring:bind path="memberDetail.memberSex">
+                        <select class="form-select" id="gender" name="memberSex" required>
+	                        <option value="">請選擇性別</option>
+	                        <option value="1">男</option>
+	                        <option value="2">女</option>
+	                        <option value="3">其他</option>
+                        </select>
+                        </spring:bind>
                         <div class="invalid-feedback">
                             Please select a valid country.
                         </div>
@@ -174,8 +195,10 @@
                     
                     <div class="col-12"></div>
                     <div class="col-5">
-                        <label for="photo" class="form-label">大頭照 <span class="text-muted"></span></label>
-                        <form:input path="memberDetail.memberPhoto" type="file" class="form-control" id="memberPhoto" name="memberPhoto"/>
+                        <label for="photo" class="form-label">大頭照 <span class=""></span></label>
+                        <spring:bind path="memberDetail.memberPhoto">
+                        <input type="file" class="form-control" id="memberPhoto" name="memberPhoto"/>
+                        </spring:bind>
                         <div class="invalid-feedback">
                             請選擇大頭照
                         </div>
@@ -184,7 +207,7 @@
                     <hr class="my-4">
 
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="same-address">
+                        <input type="checkbox" class="form-check-input" id="same-address" required>
                         <label class="form-check-label" for="same-address">我已同意會員條款</label>
                     </div>
 
@@ -194,7 +217,7 @@
                     <hr class="my-4">
 
                     <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-            </form:form>
+            </form>
         </div>
     </div>
     </div>
