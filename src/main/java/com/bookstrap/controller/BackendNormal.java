@@ -38,6 +38,7 @@ public class BackendNormal {
 		session.setAttribute("empAccount", emp.getAccount());
 		session.setAttribute("empName", emp.getEmpName());
 		session.setAttribute("empPosition", emp.getEmpPosition());
+		session.setAttribute("empId", emp.getEmpId());
 		return "redirect:index";
 	}
 	

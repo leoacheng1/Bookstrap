@@ -45,5 +45,9 @@ public class ShopEmployeesAttendanceService {
 	public void deleteShopEmployeesAttendance(Integer attId) {
 		sempattDao.deleteById(attId);
 	}
+	
+	public List<ShopEmployeesAttendance> selectShopEmployeesAttendanceById(Integer attSempid) {
+		return sempattDao.selectShopEmployeesAttendanceByIdQuery(attSempid);
+	}
 
 }
