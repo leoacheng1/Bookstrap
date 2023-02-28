@@ -1,5 +1,6 @@
 package com.bookstrap.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -56,6 +57,19 @@ public class ShoppingCartsController {
         System.out.println("memberId:" + memberId);
         if (memberId != null) {
             List<ShoppingCarts> cartItemList = scService.findCartItemsByMemberId(memberId);
+      
+            
+            List<Books> bookList = new ArrayList<Books>();
+            int n = 0;
+            while(cartItemList.size() > n) {
+            
+            	 ShoppingCarts list = cartItemList.get(n);
+            	System.out.println(list);
+            	String name = list.getBook().getName();
+            	n++;
+            }
+
+//            List<Books> bookList = bService.findBooksByBookId(bookId);
             model.addAttribute("cartItemList", cartItemList);
             return "shoppingcarts/shoppingcarts";
         }

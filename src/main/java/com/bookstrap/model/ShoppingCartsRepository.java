@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.pk.ShoppingCartsPK;
@@ -21,6 +20,7 @@ public interface ShoppingCartsRepository extends JpaRepository<ShoppingCarts, Sh
 	@Query(value = "from ShoppingCarts where memberId = :memberId")
 	public List<ShoppingCarts> findByMemberId(Integer memberId);
 	
-
+	@Query(value = "from Books where bookId = :bookId")
+	public List<Books> findBooksByBookId(Integer bookId);
 
 }
