@@ -464,14 +464,6 @@ public class MemberController {
 		return "member/Main/MyInfo";
 	}
 
-	@GetMapping("/member/getphoto")
-	public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId) {
-		MemberDetails photoId = memberDetailService.getPhotoById(memberId);
-		byte[] photoFile = photoId.getMemberPhoto();
-		HttpHeaders header = new HttpHeaders();
-		header.setContentType(MediaType.IMAGE_JPEG);
-
-		return new ResponseEntity<byte[]>(photoFile, header, HttpStatus.OK);
-	}
+	
 
 }

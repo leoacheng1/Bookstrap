@@ -38,8 +38,13 @@ public class MemberDdetailService {
 		return null;	
 				}
 	
-	public void deleteMemberDetailByID(Integer memberId) {
-		 memberDetailDao.deleteById(memberId);
+	public boolean deleteMemberDetailByID(Integer memberId) {
+		
+		if(memberId != null){
+		memberDetailDao.deleteById(memberId);
+		return true;
+		}
+		return false;
 	}
 
 	public MemberDetails insertMemberDetails(MemberDetails memberDatil) {

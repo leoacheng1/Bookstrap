@@ -46,14 +46,18 @@
 
 
 						<jstl:forEach var="member" items="${page.content}">
-							<tr>
+							<tr>  
 								<th scope="row">${member.memberId}</th>
-								<td>${member.memberPhoto}</td>
+								<td><img src="${contextRoot}/admin/get/getphoto?memberId=${member.memberId}" width="100px"> </td>
 								<td>${member.memberLastName}</td>
 								<td>${member.memberFirstName}</td>
 								<td><a href="#" type="button" class="btn btn-primary">詳細資料</a></td>
-								<td><a href="#" type="button" class="btn btn-light">修改</a></td>
-								<td><a href="#" type="button" class="btn btn-danger">刪除</a></td>
+								<td><a href="${contextRoot}/admin/edit/member?memberId=${member.memberId}" type="button" class="btn btn-light">修改</a></td>
+								<form id="deleteForm" action="${contextRoot}/admin/delete/member?memberId=${member.memberId}" method="post">
+								<input name="_method" type="hidden" value="delete"/>
+								<input name="memberId" type="hidden" value="${member.memberId}"/>
+								<td><input onclick="confirmDelete()" type="submit" value="Delete" class="btn btn-danger"></td>
+								</form>
 							</tr>
 						</jstl:forEach>
 
@@ -70,7 +74,7 @@
 					<jstl:choose>
 
 						<jstl:when test="${page.number != pageNumber-1}">
-							<a href="${contextRoot}/member/admin/allmember?p=${pageNumber}">${pageNumber}</a>
+							<a href="${contextRoot}/admin/get/allmember?p=${pageNumber}">${pageNumber}</a>
 						</jstl:when>
 
 						<jstl:otherwise>
@@ -91,8 +95,23 @@
 	</div>
 
 
-
-
+	
+	<script>
+		
+		function confirmDelete(){
+			
+			let result = confirm("確定要刪除此會員資料?");
+			
+			
+			if(result){
+				document.getElementById("deleteForm").submit();
+			}else{
+				
+			}
+								}
+		
+	
+	</script>
 
 
 	<jsp:include page="../layout/AdminJs.jsp" />
