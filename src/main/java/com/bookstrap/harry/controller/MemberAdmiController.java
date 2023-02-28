@@ -157,11 +157,7 @@ public class MemberAdmiController {
 	@DeleteMapping("/admin/delete/member")
 	public String deleteMember(@RequestParam("memberId") Integer memberId) {
 		
-		boolean deleteDetail = memberDetailService.deleteMemberDetailByID(memberId);
-		if(deleteDetail) {
-			memberService.deleteMemberById(memberId);
-			return "redirect:/admin/get/allmember";
-		}
+		 memberDetailService.deleteMemberDetailByID(memberId);
 		return "redirect:/admin/get/allmember";
 	}
 	
