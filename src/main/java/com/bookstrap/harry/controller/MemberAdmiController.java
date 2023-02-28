@@ -162,7 +162,6 @@ public class MemberAdmiController {
 			memberService.deleteMemberById(memberId);
 			return "redirect:/admin/get/allmember";
 		}
-					
 		return "redirect:/admin/get/allmember";
 	}
 	

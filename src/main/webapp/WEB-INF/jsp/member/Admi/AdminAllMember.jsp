@@ -8,6 +8,25 @@
 <meta charset="UTF-8">
 <jsp:include page="../layout/AdminCss.jsp" />
 <title>Insert title here</title>
+<script>
+		
+		function confirmDelete(){
+			
+// 			event.preventDefault();
+			
+			let result = confirm("確定要刪除此會員資料?");
+			console.log(result);
+			
+			if(result == true){
+				document.getElementById("deleteForm").submit();
+// 				window.location.replace("http://localhost:8080/Bookstrap/admin/get/allmember");
+			}else{
+				
+			}
+								}
+		
+	
+	</script>
 </head>
 <body
 	class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
@@ -53,11 +72,13 @@
 								<td>${member.memberFirstName}</td>
 								<td><a href="#" type="button" class="btn btn-primary">詳細資料</a></td>
 								<td><a href="${contextRoot}/admin/edit/member?memberId=${member.memberId}" type="button" class="btn btn-light">修改</a></td>
+								
 								<form id="deleteForm" action="${contextRoot}/admin/delete/member?memberId=${member.memberId}" method="post">
 								<input name="_method" type="hidden" value="delete"/>
 								<input name="memberId" type="hidden" value="${member.memberId}"/>
-								<td><input onclick="confirmDelete()" type="submit" value="Delete" class="btn btn-danger"></td>
+								<td><input onclick="confirmDelete()" type="" value="刪除" class="btn btn-danger"></td>
 								</form>
+								
 							</tr>
 						</jstl:forEach>
 
@@ -96,22 +117,7 @@
 
 
 	
-	<script>
-		
-		function confirmDelete(){
-			
-			let result = confirm("確定要刪除此會員資料?");
-			
-			
-			if(result){
-				document.getElementById("deleteForm").submit();
-			}else{
-				
-			}
-								}
-		
 	
-	</script>
 
 
 	<jsp:include page="../layout/AdminJs.jsp" />
