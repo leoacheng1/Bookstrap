@@ -32,7 +32,7 @@
         }
 
         img {
-          max-width: 80%;
+          max-width: 50%;
           height: auto;
         }
 
@@ -107,9 +107,9 @@
               <label class="form-label">打烊時間</label>
               <input type="time" class="form-control" id="shopcloseHourInput" name="shopcloseHour" min="00:00"
                 max="24:00" required>
-              <label class="form-label">經度</label>
-              <input type="text" class="form-control" name="longitude" id="longitudeInput" readonly="readonly" disabled>
               <label class="form-label">緯度</label>
+              <input type="text" class="form-control" name="longitude" id="longitudeInput" readonly="readonly" disabled>
+              <label class="form-label">經度</label>
               <input type="text" class="form-control" name="latitude" id="latitudeInput" readonly="readonly" disabled>
               <label for="file" class="form-label">店面照片:</label>
               <input type="file" name="shopphoto" id="shopphotoInput" />
@@ -147,10 +147,10 @@
             <label class="form-label">打烊時間</label>
             <input type="time" class="form-control" id="updateshopcloseHourInput" name="shopcloseHour" min="00:00"
               max="24:00" required>
-            <label class="form-label">經度</label>
+            <label class="form-label">緯度</label>
             <input type="text" class="form-control" name="longitude" id="updatelongitudeInput" readonly="readonly"
               disabled>
-            <label class="form-label">緯度</label>
+            <label class="form-label">經度</label>
             <input type="text" class="form-control" name="latitude" id="updatelatitudeInput" readonly="readonly"
               disabled>
             <label for="file" class="form-label">店面照片:</label>
@@ -275,8 +275,8 @@
           + ' <th>電話</th>'
           + ' <th>開店時間</th>'
           + ' <th>打烊時間</th>'
-          + ' <th>經度</th>'
           + ' <th>緯度</th>'
+          + ' <th>經度</th>'
           + ' <th>圖片</th>'
           + ' <th>修改</th>'
           + ' <th>刪除</th>'

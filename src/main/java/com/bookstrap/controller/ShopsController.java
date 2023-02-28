@@ -45,7 +45,11 @@ public class ShopsController {
 //		
 //        return "shop/shophome";
 //	}
-	
+	@GetMapping("/shops/good")
+	public String gogoodshop() {
+
+        return "shop/good";
+	}
 	
 	@GetMapping("/shops/shopmap")
 	public String gomapshop() {
