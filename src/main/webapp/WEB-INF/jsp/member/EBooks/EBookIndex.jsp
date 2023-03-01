@@ -118,7 +118,7 @@
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         
         
-<%--         <jstl:forEach var="eBook" items="${page.content}"> --%>
+        <jstl:forEach var="eBook" items="${page.content}">
          <!--  top ------------------ -->
         <div class="col">
             <div class="card shadow-sm">
@@ -144,7 +144,7 @@
             </div>
           </div>
         <!--    bottom  ------------------ -->
-<%--         </jstl:forEach> --%>
+        </jstl:forEach>
  
         
         

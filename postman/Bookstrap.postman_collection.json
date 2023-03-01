@@ -1,35 +1,61 @@
 {
 	"info": {
-		"_postman_id": "d2d216d0-af11-441b-a61c-46500b426a4b",
+		"_postman_id": "6e600e50-5962-4d0a-9c8c-7d3b73436626",
 		"name": "Bookstrap",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "addMember",
+			"name": "editMember Page",
 			"request": {
-				"method": "POST",
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/Bookstrap/member/edit?memberId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"member",
+						"edit"
+					],
+					"query": [
+						{
+							"key": "memberId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit Member",
+			"request": {
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "memberName",
-							"value": "Bob",
+							"key": "memberId",
+							"value": "1",
 							"type": "default"
 						},
 						{
-							"key": "memberEmail",
-							"value": "Bob@gmail.com",
+							"key": "memberAccount",
+							"value": "admi2@gmail.com",
 							"type": "default"
 						},
 						{
 							"key": "memberPassword",
-							"value": "Abc1234",
+							"value": "1234",
 							"type": "default"
 						},
 						{
-							"key": "membervalid",
+							"key": "memberValid",
 							"value": "1",
 							"type": "default"
 						},
@@ -39,40 +65,39 @@
 							"type": "default"
 						},
 						{
+							"key": "dMemberId",
+							"value": "1",
+							"type": "default"
+						},
+						{
+							"key": "memberName",
+							"value": "ABC",
+							"type": "default"
+						},
+						{
 							"key": "memberSex",
 							"value": "1",
 							"type": "default"
 						},
 						{
-							"key": "memberBirthday",
-							"value": "1991-01-01",
-							"type": "text"
-						},
-						{
-							"key": "memberPhone",
-							"value": "234456",
+							"key": "memberEmail",
+							"value": "ABC@gmail.com",
 							"type": "default"
 						},
 						{
-							"key": "memberCellPhone",
-							"value": "3234",
+							"key": "memberPhone",
+							"value": "0988",
 							"type": "default"
 						},
 						{
 							"key": "memberAddress",
-							"value": "Gfddwe",
+							"value": "New",
 							"type": "default"
 						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/Bookstrap/member/post",
-					"protocol": "http",
+					"raw": "localhost:8080/Bookstrap/member/edit",
 					"host": [
 						"localhost"
 					],
@@ -80,7 +105,134 @@
 					"path": [
 						"Bookstrap",
 						"member",
-						"post"
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PasswordEditPage",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/Bookstrap/member/editpasswordpage?memberId=18",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"member",
+						"editpasswordpage"
+					],
+					"query": [
+						{
+							"key": "memberId",
+							"value": "18"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddPdf",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "eBookName",
+							"value": "Amplified Silencing",
+							"type": "default"
+						},
+						{
+							"key": "eBookCategory",
+							"value": "science",
+							"type": "default"
+						},
+						{
+							"key": "eBookLanguages",
+							"value": "English",
+							"type": "default"
+						},
+						{
+							"key": "eBookAuthor",
+							"value": "David C. Baulcombe",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublisher",
+							"value": "MOLECULAR BIOLOGY",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublishDate",
+							"value": "2007/01/12",
+							"type": "default"
+						},
+						{
+							"key": "eBookPhoto",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookDiscount",
+							"value": "85",
+							"type": "default"
+						},
+						{
+							"key": "eBookPrice",
+							"value": "150",
+							"type": "default"
+						},
+						{
+							"key": "eBookTranslator",
+							"value": "ABC",
+							"type": "default"
+						},
+						{
+							"key": "eBookFile",
+							"type": "file",
+							"src": "/C:/temp/pdf/Amplified Silencing.pdf"
+						},
+						{
+							"key": "eBookSize",
+							"value": "A4",
+							"type": "default"
+						},
+						{
+							"key": "eBookPage",
+							"value": "3",
+							"type": "default"
+						},
+						{
+							"key": "eBookIntro",
+							"value": "Ten years ago, we knew nothing about\nhow double-stranded RNA blocks gene\nexpression through the silencing of\ntargeted RNA.",
+							"type": "default"
+						},
+						{
+							"key": "eBookGrade",
+							"value": "normal",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/ebook/post/addebook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ebook",
+						"post",
+						"addebook"
 					]
 				}
 			},

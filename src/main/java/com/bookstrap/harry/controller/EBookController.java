@@ -32,10 +32,10 @@ public class EBookController {
 	
 	
 	
-	@GetMapping("/ebook/index")
-	public String toEBookIndex() {
-		return "member/EBooks/EBookIndex";
-	}
+//	@GetMapping("/ebook/index")
+//	public String toEBookIndex() {
+//		return "member/EBooks/EBookIndex";
+//	}
 	
 	@GetMapping("/ebook/addpage")
 	public String addEBookPage() {
@@ -47,7 +47,7 @@ public class EBookController {
 			Model m){
 		Page<EBooks> page = eBookService.getEBooksByPage(pageNumber);
 		m.addAttribute("page", page);
-		return "redirect:/ebook/index";
+		return "member/EBooks/EBookIndex";
 	}
 	
 	@PostMapping("/ebook/post/addebook")
