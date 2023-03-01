@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="MailAttachment")
@@ -32,6 +33,7 @@ public class MailAttachment {
 	private Integer mailId;
 		
 	@Lob
+	@JsonIgnore
 	@Column(name = "attachment_file")
 	private byte[] attachmentFile;
 	

@@ -1,5 +1,6 @@
 package com.bookstrap.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bookstrap.service.EmployeesService;
+import com.bookstrap.service.MailService;
 
 @Controller
 @RequestMapping("/backend")
 public class BackendPage {
 	@Autowired
 	private EmployeesService empService;
+	
+	@Autowired
+	private MailService mailService;
 
 	@GetMapping("/login")
 	public String loginPage() {
@@ -43,18 +48,6 @@ public class BackendPage {
 			return "backend/login";
 		}
 	}
-	
-	//Mail related pages
-	@GetMapping("/composemail")
-	public String composeMail() {
-		return "/backend/controllpanel/owner/mail/writemail";
-	}
-
-	@GetMapping("/inbox")
-	public String inbox() {
-		return "/backend/controllpanel/owner/mail/inbox";
-	}
-	
 	
 	@GetMapping("/template")
 	public String templatePage() {

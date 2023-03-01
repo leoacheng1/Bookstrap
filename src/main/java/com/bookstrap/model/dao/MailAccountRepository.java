@@ -9,4 +9,5 @@ public interface MailAccountRepository extends JpaRepository<MailAccount, Intege
 	public MailAccount findByEmployee(Employees employee);
 	
 	public MailAccount findByAccount(String account);
+
 }

@@ -6,6 +6,7 @@ package com.bookstrap.model.bean;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -67,11 +68,11 @@ public class Mail {
 	}
 	//  ==========================RELATION COLUMNS==========================  // 
 	
-	@OneToMany(mappedBy = "mail")
+	@OneToMany(mappedBy = "mail", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Set<MailAttachment> mailAttachment;
 	
-	@OneToMany(mappedBy = "mail")
+	@OneToMany(mappedBy = "mail", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Set<AccountMail> accountMails;
 	

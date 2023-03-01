@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
   <!DOCTYPE html>
   <html>
 
@@ -6,9 +8,10 @@
     <meta charset="UTF-8">
     <title>撰寫郵件</title>
     <!--版型需要的css -->
-    <link rel="stylesheet" href="/Bookstrap/eddie/css/summernote-bs4.min.css">
-    <link rel="stylesheet" href="/Bookstrap/eddie/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="${contextRoot}/eddie/css/summernote-bs4.min.css">
+    <link rel="stylesheet" href="${contextRoot}/eddie/css/sweetalert2.min.css">
     <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
+    <link rel="stylesheet" href="${contextRoot}/eddie/css/mailside.css">
     <style>
       .remove-attachment{
         color: aliceblue;
@@ -25,11 +28,25 @@
       .mailbox-attachment-icon{
         font-size: 50px;
       }
+
+      #toastsContainerTopRight {
+        position: fixed;
+        top: 60px;
+        right: 10px;    
+      }
+      .eddie-toast a{
+        padding: 8px 10px 8px 10px;
+        border-radius: 5px;
+      }
+      .eddie-toast a:hover {
+        cursor: pointer;
+        background-color: lightgray;
+      }
     </style>
   </head>
 
   <body
-    class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
+    class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse" data-ref="${mailAccount.accountId}">
     <div class="wrapper">
       <!--上面導覽列 -->
       <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
@@ -58,7 +75,7 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-3">
-                    <a href="mailbox.html" class="btn btn-primary btn-block mb-3">收件匣</a>
+                    <a href="${contextRoot}/backend/mailpage/inbox" class="btn btn-primary btn-block mb-3">收件匣</a>
 
                     <div class="card">
                       <div class="card-header">
@@ -80,7 +97,7 @@
                           </li>
                           <li class="nav-item">
                             <a href="#" class="nav-link">
-                              <i class="far fa-envelope"></i> 已寄出
+                              <i class="fa fa-paper-plane"></i> 已寄出
                               <span class="badge bg-success float-right">8</span>
                             </a>
                           </li>
@@ -114,13 +131,22 @@
                       <div class="card-body p-0">
                         <ul class="nav nav-pills flex-column">
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-danger"></i>一般信件</a>
+                            <a class="nav-link" href="#">
+                              <i class="far fa-envelope text-secondary"></i> 一般信件
+                              <span class="badge badge-info float-right">6</span>
+                            </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-warning"></i>工作指派</a>
+                            <a class="nav-link" href="#">
+                              <i class="fa fa-briefcase text-secondary"></i> 工作指派
+                              <span class="badge badge-info float-right">6</span>
+                            </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-primary"></i>公司訊息</a>
+                            <a class="nav-link" href="#">
+                              <i class="fa fa-bullhorn text-secondary"></i> 公司訊息
+                              <span class="badge badge-info float-right">6</span>
+                            </a>
                           </li>
                         </ul>
                       </div>
@@ -141,13 +167,29 @@
                       <div class="card-body p-0">
                         <ul class="nav nav-pills flex-column">
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-danger"></i>自訂標籤一</a>
+                            <a class="nav-link" href="#">
+                              <i class="fas fa-star text-secondary"></i> 加入星號
+                              <span class="badge badge-warning float-right">6</span>
+                            </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-warning"></i>自訂標籤二</a>
+                            <a class="nav-link" href="#">
+                              <i class="fa fa-flag text-secondary" style="padding-left: 3px; padding-right: 2px;"></i> 重要郵件
+                              <span class="badge badge-warning float-right">6</span>
+                            </a>
                           </li>
+                          <jstl:forEach items="${mailAccount.accountLabels}" var="label">
+                            <li class="nav-item label-li" data-lid="${label.labelId}">
+                            <a class="nav-link user-label" href="www.google.com">
+                              <i class="fas fa-bookmark text-secondary" style="padding-left:3px;padding-right: 2px;"></i> ${label.labelName}
+                              <i class="fa fa-trash text-primary invisible float-right"></i>
+                            </a>
+                          </li>
+                          </jstl:forEach>
                           <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="far fa-circle text-primary"></i>自訂標籤三</a>
+                            <a class="nav-link" href="#" id="add-label">
+                              <i class="fa fa-plus-square text-secondary" style="padding-left:2px;padding-right: 2px;"></i> 新增標籤
+                            </a>
                           </li>
                         </ul>
                       </div>
@@ -164,10 +206,10 @@
                       <!-- /.card-header -->
                       <div class="card-body">
                         <div class="form-group">
-                          <input class="form-control" placeholder="To:" name = "mailTo">
+                          <input class="form-control" placeholder="收件者" name = "mailTo">
                         </div>
                         <div class="form-group">
-                          <input class="form-control" placeholder="Subject:" name = "mailSubject">
+                          <input class="form-control" placeholder="主旨" name = "mailSubject">
                         </div>
                         <div class="form-group">
                           <textarea id="compose-textarea" class="form-control" style="height: 300px">
@@ -189,10 +231,10 @@
                       <!-- /.card-body -->
                       <div class="card-footer">
                         <div class="float-right">
-                          <button type="button" class="btn btn-default" id="draftBtn"><i class="fas fa-pencil-alt"></i> 草稿</button>
+                          <button type="button" class="btn btn-warning" id="draftBtn"><i class="fas fa-pencil-alt"></i> 草稿</button>
                           <button type="submit" class="btn btn-primary" id="sendBtn" data-toggle="modal" data-target="#sendModal"><i class="far fa-envelope"></i> 送出</button>
                         </div>
-                        <button type="reset" class="btn btn-default" id="giveupBtn"><i class="fas fa-times"></i> 放棄</button>
+                        <button type="reset" class="btn btn-danger" id="giveupBtn" data-toggle="modal" data-target="#dropModal"><i class="fas fa-times"></i> 放棄</button>
                       </div>
                       <!-- /.card-footer -->
                     </div>
@@ -229,7 +271,7 @@
         </div>
       </li>
       <li id="text_template">
-        <span class="mailbox-attachment-icon"><i class="fas fa-file"></i></span>
+        <span class="mailbox-attachment-icon"><i class="fas fa-book"></i></span>
         <div class="mailbox-attachment-info">
           <a href="#" class="mailbox-attachment-name"><i class="fas fa-paperclip"></i></a>
               <span class="mailbox-attachment-size clearfix mt-1">
@@ -258,8 +300,18 @@
               </span>
         </div>
       </li>
+      <li id="other_template">
+        <span class="mailbox-attachment-icon"><i class="far fa-file"></i></span>
+        <div class="mailbox-attachment-info">
+          <a href="#" class="mailbox-attachment-name"><i class="fas fa-paperclip"></i></a>
+              <span class="mailbox-attachment-size clearfix mt-1">
+                <span class="filesize"></span>
+                <button class="remove-attachment">移除</button>
+              </span>
+        </div>
+      </li>
       <li id="image_template" style="background-color: white;">
-        <span class="mailbox-attachment-icon has-img"><img src="" style="height: 110px;"></span>
+        <span class="mailbox-attachment-icon has-img" style="min-height: 114px;"><img src="" style="height: 114px;"></span>
         <div class="mailbox-attachment-info">
           <a href="#" class="mailbox-attachment-name"><i class="fas fa-camera"></i></a>
               <span class="mailbox-attachment-size clearfix mt-1">
@@ -313,14 +365,35 @@
         </div>
       </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="dropModal" tabindex="-1" role="dialog" aria-labelledby="dropModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="#dropModal">放棄確認</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span>您確認要放棄目前所編輯內容?</span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-danger" id="dropMailBtn">放棄</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!--右側彈跳式功能列 -->
     <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/ownercontroll.jsp" %>
       <!--版型需要的js-->
       <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
-        <script src="/Bookstrap/eddie/js/summernote-bs4.min.js"></script>
-        <script src="/Bookstrap/eddie/js/axios.min.js"></script>
-        <script src="/Bookstrap/eddie/js/sweetalert2.all.min.js"></script>
-        <script src="/Bookstrap/eddie/js/mail/composemail.js"></script>
+        <script src="${contextRoot}/eddie/js/summernote-bs4.min.js"></script>
+        <script src="${contextRoot}/eddie/js/axios.min.js"></script>
+        <script src="${contextRoot}/eddie/js/sweetalert2.all.min.js"></script>
+        <script src="${contextRoot}/eddie/js/mail/composemail.js"></script>
+        <script src="${contextRoot}/eddie/js/mail/mailside.js"></script>
   </body>
 
   </html>

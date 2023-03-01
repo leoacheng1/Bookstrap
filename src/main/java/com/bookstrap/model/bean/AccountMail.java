@@ -21,7 +21,7 @@ public class AccountMail {
 	private AccountMailPK accountMailId;
 
 	@ManyToOne
-	@JsonBackReference
+	@JsonManagedReference
 	@JoinColumn(name = "account_id", insertable = false, updatable = false)
 	private MailAccount mailAccount;
 	
@@ -31,13 +31,13 @@ public class AccountMail {
 	private Mail mail;
 	
 	@Column(name = "starred")
-	private Byte starred ;
+	private Short starred ;
 	
 	@Column(name = "important")
-	private Byte important;
+	private Short important;
 	
 	@Column(name = "hasread")
-	private Byte hasread;
+	private Short hasread;
 	
 	@Column(name = "folder_id")
 	@Transient
@@ -62,13 +62,9 @@ public class AccountMail {
 	
 	@PrePersist //things to do before  into persistent state
 	public void onCreate() {
-		if (starred == null) {
-			starred = 0;
-		}else if(important == null) {
-			important = 0;
-		}else if(hasread == null) {
-			hasread = 0;
-		}
+		if (starred == null) starred = 0;
+		if (important == null) important = 0;
+		if (hasread == null) hasread = 0;		
 	}
 
 	public AccountMailPK getAccountMailId() {
@@ -83,15 +79,15 @@ public class AccountMail {
 		return mail;
 	}
 
-	public Byte getStarred() {
+	public Short getStarred() {
 		return starred;
 	}
 
-	public Byte getImportant() {
+	public Short getImportant() {
 		return important;
 	}
 
-	public Byte getHasread() {
+	public Short getHasread() {
 		return hasread;
 	}
 
@@ -123,15 +119,15 @@ public class AccountMail {
 		this.mail = mail;
 	}
 
-	public void setStarred(Byte starred) {
+	public void setStarred(Short starred) {
 		this.starred = starred;
 	}
 
-	public void setImportant(Byte important) {
+	public void setImportant(Short important) {
 		this.important = important;
 	}
 
-	public void setHasread(Byte hasread) {
+	public void setHasread(Short hasread) {
 		this.hasread = hasread;
 	}
 

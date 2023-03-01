@@ -1,5 +1,6 @@
 package com.bookstrap.model.bean;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -39,22 +41,27 @@ public class MailAccount {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "mailAccount", cascade = CascadeType.ALL)
-	private Set<AccountLabel> accountLabels;
+	private List<AccountLabel> accountLabels;
 	
-	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(mappedBy = "mailAccount", cascade = CascadeType.ALL)
 	private Set<AccountMail> accountMails;
 	
 	public MailAccount() {
 	}
 	
-	public Set<AccountLabel> getAccountLabels() {
+
+
+	public List<AccountLabel> getAccountLabels() {
 		return accountLabels;
 	}
 
-	public void setAccountLabels(Set<AccountLabel> accountLabels) {
+
+
+	public void setAccountLabels(List<AccountLabel> accountLabels) {
 		this.accountLabels = accountLabels;
 	}
+
 
 
 	public Integer getAccountId() {

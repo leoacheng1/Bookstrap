@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MailDto implements Serializable{
+public class SendMailDto implements Serializable{
 	//for receiving sending mail request
 	private static final long serialVersionUID = 1L;
 	@JsonProperty("mailTo")
@@ -18,9 +18,10 @@ public class MailDto implements Serializable{
 	@JsonProperty("mailContent")
 	private String mailContent;
 	
-	
+	//for establishing attachments
 	private MultipartFile[] file;
-	public MailDto() {
+	
+	public SendMailDto() {
 		
 	}
 
@@ -36,10 +37,6 @@ public class MailDto implements Serializable{
 		return mailContent;
 	}
 
-
-
-
-
 	public void setMailTo(String mailTo) {
 		this.mailTo = mailTo;
 	}
@@ -51,8 +48,6 @@ public class MailDto implements Serializable{
 	public void setMailContent(String mailContent) {
 		this.mailContent = mailContent;
 	}
-
-
 	
 
 	public MultipartFile[] getFile() {
@@ -62,7 +57,5 @@ public class MailDto implements Serializable{
 	public void setFile(MultipartFile[] file) {
 		this.file = file;
 	}
-
-
 
 }

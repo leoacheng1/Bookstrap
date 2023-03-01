@@ -1,0 +1,141 @@
+
+const contextRoot = "http://localhost:8080/Bookstrap/";
+/**
+ * a recursive function that fetch multiple attachment and set URIs for download.(confidence boost ><)
+ * @param {Array<Number>} attachmentIds -id of the attachment
+ * @returns 
+ */
+function setAttachment(attachmentIds, attachmentDataArray = []) {
+    if (attachmentIds.length != 0) {
+        axios({
+            url: contextRoot + 'mail/attachment/' + attachmentIds[0],
+            method: 'GET',
+            responseType: 'blob'
+        }).then(response => {
+            console.log(response);
+            let disposition = response.headers['content-disposition'];
+            let uri = window.URL.createObjectURL(new Blob([response.data]));
+            let fileSize = response.data.size.toString();
+
+            attachmentDataArray.push({
+                'id': attachmentIds[0],
+                'uri': uri,
+                'name': decodeURIComponent(disposition.split("'").pop()),
+                'extension': decodeURIComponent(disposition.split(".").pop()),
+                'size': fileSize.length < 7 ? `${Math.round(+fileSize / 1024)}kb` : `${(Math.round(+fileSize / 1024) / 1000).toFixed(1)}MB`
+            });
+            attachmentIds.shift();
+            if (attachmentIds.length == 0) {
+                // console.log(attachmentDataArray);
+                // return attachmentDataArray;
+                for (data of attachmentDataArray) {
+                    makeAttachment(data);
+                }
+            };
+            setAttachment(attachmentIds, attachmentDataArray);
+        }).catch(err => console.log(err))
+    }
+}
+/**
+ * to fill in mail info 
+ * @param {Number} mailId - mail id of the given mail 
+ * @returns 
+ */
+function setMailContent(mailId) {
+    axios({
+        url: contextRoot + 'mail/' + mailId,
+        method: 'GET'
+    }).then(response => {
+        let data = response.data;
+        console.log(response);
+        $('.mailbox-read-info h5').html(data.mailSubject).siblings('h6').html(`From: ${data.mailFrom}` + `<span class="mailbox-read-time float-right">${data.mailTime}</span>`);
+        $('.mailbox-read-message').html(data.mailContent);
+        setAttachment(response.data.attachmentIds);
+    }).catch(err => console.log(err))
+}
+
+
+
+setMailContent(location.href.slice(location.href.lastIndexOf("/") + 1));
+
+const link = document.createElement('a');
+// Create a link to download the file
+//     const link = document.createElement('a');
+//     link.href = url;
+//     link.setAttribute('download', 'filename.png');
+//     document.body.appendChild(link);
+//     link.click();
+//   });   
+
+
+{/* <li id="attachment_template">
+<span class="mailbox-attachment-icon"><i class="far fa-file-pdf"></i></span>
+<div class="mailbox-attachment-info">
+  <a href="#" class="mailbox-attachment-name"><i class="fas fa-paperclip"></i>
+    Sep2014-report.pdf</a>
+  <span class="mailbox-attachment-size clearfix mt-1">
+    <span class="filesize">1,245 KB</span>
+    <a href="#" class="btn btn-default btn-sm float-right"><i
+        class="fas fa-cloud-download-alt"></i></a>
+  </span>
+</div>
+</li>
+<li id="attachment_template_img">
+<span class="mailbox-attachment-icon has-img"><img src="" style="height: 110px;"></span>
+<div class="mailbox-attachment-info">
+  <a href="#" class="mailbox-attachment-name"><i class="fas fa-camera"></i> photo2.png</a>
+  <span class="mailbox-attachment-size clearfix mt-1">
+    <span class="filesize">1.9 MB</span>
+    <a href="#" class="btn btn-default btn-sm float-right"><i
+        class="fas fa-cloud-download-alt"></i></a>
+  </span>
+</div>
+</li> */}
+
+function makeAttachment(attachmentData) {
+    let extension = attachmentData.extension;
+    console.log(extension)
+    let typeIcon;
+    if (['zip', 'rar', 'tar', 'gz', '7z'].includes(extension)) {
+        typeIcon = "far fa-file-archive";
+    } else if (["pdf"].includes(extension)) {
+        typeIcon = "far fa-file-pdf";
+    } else if (['doc', 'docx'].includes(extension)) {
+        typeIcon = "far fa-file-word";
+    } else if (['xls', 'xlsx'].includes(extension)) {
+        typeIcon = "far fa-file-excel";
+    } else if (["txt"].includes(extension)) {
+        typeIcon = "fas fa-book";
+    } else {
+        typeIcon = "fas fa-file";
+    }
+    let isImg = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'tif', 'tiff', 'ico'].includes(attachmentData.extension);
+    let filesize = $('<span/>', { class: 'filesize', append: attachmentData.size });
+    let downloadLink = $('<a/>', {
+        download: attachmentData.name,
+        href : attachmentData.uri,
+        class: "btn btn-default btn-sm float-right",
+        append: $("<i/>", { class: "fas fa-cloud-download-alt"}),
+    });
+    let attachmentSize = $('<span/>', { class: "mailbox-attachment-size clearfix mt-1", append: [filesize, downloadLink] });
+    let attachmentName = $('<a/>', {
+        href: attachmentData.uri,
+        class: "mailbox-attachment-name",
+        append: [$('<i/>', { class: (isImg ? "fas fa-camera" : "fas fa-paperclip") }), " " + attachmentData.name],
+        download: attachmentData.name
+    })
+    let attachmentIcon = $("<span/>", {
+        class: isImg ? "mailbox-attachment-icon has-img" : "mailbox-attachment-icon",
+        style : "min-height: 114px;",
+        append: isImg ? $("<img/>", { src: attachmentData.uri, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
+    });
+    let attachmentInfo = $("<div/>", { class: "mailbox-attachment-info", append: [attachmentName, attachmentSize] });
+    let li = $('<li/>', { append: [attachmentIcon, attachmentInfo] });
+    $('.mailbox-attachments').append(li);
+    console.log("isImg: " + isImg);
+}
+
+// makeAttachment(true);
+// makeAttachment(false);
+// console.log(setAttachmentURI([62, 64]));
+// console.log(undefined ? "mailbox-attachment-icon has-img" : "mailbox-attachment-icon")

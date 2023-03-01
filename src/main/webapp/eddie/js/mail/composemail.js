@@ -1,3 +1,4 @@
+var contextRoot = "http://localhost:8080/Bookstrap/";
 $(document).ready(function () {
   initSummerNote();
   addEvents();
@@ -10,19 +11,21 @@ $(document).ready(function () {
 function addEvents() {
   document.getElementById("sendMail").addEventListener("click", sendEmail);
   document.getElementById("draftBtn").addEventListener("click", draftEmail);
+  document.getElementById("dropMailBtn").addEventListener("click", dropEmail);
   $("#attachments").change(inputEffect);
+  window.onbeforeunload = draftOnLeave; //draft unsaved mail on leave
 }
 
 
 /**
  * initialize summernote
  */
-function initSummerNote(){
+function initSummerNote() {
   $('#compose-textarea').summernote({ height: "500px" });
   //resolve tool tip misposition issue
   $('#compose-textarea').summernote('fullscreen.toggle');
   $('#compose-textarea').summernote('fullscreen.toggle');
-  // $("[data-widget = 'pushmenu']").click();
+  $('[data-widget="pushmenu"]').PushMenu('collapse');
 }
 
 /**
@@ -38,11 +41,7 @@ function getFileInfo(file) {
   let fileName = file.name;
   let extension = file.type;
   let fileSize = file.size.toString();
-  if (fileSize.length < 7) {
-    fileSize = `${Math.round(+fileSize / 1024)}kb`
-  } else {
-    fileSize = `${(Math.round(+fileSize / 1024) / 1000).toFixed(1)}MB`
-  }
+  fileSize = fileSize.length < 7 ? `${Math.round(+fileSize / 1024)}kb` : `${(Math.round(+fileSize / 1024) / 1000).toFixed(1)}MB`;
   return {
     'fileName': fileName,
     'extension': extension,
@@ -71,7 +70,9 @@ function getRawFileType(file) {
     return "other"
   }
 }
-
+/**
+ * call back function for delete button to delete certain attachment
+ */
 function deleteAttachmentBtn() {
   const filenum = $(this).parents('li').attr('data-filenum');
   $(this).parents('li').remove();
@@ -82,15 +83,13 @@ function deleteAttachmentBtn() {
       temp.items.add(files[i]);
     }
   }
-  $.each($("#fileplace").children('li'), function(){
+  $.each($("#fileplace").children('li'), function () {
     let num = $(this).attr('data-filenum');
-    if (num > filenum){
-      $(this).attr('data-filenum',Number(num) - 1);
+    if (num > filenum) {
+      $(this).attr('data-filenum', Number(num) - 1);
     }
   });
   document.getElementById('attachments').files = temp.files;
-  // const newFiles = Array.from(document.querySelector('#attachments').files).splice(filenum,1);
-  // document.querySelector('#attachments').files = newFiles;
 }
 
 /**
@@ -108,41 +107,46 @@ function inputEffect() {
     if (totalSize > 32 * 1024 * 1024) {
       $("#attachments").val("");
       $("#triggersizelimit").click();
-      $("#fileplace").empty();
+      document.getElementById("fileplace").innerHTML = "";
+      document.getElementById('attachments').files = null;
       return;
     }
-    let info = getFileInfo(file);  
+    let info = getFileInfo(file);
     //get url for file(used to show image and download)
     let objectURL;
-    if (objectURL) {URL.revokeObjectURL(objectURL)};
+    if (objectURL) { URL.revokeObjectURL(objectURL) };
     objectURL = URL.createObjectURL(file);
 
     //generate block that holds input file preview
     let box = $(`#${info.rawType}_template`).clone(true).removeAttr('id').attr("data-filenum", i);
-    box.find(".mailbox-attachment-name").html(box.find(".mailbox-attachment-name").html()+ info.fileName);
+    box.find(".mailbox-attachment-name").html(box.find(".mailbox-attachment-name").html() + info.fileName);
     box.find(".filesize").html(info.fileSize);
     box.find(".remove-attachment").click(deleteAttachmentBtn);
     //add preview for image, or url for files
     if (info.rawType == "image") {
-      box.find('img').attr("src",objectURL);
+      box.find('img').attr("src", objectURL);
     } else {
       // box.find(".mailbox-attachment-name").attr("download",objectURL);
     }
     $("#fileplace").append(box);
   }
 }
-function clearEditArea(){
+
+/**
+ * clear the whole edit area
+ */
+function clearEditArea() {
   $('.note-editable.card-block').empty();
   $('[name="mailTo"]').val("");
   $('[name="mailSubject"]').val("");
-  document.getElementById('attachments').files = null;
+  document.getElementById('attachments').value = "";
+  document.getElementById('fileplace').innerHTML = "";
 }
 /**
  * sendEmail to our server
  * @param {Event} event - input as callback function for addEventListener
  */
-function sendEmail(event){
-  event.preventDefault();
+function sendEmail(event) {
   let mailTo = $('[name="mailTo"]').val();
   let subject = $('[name="mailSubject"]').val();
   let content = $('.note-editable.card-block').html();
@@ -152,65 +156,149 @@ function sendEmail(event){
   formData.append("mailTo", mailTo);
   formData.append("mailSubject", subject);
   formData.append("mailContent", content);
-  for(f of files){
-    formData.append("file",f);
+  for (f of files) {
+    formData.append("file", f);
   }
   axios({
-    url : "http://localhost:8080/Bookstrap/mail/api/post",
+    url: contextRoot + "mail",
     method: "post",
     data: formData,
     headers: {
-      "Content-Type" : "multipart/form-data"
+      "Content-Type": "multipart/form-data"
     }
 
-})
-.then(res => {
-  console.log(res.data);
-  Swal.fire(
-    'Good job!',
-    'You clicked the button!',
-    'success'
-  )
-  clearEditArea()
-  // location.reload();
-})
-.catch(err => console.log(err));
-$('#sendModal').modal('hide')
+  })
+    .then(res => {
+      console.log(res.data);
+      Swal.fire(
+        '寄信成功',
+        '您的郵件已寄出',
+        'success'
+      );
+      clearEditArea();
+    })
+    .catch(err => Swal.fire(
+      '送出失敗',
+      '發生非預期的錯誤',
+      'error'
+    )).finally(
+      () => $('#sendModal').modal('hide')
+    );
 }
-
+/**
+ * helper function for delaying instruction
+ * @param {Number} ms - delay in millisecond  
+ * @returns 
+ */
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 /**
  * sendEmail to our server, put it in draft folder 
  * @param {Event} event - input as callback function for addEventListener
  */
-function draftEmail(event){
-  event.preventDefault();
+async function draftEmail(event) {
+  //save data 
   let mailTo = $('[name="mailTo"]').val();
   let subject = $('[name="mailSubject"]').val();
   let content = $('.note-editable.card-block').html();
   let files = document.getElementById('attachments').files;
-
+  if (mailTo.length == 0 && subject.length == 0 && content.length == 26 && files.length == 0) return;
   let formData = new FormData();
   formData.append("mailTo", mailTo);
   formData.append("mailSubject", subject);
   formData.append("mailContent", content);
-  for(f of files){
-    formData.append("file",f);
+  for (f of files) {
+    formData.append("file", f);
   }
+  let cardBackup = $('.card.card-primary.card-outline .card-body').clone(true, true);
+  clearEditArea();
+  $('.card.card-primary.card-outline .card-body').attr("data-ready", "1");
+  //if not onleave add toast
+  if (event.type == "click") {
+    draftToast(cardBackup);
+    await delay(5000);
+  }
+  //return if restore button in toast is clicked
+  if ($('.card.card-primary.card-outline .card-body').attr("data-ready") == "0") { console.log("not ready"); return; }
   axios({
-    url : "http://localhost:8080/Bookstrap/mail/api/draft",
+    url: contextRoot + "mail/draft",
     method: "post",
     data: formData,
     headers: {
-      "Content-Type" : "multipart/form-data"
+      "Content-Type": "multipart/form-data"
     }
 
-})
-.then(res => {
-  console.log(res.data);
-  console.log("上傳成功");
-  location.reload();
-})
-.catch(err => console.log(err));
-$('#sendModal').modal('hide')
+  })
+    .then(res => {
+      Swal.fire(
+        '加入草稿',
+        '您的郵件已成功加入草稿',
+        'success'
+      );
+    })
+    .catch(err => Swal.fire(
+      '加入失敗',
+      '發生非預期的錯誤',
+      'error'
+    ));
+  $('#sendModal').modal('hide')
+}
+
+function dropEmail() {
+  $('#dropModal').modal('hide');
+  location.href = contextRoot + "backend/mailpage/inbox";
+}
+
+
+/**
+ * 
+ * @param {Object} cardBackup -a copy for the original content (.card.card-primary.card-outline .card-body)
+ */
+function draftToast(cardBackup) {
+  $("body").Toasts('create', {
+    title: '已加入草稿',
+    body: '已將編輯內容加入草稿。    <a style="color:blue">復原</a>',
+    position: 'topRight',
+    icon: 'fas fa-pencil-alt',
+    class: "eddie-toast draft-toast",
+    autohide: true,
+    delay: 5000
+  })
+  $(".draft-toast a").click(function () {
+    $('.card.card-primary.card-outline .card-body').replaceWith(cardBackup);
+    $('.card.card-primary.card-outline .card-body').attr("data-ready", "0");
+    $('.toast.eddie-toast.draft-toast').find("button.close").click();
+  })
+}
+
+
+/**
+ * a call back function that draft mail which is passed to window onbeforeunload
+ * @returns 
+ */
+function draftOnLeave() {
+  let mailTo = $('[name="mailTo"]').val();
+  let subject = $('[name="mailSubject"]').val();
+  let content = $('.note-editable.card-block').html();
+  let files = document.getElementById('attachments').files;
+  if (mailTo.length == 0 && subject.length == 0 && content.length == 26 && files.length == 0) return;
+  let formData = new FormData();
+  formData.append("mailTo", mailTo);
+  formData.append("mailSubject", subject);
+  formData.append("mailContent", content);
+  for (f of files) {
+    formData.append("file", f);
+  }
+  fetch(contextRoot + "mail/draft", {
+    method: "POST",
+    body: formData,
+    keepalive: true
+  });
+}
+
+//not finished
+function checkSend() {
+  let mailTo = $('[name="mailTo"]').val();
+  let subject = $('[name="mailSubject"]').val();
+  let content = $('.note-editable.card-block').html();
 }
