@@ -39,4 +39,76 @@ public class EBookDetails {
 	public EBookDetails() {
 	}
 
+
+
+	public Integer geteBookDetailId() {
+		return eBookDetailId;
+	}
+
+
+
+	public void seteBookDetailId(Integer eBookDetailId) {
+		this.eBookDetailId = eBookDetailId;
+	}
+
+
+
+	public String geteBooksize() {
+		return eBooksize;
+	}
+
+
+
+	public void seteBooksize(String eBooksize) {
+		this.eBooksize = eBooksize;
+	}
+
+
+
+	public Integer geteBookpages() {
+		return eBookpages;
+	}
+
+
+
+	public void seteBookpages(Integer eBookpages) {
+		this.eBookpages = eBookpages;
+	}
+
+
+
+	public String geteBookintro() {
+		return eBookintro;
+	}
+
+
+
+	public void seteBookintro(String eBookintro) {
+		this.eBookintro = eBookintro;
+	}
+
+
+
+	public String geteBookgrade() {
+		return eBookgrade;
+	}
+
+
+
+	public void seteBookgrade(String eBookgrade) {
+		this.eBookgrade = eBookgrade;
+	}
+
+
+
+	public EBooks geteBook() {
+		return eBook;
+	}
+
+
+
+	public void seteBook(EBooks eBook) {
+		this.eBook = eBook;
+	}
+
 }

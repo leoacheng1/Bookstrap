@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,16 +36,16 @@ public class EBooks {
 	private String eBookName;
 	
 	@Column(name = "category")
-	private String eBookcategory;
+	private String eBookCategory;
 	
 	@Column(name = "languages")
-	private String eBooklanguages;
+	private String eBookLanguages;
 	
 	@Column(name = "author")
-	private String eBookauthor;
+	private String eBookAuthor;
 	
 	@Column(name = "publisher")
-	private String eBookpublisher;
+	private String eBookPublisher;
 	
 	@JsonFormat(pattern = "yyyy/MM/dd")
 	@Column(name = "publish_date")
@@ -52,16 +53,16 @@ public class EBooks {
 	
 	@Lob
 	@Column(name = "ebook_photo")
-	private byte[] eBookphoto;
+	private byte[] eBookPhoto;
 	
 	@Column(name = "discount")
-	private Integer eBookdiscount;
+	private Integer eBookDiscount;
 	
 	@Column(name = "price")
-	private Integer eBookprice;
+	private Integer eBookPrice;
 	
 	@Column(name = "translator")
-	private String eBooktranslator;
+	private String eBookTranslator;
 
 	@Lob
 	@Column(name = "ebook_file")
@@ -78,8 +79,140 @@ public class EBooks {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "eBook", cascade = CascadeType.ALL)
 	private Set<ShoppingCarts> shoppingCarts;
 	
+	//For test
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "member_id")
+	private Members member;
 
 	public EBooks() {
+	}
+
+	public Integer geteBookId() {
+		return eBookId;
+	}
+
+	public void seteBookId(Integer eBookId) {
+		this.eBookId = eBookId;
+	}
+
+	public String geteBookName() {
+		return eBookName;
+	}
+
+	public void seteBookName(String eBookName) {
+		this.eBookName = eBookName;
+	}
+
+	public String geteBookCategory() {
+		return eBookCategory;
+	}
+
+	public void seteBookCategory(String eBookCategory) {
+		this.eBookCategory = eBookCategory;
+	}
+
+	public String geteBookLanguages() {
+		return eBookLanguages;
+	}
+
+	public void seteBookLanguages(String eBookLanguages) {
+		this.eBookLanguages = eBookLanguages;
+	}
+
+	public String geteBookAuthor() {
+		return eBookAuthor;
+	}
+
+	public void seteBookAuthor(String eBookAuthor) {
+		this.eBookAuthor = eBookAuthor;
+	}
+
+	public String geteBookPublisher() {
+		return eBookPublisher;
+	}
+
+	public void seteBookPublisher(String eBookPublisher) {
+		this.eBookPublisher = eBookPublisher;
+	}
+
+	public Date geteBookPublishDate() {
+		return eBookPublishDate;
+	}
+
+	public void seteBookPublishDate(Date eBookPublishDate) {
+		this.eBookPublishDate = eBookPublishDate;
+	}
+
+	public byte[] geteBookPhoto() {
+		return eBookPhoto;
+	}
+
+	public void seteBookPhoto(byte[] eBookPhoto) {
+		this.eBookPhoto = eBookPhoto;
+	}
+
+	public Integer geteBookDiscount() {
+		return eBookDiscount;
+	}
+
+	public void seteBookDiscount(Integer eBookDiscount) {
+		this.eBookDiscount = eBookDiscount;
+	}
+
+	public Integer geteBookPrice() {
+		return eBookPrice;
+	}
+
+	public void seteBookPrice(Integer eBookPrice) {
+		this.eBookPrice = eBookPrice;
+	}
+
+	public String geteBookTranslator() {
+		return eBookTranslator;
+	}
+
+	public void seteBookTranslator(String eBookTranslator) {
+		this.eBookTranslator = eBookTranslator;
+	}
+
+	public byte[] geteBookFile() {
+		return eBookFile;
+	}
+
+	public void seteBookFile(byte[] eBookFile) {
+		this.eBookFile = eBookFile;
+	}
+
+	public EBookDetails geteBookDetails() {
+		return eBookDetails;
+	}
+
+	public void seteBookDetails(EBookDetails eBookDetails) {
+		this.eBookDetails = eBookDetails;
+	}
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+
+	public Set<ShoppingCarts> getShoppingCarts() {
+		return shoppingCarts;
+	}
+
+	public void setShoppingCarts(Set<ShoppingCarts> shoppingCarts) {
+		this.shoppingCarts = shoppingCarts;
+	}
+
+	public Members getMember() {
+		return member;
+	}
+
+	public void setMember(Members member) {
+		this.member = member;
 	}
 
 	
