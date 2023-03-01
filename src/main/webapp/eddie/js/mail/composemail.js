@@ -246,7 +246,7 @@ async function draftEmail(event) {
 
 function dropEmail() {
   $('#dropModal').modal('hide');
-  location.href = contextRoot + "backend/mailpage/inbox";
+  location.href = contextRoot + "backend/mailpage/folder/inbox";
 }
 
 

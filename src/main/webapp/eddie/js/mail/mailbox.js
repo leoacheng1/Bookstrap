@@ -10,7 +10,7 @@ var contextRoot = "http://localhost:8080/Bookstrap/";
  */
 function prepareMails(eventFunction){
     axios({
-        url : contextRoot + "mail",
+        url : contextRoot + "mail/" + window.location.href.split("/").pop() + "/1",
         method: "get"
     }).then(
       res => {

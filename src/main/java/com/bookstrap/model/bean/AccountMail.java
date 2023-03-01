@@ -1,9 +1,13 @@
 package com.bookstrap.model.bean;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -60,13 +64,18 @@ public class AccountMail {
 	@Column(name = "mailfrom")
 	private Short mailfrom;
 	
+	@ManyToMany
+	@JoinTable(name = "MailAccountLabel", joinColumns = {@JoinColumn(name="mail_id", referencedColumnName = "mail_id"),
+	@JoinColumn(name="account_id", referencedColumnName = "account_id")},
+	inverseJoinColumns = {@JoinColumn(name = "label_id", referencedColumnName = "label_id")})
+	private Set<AccountLabel> accountLabels;
+	
 	@PrePersist //things to do before  into persistent state
 	public void onCreate() {
 		if (starred == null) starred = 0;
 		if (important == null) important = 0;
 		if (hasread == null) hasread = 0;		
 	}
-
 	public AccountMailPK getAccountMailId() {
 		return accountMailId;
 	}
@@ -154,4 +163,20 @@ public class AccountMail {
 	public void setMailfrom(Short mailfrom) {
 		this.mailfrom = mailfrom;
 	}
+	public Set<AccountLabel> getAccountLabels() {
+		return accountLabels;
+	}
+	public void setAccountLabels(Set<AccountLabel> accountLabels) {
+		this.accountLabels = accountLabels;
+	}
+	
+	public void addAccountLabel(AccountLabel accountLabel) {
+		accountLabels.add(accountLabel);
+		accountLabel.getAccountMails().add(this);
+    }
+
+    public void removeAccountLabel(AccountLabel accountLabel) {
+    	accountLabels.remove(accountLabel);
+    	accountLabel.getAccountMails().remove(this);
+    } 
 }

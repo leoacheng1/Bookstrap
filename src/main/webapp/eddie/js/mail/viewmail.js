@@ -26,8 +26,6 @@ function setAttachment(attachmentIds, attachmentDataArray = []) {
             });
             attachmentIds.shift();
             if (attachmentIds.length == 0) {
-                // console.log(attachmentDataArray);
-                // return attachmentDataArray;
                 for (data of attachmentDataArray) {
                     makeAttachment(data);
                 }
@@ -59,38 +57,7 @@ function setMailContent(mailId) {
 setMailContent(location.href.slice(location.href.lastIndexOf("/") + 1));
 
 const link = document.createElement('a');
-// Create a link to download the file
-//     const link = document.createElement('a');
-//     link.href = url;
-//     link.setAttribute('download', 'filename.png');
-//     document.body.appendChild(link);
-//     link.click();
-//   });   
 
-
-{/* <li id="attachment_template">
-<span class="mailbox-attachment-icon"><i class="far fa-file-pdf"></i></span>
-<div class="mailbox-attachment-info">
-  <a href="#" class="mailbox-attachment-name"><i class="fas fa-paperclip"></i>
-    Sep2014-report.pdf</a>
-  <span class="mailbox-attachment-size clearfix mt-1">
-    <span class="filesize">1,245 KB</span>
-    <a href="#" class="btn btn-default btn-sm float-right"><i
-        class="fas fa-cloud-download-alt"></i></a>
-  </span>
-</div>
-</li>
-<li id="attachment_template_img">
-<span class="mailbox-attachment-icon has-img"><img src="" style="height: 110px;"></span>
-<div class="mailbox-attachment-info">
-  <a href="#" class="mailbox-attachment-name"><i class="fas fa-camera"></i> photo2.png</a>
-  <span class="mailbox-attachment-size clearfix mt-1">
-    <span class="filesize">1.9 MB</span>
-    <a href="#" class="btn btn-default btn-sm float-right"><i
-        class="fas fa-cloud-download-alt"></i></a>
-  </span>
-</div>
-</li> */}
 
 function makeAttachment(attachmentData) {
     let extension = attachmentData.extension;
@@ -135,7 +102,3 @@ function makeAttachment(attachmentData) {
     console.log("isImg: " + isImg);
 }
 
-// makeAttachment(true);
-// makeAttachment(false);
-// console.log(setAttachmentURI([62, 64]));
-// console.log(undefined ? "mailbox-attachment-icon has-img" : "mailbox-attachment-icon")

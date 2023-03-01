@@ -29,7 +29,7 @@ public class MailPageController {
 		return mailService.findByEmployees(empService.findById((Integer)session.getAttribute("empId")));
 	}
 	
-	@GetMapping("/{mailId}")
+	@GetMapping("/readmail/{mailId}")
 	public String viewMail(@PathVariable("mailId") Integer mailId, HttpSession session, Model m) {
 		if (session.getAttribute("empAccount") == null) {
 			m.addAttribute("error", "請先登入");
@@ -38,8 +38,32 @@ public class MailPageController {
 		return "/backend/controllpanel/owner/mail/viewmail";
 	}
 	
-	@GetMapping("/inbox")
+	@GetMapping("/folder/inbox")
 	public String inbox(HttpSession session, Model m) {
+		if (session.getAttribute("empAccount") == null) {
+			m.addAttribute("error", "請先登入");
+			return "backend/login";
+		}
+		return "/backend/controllpanel/owner/mail/inbox";
+	}
+	@GetMapping("/folder/sent")
+	public String sent(HttpSession session, Model m) {
+		if (session.getAttribute("empAccount") == null) {
+			m.addAttribute("error", "請先登入");
+			return "backend/login";
+		}
+		return "/backend/controllpanel/owner/mail/inbox";
+	}
+	@GetMapping("/folder/draft")
+	public String draft(HttpSession session, Model m) {
+		if (session.getAttribute("empAccount") == null) {
+			m.addAttribute("error", "請先登入");
+			return "backend/login";
+		}
+		return "/backend/controllpanel/owner/mail/inbox";
+	}
+	@GetMapping("/folder/bin")
+	public String bin(HttpSession session, Model m) {
 		if (session.getAttribute("empAccount") == null) {
 			m.addAttribute("error", "請先登入");
 			return "backend/login";

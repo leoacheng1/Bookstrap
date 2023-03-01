@@ -5,6 +5,9 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,6 +64,11 @@ public class MailService {
 		return accountMailDao.getstarredMailCount(accountId);
 	};
 // ================================================= for Searching =============================================================
+	public MailFolder findByFolderName(String FolderName) {
+		MailFolder folder = mailFolderDao.findByFolderName(FolderName);
+		return folder;
+	}
+	
 	public MailAccount findByEmployees(Employees employee) {
 		return mailAccountDao.findByEmployee(employee);
 	}
@@ -103,6 +111,15 @@ public class MailService {
 		return null;
 	}
 	
+	public Page<AccountMail> findMailByFolderAndPage(MailAccount account,Integer folderId, Integer pageNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, 20, Sort.by("mail_mailTime").descending());
+		Optional<MailFolder> folder = mailFolderDao.findById(folderId);
+		if (folder.isEmpty()) {
+			return null;
+		}
+		Page<AccountMail> page = accountMailDao.findByMailAccountAndMailFolder(account, folder.get(), pageRequest);
+		return page;
+	}
 // ================================================= for Inserting =============================================================
 	public AccountLabel addLabel(MailAccount account, String labelName) {
 		AccountLabel newLabel = new AccountLabel();
@@ -237,6 +254,14 @@ public class MailService {
 	public boolean deleteLabel(Integer labelId) {
 		Optional<AccountLabel> optional = accountLabelDao.findById(labelId);
 		if (optional.isPresent()) {
+			AccountLabel accountLabel = optional.get();
+			Set<AccountMail> mails = accountLabel.getAccountMails();
+			if (mails != null) {
+				for (AccountMail mail : mails) {
+					mail.removeAccountLabel(accountLabel);
+					accountMailDao.save(mail);
+				}
+			}
 			accountLabelDao.deleteById(labelId);			
 			return true;
 		}

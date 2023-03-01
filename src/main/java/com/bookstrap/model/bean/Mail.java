@@ -76,11 +76,6 @@ public class Mail {
 	@JsonManagedReference
 	private Set<AccountMail> accountMails;
 	
-	@ManyToMany
-	@JoinTable(name = "MailAccountLabel", joinColumns = {@JoinColumn(name="mail_id", referencedColumnName = "mail_id")},
-	inverseJoinColumns = {@JoinColumn(name = "label_id", referencedColumnName = "label_id")})
-	private Set<AccountLabel> accountLabels;
-	
 	
 	public Mail() {
 	}
@@ -180,18 +175,5 @@ public class Mail {
 
 	public void setAccountMails(Set<AccountMail> accountMails) {
 		this.accountMails = accountMails;
-	}
-
-
-
-	public Set<AccountLabel> getAccountLabels() {
-		return accountLabels;
-	}
-
-
-
-	public void setAccountLabels(Set<AccountLabel> accountLabels) {
-		this.accountLabels = accountLabels;
-	}
-	
+	}	
 }

@@ -2,6 +2,7 @@ package com.bookstrap.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,9 +38,9 @@ import com.bookstrap.model.bean.Mail;
 import com.bookstrap.model.bean.MailAccount;
 import com.bookstrap.model.bean.MailAttachment;
 import com.bookstrap.model.bean.MailCountDto;
+import com.bookstrap.model.bean.MailFolder;
 import com.bookstrap.model.bean.SendMailDto;
 import com.bookstrap.model.bean.ViewMailDto;
-import com.bookstrap.model.pk.AccountMailPK;
 import com.bookstrap.service.EmployeesService;
 import com.bookstrap.service.MailService;
 
@@ -175,6 +177,39 @@ public class BackendNormal {
 			mailToSend.setStarred(accountMail.getStarred());
 			mailToSend.setSubject(accountMail.getMail().getMailSubject());
 			mailToSend.setMailLink(""+accountMail.getMail().getMailId());
+			mailToSend.setMailTime(accountMail.getMail().getMailTime());
+			mailToSend.setHasread(accountMail.getHasread());
+			mailToSend.setMailId(accountMail.getMail().getMailId());
+			mailToSend.setAttachmentIds(accountMail.getMail().getMailAttachment().stream().map(attachment -> attachment.getAttachmentId()).toArray(Integer[]::new));
+			mailToSend.setMailContent(Jsoup.parse(accountMail.getMail().getMailContent()).text());
+			mails.add(mailToSend);
+		};
+		return mails; 	
+	}
+	
+	@GetMapping("mail/{folderName}/{pageNum}")
+	@ResponseBody
+	public List<AllMailDto> getAllMailInFolder(HttpSession session, @PathVariable("folderName") String folderName,
+			@PathVariable("pageNum") Integer pageNum) {
+		Integer empId = (Integer) session.getAttribute("empId");		
+		Employees employee = empService.findById(empId);
+		MailAccount account = mailService.findByEmployees(employee);
+		MailFolder folder = mailService.findByFolderName(folderName);
+		if (folder == null) {
+			return null;
+		}
+		Page<AccountMail> page = mailService.findMailByFolderAndPage(account, folder.getFolderId(), pageNum);
+		
+		List<AccountMail> accountMails = page.getContent();
+		List<AllMailDto> mails = new ArrayList<AllMailDto>();
+		for (AccountMail accountMail : accountMails) {
+			AllMailDto mailToSend = new AllMailDto();
+			mailToSend.setFrom(accountMail.getMailAccount().getAccount());
+			mailToSend.setFromLink("");
+			mailToSend.setImportant(accountMail.getImportant());
+			mailToSend.setStarred(accountMail.getStarred());
+			mailToSend.setSubject(accountMail.getMail().getMailSubject());
+			mailToSend.setMailLink("/Bookstrap/backend/mailpage/readmail/"+accountMail.getMail().getMailId());
 			mailToSend.setMailTime(accountMail.getMail().getMailTime());
 			mailToSend.setHasread(accountMail.getHasread());
 			mailToSend.setMailId(accountMail.getMail().getMailId());

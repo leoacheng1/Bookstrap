@@ -75,7 +75,7 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-3">
-                    <a href="${contextRoot}/backend/mailpage/inbox" class="btn btn-primary btn-block mb-3">收件匣</a>
+                    <a href="${contextRoot}/backend/mailpage/folder/inbox" class="btn btn-primary btn-block mb-3">收件匣</a>
 
                     <div class="card">
                       <div class="card-header">
@@ -90,25 +90,25 @@
                       <div class="card-body p-0">
                         <ul class="nav nav-pills flex-column">
                           <li class="nav-item active">
-                            <a href="#" class="nav-link">
+                            <a href="${contextRoot}/backend/mailpage/folder/inbox" class="nav-link">
                               <i class="fas fa-inbox"></i> 收件匣
                               <span class="badge bg-primary float-right">20</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="${contextRoot}/backend/mailpage/folder/sent" class="nav-link">
                               <i class="fa fa-paper-plane"></i> 已寄出
                               <span class="badge bg-success float-right">8</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="${contextRoot}/backend/mailpage/folder/draft" class="nav-link">
                               <i class="far fa-file-alt"></i> 草稿
                               <span class="badge bg-warning float-right">2</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="${contextRoot}/backend/mailpage/folder/bin" class="nav-link">
                               <i class="far fa-trash-alt"></i> 回收桶
                               <span class="badge bg-danger float-right">32</span>
                             </a>

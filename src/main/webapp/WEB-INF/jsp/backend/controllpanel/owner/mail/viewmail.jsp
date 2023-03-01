@@ -54,7 +54,7 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-3">
-                    <a href="http://localhost:8080/Bookstrap/backend/inbox" class="btn btn-primary btn-block mb-3">Back to Inbox</a>
+                    <a href="${contextRoot}/backend/mailpage/folder/inbox" class="btn btn-primary btn-block mb-3">Back to Inbox</a>
 
                     <div class="card">
                       <div class="card-header">

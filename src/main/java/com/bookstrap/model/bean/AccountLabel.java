@@ -38,9 +38,8 @@ public class AccountLabel {
 	
 	@ManyToMany(mappedBy = "accountLabels")
 	@JsonBackReference
-	private Set<Mail> mails;
-	
-	
+	private Set<AccountMail> accountMails;
+    
 	public AccountLabel() {
 	}
 
@@ -76,13 +75,12 @@ public class AccountLabel {
 		this.accountId = accountId;
 	}
 
-	public Set<Mail> getMails() {
-		return mails;
+	public Set<AccountMail> getAccountMails() {
+		return accountMails;
 	}
 
-	public void setMails(Set<Mail> mails) {
-		this.mails = mails;
+	public void setAccountMails(Set<AccountMail> accountMails) {
+		this.accountMails = accountMails;
 	}
-
 
 }

@@ -11,15 +11,17 @@ import org.springframework.data.repository.query.Param;
 
 import com.bookstrap.model.bean.AccountMail;
 import com.bookstrap.model.bean.MailAccount;
+import com.bookstrap.model.bean.MailCategory;
+import com.bookstrap.model.bean.MailFolder;
 import com.bookstrap.model.pk.AccountMailPK;
 
 public interface AccountMailRepository extends JpaRepository<AccountMail, AccountMailPK> {
 	
-	public Page<AccountMail> findByFolderId(Integer folderId ,Pageable pageable);
+	public Page<AccountMail> findByMailAccountAndMailFolder(MailAccount account, MailFolder folder ,Pageable pageable);
 	
-	public Page<AccountMail> findByCategoryId(Integer categoryId, Pageable pageable);
+	public Page<AccountMail> findByMailAccountAndMailCategory(MailAccount account, MailCategory category, Pageable pageable);
 	
-//	public Page<AccountMail> findByLabelId(Integer categoryId, Pageable pageable);
+	public Page<AccountMail> findByAccountMailIdAndAccountLabelsLabelId(AccountMailPK Id,Integer labelId, Pageable pageable);
 	
 	public Set<AccountMail> findByMailAccountAndMailfrom(MailAccount mailAccount,Short num);
 	
