@@ -97,16 +97,21 @@
             <form id="ajaxForm">
               <label class="form-label">店名</label>
               <input type="text" class="form-control" name="shopName" id="shopNameInput">
+              <div></div>
               <label class="form-label">地址</label>
               <input type="text" class="form-control" name="shopAddress" id="shopAddressInput">
+              <div></div>
               <label class="form-label">電話</label>
               <input type="text" class="form-control" name="shopPhone" id="shopPhoneInput">
+              <div></div>
               <label class="form-label">開店時間</label>
               <input type="time" class="form-control" name="shopOpenHour" id="shopOpenHourInput" min="00:00" max="24:00"
                 required>
+              <div></div>
               <label class="form-label">打烊時間</label>
-              <input type="time" class="form-control" id="shopcloseHourInput" name="shopcloseHour" min="00:00"
+              <input type="time" class="form-control" name="shopcloseHour" id="shopcloseHourInput" min="00:00"
                 max="24:00" required>
+              <div></div>
               <label class="form-label">緯度</label>
               <input type="text" class="form-control" name="longitude" id="longitudeInput" readonly="readonly" disabled>
               <label class="form-label">經度</label>
@@ -114,7 +119,9 @@
               <label for="file" class="form-label">店面照片:</label>
               <input type="file" name="shopphoto" id="shopphotoInput" />
               <img id="preview_progressbarTW_img" src="#" /><br>
+              <div></div>
               <button type="submit" class="btn btn-primary" id="myButton">送出</button>
+              <div id="wrongp"></div>
             </form>
           </div>
         </div>
@@ -168,14 +175,125 @@
     <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js  "></script>
-    
+
     <script>
       const output = document.querySelector('#view')
       const insertreqUrl = 'http://localhost:8080/Bookstrap/shops/add';
 
+
+      ////////////////// jQuery AJAX 檢查欄位  /////////////////////////
+
+      ////////////////// 店名  /////////////////////////
+
+      const shopNameInput = document.querySelector('#shopNameInput');
+      shopNameInput.addEventListener('input', function () {
+        if (shopNameInput.value.trim() === '') {
+          // 名稱欄位為空，顯示錯誤消息
+          shopNameInput.classList.add('is-invalid');
+          shopNameInput.nextElementSibling.textContent = '名稱欄位不能為空';
+        } else {
+          // 名稱欄位不為空，移除錯誤消息
+          shopNameInput.classList.remove('is-invalid');
+          shopNameInput.nextElementSibling.textContent = '';
+        }
+      })
+      ////////////////// 地址  /////////////////////////
+
+      const shopAddressInput = document.querySelector('#shopAddressInput');
+
+      shopAddressInput.addEventListener('input', function () {
+        const longitudeInput = document.querySelector('#longitudeInput').value;
+
+        if (longitudeInput.trim() === '') {
+          // 名稱欄位為空，顯示錯誤消息
+          shopAddressInput.classList.add('is-invalid');
+          shopAddressInput.nextElementSibling.textContent = '請輸入有效地址';
+
+        }
+        else {
+          // 名稱欄位不為空，移除錯誤消息
+          shopAddressInput.classList.remove('is-invalid');
+          shopAddressInput.nextElementSibling.textContent = '';
+        }
+      })
+
+      ////////////////// 電話  /////////////////////////
+
+      const shopPhoneInput = document.querySelector('#shopPhoneInput');
+      shopPhoneInput.addEventListener('input', function () {
+        const shopPhoneInputv = document.getElementById('shopPhoneInput').value;
+
+
+        if (checkIfAllNumbers(shopPhoneInputv)) {
+          // 名稱欄位為空，顯示錯誤消息
+          shopPhoneInput.classList.remove('is-invalid');
+          shopPhoneInput.nextElementSibling.textContent = '';
+
+        } else {
+          // 名稱欄位不為空，移除錯誤消息
+          shopPhoneInput.classList.add('is-invalid');
+          shopPhoneInput.nextElementSibling.textContent = '請輸入數字';
+        }
+      })
+
+      function checkIfAllNumbers(str) {
+        return /^\d+$/.test(str);
+      }
+      ////////////////// 開店  /////////////////////////
+
+      const shopOpenHourInput = document.querySelector('#shopOpenHourInput');
+      shopOpenHourInput.addEventListener('input', function () {
+        if (shopOpenHourInput.value.trim() === '') {
+          // 名稱欄位為空，顯示錯誤消息
+          shopOpenHourInput.classList.add('is-invalid');
+          shopOpenHourInput.nextElementSibling.textContent = '名稱欄位不能為空';
+        } else {
+          // 名稱欄位不為空，移除錯誤消息
+          shopOpenHourInput.classList.remove('is-invalid');
+          shopOpenHourInput.nextElementSibling.textContent = '';
+        }
+      })
+
+      ////////////////// 打烊  /////////////////////////
+
+      const shopcloseHourInput = document.querySelector('#shopcloseHourInput');
+      shopcloseHourInput.addEventListener('input', function () {
+        if (shopcloseHourInput.value.trim() === '') {
+          // 名稱欄位為空，顯示錯誤消息
+          shopcloseHourInput.classList.add('is-invalid');
+          shopcloseHourInput.nextElementSibling.textContent = '名稱欄位不能為空';
+        } else {
+          // 名稱欄位不為空，移除錯誤消息
+          shopcloseHourInput.classList.remove('is-invalid');
+          shopcloseHourInput.nextElementSibling.textContent = '';
+        }
+      })
+      ////////////////// 圖片  /////////////////////////
+
+      const fileInput = document.getElementById("shopphotoInput");
+      fileInput.addEventListener("change", function () {
+        const file = fileInput.files[0];
+        if (file) {
+          // 名稱欄位為空，顯示錯誤消息
+          shopphotoInput.classList.add('is-invalid');
+          shopphotoInput.nextElementSibling.textContent = '請上傳圖片';
+        } else {
+          // 名稱欄位不為空，移除錯誤消息
+          shopphotoInput.classList.remove('is-invalid');
+          shopphotoInput.nextElementSibling.textContent = '';
+        }
+      })
+
+
+
+
+
+
+
+
       ////////////////// jQuery AJAX 送insert資料  /////////////////////////
       // const socket = new WebSocket('ws://localhost:8080');
-     
+
       $("#shopphotoInput").change(function () {
         //當檔案改變後，做一些事 
         readURL(this);   // this代表<input id="imgInp">
@@ -205,6 +323,11 @@
         let latitude = document.getElementById('latitudeInput').value
         let shopphoto = document.getElementById('shopphotoInput').files[0];
 
+        if (shopName == null || shopAddress == null || shopPhone == null || shopOpenHour == null || shopcloseHour == null || longitude == null || shopphoto == null) {
+          const shopAddressInput = document.getElementById('wrongp');
+          shopAddressInput.innerHTML = '資料有錯';
+        }
+        else{
         let formData = new FormData();
         formData.append("shopName", shopName);
         formData.append("shopAddress", shopAddress);
@@ -224,26 +347,13 @@
           .then(res => {
             console.log(res.data)
             console.log('上傳成功')
-
-            axios({
-              url: 'http://localhost:8080/Bookstrap/shops/api/page2',
-              method: 'get',
-            })
-              .then(res => {
-
-                htmlMaker(res)
-
-
-              })
-              .catch(err => {
-                console.log(err)
-              })
             $('#staticBackdrop').modal('hide');
+            window.location.href = 'http://localhost:8080/Bookstrap/shops/shophome';
           })
           .catch(err => {
             console.log(err)
           })
-
+        }
       })
       ////////////////// jQuery AJAX 送showallpage資料  /////////////////////////
 
@@ -429,23 +539,10 @@
           .then(res => {
             console.log(res.data)
             console.log('上傳成功')
-
-
-            axios({
-              url: 'http://localhost:8080/Bookstrap/shops/api/page2',
-              method: 'get',
-            })
-              .then(res => {
-
-                htmlMaker(res)
-
-
-
-              })
-              .catch(err => {
-                console.log(err)
-              })
             $('#staticBackdropupdate').modal('hide');
+            window.location.href = 'http://localhost:8080/Bookstrap/shops/shophome';
+
+
 
           })
           .catch(err => {
@@ -689,7 +786,7 @@
 
 
 
-     
+
     </script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0pg7HeK2NczdqZQCbjfdkzNlErFJZTVg&callback=googlemap"></script>
