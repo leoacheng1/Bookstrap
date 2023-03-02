@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,13 +86,26 @@ public class BlogParagraphController {
 	}
 	@ResponseBody
 	@PutMapping("blog/update")
-	public String updateBlogParaById(@RequestParam("id") Integer id, @RequestParam("paragraphdiv01") String paragraphdiv01) {
+	public BlogParagraph updateBlogParaById(@RequestParam("id") Integer id, @RequestParam("paragraphdiv01") String paragraphdiv01) {
 			Optional<BlogParagraph> op = BlogParaDao.findById(id);
+	
 			if(op.isPresent()) {
 				BlogParagraph bp = op.get();
+				System.out.println(bp.getParagraphdiv01()); 
 				bp.setParagraphdiv01(paragraphdiv01);
-				return "修改完成";
+				BlogParaDao.save(bp);	//spring data的save是saveorupdate 也可以用@Transactional蓋掉原本的Transactional(read only)
+				return bp;
 			}
-			return "沒有這筆資料";
+			return null;
 			}
+	@ResponseBody
+	@GetMapping("blog/page")
+	public List<BlogParagraph> findByPage(@RequestParam Integer pageNumber){
+		Pageable pgb = PageRequest.of(0,2,Sort.Direction.ASC,"paragraphId");
+		Page<BlogParagraph> page = BlogParaDao.findAll(pgb);
+		List<BlogParagraph> resultList = page.getContent();
+		return resultList;
 	}
+
+}
+
