@@ -225,15 +225,15 @@ public class BackendNormal {
 	public MailCountDto getAllCounts(@PathVariable("accountId") Integer accountId) {
 		//folder 1:inbox, 2:sent, 3:draft, 4: delete
 		MailCountDto dto = new MailCountDto();
-		dto.setBinCount(mailService.getMailCountInFolder(4,accountId));
-		dto.setCompanyCount(0L);
-		dto.setDraftCount(mailService.getMailCountInFolder(3,accountId));
+		dto.setBinCount(mailService.getMailCountInFolder(mailService.findByFolderName("bin").getFolderId(),accountId));
+		dto.setCompanyCount(mailService.getMailCountInCategory(mailService.findByCategoryName("company").getCategoryId(), accountId));
+		dto.setDraftCount(mailService.getMailCountInFolder(mailService.findByFolderName("draft").getFolderId(),accountId));
 		dto.setImportantCount(mailService.getImportantMailCount(accountId));
-		dto.setInboxCount(mailService.getMailCountInFolder(1,accountId));
-		dto.setNormalCount(0L);
-		dto.setSentCount(mailService.getMailCountInFolder(2,accountId));
+		dto.setInboxCount(mailService.getMailCountInFolder(mailService.findByFolderName("inbox").getFolderId(),accountId));
+		dto.setNormalCount(mailService.getMailCountInCategory(mailService.findByCategoryName("normal").getCategoryId(), accountId));
+		dto.setSentCount(mailService.getMailCountInFolder(mailService.findByFolderName("sent").getFolderId(),accountId));
 		dto.setStarredCount(mailService.getstarredMailCount(accountId));
-		dto.setWorkCount(0L);
+		dto.setWorkCount(mailService.getMailCountInCategory(mailService.findByCategoryName("job").getCategoryId(), accountId));
 		return dto;
 	}
 	
@@ -249,11 +249,18 @@ public class BackendNormal {
 		return mailService.setStarred(starred, mailId, accId);
 	}
 	
-	@PutMapping("mail/folder/{mailId}")
+	@PutMapping("mail/folder/{folderId}")
 	@ResponseBody
-	public AccountMail updateFolder(@PathVariable("mailId") Integer mailId, @RequestParam("accountId") Integer accId,@RequestParam("folderId") Integer folderId) {
-		return mailService.setFolder(folderId, mailId, accId);
+	public Integer[] updateFolder(@PathVariable("folderId") Integer folderId, @RequestParam("accountId") Integer accId,@RequestParam("mailIds") Integer[] mailIds) {
+		return mailService.setFolder(folderId, mailIds, accId);
 	}
+	
+	@PutMapping("mail/hasread/{mailId}")
+	@ResponseBody
+	public AccountMail updateHasread(@PathVariable("mailId") Integer mailId, @RequestParam("accountId") Integer accId,@RequestParam("hasread") Short hasread) {
+		return mailService.setHasread(hasread, mailId, accId);
+	}
+	
 //===================================================DELETING==========================================================
 	@DeleteMapping("mail/label/{labelId}") 
 	@ResponseBody
@@ -263,4 +270,6 @@ public class BackendNormal {
 		}
 		return null;
 	}
+	
+	
 }

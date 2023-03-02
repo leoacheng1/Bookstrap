@@ -1,19 +1,30 @@
 
 var contextRoot = "http://localhost:8080/Bookstrap/";
-
+window.onpageshow = function(event) {
+  if (event.persisted) {
+    initMails(addEvents);
+  }
+};
 (function() {
-    prepareMails(addEvents);
+    // addEvents();
+    initMails(addEvents);
 })()
+
+
+
+
+
 /**
  * prepare an interactive mail table after submitting a request to get all mail data, and place them in the table.
  * @param {Function} eventFunction - a call back function that adds functionality to elements in mailbox 
  */
-function prepareMails(eventFunction){
+function initMails(eventFunction){
     axios({
         url : contextRoot + "mail/" + window.location.href.split("/").pop() + "/1",
         method: "get"
     }).then(
       res => {
+        $("#mailboxbody").html("");
         if (res.data.length == 0) {
             console.log("empty!");
             let tr = document.createElement("tr");
@@ -124,7 +135,7 @@ function makeMailRow(mailId) {
     let input1 = document.createElement('input');
     input1.type = 'checkbox';
     input1.value = '';
-    input1.id = 'check1';
+    input1.id = 'check' + mailId;
     let label1 = document.createElement('label');
     label1.htmlFor = 'check1';
     div1.appendChild(input1);
@@ -210,6 +221,13 @@ function toTimeAgo(seconds){
       return Math.floor(seconds) + " 秒前";
     }
 }
+/**
+ * addthefollowing events:
+ * 1. checkbox toggle all
+ * 2. star click turn yellow and update starred in database 
+ * 3. important click turn yellow and update important in database
+ * 4. text not bold anymore and update hasread to 1 in database
+ */
 function addEvents() {
     //Enable check and uncheck all functionality
     $('.checkbox-toggle').click(function () {
@@ -263,5 +281,62 @@ function addEvents() {
         .then(response => console.log(response))
         .catch(error => console.log(error));
       }    
-    }) 
+    })
+    //handle hasread
+    $('.mailbox-subject').click(function(){
+      let accountId = $("body").attr("data-ref");
+      let mailId = $(this).parent('tr').attr("data-mailid");
+      let formData = new FormData();
+      formData.append("accountId", accountId);
+      formData.append("hasread", 1);
+      axios.put(contextRoot + "mail/hasread/" + mailId, formData).
+      then(response => response).
+      catch(error => console.log(error));
+    })
+    //handle deletion
+    if (window.location.href.split("/").pop() == "bin") {
+      $("#delete-mail").css("color","red");
+    }else {
+      $("#delete-mail").click(deleteEvent);
+    }
+
+  }
+
+  /**
+   * find table rows which check box is checked
+   * @returns {Element} - table rows that is selected
+   */
+  function findChecked(){
+    let trs = [];
+    for (input of $(".icheck-primary input")){
+        if (input.checked) {
+          trs.push($(input).parents("tr")[0]);
+        }
+    }
+    return trs;
+  }
+
+  /**
+   *  a call back function for delete button eventlistner which move
+   *  all selected rows to bin
+   * @returns 
+   */
+  function deleteEvent() {
+    let trs = findChecked();
+    if (trs.length == 0) return;
+    let accountId = $("body").attr("data-ref");
+    let mailIds = [];
+    for (tr of trs) {
+      let mailId = $(tr).attr("data-mailid");
+      if(mailId != null) mailIds.push(mailId);
+    }
+    let formData = new FormData();
+    formData.append("mailIds",mailIds);
+    formData.append("accountId",accountId);
+    axios.put(contextRoot + "mail/folder/4", formData)
+    .then(response => {
+      console.log(response);
+      initMails(addEvents);
+    })
+    .catch(error => console.log(error));   
   }

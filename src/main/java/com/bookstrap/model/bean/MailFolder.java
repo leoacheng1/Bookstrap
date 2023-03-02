@@ -25,7 +25,7 @@ public class MailFolder {
 	private String folderName;
 	
 	
-	@OneToMany(mappedBy="mailFolder")
+	@OneToMany(mappedBy="mailFolder", orphanRemoval = true)
 	@JsonBackReference
 	private Set<AccountMail> accountMails;
 	

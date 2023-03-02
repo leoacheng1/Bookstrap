@@ -216,7 +216,7 @@ async function draftEmail(event) {
   //if not onleave add toast
   if (event.type == "click") {
     draftToast(cardBackup);
-    await delay(5000);
+    await delay(3000);
   }
   //return if restore button in toast is clicked
   if ($('.card.card-primary.card-outline .card-body').attr("data-ready") == "0") { console.log("not ready"); return; }
@@ -230,11 +230,7 @@ async function draftEmail(event) {
 
   })
     .then(res => {
-      Swal.fire(
-        '加入草稿',
-        '您的郵件已成功加入草稿',
-        'success'
-      );
+
     })
     .catch(err => Swal.fire(
       '加入失敗',
@@ -262,7 +258,7 @@ function draftToast(cardBackup) {
     icon: 'fas fa-pencil-alt',
     class: "eddie-toast draft-toast",
     autohide: true,
-    delay: 5000
+    delay: 3000
   })
   $(".draft-toast a").click(function () {
     $('.card.card-primary.card-outline .card-body').replaceWith(cardBackup);

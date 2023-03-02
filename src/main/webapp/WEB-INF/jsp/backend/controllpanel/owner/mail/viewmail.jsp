@@ -25,7 +25,7 @@
   </head>
 
   <body
-    class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse" data-ref="${empId}">
+    class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse" data-ref="${mailAccount.accountId}">
     <div class="wrapper">
       <!--上面導覽列 -->
       <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>

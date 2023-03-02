@@ -1,6 +1,7 @@
 package com.bookstrap.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 
@@ -18,12 +19,14 @@ import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.Mail;
 import com.bookstrap.model.bean.MailAccount;
 import com.bookstrap.model.bean.MailAttachment;
+import com.bookstrap.model.bean.MailCategory;
 import com.bookstrap.model.bean.MailFolder;
 import com.bookstrap.model.bean.SendMailDto;
 import com.bookstrap.model.dao.AccountLabelRepository;
 import com.bookstrap.model.dao.AccountMailRepository;
 import com.bookstrap.model.dao.MailAccountRepository;
 import com.bookstrap.model.dao.MailAttachmentRepository;
+import com.bookstrap.model.dao.MailCategoryRepository;
 import com.bookstrap.model.dao.MailFolderRepository;
 import com.bookstrap.model.dao.MailRepository;
 import com.bookstrap.model.pk.AccountMailPK;
@@ -50,12 +53,18 @@ public class MailService {
 	@Autowired
 	private AccountLabelRepository accountLabelDao;
 	
+	@Autowired
+	private MailCategoryRepository mailCategoryDao;
+	
 	public MailService() {
 	}
 
 // ================================================= for Counting =============================================================
 	public Long getMailCountInFolder(Integer folderId, Integer accountId) {
 		return accountMailDao.getMailCountInFolder(folderId, accountId);
+	};
+	public Long getMailCountInCategory(Integer categoryId, Integer accountId) {
+		return accountMailDao.getMailCountInCategory(categoryId, accountId);
 	};
 	public Long getImportantMailCount(Integer accountId) {
 		return accountMailDao.getImportantMailCount(accountId);
@@ -64,6 +73,11 @@ public class MailService {
 		return accountMailDao.getstarredMailCount(accountId);
 	};
 // ================================================= for Searching =============================================================
+	public MailCategory findByCategoryName(String categoryName) {
+		MailCategory category = mailCategoryDao.findByCategoryName(categoryName);
+		return category;
+	}
+	
 	public MailFolder findByFolderName(String FolderName) {
 		MailFolder folder = mailFolderDao.findByFolderName(FolderName);
 		return folder;
@@ -212,6 +226,7 @@ public class MailService {
 		AccountMail from = new AccountMail();
 		AccountMailPK fromPK = new AccountMailPK(newMail.getMailId(),mailFrom.getAccountId());
 		from.setAccountMailId(fromPK);
+		from.setHasread((short)1);
 		from.onCreate();
 		from.setMailfrom((short)1);		
 		from.setMailFolder(mailFolderDao.findById(3).get());
@@ -220,6 +235,17 @@ public class MailService {
 		return newMail;		
 	}
 // ================================================= for Updating =============================================================
+	public AccountMail setHasread(Short hasread,Integer mailId,Integer accountId) {
+		AccountMailPK accountMailPK = new AccountMailPK(mailId,accountId);
+		Optional<AccountMail> optional = accountMailDao.findById(accountMailPK);
+		if (optional.isPresent()) {
+			AccountMail mail = optional.get();
+			mail.setHasread(hasread);
+			return accountMailDao.save(mail);
+		}
+		return null;
+	}
+	
 	public AccountMail setImportant(Short important,Integer mailId,Integer accountId) {
 		AccountMailPK accountMailPK = new AccountMailPK(mailId,accountId);
 		Optional<AccountMail> optional = accountMailDao.findById(accountMailPK);
@@ -232,6 +258,7 @@ public class MailService {
 	}
 	public AccountMail setStarred(Short starred,Integer mailId,Integer accountId) {
 		AccountMailPK accountMailPK = new AccountMailPK(mailId,accountId);
+		
 		Optional<AccountMail> optional = accountMailDao.findById(accountMailPK);
 		if (optional.isPresent()) {
 			AccountMail mail = optional.get();
@@ -241,14 +268,24 @@ public class MailService {
 		return null;
 	}
 	
-	public AccountMail setFolder(Integer FolderId, Integer mailId, Integer accountId) {
-		Optional<AccountMail> optional = accountMailDao.findById(new AccountMailPK(mailId,accountId));
-		if (optional.isPresent()) {
-			AccountMail mail = optional.get();
-			mail.setFolderId(FolderId);			
-			return accountMailDao.save(mail);
+	public Integer[] setFolder(Integer folderId, Integer[] mailIds, Integer accountId) {
+		Optional<MailFolder> optionalf = mailFolderDao.findById(folderId);
+		if (mailIds.length == 0 || optionalf.isEmpty()) return null;
+		MailFolder folder = optionalf.get();
+		ArrayList<Integer> updatedIds = new ArrayList<Integer>();
+		for (Integer mailId : mailIds) {
+			Optional<AccountMail> optional = accountMailDao.findById(new AccountMailPK(mailId,accountId));
+			if (optional.isPresent()) {
+				AccountMail mail = optional.get();
+				System.out.println("==========================================folderId: "+folderId+"===============================================");
+				mail.setMailFolder(folder);	
+				System.out.println("==========================================set===============================================");
+				accountMailDao.save(mail);
+				System.out.println("==========================================set and save===============================================");
+				updatedIds.add(mailId);
+			}
 		}
-		return null;
+		return updatedIds.size() == 0 ? null : updatedIds.toArray(new Integer[updatedIds.size()]);
 	}
 //================================================= for Deleting =============================================================
 	public boolean deleteLabel(Integer labelId) {
@@ -267,5 +304,4 @@ public class MailService {
 		}
 		return false;
 	}
-
 }
