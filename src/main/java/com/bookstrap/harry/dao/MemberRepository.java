@@ -28,6 +28,10 @@ public interface MemberRepository extends JpaRepository<Members, Integer> {
 	@Query(value = "UPDATE Members SET memberValid = :mValid WHERE memberId = :mId")
 	public Integer updateMemberValid(@Param("mValid") Integer valid, @Param("mId") Integer memberId);
 	
+	@Query()
+	public Members findByResetPasswordToken(String token);
+		
+	
 	
 //	@Query(value = "SELECT*FROM Members WHERE memberAccount = :mEmail", nativeQuery = true)
 //	public boolean findEmailByid(@Param("mEmail") String memberEmail);
