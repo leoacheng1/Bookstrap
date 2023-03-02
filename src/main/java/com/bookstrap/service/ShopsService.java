@@ -45,7 +45,7 @@ public class ShopsService {
 	}
 
 	public Page<Shops> getshopByPage(Integer pageNumber) {
-		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.DESC, "id");
+		Pageable pgb = PageRequest.of(pageNumber - 1, 4, Sort.Direction.ASC, "id");
 
 		Page<Shops> page = sDao.findAll(pgb);
 

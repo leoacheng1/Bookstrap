@@ -32,8 +32,8 @@
         }
 
         img {
-          max-width: 50%;
-          height: auto;
+          max-width: 200px;
+          max-height: 100px;
         }
 
         .pageButton {
@@ -61,9 +61,7 @@
                 <h1>分店管理</h1>
               </div>
               <section class="content">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  新增分店
-                </button>
+                
                 <div class="row mt-3">
                   <div class="col-md-5 mx-auto">
 
@@ -71,11 +69,15 @@
                       <input class="form-control border rounded-pill" type="search" value="search"
                         id="example-search-input">
                     </div>
+                    
                   </div>
                 </div>
                 <br>
-                <div id="view">
               </section>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  新增分店
+                </button>
+                <div id="view">
             </div>
       </div>
       <!--右側彈跳式功能列 -->
@@ -376,7 +378,7 @@
         view.innerHTML = ""
 
 
-        let msg_data = '<table class="table table-dark table-hover">'
+        let msg_data = '<table class="table table-Default table-hover">'
           + '<thead>'
           + '<tr>'
           + ' <th>書店ID</th>'
@@ -425,7 +427,7 @@
         let totalPages = data.data.totalPages;
 
         for (let i = 1; i <= totalPages; i++) {
-          msg_page += '<button class="pageBtn btn-dark" id="pageButton"  data-page="' + i + '">' + i + '</button>'
+          msg_page += '<button class="pageBtn btn btn-outline-info  " id="pageButton"  data-page="' + i + '">' + i + '</button>'
         }
 
 
@@ -624,7 +626,7 @@
       function likehtmlMaker(data) {
         console.log(data.data)
 
-        let msg_data = '<table class="table table-hover">'
+        let msg_data = '<table class="table table-Default table-hover">'
           + '<thead>'
           + '<tr>'
           + ' <th>書店ID</th>'

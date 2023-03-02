@@ -12,8 +12,6 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
             <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet" />
 
-            <link rel="stylesheet" type="text/css" href="css/slick.css" />
-            <link rel="stylesheet" type="text/css" href="css/slick-theme.css" />
 
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -116,10 +114,26 @@
                     border: 1px solid red;
                     padding: 5px;
                     margin-top: 92px;
-
                     max-width: 350px;
                     max-height: 850px;
 
+                  
+
+                }
+
+                .form-check {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+                }
+
+                .form-check-input {
+                    margin-right: 10px;
+                }
+
+                .form-check-label {
+                    font-size: 16px;
+                    cursor: pointer;
                 }
             </style>
         </head>
@@ -551,22 +565,12 @@
                                                 }
                                             })
                                         }
-
-
-
-
                                     } else {
                                         console.error("Failed to get distance matrix: " + status);
                                     }
                                 }
-
-
-
-
                             })
                         }
-
-
                     })
                 }
 
