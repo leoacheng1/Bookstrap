@@ -25,36 +25,34 @@
 		<div class="content-wrapper">
 			<div class="content-header">
 				<!-- 標題位置 -->
-				<h1>假單申請</h1>
+				<h1>我的假單</h1>
 			</div>
 			<section class="content">
 				<!-- 寫東西的地方 -->
-				<form action="${contextRoot}/sempsatt/insert" method="post">
-					<label for="attSempid"></label> 
-					<input type="hidden" id="attSempid"
-						name="attSempid" value="${empId}"> <br> 
-						<label for="attStartDate">請假起始日期:</label> 
-						<input type="date" id="attStartDate"	name="attStartDate"><br> <br> 
-						<label for="attEndDate">請假截止日期:</label> 
-						<input type="date" id="attEndDate"	name="attEndDate"><br> <br> 
-						<label for="attVacation">請假假別:</label> 
-						
-						<select name="attVacation">
-           <option selected value="特休">特休</option>
-           <option value="事假">事假</option>
-           <option value="病假">病假</option>
-           <option value="喪假">喪假</option>
-           <option value="生理假">生理假</option>
-         </select>
-						<br> <br> 
-						<label for="">請假事由:</label> 
-						<input type="text" id="attReason" name="attReason"><br> <br> 
-						<label for="attTime">請假時數:</label>
-						<input type="number" id="attTime" name="attTime" step="1"><br> <br> 
-						<label for="attAgree"></label> <input type="hidden"
-						id="attAgree" name="attAgree" value="已提交"> <input
-						type="submit" value="提交假單">
-				</form>
+				<table>
+					<tr>
+						<th>請假起始日期</th>
+						<th>請假截止日期</th>
+						<th>請假假別</th>
+						<th>請假事由</th>
+						<th>請假時數</th>
+						<th>核准狀態</th>
+					</tr>
+					<jstl:forEach items="${seatbyid}" var="seatbyid">
+						<tr>
+
+							<%-- 				<td>${seatbyid.attSemps.empId}</td> --%>
+							<%-- 				<td>${seatbyid.attSemps.empName}</td> --%>
+							<td>${seatbyid.attStartDate}</td>
+							<td>${seatbyid.attEndDate}</td>
+							<td>${seatbyid.attVacation}</td>
+							<td>${seatbyid.attReason}</td>
+							<td>${seatbyid.attTime}</td>
+							<td>${seatbyid.attAgree}</td>
+						</tr>
+
+					</jstl:forEach>
+				</table>
 			</section>
 		</div>
 	</div>

@@ -1,20 +1,18 @@
 package com.bookstrap.controller;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bookstrap.model.bean.ShopEmployees;
 import com.bookstrap.model.bean.ShopEmployeesAttendance;
 import com.bookstrap.service.ShopEmployeesAttendanceService;
 
@@ -33,7 +31,8 @@ public class ShopEmployeesAttendanceController {
     @PostMapping("sempsatt/insert")
     public String addShopEmployeesAttendance(
     		@RequestParam("attSempid") Integer attSempid, 
-    		@RequestParam("attDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate attDate,
+    		@RequestParam("attStartDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate attStartDate,
+    		@RequestParam("attEndDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate attEndDate,
 			@RequestParam("attVacation") String attVacation, 
 			@RequestParam("attReason") String attReason, 
 			@RequestParam("attTime") Integer attTime,
@@ -42,7 +41,8 @@ public class ShopEmployeesAttendanceController {
     	try {
 			ShopEmployeesAttendance sempAtt = new ShopEmployeesAttendance();
 			sempAtt.setAttSempid(attSempid);
-			sempAtt.setAttDate(attDate);
+			sempAtt.setAttStartDate(attStartDate);
+			sempAtt.setAttEndDate(attEndDate);
 			sempAtt.setAttVacation(attVacation);
 			sempAtt.setAttReason(attReason);
 			sempAtt.setAttTime(attTime);
@@ -67,7 +67,8 @@ public class ShopEmployeesAttendanceController {
 	public String sendUploadShopEmployeesAttendance(
 			@RequestParam("attId") Integer attId, 
 			@RequestParam("attSempid") Integer attSempid, 
-    		@RequestParam("attDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate attDate,
+    		@RequestParam("attStartDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate attStartDate,
+    		@RequestParam("attEndDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate attEndDate,
 			@RequestParam("attVacation") String attVacation, 
 			@RequestParam("attReason") String attReason, 
 			@RequestParam("attTime") Integer attTime,
@@ -76,7 +77,8 @@ public class ShopEmployeesAttendanceController {
 			ShopEmployeesAttendance se = new ShopEmployeesAttendance();
 			se.setAttId(attId);
 			se.setAttSempid(attSempid);
-			se.setAttDate(attDate);
+			se.setAttStartDate(attStartDate);
+			se.setAttEndDate(attEndDate);
 			se.setAttVacation(attVacation);
 			se.setAttReason(attReason);
 			se.setAttTime(attTime);
@@ -89,6 +91,18 @@ public class ShopEmployeesAttendanceController {
 		return "redirect:/semps/home";
 
 	}
+    
+    
+    @GetMapping("/sempsatt/myvacationpage")
+    public String showShopEmployeesAttendanceById(@RequestParam("empId") Integer empId, Model model) {
+    	List<ShopEmployeesAttendance> seatbyid = sempattService.selectShopEmployeesAttendanceById(empId);
+    	model.addAttribute("seatbyid", seatbyid);
+//		return "/semps/home";
+		return "shopemployees/showmyvacationsempsatt";
+    	
+    	
+    	
+    }
 
 
 }

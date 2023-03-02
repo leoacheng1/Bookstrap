@@ -70,7 +70,7 @@
 			</a>
 		  </li>
 		  <li class="nav-item">
-			<a href="pages/tables/jsgrid.html" class="nav-link">
+			<a href="${contextRoot}/sempsatt/myvacationpage?empId=${empId}" class="nav-link">
 			  <i class="far fa-circle nav-icon"></i>
 			  <p>我的出勤</p>
 			</a>

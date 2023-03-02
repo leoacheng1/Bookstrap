@@ -12,7 +12,7 @@ import com.bookstrap.model.bean.ShopEmployeesAttendance;
 public interface ShopEmployeesAttendanceRepository extends JpaRepository<ShopEmployeesAttendance, Integer> {
 
 	@Modifying
-	@Query(value="select * from ShopEmployeesAttendance where attend_empid = :attSempid")
+	@Query(value="select * from ShopEmployeesAttendance where attend_empid =:attSempid" , nativeQuery = true)
 	public List<ShopEmployeesAttendance> selectShopEmployeesAttendanceByIdQuery(@Param("attSempid") Integer attSempid); 
 	
 }
