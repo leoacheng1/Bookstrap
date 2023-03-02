@@ -39,6 +39,16 @@
         .pageButton {
           padding-bottom: 300px;
         }
+
+        button.insertshop,
+        button.pageBtn {
+          display: inline-block;
+
+        }
+
+        button.insertshop {
+          float: right
+        }
       </style>
 
 
@@ -58,32 +68,29 @@
             <div class="content-wrapper">
               <div class="content-header">
                 <!-- 標題位置 -->
-                <h1>分店管理</h1>
+                <h2>分店管理</h2>
               </div>
               <section class="content">
-                
+
                 <div class="row mt-3">
                   <div class="col-md-5 mx-auto">
-
                     <div class="input-group">
                       <input class="form-control border rounded-pill" type="search" value="search"
                         id="example-search-input">
                     </div>
-                    
+
                   </div>
                 </div>
                 <br>
               </section>
-                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  新增分店
-                </button>
-                <div id="view">
+
+              <div id="view">
+              </div>
             </div>
-      </div>
-      <!--右側彈跳式功能列 -->
-      <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
-        <!--版型需要的js-->
-        <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+            <!--右側彈跳式功能列 -->
+            <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+              <!--版型需要的js-->
+              <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
     </body>
 
     <!-- 新增分店 -->
@@ -329,32 +336,32 @@
           const shopAddressInput = document.getElementById('wrongp');
           shopAddressInput.innerHTML = '資料有錯';
         }
-        else{
-        let formData = new FormData();
-        formData.append("shopName", shopName);
-        formData.append("shopAddress", shopAddress);
-        formData.append("shopPhone", shopPhone);
-        formData.append("shopOpenHour", shopOpenHour);
-        formData.append("shopcloseHour", shopcloseHour);
-        formData.append("longitude", longitude);
-        formData.append("latitude", latitude);
-        formData.append("shopphoto", shopphoto);
+        else {
+          let formData = new FormData();
+          formData.append("shopName", shopName);
+          formData.append("shopAddress", shopAddress);
+          formData.append("shopPhone", shopPhone);
+          formData.append("shopOpenHour", shopOpenHour);
+          formData.append("shopcloseHour", shopcloseHour);
+          formData.append("longitude", longitude);
+          formData.append("latitude", latitude);
+          formData.append("shopphoto", shopphoto);
 
-        axios({
-          url: 'http://localhost:8080/Bookstrap/shops/postAjax',
-          method: 'post',
-          data: formData,
-          headers: { "Content-Type": "multipart/form-data" }
-        })
-          .then(res => {
-            console.log(res.data)
-            console.log('上傳成功')
-            $('#staticBackdrop').modal('hide');
-            window.location.href = 'http://localhost:8080/Bookstrap/shops/shophome';
+          axios({
+            url: 'http://localhost:8080/Bookstrap/shops/postAjax',
+            method: 'post',
+            data: formData,
+            headers: { "Content-Type": "multipart/form-data" }
           })
-          .catch(err => {
-            console.log(err)
-          })
+            .then(res => {
+              console.log(res.data)
+              console.log('上傳成功')
+              $('#staticBackdrop').modal('hide');
+              window.location.href = 'http://localhost:8080/Bookstrap/shops/shophome';
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
       })
       ////////////////// jQuery AJAX 送showallpage資料  /////////////////////////
@@ -429,7 +436,10 @@
         for (let i = 1; i <= totalPages; i++) {
           msg_page += '<button class="pageBtn btn btn-outline-info  " id="pageButton"  data-page="' + i + '">' + i + '</button>'
         }
-
+        msg_page += '<button type="button" class="insertshop btn btn-info" data-bs-toggle="modal"'
+          + ' data-bs-target="#staticBackdrop">'
+          + ' 新增分店'
+          + ' </button>'
 
         view.innerHTML = msg_page + msg_data
 
