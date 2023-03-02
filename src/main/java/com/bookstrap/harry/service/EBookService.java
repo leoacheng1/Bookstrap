@@ -84,6 +84,16 @@ public class EBookService {
 			return op.get();
 		}
 		return null;
+	}
+	
+	
+	public EBooks getEBookFileById(Integer eBookId) {
+		Optional<EBooks> op = eBookDao.findById(eBookId);
+		if(op.isPresent()) {
+			return op.get();
+		}
+		return null;
 	
 	}
+	
 }

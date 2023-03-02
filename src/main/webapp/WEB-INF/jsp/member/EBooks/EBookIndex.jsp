@@ -138,6 +138,7 @@
                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                   </div>
+                  <a type="button" href="${contextRoot}/eBook/get/pdfpage?eBookId=${eBook.eBookId}">Go to PDF</a>
                   <small class="text-muted">${eBook.eBookPublishDate}</small>
                 </div>
               </div>
@@ -145,6 +146,28 @@
           </div>
         <!--    bottom  ------------------ -->
         </jstl:forEach>
+ 
+ 
+ 
+ <jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+
+					<jstl:choose>
+
+						<jstl:when test="${page.number != pageNumber-1}">
+							<a href="${contextRoot}/ebook/get/allebook?p=${pageNumber}">${pageNumber}</a>
+						</jstl:when>
+
+						<jstl:otherwise>
+	     				${pageNumber}
+	    				</jstl:otherwise>
+					</jstl:choose>
+
+					<jstl:if test="${pageNumber != page.totalPages}">
+						|
+				</jstl:if>
+
+
+				</jstl:forEach>
  
         
         

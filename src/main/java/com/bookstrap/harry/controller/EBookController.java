@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,10 +38,10 @@ public class EBookController {
 //		return "member/EBooks/EBookIndex";
 //	}
 	
-	@GetMapping("/ebook/addpage")
-	public String addEBookPage() {
-		return "";
-	}
+//	@GetMapping("/ebook/addpage")
+//	public String addEBookPage() {
+//		return "";
+//	}
 	
 	@GetMapping("/ebook/get/allebook")
 	public String findAllEbooks(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
@@ -97,6 +98,7 @@ public class EBookController {
 		eBookService.insertEBook(eBook);
 		
 		
+//		return null;
 		return "redirect:/ebook/get/allebook";
 	}
 	
@@ -109,5 +111,39 @@ public class EBookController {
 		header.setContentType(MediaType.IMAGE_JPEG);
 		return new ResponseEntity<byte[]>(photoFile, header, HttpStatus.OK);
 	}
+	
+	@GetMapping("/eBook/get/pdfpage")
+	public String toPDFpage(@RequestParam("eBookId") Integer eBookId, Model m) {
+			
+		m.addAttribute("eBookId", eBookId);
+		
+		return "member/EBooks/EBookShowPDF";
+	}
+	
+	@GetMapping("/ebook/get/pdf")
+	public ResponseEntity<byte[]> getPDF(@RequestParam("eBookId") Integer eBookId){
+		EBooks fildId = eBookService.getEBookFileById(eBookId);
+		
+		System.out.println("eBookId =" + eBookId);
+		
+		byte[] pdfFile = fildId.geteBookFile();
+		
+//		String fileName = "testPDF.pdf";
+		System.out.println("PDFPPP: " + pdfFile);
+//		ByteArrayResource resource = new ByteArrayResource(pdfFile);
+		
+		HttpHeaders header = new HttpHeaders();
+//		header.setContentDispositionFormData(fileName, fileName);  //下載pdf
+		header.setContentType(MediaType.APPLICATION_PDF);
+		return ResponseEntity.ok()
+				.headers(header)
+				.contentLength(pdfFile.length)
+				.contentType(MediaType.APPLICATION_PDF)
+				.body(pdfFile);
+		
+	}
+	
+	
+	
 	
 }
