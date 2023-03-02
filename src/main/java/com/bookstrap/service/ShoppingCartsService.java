@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.harry.bean.ShoppingCarts;
-import com.bookstrap.model.BookDetailsRepository;
 import com.bookstrap.model.Books;
 import com.bookstrap.model.BooksRepository;
 import com.bookstrap.model.ShoppingCartsRepository;
+import com.bookstrap.model.pk.ShoppingCartsPK;
 
 @Service
 @Transactional
@@ -21,10 +21,7 @@ public class ShoppingCartsService {
 	private ShoppingCartsRepository scDao;
 	@Autowired
 	private BooksRepository bDao;
-	@Autowired
-	private BookDetailsRepository bdDao;
-	
-	
+
 //	public List<ShoppingCarts> findCartsByMemberId(Integer memberId) {
 //		return scDao.findCartsByMemberId(memberId);
 //	}
@@ -32,20 +29,53 @@ public class ShoppingCartsService {
 //	public void deleteCartsByBookId(Integer bookId) {
 //		scDao.deleteBookById(bookId);
 //	}
-	
+
 	// 根據會員id查詢購車清單
 	public List<ShoppingCarts> findCartItemsByMemberId(Integer memberId) {
-        return scDao.findByMemberId(memberId);
-    }
-	
+		return scDao.findByMemberId(memberId);
+	}
+
 	// 根據會員id拿取書本id的相關資料
-	public Books findBooksByBookId(Integer bookId){
-		Optional<Books> books = bDao.findById(bookId);
-		if(books.isEmpty()) {
+	public ShoppingCarts updateAmountByBookId(Integer amount, Integer bookId) {
+//		Optional<Books> books = bDao.findById(bookId);
+//		ShoppingCarts sc = new ShoppingCarts();
+//		sc.setBookId(bookId);
+//		sc.setAmount(amount);
+		Optional<ShoppingCarts> optional = scDao.findBookByBookId(bookId);
+		if (optional.isEmpty()) {
 			return null;
 		}
-		System.out.println(books);
-		return books.get();
+		System.out.println(optional);
+		ShoppingCarts shoppingCarts = optional.get();
+		shoppingCarts.setAmount(amount);
+		return shoppingCarts;
+	}
+
+	// 根據書籍id刪除對應的購物車內項目
+	public void deleteBookByBookId(Integer bookId) {
+		scDao.deleteBookByBookId(bookId);
 	}
 	
+	// 根據會員id刪除所有購物車內項目
+	public void deleteAllByMemberId(Integer memberId) {
+		scDao.deleteAllByMemberId(memberId);
+	}
+
+	// 根據書籍id更新購物車內書籍數量
+	public void updateCartItemAmount(Integer amount, Integer bookId) {
+		scDao.updateCartItemAmount(amount, bookId);
+    }
+
+
+//	public void saveOrUpdate(Integer bookId) {
+//        List<Books> book = scDao.find
+//
+//        if (existingItem.isPresent()) {
+//            ShoppingCart cartItem = existingItem.get();
+//            cartItem.setAmount(shoppingCart.getAmount());
+//            shoppingCartRepository.save(cartItem);
+//        } else {
+//            shoppingCartRepository.save(shoppingCart);
+//        }
+//    }
 }

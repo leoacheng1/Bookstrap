@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/tags/form"
-prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+pageEncoding="UTF-8"%> <%@ taglib uri="http://www.springframework.org/tags/form"
+prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -45,26 +44,103 @@ prefix="c"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
   <body>
     <jsp:include page="../layout/header.jsp"></jsp:include>
     <div class="container">
-     <h1>購物車清單</h1>
-    <table border="1">
+      <h1>購物車清單</h1>
+
+      <table class="table table-bordered">
         <thead>
-            <tr>
-                <th>商品名稱</th>
-                <th>數量</th>
-                <th>價格</th>
-            </tr>
+          <tr>
+            <th></th>
+            <th>商品ID</th>
+            <th>商品名稱</th>
+            <th>數量</th>
+            <th>單價</th>
+            <th>小計</th>
+            <th>移除商品</th>
+          </tr>
         </thead>
         <tbody>
-            <c:forEach var="cartItem" items="${cartItemList}">
-                <tr>
-                    <td>${cartItem.bookId}</td>
-                    <td>${cartItem.amount}</td>
-                    <td>${cartItem.memberId}</td>
-                </tr>
-            </c:forEach>
+          <c:forEach var="cartItem" items="${cartItemList}" varStatus="status">
+            <tr>
+              <td>
+                <input
+                  class="form-check-input form-check checkbox-lg"
+                  type="checkbox"
+                  name="checkbook"
+                  id="checkbook"
+                  checked
+                />
+              </td>
+              <td>${cartItem.bookId}</td>
+              <td>${bookList[status.index].name}</td>
+              <td>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      onclick="updateCartItemAmount(${cartItem.bookId}, ${cartItem.amount - 1})"
+                    >
+                      -
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control quantity"
+                    data-cart-item-id="${cartItem.bookId}"
+                    value="${cartItem.amount}"
+                    readonly
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      onclick="updateCartItemAmount(${cartItem.bookId}, ${cartItem.amount + 1})"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </td>
+              <td>${bookList[status.index].price}</td>
+              <td class="total-price">
+                ${cartItem.amount * bookList[status.index].price}
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="delete-btn btn btn-danger"
+                  data-bkid="${cartItem.bookId}"
+                >
+                  刪除
+                </button>
+              </td>
+            </tr>
+          </c:forEach>
         </tbody>
-    </table>
-    
+      </table>
+
+      <!-- 刪除全部購物車商品按鈕 -->
+      <button
+        type="button"
+        class="delete-all-btn btn btn-danger"
+        onclick="clearCart(${sessionScope.memberId})"
+      >
+        清空購物車
+      </button>
+
+      <!-- 購物車總金額 -->
+      <div class="row">
+        <div class="col-sm-12">
+          <h4 class="text-right">
+            總金額: <span id="total-price">${totalPrice}</span>
+          </h4>
+        </div>
+      </div>
     </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+      src="${contextRoot}/js/shoppingcarts.js"
+      type="text/javascript"
+    ></script>
   </body>
 </html>

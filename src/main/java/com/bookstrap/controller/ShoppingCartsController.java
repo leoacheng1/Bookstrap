@@ -6,10 +6,16 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.Books;
@@ -22,10 +28,9 @@ public class ShoppingCartsController {
 
 	@Autowired
 	private ShoppingCartsService scService;
-	
+
 	private BooksService bService;
-	
-	
+
 //	@GetMapping("/cart")
 //	public String checkSignIn(HttpSession session) {
 //		if (session.getAttribute("member") != null) {
@@ -33,46 +38,68 @@ public class ShoppingCartsController {
 //		}
 //		return "member/SignInPage";
 //	}
-	
-////	@ResponseBody	
+
+//	@ResponseBody	
 //	@GetMapping("/carts")
 //	public String findAllCarts(Integer memberId, Model model) {
-////		Object id = session.getAttribute("memberId");
-////		System.out.println("idclass=" + id.getClass());
+//		Object id = session.getAttribute("memberId");
+//		System.out.println("idclass=" + id.getClass());
 //		List<ShoppingCarts> carts = scService.findCartsByMemberId(memberId);
 //		model.addAttribute("carts", carts);
 //		return "shoppingcarts/shoppingcarts";
 //	}
-//	
-//	@DeleteMapping("/carts/delete")
-//	public String deleteCartsByBookId(@RequestParam("bookId") Integer bookId) {
-//		scService.deleteCartsByBookId(bookId);
-//		return "rediect:shoppingcarts/shoppingcarts";
-//	}
-	
-	@GetMapping("/cart")
-    public String findCartItemsByMemberId(Model model, HttpSession session) {
-        
-        Integer memberId = (Integer) session.getAttribute("memberId");
-        System.out.println("memberId:" + memberId);
-        if (memberId != null) {
-            List<ShoppingCarts> cartItemList = scService.findCartItemsByMemberId(memberId);
-      
-            
-            List<Books> bookList = new ArrayList<Books>();
-            int n = 0;
-            while(cartItemList.size() > n) {
-            
-            	 ShoppingCarts list = cartItemList.get(n);
-            	System.out.println(list);
-            	String name = list.getBook().getName();
-            	n++;
-            }
 
-//            List<Books> bookList = bService.findBooksByBookId(bookId);
-            model.addAttribute("cartItemList", cartItemList);
-            return "shoppingcarts/shoppingcarts";
-        }
-        return "member/SignInPage";
-    }
+	@GetMapping("/cart")
+	public String findCartItemsByMemberId(ModelMap model, HttpSession session) {
+
+		// 從 session 中取得 memberId
+		Integer memberId = (Integer) session.getAttribute("memberId");
+//        System.out.println("memberId:" + memberId);
+
+		if (memberId != null) {
+			// 透過 memberId 找尋會員購買的 bookId
+			List<ShoppingCarts> cartItemList = scService.findCartItemsByMemberId(memberId);
+
+			// 透過 bookId 拿取 Books 相關資料
+			List<Books> bookList = new ArrayList<Books>();
+			for (int n = 0; n < cartItemList.size(); n++) {
+				Books book = cartItemList.get(n).getBook();
+				bookList.add(book);
+			}
+
+			model.addAttribute("bookList", bookList);
+			model.addAttribute("cartItemList", cartItemList);
+			return "shoppingcarts/shoppingcarts";
+		}
+		return "member/SignInPage";
+	}
+
+	@DeleteMapping("/cart/delete")
+	public String deleteCartItem(Integer bookId) {
+		scService.deleteBookByBookId(bookId);
+		return "redirect:/cart";
+
+	}
+
+	@DeleteMapping("/cart/clear")
+	public String deleteAllCartItems(Integer memberId) {
+		scService.deleteAllByMemberId(memberId);
+		return "redirect:/cart";
+	}
+
+	@ResponseBody
+	@PutMapping("/cart/api/update")
+	public Integer updateCartItemAmount(@RequestParam("bookId") Integer bookId, @RequestParam("amount") Integer amount) {
+		ShoppingCarts upAmount = scService.updateAmountByBookId(amount, bookId);
+		return upAmount.getAmount();
+//		Integer memberId = (Integer) session.getAttribute("memberId");
+//		scService.updateCartItemAmount(amount, bookId);
+//		List<ShoppingCarts> cartItemList = scService.findCartItemsByMemberId(memberId);
+//		if (update == null) {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//		}
+//		scService.
+//		scService.saveOrUpdate(update);
+//		return "redirect:/cart";
+	}
 }
