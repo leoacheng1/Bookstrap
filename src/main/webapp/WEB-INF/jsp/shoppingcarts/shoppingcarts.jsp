@@ -50,10 +50,10 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <thead>
           <tr>
             <th></th>
-            <th>商品ID</th>
+            <th>商品照片</th>
             <th>商品名稱</th>
             <th>數量</th>
-            <th>單價</th>
+            <th>售價</th>
             <th>小計</th>
             <th>移除商品</th>
           </tr>
@@ -63,14 +63,20 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             <tr>
               <td>
                 <input
-                  class="form-check-input form-check checkbox-lg"
+                  class="form-check-input form-check checkbox-lg book-checkbox"
                   type="checkbox"
                   name="checkbook"
-                  id="checkbook"
-                  checked
+                  id="bookCheckbox"
+                  data-price="${cartItem.amount * bookList[status.index].price}"
+                  value="${cartItem.bookId}"
                 />
               </td>
-              <td>${cartItem.bookId}</td>
+              <td>
+                <img
+                  style="width: 100px; height: 128px"
+                  src="${contextRoot}/books/id?id=${cartItem.bookId}"
+                />
+              </td>
               <td>${bookList[status.index].name}</td>
               <td>
                 <div class="input-group">
@@ -78,13 +84,15 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                     <button
                       class="btn btn-outline-secondary"
                       type="button"
-                      onclick="updateCartItemAmount(${cartItem.bookId}, ${cartItem.amount - 1})"
+                      onclick="updateCartItemAmount(${cartItem.bookId}, ${cartItem.amount}, 'sub')"
                     >
                       -
                     </button>
                   </div>
                   <input
+                    style="width: 16px"
                     type="text"
+                    id="book-amount"
                     class="form-control quantity"
                     data-cart-item-id="${cartItem.bookId}"
                     value="${cartItem.amount}"
@@ -94,16 +102,16 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                     <button
                       class="btn btn-outline-secondary"
                       type="button"
-                      onclick="updateCartItemAmount(${cartItem.bookId}, ${cartItem.amount + 1})"
+                      onclick="updateCartItemAmount(${cartItem.bookId}, ${cartItem.amount}, 'add')"
                     >
                       +
                     </button>
                   </div>
                 </div>
               </td>
-              <td>${bookList[status.index].price}</td>
+              <td>${bookList[status.index].price}元</td>
               <td class="total-price">
-                ${cartItem.amount * bookList[status.index].price}
+                ${cartItem.amount * bookList[status.index].price}元
               </td>
               <td>
                 <button
@@ -129,12 +137,10 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       </button>
 
       <!-- 購物車總金額 -->
-      <div class="row">
-        <div class="col-sm-12">
-          <h4 class="text-right">
-            總金額: <span id="total-price">${totalPrice}</span>
-          </h4>
-        </div>
+
+      <div class="text-right">
+        <h4>總金額: <span id="total-price">0</span>元</h4>
+        <button type="button" class="btn btn-info">結帳</button>
       </div>
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

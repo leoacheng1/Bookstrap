@@ -6,8 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.Books;
-import com.bookstrap.service.BooksService;
 import com.bookstrap.service.ShoppingCartsService;
 
 @Controller
@@ -29,7 +26,6 @@ public class ShoppingCartsController {
 	@Autowired
 	private ShoppingCartsService scService;
 
-	private BooksService bService;
 
 //	@GetMapping("/cart")
 //	public String checkSignIn(HttpSession session) {
@@ -49,6 +45,7 @@ public class ShoppingCartsController {
 //		return "shoppingcarts/shoppingcarts";
 //	}
 
+	// 透過session 中的 memberId 取得所有購買的商品
 	@GetMapping("/cart")
 	public String findCartItemsByMemberId(ModelMap model, HttpSession session) {
 
@@ -74,6 +71,7 @@ public class ShoppingCartsController {
 		return "member/SignInPage";
 	}
 
+	// 清除購物車中其中一樣商品
 	@DeleteMapping("/cart/delete")
 	public String deleteCartItem(Integer bookId) {
 		scService.deleteBookByBookId(bookId);
@@ -81,6 +79,7 @@ public class ShoppingCartsController {
 
 	}
 
+	// 清除購物車中所有商品
 	@DeleteMapping("/cart/clear")
 	public String deleteAllCartItems(Integer memberId) {
 		scService.deleteAllByMemberId(memberId);
@@ -102,4 +101,8 @@ public class ShoppingCartsController {
 //		scService.saveOrUpdate(update);
 //		return "redirect:/cart";
 	}
+	
+//	 @PutMapping("/updateTotal")
+//	  public updateTotal() {
+//	 }
 }
