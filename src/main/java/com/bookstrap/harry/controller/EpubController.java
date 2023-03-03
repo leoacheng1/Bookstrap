@@ -19,9 +19,14 @@ public class EpubController {
 	@Autowired
 	private EpubService ePubSevice;
 	
+//	@GetMapping("/epub/index")
+//	public String toEpubIndex() {
+//		return "member/ePub/EpubIndex";
+//	}
+	
 	@GetMapping("/epub/index")
-	public String toEpubIndex() {
-		return "member/ePub/EpubIndex";
+	public String toEpubIndex2() {
+		return "member/ePub/Viewer";
 	}
 	
 //	@GetMapping("/epub/books/{id}")
@@ -34,7 +39,7 @@ public class EpubController {
 	
 	 @GetMapping("/epub/books/{id}")
 	    public ResponseEntity<String> showBook(@PathVariable Long id) {
-	        String filePath = "C:\\epub\\1010490076.epub";
+	        String filePath = "C:\\epub\\1010490082.epub";
 	        String html = ePubSevice.getBookHtml(filePath);
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.TEXT_HTML);

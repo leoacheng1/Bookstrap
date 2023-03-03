@@ -19,6 +19,16 @@ use Bookstrap
 alter table Members add reset_password_token nvarchar(45);
 
 
+CREATE TABLE Gender(
+gender_id tinyint primary key not null identity(1,1),
+gender nvarchar(5)
+);
+
+INSERT INTO Gender (gender) VALUES
+('男'),
+('女'),
+('其他');
+
 
 DROP TABLE IF EXISTS MemberDetails;
 
