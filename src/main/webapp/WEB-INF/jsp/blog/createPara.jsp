@@ -10,7 +10,7 @@
 <title>編寫文章</title>
 </head>
 <body>
-	<form action="${contextRoot }/createParagraph" method="post"
+	<form action="${contextRoot }/blog/createParagraph" method="post"
 		enctype="multipart/form-data">
 		<div>
 			文章標題： <input type="text" name="pTitle">

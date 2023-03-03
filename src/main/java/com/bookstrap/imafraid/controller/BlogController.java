@@ -9,14 +9,17 @@ public class BlogController {
 	public String goToIndex() {
 		return "/blog/blogIndex";
 	}
-	@GetMapping("/blog/fakeIndex")
-	public String goToFakeIndex() {
-		return "/blog/fakeIndex";
+	@GetMapping("/blog/backIndex")
+	public String goToBackIndex() {
+		return "/blog/backIndex";
 	}
 	@GetMapping("/blog/createPara")
 	public String goToCreate() {
 		return "/blog/createPara";
 	}
-	
+	@GetMapping("/blog/updatePara")
+	public String goToupdate() {
+		return "/blog/updatePara";
+	}
 	
 }
