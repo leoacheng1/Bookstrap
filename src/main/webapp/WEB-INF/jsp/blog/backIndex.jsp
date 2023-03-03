@@ -29,7 +29,7 @@
 						//listener fetch delete
 
 						outPutString += "<div>文章標題：" + item.paragraphTitle + "<button name=delebtn  data-id=" + item.paragraphId + ">刪除</button>" + "</div>"
-						outPutString += "<div>文章內文：" + item.paragraphContent + "<button name=delebtn  data-id=" + item.paragraphId + ">修改</button>" + "</div>"
+						outPutString += "<div>文章內文：" + item.paragraphContent + `<a href= "http://localhost:8080/Bookstrap/blog/getParaById?id=` + item.paragraphId + `"<button name=updatebtn  data-id=` + item.paragraphId + "  > 修改</button></a>" + "</div>"
 						outPutString += "===================="
 
 					}

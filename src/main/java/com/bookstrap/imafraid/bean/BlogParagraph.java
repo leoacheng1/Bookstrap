@@ -1,7 +1,7 @@
 package com.bookstrap.imafraid.bean;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +29,7 @@ public class BlogParagraph {
 	@Column(name = "paragraphCatagory")
 	private String paragraphCatagory;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blogparagraph", cascade = CascadeType.ALL)
-	private Set<BlogPhotos> blogPhotos = new HashSet<BlogPhotos>();
+	private List<BlogPhotos> blogPhotos = new ArrayList<>();
 
 	public Integer getParagraphId() {
 		return paragraphId;
@@ -72,12 +72,14 @@ public class BlogParagraph {
 		this.paragraphCatagory = paragraphCatagory;
 	}
 
-	public Set<BlogPhotos> getBlogPhotos() {
+	public List<BlogPhotos> getBlogPhotos() {
 		return blogPhotos;
 	}
 
-	public void setBlogPhotos(Set<BlogPhotos> blogPhotos) {
+	public void setBlogPhotos(List<BlogPhotos> blogPhotos) {
 		this.blogPhotos = blogPhotos;
 	}
+
+
 
 }

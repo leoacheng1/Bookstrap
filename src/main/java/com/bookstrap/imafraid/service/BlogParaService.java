@@ -49,5 +49,12 @@ public class BlogParaService {
 			}
 		return "查無此篇文章";
 	}
-}
+	public BlogParagraph getParaById(Integer paragraphId) {
+		Optional <BlogParagraph> op =blogParaDao.findById(paragraphId);
+		
+			BlogParagraph bp = op.get();
+			return bp;
+		}
+	}
+
 

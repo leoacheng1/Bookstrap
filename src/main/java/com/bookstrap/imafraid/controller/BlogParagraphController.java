@@ -1,9 +1,10 @@
 package com.bookstrap.imafraid.controller;
 
+import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.imafraid.bean.BlogParagraph;
+import com.bookstrap.imafraid.bean.BlogPhotos;
 import com.bookstrap.imafraid.service.BlogParaService;
 
 @Controller
@@ -24,15 +27,28 @@ public class BlogParagraphController {
 
 	@PostMapping("/blog/createParagraph")
 	public String createPara(@RequestParam String pTitle, @RequestParam String pContent, @RequestParam String pAuther,
-			@RequestParam String pCatagory) {
+			@RequestParam String pCatagory, @RequestParam MultipartFile[] pPhoto) throws IOException {
+		
+		List<BlogPhotos> blogPhoto= new LinkedList<>();
 		BlogParagraph bp = new BlogParagraph();
+		for(MultipartFile photo : pPhoto) {
+		
+
+		BlogPhotos bPhoto = new BlogPhotos();
+		byte[] photoByte = photo.getBytes();
 		bp.setParagraphTitle(pTitle);
 		bp.setParagraphContent(pContent);
 		bp.setParagraphAuther(pAuther);
 		bp.setParagraphCatagory(pCatagory);
-
+		bPhoto.setBlogPhoto(photoByte);
+		bPhoto.setBlogparagraph(bp);
+		blogPhoto.add(bPhoto);
+//		bp.set
+//
+//		blogParaService.insertBlog(bp);
+		}
+		bp.setBlogPhotos(blogPhoto);
 		blogParaService.insertBlog(bp);
-
 		return "/blog/blogIndex";
 	}
 
@@ -62,14 +78,21 @@ public class BlogParagraphController {
 	@PostMapping("/blog/updatePara")
 	public String updatePara(@RequestParam Integer id,@RequestParam String pTitle, @RequestParam String pContent, @RequestParam String pAuther,
 			@RequestParam String pCatagory) {
-		blogParaService.updatePara(id,pTitle,pContent,pAuther,pCatagory);
+	blogParaService.updatePara(id,pTitle,pContent,pAuther,pCatagory);
 		return "/blog/blogIndex";
-		
-	@ResponseBody
-	public String GetP
-		
-		
-		
-		
+	}	
+//	@ResponseBody
+	@GetMapping("/blog/getParaById")
+	public String getParaById(@RequestParam("id") Integer id,Model model) {
+	BlogParagraph bp=blogParaService.getParaById(id);
+	model.addAttribute("updateBlog",bp);
+		return "/blog/updatePara";
 	}
-}
+	
+//	public String insertBlogImage(
+//			@RequestParam("")blogParagraphId,@RequestParam )) {}
+//		
+//		
+//		
+	}
+

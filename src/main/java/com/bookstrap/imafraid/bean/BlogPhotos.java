@@ -17,19 +17,20 @@ public class BlogPhotos {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "blogPhoto_id")
 	private Integer blogPhotoId;
+	
 	@Column(name = "blogPhoto_name")
 	private String blogPhotoName;
-	@Column(name = "blogPhoto01")
-	private byte blogPhoto01;
-	@Column(name = "blogPhoto02")
-	private byte blogPhoto02;
-	@Column(name = "blogPhoto03")
-	private byte blogPhoto03;
+	
+	@Column(name = "blogPhoto")
+	private byte[] blogPhoto;
+
 	@Column(name="fk_paragraph_id")
 	@Transient
 	private Integer paragraphId;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	private BlogParagraph blogparagraph;
+	
 	public Integer getBlogPhotoId() {
 		return blogPhotoId;
 	}
@@ -42,23 +43,12 @@ public class BlogPhotos {
 	public void setBlogPhotoName(String blogPhotoName) {
 		this.blogPhotoName = blogPhotoName;
 	}
-	public byte getBlogPhoto01() {
-		return blogPhoto01;
+
+	public byte[] getBlogPhoto() {
+		return blogPhoto;
 	}
-	public void setBlogPhoto01(byte blogPhoto01) {
-		this.blogPhoto01 = blogPhoto01;
-	}
-	public byte getBlogPhoto02() {
-		return blogPhoto02;
-	}
-	public void setBlogPhoto02(byte blogPhoto02) {
-		this.blogPhoto02 = blogPhoto02;
-	}
-	public byte getBlogPhoto03() {
-		return blogPhoto03;
-	}
-	public void setBlogPhoto03(byte blogPhoto03) {
-		this.blogPhoto03 = blogPhoto03;
+	public void setBlogPhoto(byte[] blogPhoto) {
+		this.blogPhoto = blogPhoto;
 	}
 	public Integer getParagraphId() {
 		return paragraphId;
@@ -72,4 +62,5 @@ public class BlogPhotos {
 	public void setBlogparagraph(BlogParagraph blogparagraph) {
 		this.blogparagraph = blogparagraph;
 	}
+	
 }
