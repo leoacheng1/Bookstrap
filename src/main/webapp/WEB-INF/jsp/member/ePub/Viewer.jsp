@@ -72,8 +72,8 @@
     //https://s3.amazonaws.com/moby-dick/moby-dick.epub
     //${contextRoot}/epub/ebook/1
     //https://haodooclassic.net/PDB/P/1010490082.epub
-    var book = ePub("https://s3.amazonaws.com/moby-dick/moby-dick.epub");
-	axios.get("${contextRoot}/epub/ebook/1").then(response => console.log(response))
+    var book = ePub("${contextRoot}/epub/ebook/1");
+	axios.get("https://s3.amazonaws.com/moby-dick/moby-dick.epub").then(response => console.log(response))
 
     var rendition = book.renderTo("viewer", {
       width: "100%",
