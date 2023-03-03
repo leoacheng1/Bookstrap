@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,48 +33,45 @@ public class MemberService {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	public Members insertMember(Members member) {
 		String randomCode = RandomString.make(64);
 		member.setVertificationCode(randomCode);
-		
+
 //		sendVertificationEnail(member);
-		
+
 		return mDao.save(member);
 	}
 
-	public void sendVertificationEnail(Members member, MemberDetails memberDetail) throws UnsupportedEncodingException, MessagingException {
-			String subject = "請確認您的註冊信箱";
-			String senderName = "BookStrap team";
-			String mailContent ="<p>"+ memberDetail.getMemberName() 
-					+ "您好" + "</p>";
-			mailContent += "<p>請進入連結以認證註冊信箱地址:</p>";
-			
+	public void sendVertificationEnail(Members member) throws UnsupportedEncodingException, MessagingException {
+		String subject = "請確認您的註冊信箱";
+		String senderName = "BookStrap team";
+		String mailContent = "<p>" + member.getMemberAccount() + "您好" + "</p>";
+		mailContent += "<p>請進入連結以認證註冊信箱地址:</p>";
+
 //			這裡用localhost充當
-			String verifyURL = "http://localhost:8080/Bookstrap" + "/member/verify?code=" + member.getVertificationCode();
-			mailContent +="<h3><a href=\"" + verifyURL + "\">驗證</a></h3>";
-			mailContent +="<p>BookStrap team</p>";
-	
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message);
-			helper.setFrom("bookstrap157@gmail.com", senderName);
-			helper.setTo(memberDetail.getMemberEmail());
-			helper.setSubject(subject);
-			helper.setText(mailContent, true);
-			
-			mailSender.send(message);
-	
+		String verifyURL = "http://localhost:8080/Bookstrap" + "/member/verify?code=" + member.getVertificationCode();
+		mailContent += "<h3><a href=\"" + verifyURL + "\">驗證</a></h3>";
+		mailContent += "<p>BookStrap team</p>";
+
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
+		helper.setFrom("bookstrap157@gmail.com", senderName);
+		helper.setTo(member.getMemberAccount());
+		helper.setSubject(subject);
+		helper.setText(mailContent, true);
+
+		mailSender.send(message);
+
 	}
-	
-	
-	
+
 	public Members findByVerifyCode(String code) {
 		return mDao.findByVerifyCode(code);
 	}
-	
+
 	public Integer insertMemberValid(Integer valid, Integer memberId) {
 		return mDao.updateMemberValid(valid, memberId);
-				
+
 	}
 
 	public boolean deleteMemberById(Integer memberId) {
@@ -114,7 +112,7 @@ public class MemberService {
 
 		return checkDao.checkLogin(member);
 	}
-	
+
 //	public Integer checkValid(Members member) {
 //		return checkDao.checkLogin(member);
 //	}
@@ -122,20 +120,71 @@ public class MemberService {
 	public Members useEmailFindId(String memberEmail) {
 		return mDao.findIdByEmail(memberEmail);
 	}
-	
+
 //	public boolean checkAccount(String memberEmail) {
 //		return mDao.findEmailByid(memberEmail);
 //	}
-	
+
 	public boolean verify(String verificationCode) {
 		Members member = mDao.findByVerificationCode(verificationCode);
-	
-		if(member == null) {
+
+		if (member == null) {
 			return false;
-		}else {
+		} else {
 			return true;
 		}
-	
+
 	}
+
+	public void updateResetPasswordToken(String token, String email) throws MemberNotFoundException {
+		Members member = mDao.findIdByEmail(email);
+		System.out.println("TokenEmail: " + email);
+		if (member != null) {
+			member.setResetPasswordToken(token);
+			mDao.save(member);
+		} else {
+			new MemberNotFoundException("Could not found any member!" + email);
+		}
+
+	}
+
+	public Members get(String resetPasswordToken) {
+		return mDao.findByResetPasswordToken(resetPasswordToken);
+	}
+
+	
+	public void updatePassword(Members member, String newPassword) {
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//		String encodePassword = passwordEncoder.encode(newPassword);
+		
+		member.setMemberPassword(newPassword);
+		member.setResetPasswordToken(null);
+		//16:29
+		mDao.save(member);
+	}
+	
+	
+	//	public void sendVertificationEnail(Members member, MemberDetails memberDetail) throws UnsupportedEncodingException, MessagingException {
+//		String subject = "請確認您的註冊信箱";
+//		String senderName = "BookStrap team";
+//		String mailContent ="<p>"+ memberDetail.getMemberName() 
+//				+ "您好" + "</p>";
+//		mailContent += "<p>請進入連結以認證註冊信箱地址:</p>";
+//		
+////		這裡用localhost充當
+//		String verifyURL = "http://localhost:8080/Bookstrap" + "/member/verify?code=" + member.getVertificationCode();
+//		mailContent +="<h3><a href=\"" + verifyURL + "\">驗證</a></h3>";
+//		mailContent +="<p>BookStrap team</p>";
+//
+//		MimeMessage message = mailSender.createMimeMessage();
+//		MimeMessageHelper helper = new MimeMessageHelper(message);
+//		helper.setFrom("bookstrap157@gmail.com", senderName);
+//		helper.setTo(memberDetail.getMemberEmail());
+//		helper.setSubject(subject);
+//		helper.setText(mailContent, true);
+//		
+//		mailSender.send(message);
+//
+//}
 
 }

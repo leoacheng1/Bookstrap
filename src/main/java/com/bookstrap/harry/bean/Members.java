@@ -42,6 +42,9 @@ public class Members {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "auth_provider")
 	private AuthenticationProvider authProvider;
+	
+	@Column(name = "reset_password_token")
+	private String resetPasswordToken;
 
 	//雙向，去找memberDetails有本類別屬性的參考變數
 	@OneToOne(mappedBy ="member")
@@ -74,6 +77,17 @@ public class Members {
 	public Members(Integer memberId) {
 		super();
 		this.memberId = memberId;
+	}
+
+	
+	
+	
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
 	}
 
 	public String getVertificationCode() {

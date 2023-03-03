@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstrap.harry.bean.Comment;
+import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -72,6 +73,9 @@ public class Books {
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<Comment> comment;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book", cascade = CascadeType.ALL)
+	private Set<ShoppingCarts> shoppingCarts;
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy="book", cascade = CascadeType.ALL)

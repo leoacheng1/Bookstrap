@@ -6,12 +6,14 @@ Create Table Members(
 	password nvarchar(max) not null,
 	valid tinyint not null, --驗證，有沒有停權
 	vertification_code nvarchar(255),
-	member_level nvarchar(50)
+	member_level nvarchar(50),
+	reset_password_token nvarchar(45)
 );
 
 Create Table MemberDetails(
 	member_id int FOREIGN KEY REFERENCES Members(member_id) primary key,
-	member_name nvarchar(50),
+	member_lastname nvarchar(50) not null,
+	member_firstname nvarchar(50) not null,
 	photo varbinary,
 	sex tinyint, --性別
 	email nvarchar(max),
