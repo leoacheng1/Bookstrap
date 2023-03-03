@@ -102,5 +102,24 @@ function makeAttachment(attachmentData) {
     console.log("isImg: " + isImg);
 }
 
-
+/**
+ * update sidebar number for page
+ */
+function updateSideBar() {
+    let accountId = $("body").attr("data-ref");
+    axios.get(`${contextRoot}mail/countall/${accountId}`)
+    .then(response => {
+        console.log(response);
+        $("#inbox-count").html(response.data.inboxCount == 0 ? "" : response.data.inboxCount);
+        $("#sent-count").html(response.data.sentCount == 0 ? "" : response.data.sentCount);
+        $("#draft-count").html(response.data.draftCount == 0 ? "" : response.data.draftCount);
+        $("#bin-count").html(response.data.binCount == 0 ? "" : response.data.binCount);
+        $("#normal-count").html(response.data.normalCount == 0 ? "" : response.data.normalCount);
+        $("#job-count").html(response.data.workCount == 0 ? "" : response.data.workCount);
+        $("#company-count").html(response.data.companyCount == 0 ? "" : response.data.companyCount);
+        $("#starred-count").html(response.data.starredCount == 0 ? "" : response.data.starredCount);
+        $("#important-count").html(response.data.importantCount == 0 ? "" : response.data.importantCount);
+    })
+    .catch(err => console.log(err)); 
+}
 

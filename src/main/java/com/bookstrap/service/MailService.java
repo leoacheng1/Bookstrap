@@ -134,6 +134,33 @@ public class MailService {
 		Page<AccountMail> page = accountMailDao.findByMailAccountAndMailFolder(account, folder.get(), pageRequest);
 		return page;
 	}
+	
+	public Page<AccountMail> findMailByCategoryAndPage(MailAccount account,Integer categoryId, Integer pageNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, 20, Sort.by("mail_mailTime").descending());
+		Optional<MailCategory> category = mailCategoryDao.findById(categoryId);
+		if (category.isEmpty()) {
+			return null;
+		}
+		Page<AccountMail> page = accountMailDao.findByMailAccountAndMailCategory(account, category.get(), pageRequest);
+		return page;
+	}
+	
+	public Page<AccountMail> findMailByLabelAndPage(Integer labelId, Integer pageNum) {
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, 20, Sort.by("mail_mailTime").descending());
+		Page<AccountMail> page = accountMailDao.findByAccountLabelsLabelId(labelId, pageRequest);
+		return page;
+	}
+	
+	public Page<AccountMail> findMailByImportantOrStarredAndPage(String importantOrStarred, Integer pageNum){
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, 20, Sort.by("mail_mailTime").descending());
+		if (importantOrStarred.equals("important")) {
+			Page<AccountMail> page = accountMailDao.findByImportant((short)1, pageRequest);
+			return page;
+		}else {
+			Page<AccountMail> page = accountMailDao.findByStarred((short)1, pageRequest);
+			return page;
+		}
+	}
 // ================================================= for Inserting =============================================================
 	public AccountLabel addLabel(MailAccount account, String labelName) {
 		AccountLabel newLabel = new AccountLabel();
@@ -277,11 +304,8 @@ public class MailService {
 			Optional<AccountMail> optional = accountMailDao.findById(new AccountMailPK(mailId,accountId));
 			if (optional.isPresent()) {
 				AccountMail mail = optional.get();
-				System.out.println("==========================================folderId: "+folderId+"===============================================");
 				mail.setMailFolder(folder);	
-				System.out.println("==========================================set===============================================");
 				accountMailDao.save(mail);
-				System.out.println("==========================================set and save===============================================");
 				updatedIds.add(mailId);
 			}
 		}
@@ -304,4 +328,19 @@ public class MailService {
 		}
 		return false;
 	}
+	
+	public Integer[] deleteMail(Integer accountId, Integer[] mailIds) {
+		ArrayList<Integer> deleted = new ArrayList<Integer>();
+		for (Integer mailId : mailIds) {
+			AccountMailPK accountMailPK = new AccountMailPK(mailId, accountId);
+			Optional<AccountMail> optional = accountMailDao.findById(accountMailPK);
+			if (optional.isEmpty()) continue;
+			AccountMail mail = optional.get();
+			accountMailDao.delete(mail);
+			deleted.add(mailId);			
+		}
+		return deleted.toArray(new Integer[deleted.size()]);
+		
+	}
+	
 }

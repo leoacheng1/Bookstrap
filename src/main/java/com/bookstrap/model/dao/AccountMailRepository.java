@@ -23,6 +23,13 @@ public interface AccountMailRepository extends JpaRepository<AccountMail, Accoun
 	
 	public Page<AccountMail> findByAccountMailIdAndAccountLabelsLabelId(AccountMailPK Id,Integer labelId, Pageable pageable);
 	
+	public Page<AccountMail> findByAccountLabelsLabelId(Integer labelId, Pageable pageable);
+	
+	public Page<AccountMail> findByImportant(Short important, Pageable pageable);
+	
+	public Page<AccountMail> findByStarred(Short starred, Pageable pageable);
+	
+	
 	public Set<AccountMail> findByMailAccountAndMailfrom(MailAccount mailAccount,Short num);
 	
 	@Query("SELECT COUNT(mail) FROM AccountMail mail WHERE mail.mailFolder.folderId=:fid AND mailAccount.id=:aid")

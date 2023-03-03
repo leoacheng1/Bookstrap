@@ -78,7 +78,8 @@ for (li of document.getElementsByClassName("label-li")) {
  * @param {Object} response - json response after insert label, with attribute value : {labelId, labelName, accountId(null)}
  */
 function createLabelRow(response) {
-    let a = $('<a/>',{class: "nav-link user-label", href: "apiURL"+response.value.labelId, append:[
+    let a = $('<a/>',{class: "nav-link user-label", href: contextRoot + "backend/mailpage/mailbox/l/label/"+response.value.labelId
+    ,"data-typeName":response.value.labelId, append:[
         $('<i/>',{class: "fas fa-bookmark text-secondary", style: "padding-left:3px;padding-right: 2px;"}), " " , response.value.labelName, $('<i/>',{class: "fa fa-trash text-primary invisible float-right"})
     ]});
     let li = $('<li/>',{class: "nav-item label-li", "data-lid": response.value.labelId, append: a});
@@ -99,6 +100,7 @@ function addLabelEvent(li) {
             showCancelButton: true,
             confirmButtonColor: '#d33',
             confirmButtonText: '刪除',
+            cancelButtonText: '取消',
             preConfirm: () => {
                 axios.delete(contextRoot + "mail/label/" + id).then(
                     response => response

@@ -21,7 +21,16 @@ function addEvents() {
  * initialize summernote
  */
 function initSummerNote() {
-  $('#compose-textarea').summernote({ height: "500px" });
+  $('#compose-textarea').summernote({ height: "500px",toolbar: [
+    ['style', ['style']],
+    ['font', ['bold', 'underline', 'clear']],
+    ['fontname', ['fontname','fontsize']],
+    ['color', ['color']],
+    ['para', ['ul', 'ol', 'paragraph']],
+    ['table', ['table']],
+    ['insert', ['link', 'picture', 'video','hr']],
+    ['view', ['fullscreen', 'codeview', 'help']],
+  ] });
   //resolve tool tip misposition issue
   $('#compose-textarea').summernote('fullscreen.toggle');
   $('#compose-textarea').summernote('fullscreen.toggle');
@@ -215,11 +224,11 @@ async function draftEmail(event) {
   $('.card.card-primary.card-outline .card-body').attr("data-ready", "1");
   //if not onleave add toast
   if (event.type == "click") {
-    draftToast(cardBackup);
+    draftToast(cardBackup, formData);
     await delay(3000);
   }
   //return if restore button in toast is clicked
-  if ($('.card.card-primary.card-outline .card-body').attr("data-ready") == "0") { console.log("not ready"); return; }
+  if ($('.card.card-primary.card-outline .card-body').attr("data-ready") == "0") return; 
   axios({
     url: contextRoot + "mail/draft",
     method: "post",
@@ -237,9 +246,10 @@ async function draftEmail(event) {
       '發生非預期的錯誤',
       'error'
     ));
-  $('#sendModal').modal('hide')
 }
-
+/**
+ * simply redirect to inbox
+ */
 function dropEmail() {
   $('#dropModal').modal('hide');
   location.href = contextRoot + "backend/mailpage/folder/inbox";
@@ -249,8 +259,10 @@ function dropEmail() {
 /**
  * 
  * @param {Object} cardBackup -a copy for the original content (.card.card-primary.card-outline .card-body)
+ * @param {boolean} skip - whether to skip or not
  */
-function draftToast(cardBackup) {
+function draftToast(cardBackup, formData, skip) {
+  if (skip) return;
   $("body").Toasts('create', {
     title: '已加入草稿',
     body: '已將編輯內容加入草稿。    <a style="color:blue">復原</a>',
@@ -291,7 +303,26 @@ function draftOnLeave() {
     keepalive: true
   });
 }
-
+/**
+ * update sidebar number for page
+ */
+function updateSideBar() {
+  let accountId = $("body").attr("data-ref");
+  axios.get(`${contextRoot}mail/countall/${accountId}`)
+  .then(response => {
+      console.log(response);
+      $("#inbox-count").html(response.data.inboxCount == 0 ? "" : response.data.inboxCount);
+      $("#sent-count").html(response.data.sentCount == 0 ? "" : response.data.sentCount);
+      $("#draft-count").html(response.data.draftCount == 0 ? "" : response.data.draftCount);
+      $("#bin-count").html(response.data.binCount == 0 ? "" : response.data.binCount);
+      $("#normal-count").html(response.data.normalCount == 0 ? "" : response.data.normalCount);
+      $("#job-count").html(response.data.workCount == 0 ? "" : response.data.workCount);
+      $("#company-count").html(response.data.companyCount == 0 ? "" : response.data.companyCount);
+      $("#starred-count").html(response.data.starredCount == 0 ? "" : response.data.starredCount);
+      $("#important-count").html(response.data.importantCount == 0 ? "" : response.data.importantCount);
+  })
+  .catch(err => console.log(err)); 
+}
 //not finished
 function checkSend() {
   let mailTo = $('[name="mailTo"]').val();
