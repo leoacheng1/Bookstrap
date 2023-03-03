@@ -7,7 +7,6 @@ prefix="jstl"%>
 <html>
   <head>
     <meta charset="UTF-8" />
-
     <link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="${contextRoot}/css/index.css" />
   </head>
@@ -34,22 +33,17 @@ prefix="jstl"%>
         <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
 
         <div class="input-group d-flex mx-auto my-auto">
-          <select class="form-select w-20 d" id="inputGroupSelect01">
-            <option selected>全部</option>
-            <option value="1">書籍</option>
-            <option value="2">電子書</option>
-            <option value="3">語言</option>
-            <option value="4">somethingElse</option>
-          </select>
-
-          <input
-            type="text"
-            class="form-control w-50"
-            aria-label="Text input with dropdown button"
-          />
-          <button class="btn btn-dark" type="button" id="button-addon2">
+<!-- 模糊搜尋 -->
+<form action="${contextRoot}/books/page3" method="post" modelAttribute="book" style="width: 800px;text-align: center;">
+  <input style="display: inline;vertical-align: middle;"
+         type="text" name="name" 
+         class="form-control w-50 searchArea" id="searchArea" data-search="searchArea"
+         aria-label="Text input with dropdown button"/>
+    <button class="btn btn-dark sendOutBtn" type="submit" id="button-addon2 sendOutBtn" data-btnid="sendOutBtn" 
+            style="display: inline;vertical-align: middle;">
             <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
+    </button>
+</form>
         </div>
 
 
@@ -92,12 +86,12 @@ prefix="jstl"%>
         </div>
       </div>
     </header>
-
+<script>
+ 
+</script>
     <script src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
 
-    <script
-      type="text/javascript"
-      src="${contextRoot}/js/jquery-3.6.3.min.js"
-    ></script>
+    <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
   </body>
 </html>
