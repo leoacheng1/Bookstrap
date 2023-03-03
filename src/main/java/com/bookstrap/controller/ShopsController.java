@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.bookstrap.model.ShopDaoImpl;
 import com.bookstrap.model.Shops;
 import com.bookstrap.service.ShopsService;
 
@@ -48,16 +48,15 @@ public class ShopsController {
 	@GetMapping("/shops/good")
 	public String gogoodshop() {
 
-        return "shop/good";
+		return "shop/good";
 	}
-	
+
 	@GetMapping("/shops/shopmap")
 	public String gomapshop() {
 
-        return "shop/shopmap";
+		return "shop/shopmap";
 	}
-	
-	
+
 	@ResponseBody
 	@PostMapping("/shops/postAjax")
 	public String postAjaxUpload(@RequestParam("shopName") String shopName,
@@ -83,6 +82,7 @@ public class ShopsController {
 			return "失敗，IO 的問題";
 		}
 	}
+
 	@ResponseBody
 	@GetMapping("/shops/allshopslist")
 	public List<Shops> listHouse() {
@@ -155,7 +155,7 @@ public class ShopsController {
 		shService.deleteshopsbById(msgId);
 		return "redirect:/shop/shophome";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/shops/addressshopslist")
 	public List<Shops> findShopByAddress(String address) {
@@ -164,14 +164,22 @@ public class ShopsController {
 
 		return shlist;
 	}
-	
-	
+
 	@ResponseBody
 	@GetMapping("/shops/addressshopslist1")
 	public Shops findShopByid(Integer id) {
 
-		Shops shlist = shService.findShopByid( id);
+		Shops shlist = shService.findShopByid(id);
 
+		return shlist;
+	}
+
+	@ResponseBody
+	@PostMapping("/shops/likeaddress")
+	public List<Shops> findShopBylikeaddress(@RequestParam("place") String place) {
+		System.out.println("controller place" + place);
+		ShopDaoImpl SDO = new ShopDaoImpl();
+		List<Shops> shlist = SDO.ShopsByAddress(place);
 		return shlist;
 	}
 }

@@ -86,4 +86,9 @@ public class ShopsService {
 		
 		return optional.get();
 	}
+	public List<Shops> findShopsAddressLike(String place) {
+		System.out.println("service place"+place);
+		System.out.println(sDao.findShopsAddressLike(place).size());
+		return sDao.findShopsAddressLike(place);
+	}
 }

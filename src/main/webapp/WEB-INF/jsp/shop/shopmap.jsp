@@ -114,8 +114,8 @@
 
                     padding: 5px;
                     margin-top: 92px;
-                    max-width: 350px;
-                    max-height: 850px;
+                    max-width: 500px;
+                    max-height: 900px;
 
 
 
@@ -141,16 +141,16 @@
                     text-align: left;
 
                     padding: 5px;
-                    margin-top: 150px;
-                    width: 260px;
-                    height: 590px;
+                    margin-top:300px;
+                    width: 350px;
+                    max-height: 500px;
 
                     overflow: scroll;
                 }
 
                 .instructions {
                     padding: 5px;
-                    width: 200px;
+                    width: 300px;
 
                     white-space: normal;
 
@@ -175,6 +175,30 @@
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
                     <label class="form-check-label" for="defaultCheck1">
                         依距離排序
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="北部" id="north">
+                    <label class="form-check-label" for="defaultCheck1">
+                        北部
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="西部" id="west">
+                    <label class="form-check-label" for="defaultCheck1">
+                        西部
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="南部" id="south">
+                    <label class="form-check-label" for="defaultCheck1">
+                        南部
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="東部" id="east">
+                    <label class="form-check-label" for="defaultCheck1">
+                        東部
                     </label>
                 </div>
 
@@ -359,7 +383,7 @@
                                             viewright.innerHTML = ""
                                             const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
 
-                                            shopshow += '<div   class="card" style="width: 14rem; height: 14rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
                                                 + '<div class="card-body row justify-content-center">'
                                                 + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                 + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
@@ -370,6 +394,8 @@
                                                 + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
                                                 + '</div>'
                                                 + '</div>'
+                                                + '</div>'
+                                                + '</br>'
 
                                         };
 
@@ -555,7 +581,7 @@
                                             viewright.innerHTML = ""
                                             const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
 
-                                            shopshow += '<div   class="card" style="width: 14rem; height: 14rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                            shopshow += '<div   class="card" style="width: 15rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
                                                 + '<div class="card-body row justify-content-center">'
                                                 + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                 + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
@@ -566,6 +592,7 @@
                                                 + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
                                                 + '</div>'
                                                 + '</div>'
+                                                + '<br>'
 
                                         };
 
@@ -640,6 +667,71 @@
                                         console.error("Failed to get distance matrix: " + status);
                                     }
                                 }
+                            })
+                        }
+                    })
+
+                    const northBtn = document.getElementById("north");
+                    const southBtn = document.getElementById("south");
+                    const westBtn = document.getElementById("west");
+                    const eastBtn = document.getElementById("east");
+
+                    northBtn.addEventListener("change", function () {
+                        console.log("okok")
+                        console.log(northBtn.value)
+                        let place = ""
+
+                        // %臺北市% OR address LIKE %新北市% OR address LIKE %基隆市% OR address LIKE %新竹市% OR address LIKE %宜蘭縣% OR address LIKE %台北市% OR address LIKE %花蓮縣%
+
+                        place += " '%臺北市%' or address LIKE '%花蓮縣%'"
+                        // if (southBtn.checked == true) {
+                        //     console.log(southBtn.value)
+                        // }
+                        // if (westBtn.checked == true) {
+                        //     console.log(westBtn.value)
+                        // }
+                        // if (eastBtn.checked == true) {
+                        //     console.log(eastBtn.value)
+                        // }
+console.log(place)
+                        axios({
+                            url: 'http://localhost:8080/Bookstrap/shops/likeaddress',
+                            method: 'get',
+                            params:{
+                                place:place
+                            }
+                        })
+                            .then(res => {
+                                console.log(res.data)
+                                // showcloseshop(res.data)
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+
+                        function showcloseshop(data) {
+
+                            var locations = [];
+                            data.forEach(element => {
+                                let shopid = element.id
+                                let shopAddress = element.shopAddress
+                                let shopPhone = element.shopPhone
+                                locations.push(element.shopAddress)
+                                // locations.push(new google.maps.LatLng(element.latitude, element.longitude))
+                            })
+                            var locationdetails = [];
+                            data.forEach(element => {
+                                let shopid = element.id
+                                let shopName = element.shopName
+                                let shopAddress = element.shopAddress
+                                let shopPhone = element.shopPhone
+                                let shoptime = element.shopOpenHour + "-" + element.shopcloseHour
+
+                                locationdetails.push({
+                                    shopid: shopid, shopName: shopName, shopAddress: shopAddress
+                                    , shopPhone: shopPhone, shoptime: shoptime
+                                })
+
                             })
                         }
                     })
