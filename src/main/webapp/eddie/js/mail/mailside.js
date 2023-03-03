@@ -80,7 +80,7 @@ for (li of document.getElementsByClassName("label-li")) {
 function createLabelRow(response) {
     let a = $('<a/>',{class: "nav-link user-label", href: contextRoot + "backend/mailpage/mailbox/l/label/"+response.value.labelId
     ,"data-typeName":response.value.labelId, append:[
-        $('<i/>',{class: "fas fa-bookmark text-secondary", style: "padding-left:3px;padding-right: 2px;"}), " " , response.value.labelName, $('<i/>',{class: "fa fa-trash text-primary invisible float-right"})
+        $('<i/>',{class: "fa fa-tag text-secondary", style: "padding-left:3px;padding-right: 2px;"}), " " , response.value.labelName, $('<i/>',{class: "fa fa-trash text-primary invisible float-right"})
     ]});
     let li = $('<li/>',{class: "nav-item label-li", "data-lid": response.value.labelId, append: a});
     return li;

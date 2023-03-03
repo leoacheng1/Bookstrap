@@ -75,7 +75,7 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-md-3">
-                    <a href="${contextRoot}/backend/mailpage/folder/inbox" class="btn btn-primary btn-block mb-3">收件匣</a>
+                    <a href="${contextRoot}/backend/mailpage/mailbox/folder/inbox" class="btn btn-primary btn-block mb-3">收件匣</a>
 
                     <div class="card">
                       <div class="card-header">
@@ -90,27 +90,27 @@
                       <div class="card-body p-0">
                         <ul class="nav nav-pills flex-column" id="folder-ul">
                           <li class="nav-item">
-                            <a href="${contextRoot}/backend/mailpage/folder/inbox" class="nav-link" data-typename = "inbox">
+                            <a href="${contextRoot}/backend/mailpage/mailbox/folder/inbox" class="nav-link" data-typename = "inbox">
                               <i class="fas fa-inbox"></i> 收件匣
-                              <span class="badge bg-primary float-right" id="inbox-count">20</span>
+                              <span class="badge bg-primary float-right" id="inbox-count">${mailCount.inboxCount != 0 ? mailCount.inboxCount : ''}</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="${contextRoot}/backend/mailpage/folder/sent" class="nav-link" data-typename = "sent">
+                            <a href="${contextRoot}/backend/mailpage/mailbox/folder/sent" class="nav-link" data-typename = "sent">
                               <i class="fa fa-paper-plane"></i> 已寄出
-                              <span class="badge bg-success float-right" id="sent-count">8</span>
+                              <span class="badge bg-success float-right" id="sent-count">${mailCount.sentCount != 0 ? mailCount.sentCount : ''}</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="${contextRoot}/backend/mailpage/folder/draft" class="nav-link" data-typename = "draft">
+                            <a href="${contextRoot}/backend/mailpage/mailbox/folder/draft" class="nav-link" data-typename = "draft">
                               <i class="far fa-file-alt"></i> 草稿
-                              <span class="badge bg-warning float-right" id="draft-count">2</span>
+                              <span class="badge bg-warning float-right" id="draft-count">${mailCount.draftCount != 0 ? mailCount.draftCount : ''}</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a href="${contextRoot}/backend/mailpage/folder/bin" class="nav-link" data-typename = "bin">
+                            <a href="${contextRoot}/backend/mailpage/mailbox/folder/bin" class="nav-link" data-typename = "bin">
                               <i class="far fa-trash-alt"></i> 回收桶
-                              <span class="badge bg-danger float-right" id="bin-count">32</span>
+                              <span class="badge bg-danger float-right" id="bin-count">${mailCount.binCount != 0 ? mailCount.binCount : ''}</span>
                             </a>
                           </li>
                         </ul>
@@ -131,21 +131,21 @@
                       <div class="card-body p-0">
                         <ul class="nav nav-pills flex-column" id="category-ul">
                           <li class="nav-item">
-                            <a class="nav-link" href="${contextRoot}/backend/mailpage/category/normal" data-typename = "normal">
+                            <a class="nav-link" href="${contextRoot}/backend/mailpage/mailbox/category/normal" data-typename = "normal">
                               <i class="far fa-envelope text-secondary"></i> 一般信件
-                              <span class="badge badge-info float-right" id="normal-count">6</span>
+                              <span class="badge badge-primary float-right" id="normal-count">${mailCount.normalCount != 0 ? mailCount.normalCount : ''}</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="${contextRoot}/backend/mailpage/category/job" data-typename = "job">
+                            <a class="nav-link" href="${contextRoot}/backend/mailpage/mailbox/category/job" data-typename = "job">
                               <i class="fa fa-briefcase text-secondary"></i> 工作指派
-                              <span class="badge badge-info float-right" id="job-count">6</span>
+                              <span class="badge badge-primary float-right" id="job-count">${mailCount.workCount != 0 ? mailCount.workCount : ''}</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="${contextRoot}/backend/mailpage/category/company" data-typename = "company">
+                            <a class="nav-link" href="${contextRoot}/backend/mailpage/mailbox/category/company" data-typename = "company">
                               <i class="fa fa-bullhorn text-secondary"></i> 公司訊息
-                              <span class="badge badge-info float-right" id="company-count">6</span>
+                              <span class="badge badge-primary float-right" id="company-count">${mailCount.companyCount != 0 ? mailCount.companyCount : ''}</span>
                             </a>
                           </li>
                         </ul>
@@ -165,23 +165,23 @@
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body p-0">
-                        <ul class="nav nav-pills flex-column">
+                        <ul class="nav nav-pills flex-column" id="label-ul">
                           <li class="nav-item">
-                            <a class="nav-link" href="#">
-                              <i class="fas fa-star text-secondary" data-typename = "starred"></i> 加入星號
-                              <span class="badge badge-warning float-right" id="starred-count">6</span>
+                            <a class="nav-link" href="${contextRoot}/backend/mailpage/mailbox/label/starred" data-typename = "starred">
+                              <i class="fas fa-star text-secondary"></i> 加入星號
+                              <span class="badge badge-warning float-right" id="starred-count">${mailCount.starredCount != 0 ? mailCount.starredCount : ''}</span>
                             </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#" data-typename = "important">
+                            <a class="nav-link" href="${contextRoot}/backend/mailpage/mailbox/label/important" data-typename = "important">
                               <i class="fa fa-flag text-secondary" style="padding-left: 3px; padding-right: 2px;"></i> 重要郵件
-                              <span class="badge badge-warning float-right" id="important-count">6</span>
+                              <span class="badge badge-warning float-right" id="important-count">${mailCount.importantCount != 0 ? mailCount.importantCount : ''}</span>
                             </a>
                           </li>
                           <jstl:forEach items="${mailAccount.accountLabels}" var="label">
                             <li class="nav-item label-li" data-lid="${label.labelId}">
-                            <a class="nav-link user-label" href="${contextRoot}/backend/mailpage/label/${label.labelId}" data-typename = "${label.labelName}">
-                              <i class="fas fa-bookmark text-secondary" style="padding-left:3px;padding-right: 2px;"></i> ${label.labelName}
+                            <a class="nav-link user-label" href="${contextRoot}/backend/mailpage/mailbox/l/label/${label.labelId}" data-typename = "${label.labelId}">
+                              <i class="fa fa-tag text-secondary" style="padding-left:3px;padding-right: 2px;"></i> ${label.labelName}
                               <i class="fa fa-trash text-primary invisible float-right"></i>
                             </a>
                           </li>

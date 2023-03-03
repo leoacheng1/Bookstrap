@@ -1,16 +1,17 @@
 
 var contextRoot = "http://localhost:8080/Bookstrap/";
+onstartup();
 window.onpageshow = function (event) {
     if (event.persisted) {
         console.log("executed")
-        initMails();
-        updateSideBar();
+        onstartup();
     }
 };
-(function () {
-    // addEvents();
-    initMails();
-})()
+
+async function onstartup() {
+    let init = () => new Promise (() => initMails());
+    init().then(() => updateSideBar()).then(()=>$('[data-toggle="tooltip"]').tooltip());
+}
 
 
 
@@ -40,7 +41,7 @@ function initMails(pageNum = 1) {
                 td.innerHTML = "目前尚無郵件";
                 tr.appendChild(td);
                 $("#mailboxbody").append(tr);
-            }else {
+            } else {
                 for (rawData of res.data) {
                     let data = makeMailData(rawData);
                     // console.log(makeMailRow(data.mailId));
@@ -272,14 +273,14 @@ function addEvents() {
             axios.put(contextRoot + "mail/starred/" + this_.parent("tr").attr("data-mailid"), formData)
                 .then(response => console.log(response))
                 .catch(error => console.log(error));
-                let len = $("#starred-count").html().length;
-                if (len == 0) {
-                    $("#starred-count").html("1");
-                }else {
-                    let num = Number($("#starred-count").html());
-                    num += (starred == 1 ? 1 : -1);
-                    $("#starred-count").html(num == 0 ? "" : num);
-                }
+            let len = $("#starred-count").html().length;
+            if (len == 0) {
+                $("#starred-count").html("1");
+            } else {
+                let num = Number($("#starred-count").html());
+                num += (starred == 1 ? 1 : -1);
+                $("#starred-count").html(num == 0 ? "" : num);
+            }
         }
     })
     //handle important
@@ -302,7 +303,7 @@ function addEvents() {
             let len = $("#important-count").html().length;
             if (len == 0) {
                 $("#important-count").html("1");
-            }else {
+            } else {
                 let num = Number($("#important-count").html());
                 num += (important == 1 ? 1 : -1);
                 $("#important-count").html(num == 0 ? "" : num);
@@ -320,16 +321,19 @@ function addEvents() {
             then(response => response).
             catch(error => console.log(error));
     })
-    //handle deletion
+    //handle deletion and recovery
     if (window.location.href.split("/").pop() == "bin") {
         $("#delete-mail").css("color", "red");
         $("#delete-mail").click(permanentDelete);
+        if($("#recovery-btn").length == 0){
+            addRecoveryBtn();
+        }  
     } else {
         $("#delete-mail").click(deleteEvent);
     }
 
     //refresh
-    $("#refreshBtn").click(function(){
+    $("#refreshBtn").click(function () {
         initMails();
         updateSideBar();
     })
@@ -416,7 +420,7 @@ function permanentDelete(numDeleted) {
             let formData = new FormData();
             formData.append("mailIds", mailIds);
             formData.append("accountId", accountId);
-            axios.delete(contextRoot + "mail/multiple", {data:formData}).then(
+            axios.delete(contextRoot + "mail/multiple", { data: formData }).then(
                 response => response
             ).catch(error => {
                 Swal.showValidationMessage(
@@ -436,8 +440,8 @@ function permanentDelete(numDeleted) {
                 showConfirmButton: false,
                 timer: 1500
             });
-            (async function() {
-                await delay(2000);
+            (async function () {
+                await delay(1500);
                 initMails(1);
                 updateSideBar();
             })();
@@ -451,27 +455,57 @@ function permanentDelete(numDeleted) {
 function updateSideBar() {
     let accountId = $("body").attr("data-ref");
     axios.get(`${contextRoot}mail/countall/${accountId}`)
-    .then(response => {
-        console.log(response);
-        $("#inbox-count").html(response.data.inboxCount == 0 ? "" : response.data.inboxCount);
-        $("#sent-count").html(response.data.sentCount == 0 ? "" : response.data.sentCount);
-        $("#draft-count").html(response.data.draftCount == 0 ? "" : response.data.draftCount);
-        $("#bin-count").html(response.data.binCount == 0 ? "" : response.data.binCount);
-        $("#normal-count").html(response.data.normalCount == 0 ? "" : response.data.normalCount);
-        $("#job-count").html(response.data.workCount == 0 ? "" : response.data.workCount);
-        $("#company-count").html(response.data.companyCount == 0 ? "" : response.data.companyCount);
-        $("#starred-count").html(response.data.starredCount == 0 ? "" : response.data.starredCount);
-        $("#important-count").html(response.data.importantCount == 0 ? "" : response.data.importantCount);
-    })
-    .catch(err => console.log(err)); 
+        .then(response => {
+            console.log(response);
+            $("#inbox-count").html(response.data.inboxCount == 0 ? "" : response.data.inboxCount);
+            $("#sent-count").html(response.data.sentCount == 0 ? "" : response.data.sentCount);
+            $("#draft-count").html(response.data.draftCount == 0 ? "" : response.data.draftCount);
+            $("#bin-count").html(response.data.binCount == 0 ? "" : response.data.binCount);
+            $("#normal-count").html(response.data.normalCount == 0 ? "" : response.data.normalCount);
+            $("#job-count").html(response.data.workCount == 0 ? "" : response.data.workCount);
+            $("#company-count").html(response.data.companyCount == 0 ? "" : response.data.companyCount);
+            $("#starred-count").html(response.data.starredCount == 0 ? "" : response.data.starredCount);
+            $("#important-count").html(response.data.importantCount == 0 ? "" : response.data.importantCount);
+        })
+        .catch(err => console.log(err));
 }
 
 
-//testing area
-$('.js-example-basic-multiple').select2({
-    placeholder: '請選擇要放入的類別',
-    dropdownAutoWidth: true,
-    width: "120px",
-
-});
-$('[data-toggle="tooltip"]').tooltip()
+function addRecoveryBtn() {
+    let newBtn = $('<button/>', {
+        type: "button",
+        class: "btn btn-default btn-sm",
+        "data-toggle": "tooltip",
+        "data-placement": "bottom",
+        "title": "復原刪除",
+        "id": "recovery-btn",
+        append: $('<i/>', { class: "fas fa-reply" }),
+        click: function () {
+            let trs = findChecked();
+            if (trs.length == 0) return;
+            let accountId = $("body").attr("data-ref");
+            let mailIds = [];
+            for (tr of trs) {
+                let mailId = $(tr).attr("data-mailid");
+                if (mailId != null) mailIds.push(mailId);
+            }
+            let formData = new FormData();
+            formData.append("mailIds", mailIds);
+            formData.append("accountId", accountId);
+            axios.put(contextRoot + "mail/folder/1", formData)
+                .then(response => {
+                    Swal.fire({
+                        position: 'bottom-start',
+                        toast: true,
+                        icon: 'success',
+                        title: '已將' + response.data + '筆郵件放入收件夾',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    initMails(1);
+                    updateSideBar();
+                })
+        }
+    })
+    newBtn.insertAfter($("#delete-mail"));
+}

@@ -185,6 +185,7 @@ function sendEmail(event) {
         'success'
       );
       clearEditArea();
+      updateSideBar();
     })
     .catch(err => Swal.fire(
       '送出失敗',
@@ -239,7 +240,7 @@ async function draftEmail(event) {
 
   })
     .then(res => {
-
+      updateSideBar();
     })
     .catch(err => Swal.fire(
       '加入失敗',

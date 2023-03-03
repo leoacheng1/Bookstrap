@@ -78,7 +78,7 @@
                         <section class="content">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <a href="${contextRoot}/backend/mailpage/mailbox/folder/inbox" class="btn btn-primary btn-block mb-3">收件匣</a>
+                                    <a href="${contextRoot}/backend/mailpage/composemail" class="btn btn-primary btn-block mb-3">撰寫郵件</a>
                 
                                     <div class="card">
                                       <div class="card-header">
@@ -184,7 +184,7 @@
                                           <jstl:forEach items="${mailAccount.accountLabels}" var="label">
                                             <li class="nav-item label-li" data-lid="${label.labelId}">
                                             <a class="nav-link user-label" href="${contextRoot}/backend/mailpage/mailbox/l/label/${label.labelId}" data-typename = "${label.labelId}">
-                                              <i class="fas fa-bookmark text-secondary" style="padding-left:3px;padding-right: 2px;"></i> ${label.labelName}
+                                              <i class="fa fa-tag text-secondary" style="padding-left:3px;padding-right: 2px;"></i> ${label.labelName}
                                               <i class="fa fa-trash text-primary invisible float-right"></i>
                                             </a>
                                           </li>
@@ -229,15 +229,15 @@
                                                     <button type="button" class="btn btn-default btn-sm" id="delete-mail" data-toggle="tooltip" data-placement="bottom" title="刪除郵件">
                                                         <i class="far fa-trash-alt"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="刪除郵件">
+                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="回覆郵件">
                                                         <i class="fas fa-reply"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="刪除郵件">
+                                                    <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="分享郵件">
                                                         <i class="fas fa-share"></i>
                                                     </button>
                                                 </div>
                                                 <!-- /.btn-group -->
-                                                <button type="button" class="btn btn-default btn-sm" id="refreshBtn">
+                                                <button type="button" class="btn btn-default btn-sm" id="refreshBtn" data-toggle="tooltip" data-placement="bottom" title="刷新">
                                                     <i class="fas fa-sync-alt"></i>
                                                 </button>
                                                 <div class="float-right">
