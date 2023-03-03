@@ -49,7 +49,7 @@ function getDetails(bkID){
       }
   })
   .then(res=>{
-      console.log(res.data)
+      // console.log(res.data)
       htmlMaker(res)
   })
   .catch(err=>{
@@ -62,17 +62,17 @@ function htmlMaker(data){
   bookmsg='<tr>'
  +' <td colspan="2" id="sizeInput" style="font-weight:bold">尺寸</td>'
  +' <td colspan="2" id="pagesInput" style="font-weight:bold">頁數</td>'
- +' <td colspan="6" id="introInput" style="font-weight:bold">簡介</td>'
+ +' <td colspan="7" id="introInput" style="font-weight:bold">簡介</td>'
  +' <td colspan="2" id="gradeInput" style="font-weight:bold">分級</td>'
-//  +' <td colspan="2" id="crossInput"><button type="button" data-btnId="'+data.data.id+'" class="btn-close clearBtn'+data.data.id+'" aria-label="Close"></button></td>'
  +' <td colspan="1" id="crossInput"><button data-btnId="'+data.data.id+'" class="clearBtn'+data.data.id+'"><img style="width:10px;height:10px" src="../book/cross.png"></button></td>'
  +' </tr>'
  +' <tr>'
  +' <td colspan="2" id="size">'+data.data.size+'</td>'
  +' <td colspan="2" id="pages">'+data.data.pages+'</td>'
- +' <td colspan="6" id="intro" class="text-center" style="text-align: center;height:300px">'+data.data.intro+'</td>'
+ +' <td colspan="7" id="intro" class="text-center" style="text-align: center;height:100px;">'+data.data.intro+'</td>'
  +' <td colspan="2" id="grade">'+data.data.grade+'</td>'
  +' <td colspan="1" id="clear"></td>'
+ +' <td></td>'
  +' </tr>'
 
  

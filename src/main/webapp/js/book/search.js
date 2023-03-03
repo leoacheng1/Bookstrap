@@ -1,55 +1,131 @@
 
-const submitBtnnnn = document.getElementById('submitBtnnnn')
-submitBtnnnn.addEventListener('click',function(e){
+
+// axios({
+//   method:'get',
+//   url:'http://localhost:8080/Bookstrap/books/allpage'
+// })
+// .then(res=>{
+//   console.log(res.data)
+//   allHtmlMaker(res)
+// })
+// .catch(err=>{
+// console.log(err)
+// })
+
+// function allHtmlMaker(res){
+//   const con = document.getElementById('console')
+//   let daaata=""
+//   con.innerHTML=""
+//   res.data.content.forEach(element=>{
+//     console.log(element.name )
+//     daaata+=`<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px">`
+//   +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
+//     <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" class="card-img-top" 
+//     style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>`
+//   +`<div class="card-body">`
+//   +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`"><h6 class="card-title">`+element.name+`</h6></a>`
+//   +`<p class="card-text" style="margin-bottom: 3px;">語言：`+element.languages+`書</p>`
+//   +`<p class="card-text" style="margin-bottom: 3px;">作者：`+element.author+`</p>`
+//   +`<p class="card-text" style="margin-bottom: 3px;">售價：`+element.price+`元</p>`
+//   +`<p class="card-text" style="margin-bottom: 3px;">優惠價：`+element.discount+`折</p>`
+//   +`<a href="#" class="btn btn-primary">加入購物車</a>`
+//   +`</div>`
+//   +`</div>`
+
+//   }); 
+
+//   let totalPages = res.data.totalPages;
+//   console.log(totalPages)
+//   for (let i = 1; i <= totalPages; i++) {
+//     daaata += '<button class="pageBtn btn btn-outline-info" style="position: absolute;bottom: 0;" id="pageButton" data-page="' + i + '">' + i + '</button>'
+//   }
+//   con.innerHTML=daaata    
+
+
+//   let buttonsArray = document.getElementsByClassName('pageBtn');
+//   for (i = 0; i <= buttonsArray.length; i++) {
+//     buttonsArray[i].addEventListener('click', function (e) {
+
+//       let pageNumber = this.getAttribute('data-page');
+
+//       console.log('pageNumber:' + pageNumber)
+//       loadThatPage(pageNumber)
+//     })
+   
+//   }
+//   function loadThatPage(pageNumber) {
+
+//     axios({
+//       url: 'http://localhost:8080/Bookstrap/books/allpage',
+//       method: 'get',
+//       params: {
+//         p: pageNumber
+//       }
+//     })
+//       .then(res => {
+//         console.log(res)
+//         allHtmlMaker(res)
+//       })
+//       .catch(err => {
+//         console.log(err)
+//       })
+//   }
+
+
+// }
+  
+////////  多條件搜尋  ////////
+var submitBtn = document.getElementById('submitBtnnnn')
+submitBtn.addEventListener('click',function(e){
  console.log("OKOK")
  let selectorL = ""
  let selectorC = ""
-if(document.getElementById("allL").checked == true){
+// if(document.getElementById("allL").checked == true){
    
- }
+//  }
 if(document.getElementById("chinese").checked == true){
-  selectorL+="or languages = 中文 "
+  selectorL+=" ,中文 "
 }
 if(document.getElementById("foreign").checked == true){
-  selectorL+="or languages = 外文 "
+  selectorL+=" ,外文 "
 }
-if(document.getElementById("allC").checked == true){
+// if(document.getElementById("allC").checked == true){
    
-}
+// }
 if(document.getElementById("philosophy").checked == true){
-  selectorC+="or category = 哲學 "
+  selectorC+=" ,哲學"
 }
 if(document.getElementById("religion").checked == true){
-  selectorC+="or category = 宗教 "
+  selectorC+=" ,宗教 "
 }
 if(document.getElementById("science").checked == true){
-  selectorC+="or category = 科學 "
+  selectorC+=" ,科學 "
 }
 if(document.getElementById("appliedScience").checked == true){
-  selectorC+="or category = 應用科學 "
+  selectorC+=" ,應用科學 "
 }
 if(document.getElementById("socialScience").checked == true){
-  selectorC+="or category = 社會科學 "
+  selectorC+=" ,社會科學 "
 }
 if(document.getElementById("history").checked == true){
-  selectorC+="or category = 歷史 "
+  selectorC+=" ,歷史 "
 }
 if(document.getElementById("geography").checked == true){
-  selectorC+="or category = 地理 "
+  selectorC+=" ,地理 "
 }
 if(document.getElementById("foreignLan").checked == true){
-  selectorC+="or category = 語言文學 "
+  selectorC+=" ,語言文學 "
 }
 if(document.getElementById("Art").checked == true){
-  selectorC+="or category = 藝術 "
+  selectorC+=" ,藝術 "
 }
 if(document.getElementById("other").checked == true){
-  selectorC+="or category = 其他 "
+  selectorC+=" ,其他 "
 }
 console.log("selectorL:"+selectorL)
 console.log("selectorC:"+selectorC)
-const str1=selectorL.substring(15,selectorL.length)
-const str2=selectorC.substring(14,selectorC.length)
+const str1 = selectorL.substring(2,selectorL.length)
+const str2 = selectorC.substring(2,selectorC.length)
 console.log("str1:"+str1)
 console.log("str2:"+str2)
 getbook(str1,str2);
@@ -71,25 +147,63 @@ axios({
 .catch(err=>{
   console.log("跳頁失敗")
 })
-
 }
+
 function htmlmaker(data){
- 
+  const con = document.getElementById('console')
+  con.innerHTML=""
   let daaaata=""
     data.forEach(element => {
-
-
 console.log(element.name )
-
-    daaaata+=`<div class="card" style="width: 18rem">`
-  +`<img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" class="card-img-top">`
+    daaaata+=`<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px">`
+  +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
+    <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" class="card-img-top" 
+    style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>`
   +`<div class="card-body">`
-  +`<h5 class="card-title">`+element.name+`</h5>`
-  +` <p class="card-text">售價:`+element.price+`元</p>`
+  +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`"><h6 class="card-title">`+element.name+`</h6></a>`
+  +`<p class="card-text" style="margin-bottom: 3px;">語言：`+element.languages+`書</p>`
+  +`<p class="card-text" style="margin-bottom: 3px;">作者：`+element.author+`</p>`
+  +`<p class="card-text" style="margin-bottom: 3px;">售價：`+element.price+`元</p>`
+  +`<p class="card-text" style="margin-bottom: 3px;">優惠價：`+element.discount+`折</p>`
   +`<a href="#" class="btn btn-primary">加入購物車</a>`
-  +` </div>`
+  +`</div>`
   +`</div>`
   }); 
-  const con = document.getElementById('console')
   con.innerHTML=daaaata
 }
+
+//////////  模糊搜尋  ///////////
+// var sendOutBtn = document.querySelector(`[data-btnid="sendOutBtn"]`)
+// sendOutBtn.addEventListener('click',function(e){
+//   console.log("有抓到")
+//   let searchField = ""
+//   let searchArea = document.querySelector(`[data-search="searchArea"]`).value
+//   if(searchArea != null){
+//     searchField += searchArea
+//   }
+//   console.log("searchField:"+searchField)
+//   likebook(searchField)
+// })
+
+
+// function likebook(searchField){
+//   axios({
+//     url:"http://localhost:8080/Bookstrap/books/like",
+//     method:'get',
+//     params:{
+//       name:searchField
+//     }
+//   })
+//   .then(res=>{
+//     console.log("好耶")
+//     console.log("res:"+res.data)
+//     // window.location.href = 'http://localhost:8080/Bookstrap/books/search';
+    
+//   }).then(res=>{
+//     htmlmaker(res.data)
+//   })
+//   .catch(err=>{
+//     console.log("哭阿")
+//   })
+// }
+

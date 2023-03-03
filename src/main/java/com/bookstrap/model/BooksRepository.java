@@ -17,11 +17,19 @@ public interface BooksRepository extends JpaRepository<Books, Integer> {
 	@Query(value = "from Books where languages like %:languages% or category like %:languages%")
 	public List<Books> findBookBySelector(String languages);
 	
-	@Query(value = "select * from Books where (languages =:languages) and (category =:category)",nativeQuery = true)
-	public  List<Books> getBookBySelector(@Param("languages") String languages,@Param("category")String category);
+	@Query(value = "select * from Books where languages in (:languages)", nativeQuery=true)
+	public List<Books> getBookByLanguages(@Param("languages") List<String> languages);
 	
-//	@Modifying
-//	@Query(value = "from Books where languages in (:languages) and category in (:category)")
+	@Query(value = "select * from Books where category in (:category)", nativeQuery=true)
+	public List<Books> getBookByCategory(@Param("category") List<String> category);
+	
+	@Query(value = "select * from Books where category in (:category)", nativeQuery=true)
+	public List<Books> findBookByCategory(String category);
+	
+//	@Query(value = "select * from Books where (languages =:languages) and (category =:category)",nativeQuery = true)
 //	public  List<Books> getBookBySelector(@Param("languages") String languages,@Param("category")String category);
+	
+	@Query(value = "select * from Books where languages in (:languages) AND category in (:category)", nativeQuery=true)
+	public List<Books> getBookBySelector(@Param("languages") List<String> languages,@Param("category") List<String> category);
 	
 }

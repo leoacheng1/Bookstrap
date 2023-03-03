@@ -11,6 +11,11 @@
 <title>所有書籍</title>
 <!--版型需要的css -->
 <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
+<style>
+  table {
+  table-layout: fixed;
+}
+</style>
 </head>
 <body class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
   <div class="wrapper">
@@ -20,43 +25,45 @@
       <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 
 <div class="content-wrapper">
-<div>
-<div class="content-header">
+<div style="margin-left: 200px;">
+<div class="content-header" >
   <br/>
 	<h1>所有書籍</h1>
   <br/>
 </div>
 <div id="output"></div>
   
-<table class="text-center" style="width:1450px">
+<table class="text-center">
     <thead>
       <tr>
-        <th>書名</th>
-        <th>作者</th>
-        <th>譯者</th>
-        <th>語言</th>
-        <th>類別</th>
-        <th>出版社</th>
-        <th>出版日期</th>
-        <th>封面圖片</th>
-        <th>折扣</th>
-        <th>定價</th>
-        <th>詳細資料</th>
-        <th>更新</th>
-	      <th>刪除</th>
+        <th colspan="2">書名</th>     
+        <th style="width: 50px;"></th>     
+        <th style="width: 75px;">作者</th>
+        <th style="width: 75px;">譯者</th>
+        <th style="width: 75px;">語言</th>
+        <th style="width: 75px;">類別</th>
+        <th style="width: 100px;">出版社</th>
+        <th style="width: 100px;">出版日期</th>
+        <th style="width: 110px;height: 30px;">封面圖片</th>
+        <th style="width: 75px;">折扣</th>
+        <th style="width: 75px;">定價</th>
+        <th style="width: 100px;">詳細資料</th>
+        <th style="width: 75px;">更新</th>
+	      <th style="width: 75px;">刪除</th>
       </tr>
     </thead>
     <tbody>
     <jstl:forEach items="${page.content}" var="book" >
      <tr>
-      <td><jstl:out value="${book.name}"/></td> 
+      <td colspan="2"><jstl:out value="${book.name}"/></td> 
+      <td></td> 
       <td><jstl:out value="${book.author}"/></td> 
       <td><jstl:out value="${book.translator}"/></td>   
       <td><jstl:out value="${book.languages}"/></td>   
       <td><jstl:out value="${book.category}"/></td>   
       <td><jstl:out value="${book.publisher}"/></td>   
-      <td><jstl:out value="${book.date}"/></td>   
-      <td><img style="width:100px;height:120px" src="${contextRoot}/books/id?id=${book.id}"></td>
+      <td style="width: 100px;"><jstl:out value="${book.date}"/></td>   
+      <td style="width: 130px;"><img style="width:100px;height:120px;margin-top:5px;" src="${contextRoot}/books/id?id=${book.id}"></td>
       <td><jstl:out value="${book.discount}"/></td>  
       <td><jstl:out value="${book.price}"/></td> 
       <td>
@@ -72,7 +79,7 @@
         <button class="delete-btn btn btn-danger"  data-bkid="${book.id}">刪除</button>
       </td>
     </tr>
-    <tbody id="bbody" class="${book.id} text-center" style="width:1500px"" body-bkid="${book.id}">  
+    <tbody id="bbody" class="${book.id} text-center" style="width:1500px" body-bkid="${book.id}">  
  
     </tbody>
     </jstl:forEach>
@@ -80,8 +87,8 @@
     </tbody>
    
 </table>
-
-
+<br>
+<div style="font-size:larger;">
 <jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
   <jstl:choose>
     <jstl:when test="${page.number != pageNumber-1}">
@@ -97,6 +104,8 @@
      | 
   </jstl:if>
 </jstl:forEach>
+
+</div>
 </div>
 </div>
 </div>

@@ -113,7 +113,7 @@
 
                         <li class="nav-item searchArea" id="searchArea">
                             <a class="nav-link active-2 text-dark fs-5 me-5 " aria-current="page"
-                                 href="${contextRoot}/books/search">
+                                href="${contextRoot}/books/allpage2">
                                 條件搜尋
                             </a>
                         </li>
@@ -136,72 +136,7 @@
                 </div>
             </div>
 
-            <form action="${contextRoot}/books/getbook" method="post" >
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body container">
-                        <fieldset>
-                            <legend>請選擇條件</legend>
-                            <div class="st1">
-                                <div class="st1">
-                                    <br>
-                                    <label for="" class="t1">語言:</label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="全部" id="allL">全部
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="中文" id="chinese">中文
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="外文" id="foreign">外文
-                                    </label>
-                                </div>
-                                <br>
-                                <div class="st1">
-                                    <label for="" class="t1">類別:</label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="全部" id="allC">全部
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="哲學" id="philosophy">哲學
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="宗教" id="religion">宗教
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="科學" id="science">科學
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="應用科學" id="appliedScience">應用科學
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="社會科學" id="socialScience">社會科學
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="歷史" id="history">歷史
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="地理" id="philosophy">地理
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="語言文學" id="geography">語言文學
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="藝術" id="Art">藝術
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="hobby" value="其他" id="other">其他
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <br />
-                        <div class="sub">
-                            <input type="submit" id="submitBtnnnn" value="送出">
-                            <input type="reset" value="清除">
-                        </div>
-                    </div>
-                </div>
-            </form>
+            
 
             <!-- <div id="booksearch" class="container"></div> -->
 
@@ -295,7 +230,7 @@
                     <!-- <span class="fs-4">即將上架</span> <br /> -->
                     <div class="d-flex align-items-center align-middle">
 
-                        <p class="ms-2 fs-4 my-auto mb-2">即將上架</p>
+                        <p class="ms-2 fs-4 my-auto mb-2">新書推薦</p>
                     </div>
                     <div class="nav nav-tabs" id=" nav-tab" role="tablist">
                         <!-- 要改改這裡的data-bs-target="#..." -->
@@ -655,140 +590,6 @@
 
             </div>
 
-
-
-            <!-- 新書推薦 頭 (寫死 僅供參考)-->
-
-            <div class="container mt-5 mb-5">
-                <nav>
-
-                    <div class="d-flex align-items-center">
-
-                        <p class="ms-2 fs-4 my-auto">新書推薦</p>
-                    </div>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <!-- 要改改這裡的data-bs-target="#..." -->
-                        <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
-                        <button class="btn btn-light rounded-0 active" id="nav-t2i1-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t2i1" type="button" role="button" aria-controls="nav-t2i1"
-                            aria-selected="true">
-                            中文
-                        </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t2i2-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t2i2" type="button" role="tab" aria-controls="nav-t2i2"
-                            aria-selected="false">
-                            外文
-                        </button>
-                        <button class="btn btn-light rounded-0 e" id="nav-t2i3-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t2i3" type="button" role="tab" aria-controls="nav-t2i3"
-                            aria-selected="false">
-                            人氣小說
-                        </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t2i4-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t2i4" type="button" role="tab" aria-controls="nav-t2i4"
-                            aria-selected="false">
-                            雜誌新刊
-                        </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t2i5-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t2i5" type="button" role="tab" aria-controls="nav-t2i5"
-                            aria-selected="false">
-                            人氣小說
-                        </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t2i6-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t2i6" type="button" role="tab" aria-controls="nav-t2i6"
-                            aria-selected="false">
-                            創意生活
-                        </button>
-                    </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <!-- nav-home 改此id -->
-                    <div class="tab-pane fade show active" id="nav-t2i1" role="tabpanel" aria-labelledby="nav-home-tab"
-                        tabindex="0">
-                        <div class="container">
-                            <div class="homeslider">
-                                <div class="slider">
-                                    <img src="sildePage/i1.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i2.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i3.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i1.jpg" />
-                                </div>
-                                <div class="slider">
-                                    <img src="sildePage/i2.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i3.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i1.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i2.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i3.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i1.jpg" />
-                                </div>
-                                <div class="slider">
-                                    <img src="sildePage/i2.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i3.jpg" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="nav-t2i2" role="tabpanel" aria-labelledby="nav-profile-tab"
-                        tabindex="0">
-                        t2i2
-                    </div>
-                    <div class="tab-pane fade" id="nav-t2i3" role="tabpanel" aria-labelledby="nav-contact-tab"
-                        tabindex="0">
-                        t2i3
-                    </div>
-
-                    <div class="tab-pane fade" id="nav-t2i4" role="tabpanel" aria-labelledby="nav-contact-tab"
-                        tabindex="0">
-                        t2i4
-                    </div>
-
-                    <div class="tab-pane fade" id="nav-t2i5" role="tabpanel" aria-labelledby="nav-disabled-tab"
-                        tabindex="0">
-                        t2i5
-                    </div>
-
-                    <div class="tab-pane fade" id="nav-t2i6" role="tabpanel" aria-labelledby="nav-contact-tab"
-                        tabindex="0">
-                        t2i6
-                    </div>
-                </div>
-            </div>
-
-            <!-- 新書推薦 尾 -->
-
-
-
-
-
-
-
             <!-- 推薦卡2 top -->
             <div class="container mt-5">
                 <h4 class="mb-5 mt-5">Bookstrap library</h4>
@@ -881,9 +682,9 @@
 
             <!-- //////////////js///////////// -->
             <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
-           
             <script type="text/javascript" src="js/slick.js"></script>
             <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
 
             <script>
                 $(".homeslider").slick({
@@ -917,7 +718,33 @@
                     slidesToScroll: 1,
                 });
 
-                /////////////////////////////  條件搜尋  ////////////////////////////////
+                // var sendOutBtn = document.querySelector(`[data-btnid="sendOutBtn"]`)
+                // sendOutBtn.addEventListener('click', function (e) {
+                //     console.log("有抓到")
+                //     let searchField = ""
+                //     let searchArea = document.querySelector(`[data-search="searchArea"]`).value
+                //     if (searchArea != null) {
+                //         searchField += searchArea
+                //     }
+                //     console.log("searchField:" + searchField)
+
+                //     axios({
+                //         method: 'post',
+                //         url: "http://localhost:8080/Bookstrap/books/page3",
+                //         params: {
+                //             p: 1,
+                //             name: searchField
+                //         }
+                //     })
+                //         .then(res => {
+                //             console.log("OK")
+                //             window.location.href = 'http://localhost:8080/Bookstrap/books/search';
+                //         })
+                //         .catch(err => {
+                //             console.log("noooo")
+                //         })
+                // })
+
 
 
             </script>

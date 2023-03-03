@@ -124,7 +124,7 @@ public class BooksController {
 	@GetMapping("/books/alldetails")
 	public BookDetails showAllDetails(Integer id) {
 		BookDetails details = dService.getDetailsByID(id);
-		return	details;	
+		return details;	
 	}
 	
 	// 透過id找圖片
@@ -143,16 +143,7 @@ public class BooksController {
 	
 	@GetMapping("/books/details")
 	public List<BookDetails> getDetailsById(@RequestParam Integer Id) {
-//        BookDetails bookdetails = dService.getDetailsByID(Id);
-//        ArrayList<BookDetails> list = new ArrayList<>();
-//        bookdetails.getSize();
-//        bookdetails.getPages();
-//        bookdetails.getIntro();
-//        bookdetails.getGrade();
-//        list.add(bookdetails);
         return dService.findById(Id);
-    
-//        bookdetails;
 		}
 
 	@ResponseBody
@@ -173,6 +164,16 @@ public class BooksController {
 
 		return "books/showBooks";
 	}
+	// 分頁功能
+	@ResponseBody
+	@GetMapping("/books/allpage")
+	public Page<Books> AllBookByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber) {
+
+		Page<Books> page = bService.ALLBookByPage(pageNumber);
+
+		return page;
+	}
+
 
 	@ResponseBody
 	@PostMapping("/books/ajax/post")
@@ -216,6 +217,7 @@ public class BooksController {
 		return null;
 	}
 
+	// 模糊搜尋ver.1
 	@ResponseBody
 	@GetMapping("/books/like")
 	public List<Books> findBookLikeSelector(@RequestParam("name") String name) {
@@ -229,20 +231,59 @@ public class BooksController {
 		return bService.findBookBySelector(languages);
 	}
 	
+	// 多條件搜索
 	@ResponseBody
 	@GetMapping("/books/getbook")
 	public List<Books> getBookBySelector(@RequestParam("languages")String languages, @RequestParam("category") String category) {
 		System.out.println("controller  languages:"+languages+"category:"+category);
 		List<Books> list = bService.getBookBySelector(languages, category);
-		if(list==null) {
-			System.out.println("nai");
-		}
-		else {
-			System.out.println("aaaaaa");
-		}
+		
 		return list;
 	}
 	
-
+	// 跳轉至單項商品頁面
+	@GetMapping("/books/oneBook")
+	public String goToBookPage(@RequestParam("id") Integer id,Model model) {
+		Books book = bService.getBookById(id);
+		BookDetails detail = dService.getDetailsByID(id);
+		model.addAttribute("book",book);
+		model.addAttribute("detail",detail);
+		return "/books/bookPage";
+	}
 	
+	// 模糊搜尋ver.2
+	@PostMapping("/books/searchBook")
+	public String goToSearchPage(@RequestParam("name") String name,Model model) {
+		List<Books> list = bService.findBookLikeSelector(name);
+		System.out.println("listsize:"+list.size());
+		model.addAttribute("book",list);
+		System.out.println("ok");
+		return "/books/search";
+	}
+
+	// 模糊搜尋ver.3 + 結果分頁
+	@PostMapping("/books/page3")
+	public String showBookByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber
+			                    ,@RequestParam("name") String name,Model model) {
+
+		Page<Books> page = bService.getBookByPage2(pageNumber,name);
+		model.addAttribute("book", page);
+			
+		return "/books/search";
+	}
+	
+	// 全部書籍分頁
+	@GetMapping("/books/allpage2")
+	public String AllBookByPage2(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,Model model) {
+
+		Page<Books> page = bService.ALLBookByPage(pageNumber);
+		model.addAttribute("book", page);
+		return "/books/search";
+	}
+	
+	@ResponseBody
+	@GetMapping("/books/category")
+	public List<Books> findBookByCategory(@RequestParam("category") String category) {
+		return bService.findBookByCategory(category);
+	}
 }
