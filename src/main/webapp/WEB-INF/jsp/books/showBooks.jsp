@@ -1,61 +1,125 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>show Books Page</title>
+<title>所有書籍</title>
+<!--版型需要的css -->
+<%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
+<style>
+  table {
+  table-layout: fixed;
+}
+</style>
 </head>
-<body>
-<jsp:include page="../layout/navbar.jsp"></jsp:include>
+<body class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
+  <div class="wrapper">
+      <!--上面導覽列 -->
+      <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %> 
+      <!-- 左邊導覽列 -->
+      <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 
-<div class="container">
+<div class="content-wrapper">
+<div style="margin-left: 200px;">
+<div class="content-header" >
   <br/>
-	<h1>所有書籍頁面</h1>
+	<h1>所有書籍</h1>
   <br/>
-  <table class="text-center" style="width:1200px">
+</div>
+<div id="output"></div>
+  
+<table class="text-center">
     <thead>
       <tr>
-        <th>書名</th>
-        <th>作者</th>
-        <th>譯者</th>
-        <th>語言</th>
-        <th>類別</th>
-        <th>出版社</th>
-        <th>出版日期</th>
-        <th>封面圖片</th>
-        <th>折扣</th>
-        <th>定價</th>
-        <th>詳細資料</th>
-        <th>更新</th>
-	    <th>刪除</th>
+        <th colspan="2">書名</th>     
+        <th style="width: 50px;"></th>     
+        <th style="width: 75px;">作者</th>
+        <th style="width: 75px;">譯者</th>
+        <th style="width: 75px;">語言</th>
+        <th style="width: 75px;">類別</th>
+        <th style="width: 100px;">出版社</th>
+        <th style="width: 100px;">出版日期</th>
+        <th style="width: 110px;height: 30px;">封面圖片</th>
+        <th style="width: 75px;">折扣</th>
+        <th style="width: 75px;">定價</th>
+        <th style="width: 100px;">詳細資料</th>
+        <th style="width: 75px;">更新</th>
+	      <th style="width: 75px;">刪除</th>
       </tr>
     </thead>
     <tbody>
-    <jstl:forEach items="${list}" var="book">
+    <jstl:forEach items="${page.content}" var="book" >
      <tr>
-      <td>${book.name}</td>  
-      <td>${book.author}</td>  
-      <td>${book.translator}</td>  
-      <td>${book.languages}</td>  
-      <td>${book.category}</td>  
-      <td>${book.publisher}</td>  
-      <td>${book.date}</td>  
-      <td><img style="width:100px;height:120px" src="${contextRoot}/books/id?id=${book.id}"></td>
-      <td>${book.discount}</td>  
-      <td>${book.price}</td>  
-      <td><button class="btn btn-info">詳細資料</button></td> 
-      <td><button class="edit-btn btn btn-primary" data-bkid="${book.id}">更新</button></td>     
-      <td><button class="delete-btn btn btn-danger"  data-bkid="${book.id}">刪除</button></td>
-     </tr>
-    </jstl:forEach>
+      <td colspan="2"><jstl:out value="${book.name}"/></td> 
+      <td></td> 
+      <td><jstl:out value="${book.author}"/></td> 
+      <td><jstl:out value="${book.translator}"/></td>   
+      <td><jstl:out value="${book.languages}"/></td>   
+      <td><jstl:out value="${book.category}"/></td>   
+      <td><jstl:out value="${book.publisher}"/></td>   
+      <td style="width: 100px;"><jstl:out value="${book.date}"/></td>   
+      <td style="width: 130px;"><img style="width:100px;height:120px;margin-top:5px;" src="${contextRoot}/books/id?id=${book.id}"></td>
+      <td><jstl:out value="${book.discount}"/></td>  
+      <td><jstl:out value="${book.price}"/></td> 
+      <td>
+        <button id="detail-btn" class="detail-btn btn btn-info" data-bkid="${book.id}">詳細資料</button>
+      </td> 
+      <td>
+        <a href="${contextRoot}/books/edit?id=${book.id}">
+          <button id="edit-btn" class="edit-btn btn btn-primary" data-bkid="${book.id}">更新</button>
+        </a>
+       
+      </td>     
+      <td>
+        <button class="delete-btn btn btn-danger"  data-bkid="${book.id}">刪除</button>
+      </td>
+    </tr>
+    <tbody id="bbody" class="${book.id} text-center" style="width:1500px" body-bkid="${book.id}">  
+ 
     </tbody>
-</table>
-</div>
+    </jstl:forEach>
 
+    </tbody>
+   
+</table>
+<br>
+<div style="font-size:larger;">
+<jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+  <jstl:choose>
+    <jstl:when test="${page.number != pageNumber-1}">
+      <a href="${contextRoot}/books/page?p=${pageNumber}">${pageNumber}</a>
+    </jstl:when>
+    
+    <jstl:otherwise>
+      ${pageNumber}
+    </jstl:otherwise>
+  </jstl:choose>
+  
+  <jstl:if test="${pageNumber != page.totalPages}">
+     | 
+  </jstl:if>
+</jstl:forEach>
+
+</div>
+</div>
+</div>
+</div>
+<!--右側彈跳式功能列 -->
+<%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+<!--版型需要的js-->
+<%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+<script>
+
+</script>
 <script src="${contextRoot}/js/book/mix-book.js" type="text/javascript"></script>
+<script src="${contextRoot}/js/book/search.js" type="text/javascript"></script>
+<script src="${contextRoot}/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 </body>
 </html>

@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.bookstrap.model.Books;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "Comment")
@@ -45,6 +46,7 @@ public class Comment {
 	@JoinColumn(name = "member_id")
 	private	Members member;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)  //??
 	@JoinColumn(name = "book_id")
 	private Books book;
