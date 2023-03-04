@@ -77,12 +77,12 @@ public class EpubController {
 		 return new ResponseEntity<>(fileByte, header, HttpStatus.OK);
 	 }
 	
-	 @GetMapping("/epub/get/epubfile")
-	 public String getEPUBfile() {
-		 String filePath = "C:\\epub\\1010490077";
-		 
-		 return "1010490077/OEBPS/content.opf";
-	 }
+//	 @GetMapping("/epub/get/epubfile")
+//	 public String getEPUBfile() {
+//		 String filePath = "C:\\epub\\1010490077";
+//		 
+//		 return "1010490077/OEBPS/content.opf";
+//	 }
 }
 
 

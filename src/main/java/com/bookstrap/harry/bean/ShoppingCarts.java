@@ -53,6 +53,20 @@ public class ShoppingCarts implements Serializable {
 	public ShoppingCarts() {
 	}
 
+	
+	
+	public Books getBook() {
+		return book;
+	}
+
+
+
+	public void setBook(Books book) {
+		this.book = book;
+	}
+
+
+
 	public Integer getMemberId() {
 		return memberId;
 	}
