@@ -56,6 +56,10 @@
     }
 
   </style>
+  <!-- Load EPUB.js and the reader extension -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/epub.js/0.3.77/epub.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/epub.js/0.3.77/epubjs-reader.min.js"></script>
+  
 </head>
 <body>
  <div id="frame">
@@ -72,7 +76,7 @@
     //https://s3.amazonaws.com/moby-dick/moby-dick.epub
     //${contextRoot}/epub/ebook/1
     //https://haodooclassic.net/PDB/P/1010490082.epub
-    var book = ePub("${contextRoot}/epub/ebook/1");
+    var book = ePub("${contextRoot}/epub/1010490076.epub");
 	axios.get("https://s3.amazonaws.com/moby-dick/moby-dick.epub").then(response => console.log(response))
 
     var rendition = book.renderTo("viewer", {

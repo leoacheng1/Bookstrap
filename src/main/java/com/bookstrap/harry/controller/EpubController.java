@@ -36,6 +36,11 @@ public class EpubController {
 		return "member/ePub/Viewer";
 	}
 	
+	@GetMapping("/epub/Viewer2")
+	public String toEpubIndex3() {
+		return "member/ePub/Viewer2";
+	}
+	
 //	@GetMapping("/epub/books1/{id}")
 //    public String showBook(@PathVariable Long id, Model model) {
 //        String filePath = "C:\\epub\\1010490076.epub";
@@ -55,7 +60,7 @@ public class EpubController {
 	
 	 @GetMapping("/epub/ebook/{id}")
 	 public ResponseEntity<byte[]> getEPUB(@PathVariable Integer id) throws IOException{
-		 String filePath = "C:\\epub\\1010490076";
+		 String filePath = "C:\\epub\\1010490076.epub";
 		 File file = new File(filePath);
 		 if (file.exists()) {
 			 System.out.println("fileExistedfsfwfwefwefwef");
