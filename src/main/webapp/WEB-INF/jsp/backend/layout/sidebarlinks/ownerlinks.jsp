@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 	<li class="nav-item">
 	  <a href="pages/calendar.html" class="nav-link">
 		<i class="nav-icon fas fa-calendar-alt"></i>
@@ -10,7 +11,7 @@
 
 	  </a>
 	</li>
-	<li class="nav-header">商店管理</li>
+	<li class="nav-header">分店管理</li>
 	<li class="nav-item">
 		<a href="pages/calendar.html" class="nav-link">
 		  <i class="nav-icon fas fa-calendar-alt"></i>
@@ -25,7 +26,7 @@
 	  <a href="#" class="nav-link">
 		<i class="nav-icon fas fa-table"></i>
 		<p>
-		  商店管理
+		  分店管理
 		  <i class="fas fa-angle-left right"></i>
 		</p>
 	  </a>

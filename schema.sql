@@ -6,19 +6,33 @@ Create Table Members(
 	password nvarchar(max) not null,
 	valid tinyint not null, --驗證，有沒有停權
 	vertification_code nvarchar(255),
-	member_level nvarchar(50)
+	member_level nvarchar(50),
+	reset_password_token nvarchar(45)
 );
 
 Create Table MemberDetails(
 	member_id int FOREIGN KEY REFERENCES Members(member_id) primary key,
-	member_name nvarchar(50),
-	photo varbinary,
-	sex tinyint, --性別
+	member_lastname nvarchar(50) not null,
+	member_firstname nvarchar(50) not null,
+	photo varbinary(max),
+	gender_id tinyint foreign key references Gender(gender_id), --性別
+	sex tinyint,
 	email nvarchar(max),
 	cellphone nvarchar(max),
 	address nvarchar(max),
 	birthday Date
 ) ;
+
+CREATE TABLE Gender(
+gender_id tinyint primary key not null identity(1,1),
+gender nvarchar(5)
+);
+
+INSERT INTO Gender (gender) VALUES
+('男'),
+('女'),
+('其他');
+
 Create Table BookDetails(
 	book_id int identity(1,1) primary key,
 	size nvarchar(50), --重量

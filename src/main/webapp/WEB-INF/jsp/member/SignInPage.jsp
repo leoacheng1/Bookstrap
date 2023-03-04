@@ -12,46 +12,41 @@
 <title>會員登入</title>
 </head>
 <body>
-	<section class="vh-100 gradient-custom">
-		<div class="container py-5 h-100">
+	<section class="gradient-custom">
+		<div class="container py-5 h-100 ">
 			<div
-				class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+				class=" d-flex justify-content-center align-items-center h-100 ">
+				<div class="row col-12 col-md-8 col-lg-6 col-xl-5 ">
 					<div class="card bg-secondary text-white"
 						style="border-radius: 1rem;">
 						<div class="card-body p-5 text-center">
 
 							<div class="mb-md-5 mt-md-4 pb-5">
-
+								
 								<form action="${contextRoot}/member/checklogin" method="post">
 									<h2 class="fw-bold mb-2 text-uppercase">登入</h2>
-									<p class="text-white-50 mb-5">請出入帳號以及密碼!</p>
+									<p class="text-white-50 mb-5">請輸入帳號以及密碼!</p>
 
 									<div class="form-outline form-white mb-4">
 										<input type="email" id="typeEmailX"
 											class="form-control form-control-lg" placeholder="註冊信箱"
 											name="memberEmail" />
 									</div>
-									<div>
-									${errors.Email}
-									</div>
-									
+									<div>${errors.Email}</div>
+
 
 									<div class="form-outline form-white mb-4">
 										<input type="password" id="typePasswordX"
-											class="form-control form-control-lg" placeholder="密碼" name="memberPassword"/>
+											class="form-control form-control-lg" placeholder="密碼"
+											name="memberPassword" />
 
 									</div>
-									<div>
-									${errors.Password}
-									</div>
-									<div>
-									${errors.msg}
-									</div>
-									
+									<div>${errors.Password}</div>
+									<div>${errors.msg}</div>
+
 
 									<p class="small mb-5 pb-lg-2">
-										<a class="text-white-50" href="#!">忘記密碼</a>
+										<a class="text-white-50" href="${contextRoot}/forgot/password">忘記密碼</a>
 									</p>
 
 									<button class="btn btn-outline-light btn-lg px-5" type="submit">登入</button>
@@ -62,6 +57,18 @@
 										class="text-white"><i
 										class="fab fa-twitter fa-lg mx-4 px-2"></i></a> <a href="#!"
 										class="text-white"><i class="fab fa-google fa-lg"></i></a>
+								</div>
+
+								<div class="">
+									<div class="">
+										<a class="btn btn-outline-dark bg-light" href="${contextRoot}/oauth2/authorization/google"
+											role="button" style="text-transform: none"> <img
+											width="20px" style="margin-bottom: 3px; margin-right: 5px"
+											alt="Google sign-in"
+											src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+											Login with Google
+										</a>
+									</div>
 								</div>
 
 							</div>

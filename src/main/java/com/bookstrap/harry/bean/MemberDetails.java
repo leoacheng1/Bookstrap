@@ -5,15 +5,20 @@ import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ManyToAny;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -25,15 +30,23 @@ public class MemberDetails {
 @Column(name = "member_id" )
 private Integer memberId;
 
-@Column(name = "member_name")
-private String memberName;
+@Column(name = "member_lastname")
+private String memberLastName;
 
+@Column(name = "member_firstname")
+private String memberFirstName;
+
+@JsonIgnore
 @Lob
 @Column(name = "photo")
 private byte[] memberPhoto;
 
 @Column(name = "sex")
 private Integer memberSex;
+
+@OneToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "gender_id")
+private Gender gender;
 
 @Column(name = "email")
 private String memberEmail;
@@ -94,15 +107,34 @@ public void setMemberId(Integer memberId) {
 
 
 
-public String getMemberName() {
-	return memberName;
+
+
+
+public String getMemberLastName() {
+	return memberLastName;
 }
 
 
 
-public void setMemberName(String memberName) {
-	this.memberName = memberName;
+
+public void setMemberLastName(String memberLastName) {
+	this.memberLastName = memberLastName;
 }
+
+
+
+
+public String getMemberFirstName() {
+	return memberFirstName;
+}
+
+
+
+
+public void setMemberFirstName(String memberFirstName) {
+	this.memberFirstName = memberFirstName;
+}
+
 
 
 
