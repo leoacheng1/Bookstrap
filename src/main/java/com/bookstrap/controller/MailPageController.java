@@ -75,41 +75,6 @@ public class MailPageController {
 		}
 		return "/backend/controllpanel/owner/mail/inbox";
 	}
-//	@GetMapping("/{type}/inbox")
-//	public String inbox(HttpSession session, Model m, @PathVariable("type") String type) {
-//		if (session.getAttribute("empAccount") == null) {
-//			m.addAttribute("error", "請先登入");
-//			return "backend/login";
-//		}
-//		m.addAttribute("type",type);
-//		return "/backend/controllpanel/owner/mail/inbox";
-//	}
-//	
-//	
-//	@GetMapping("/folder/sent")
-//	public String sent(HttpSession session, Model m) {
-//		if (session.getAttribute("empAccount") == null) {
-//			m.addAttribute("error", "請先登入");
-//			return "backend/login";
-//		}
-//		return "/backend/controllpanel/owner/mail/inbox";
-//	}
-//	@GetMapping("/folder/draft")
-//	public String draft(HttpSession session, Model m) {
-//		if (session.getAttribute("empAccount") == null) {
-//			m.addAttribute("error", "請先登入");
-//			return "backend/login";
-//		}
-//		return "/backend/controllpanel/owner/mail/inbox";
-//	}
-//	@GetMapping("/folder/bin")
-//	public String bin(HttpSession session, Model m) {
-//		if (session.getAttribute("empAccount") == null) {
-//			m.addAttribute("error", "請先登入");
-//			return "backend/login";
-//		}
-//		return "/backend/controllpanel/owner/mail/inbox";
-//	}
 	
 	@GetMapping("/composemail")
 	public String composeMail(HttpSession session,Model m) {

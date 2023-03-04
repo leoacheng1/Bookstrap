@@ -2,6 +2,7 @@ package com.bookstrap.controller;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -100,7 +101,7 @@ public class BackendNormal {
 	
 	@PostMapping("mail")
 	@ResponseBody
-	public Mail insertMail(SendMailDto mail, HttpSession session) throws IOException {
+	public Mail insertMail(SendMailDto mail, HttpSession session) throws IOException, SQLException {
 		String username = (String) session.getAttribute("empAccount");
 		Employees emp = empService.findByUsername(username);
 		MailAccount account = mailService.findByEmployees(emp);
@@ -306,6 +307,11 @@ public class BackendNormal {
 		return dto;
 	}
 	
+	@GetMapping("mail/label/findall/{accountId}")
+	@ResponseBody
+	public List<AccountLabel> getAllLabels(@PathVariable("accountId") Integer accountId) {
+		return mailService.findAllLabelByAccountId(accountId);
+	}
 //===================================================Updating==========================================================
 	@PutMapping("mail/important/{mailId}")
 	@ResponseBody
@@ -318,18 +324,23 @@ public class BackendNormal {
 		return mailService.setStarred(starred, mailId, accId);
 	}
 	
-	@PutMapping("mail/folder/{folderId}")
-	@ResponseBody
-	public Integer updateFolder(@PathVariable("folderId") Integer folderId, @RequestParam("accountId") Integer accId,@RequestParam("mailIds") Integer[] mailIds) {
-		return mailService.setFolder(folderId, mailIds, accId).length;
-	}
-	
 	@PutMapping("mail/hasread/{mailId}")
 	@ResponseBody
 	public AccountMail updateHasread(@PathVariable("mailId") Integer mailId, @RequestParam("accountId") Integer accId,@RequestParam("hasread") Short hasread) {
 		return mailService.setHasread(hasread, mailId, accId);
 	}
 	
+	@PutMapping("mail/folder/{folderId}")
+	@ResponseBody
+	public Integer updateFolder(@PathVariable("folderId") Integer folderId, @RequestParam("accountId") Integer accId,@RequestParam("mailIds") Integer[] mailIds) {
+		return mailService.setFolder(folderId, mailIds, accId).length;
+	}
+	
+	@PutMapping("mail/label/{labelId}")
+	@ResponseBody
+	public Integer addLabel(@PathVariable("labelId") Integer labelId, @RequestParam("accountId") Integer accId, @RequestParam("mailIds") Integer[] mailIds) {
+		return mailService.addLabelToMail(labelId, mailIds, accId);
+	}
 //===================================================DELETING==========================================================
 	@DeleteMapping("mail/label/{labelId}") 
 	@ResponseBody

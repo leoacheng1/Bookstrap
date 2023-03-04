@@ -5,6 +5,7 @@ package com.bookstrap.model.bean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class Employees {
 	@Column(name="emp_position")
 	private String empPosition;
 	
-	@OneToOne(mappedBy="employee", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private ShopEmployees shopEmployee;
 

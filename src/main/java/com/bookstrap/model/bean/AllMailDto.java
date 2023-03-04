@@ -2,6 +2,7 @@ package com.bookstrap.model.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,6 +46,9 @@ public class AllMailDto implements Serializable{
 	private String mailContent;
 	
 	@JsonProperty
+	private List<AccountLabel> accountLabel;
+	
+	@JsonProperty
 	@Temporal(TemporalType.TIMESTAMP) 
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "GMT+8")
@@ -53,9 +57,9 @@ public class AllMailDto implements Serializable{
 	public AllMailDto() {
 	}
 
-
 	public AllMailDto(Short starred, Short important, Short hasread, String from, String fromLink, String subject,
-			String mailLink, Date mailTime, Integer mailId, Integer[] attachmentIds,String mailContent) {
+			String mailLink, Integer mailId, Integer[] attachmentIds, String mailContent,
+			List<AccountLabel> accountLabel, Date mailTime) {
 		super();
 		this.starred = starred;
 		this.important = important;
@@ -64,11 +68,15 @@ public class AllMailDto implements Serializable{
 		this.fromLink = fromLink;
 		this.subject = subject;
 		this.mailLink = mailLink;
-		this.mailTime = mailTime;
 		this.mailId = mailId;
 		this.attachmentIds = attachmentIds;
 		this.mailContent = mailContent;
+		this.accountLabel = accountLabel;
+		this.mailTime = mailTime;
 	}
+
+
+
 
 
 	public Short getHasread() {
@@ -165,6 +173,14 @@ public class AllMailDto implements Serializable{
 
 	public void setMailContent(String mailContent) {
 		this.mailContent = mailContent;
+	}
+
+	public List<AccountLabel> getAccountLabel() {
+		return accountLabel;
+	}
+
+	public void setAccountLabel(List<AccountLabel> accountLabel) {
+		this.accountLabel = accountLabel;
 	}
 
 }

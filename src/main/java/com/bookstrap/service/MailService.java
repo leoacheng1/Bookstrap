@@ -1,10 +1,13 @@
 package com.bookstrap.service;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +30,7 @@ import com.bookstrap.model.dao.AccountMailRepository;
 import com.bookstrap.model.dao.MailAccountRepository;
 import com.bookstrap.model.dao.MailAttachmentRepository;
 import com.bookstrap.model.dao.MailCategoryRepository;
+import com.bookstrap.model.dao.MailEMRepository;
 import com.bookstrap.model.dao.MailFolderRepository;
 import com.bookstrap.model.dao.MailRepository;
 import com.bookstrap.model.pk.AccountMailPK;
@@ -56,6 +60,9 @@ public class MailService {
 	@Autowired
 	private MailCategoryRepository mailCategoryDao;
 	
+	@Autowired 
+	private MailEMRepository emDao;
+	
 	public MailService() {
 	}
 
@@ -73,6 +80,10 @@ public class MailService {
 		return accountMailDao.getstarredMailCount(accountId);
 	};
 // ================================================= for Searching =============================================================
+	public List<AccountLabel> findAllLabelByAccountId(Integer accountId) {
+		return emDao.findAllLabelByAccountId(accountId);
+	}
+	
 	public MailCategory findByCategoryName(String categoryName) {
 		MailCategory category = mailCategoryDao.findByCategoryName(categoryName);
 		return category;
@@ -171,10 +182,12 @@ public class MailService {
 	} 
 	
 	
-	public Mail sendMail(MailAccount mailFrom,SendMailDto mailDto) throws IOException {
+	public Mail sendMail(MailAccount mailFrom,SendMailDto mailDto) throws IOException, SQLException {
 		MultipartFile[] files = mailDto.getFile();
 		MailAccount mailTo = mailAccountDao.findByAccount(mailDto.getMailTo());
-		
+		if (mailTo == null) {
+			throw new SQLException("no data found for MailAccount with account name: "+mailDto.getMailTo());
+		}
 		// folder 1:inbox, 2:sent, 3:draft, 4: delete
 				
 		//add mail
@@ -213,6 +226,7 @@ public class MailService {
 		
 		
 		from.setMailFolder(mailFolderDao.findById(2).get());
+		from.setHasread((short)1);
 		to.setMailFolder(mailFolderDao.findById(1).get());
 		
 		accountMailDao.save(from);
@@ -311,6 +325,10 @@ public class MailService {
 		}
 		return updatedIds.size() == 0 ? null : updatedIds.toArray(new Integer[updatedIds.size()]);
 	}
+	
+	public Integer addLabelToMail(Integer labelId, Integer[] mailIds, Integer accountId) {
+		return emDao.addLabelToMail(labelId, mailIds, accountId);
+	}
 //================================================= for Deleting =============================================================
 	public boolean deleteLabel(Integer labelId) {
 		Optional<AccountLabel> optional = accountLabelDao.findById(labelId);
@@ -319,8 +337,10 @@ public class MailService {
 			Set<AccountMail> mails = accountLabel.getAccountMails();
 			if (mails != null) {
 				for (AccountMail mail : mails) {
-					mail.removeAccountLabel(accountLabel);
-					accountMailDao.save(mail);
+					AccountMail newMail = new AccountMail();
+					BeanUtils.copyProperties(mail, newMail); // avoid ConcurrentModificationException
+					newMail.removeAccountLabel(accountLabel);
+					accountMailDao.save(newMail);
 				}
 			}
 			accountLabelDao.deleteById(labelId);			

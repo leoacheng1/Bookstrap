@@ -46,7 +46,7 @@
   </head>
 
   <body
-    class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse" data-ref="${mailAccount.accountId}">
+    class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse" data-ref="${mailAccount.accountId}">
     <div class="wrapper">
       <!--上面導覽列 -->
       <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
@@ -388,7 +388,17 @@
     <!--右側彈跳式功能列 -->
     <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/ownercontroll.jsp" %>
       <!--版型需要的js-->
-      <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="http://localhost:8080/Bookstrap/eddie/js/jquery.overlayScrollbars.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+      <script src="http://localhost:8080/Bookstrap/eddie/js/adminlte.min.js"></script>
+      <!-- <script src="http://localhost:8080/Bookstrap/eddie/js/layoutfix.js"></script> -->
+      <script>
+        $('.main-sidebar').toggleClass("sidebar-dark-danger");
+        $('.brand-link').toggleClass("bg-danger");
+        $('.main-header').toggleClass("bg-gray");
+      </script>
         <script src="${contextRoot}/eddie/js/summernote-bs4.min.js"></script>
         <script src="${contextRoot}/eddie/js/axios.min.js"></script>
         <script src="${contextRoot}/eddie/js/sweetalert2.all.min.js"></script>

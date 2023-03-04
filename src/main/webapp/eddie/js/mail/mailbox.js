@@ -1,32 +1,43 @@
 
 var contextRoot = "http://localhost:8080/Bookstrap/";
-onstartup();
+initialize();
 window.onpageshow = function (event) {
     if (event.persisted) {
         console.log("executed")
-        onstartup();
+        initialize();
     }
 };
-
-async function onstartup() {
-    let init = () => new Promise (() => initMails());
-    init().then(() => updateSideBar()).then(()=>$('[data-toggle="tooltip"]').tooltip());
+/**
+ * operations to update scene
+ * 1. init mail table
+ * 2. update side bar numbers
+ * 3. fix tool tip
+ */
+async function initialize() {
+    await initMails();
+    await updateSideBar();
+    await addTooltip();
 }
 
-
-
+/**
+ * enable proper tool tip functionality and style 
+ */
+async function addTooltip() { $('[data-toggle="tooltip"]').tooltip() };
 
 
 /**
  * prepare an interactive mail table after submitting a request to get all mail data, and place them in the table.
  */
-function initMails(pageNum = 1) {
+async function initMails(pageNum = 1) {
+    $("#mailboxbody").html("");
     let url = window.location.href.split("/");
     let tname = url.pop();
     let type = url.pop();
-    console.log(tname);
-    console.log(type);
-    $(`#${type}-ul a[data-typename=${tname}]`).toggleClass("font-weight-bold").toggleClass("bg-info")
+    let activeLi = $(`#${type}-ul a[data-typename=${tname}]`);
+    if (!activeLi.hasClass("bg-info")) {
+        activeLi.addClass("font-weight-bold").addClass("bg-info")
+    }
+
     axios({
         url: contextRoot + `mail/${type}/${tname}/${pageNum}`,
         method: "get"
@@ -34,7 +45,6 @@ function initMails(pageNum = 1) {
         res => {
             $("#mailboxbody").html("");
             if (res.data.length == 0) {
-                console.log("empty!");
                 let tr = document.createElement("tr");
                 tr.setAttribute("style", "text-align:center; color: gray")
                 let td = document.createElement("td");
@@ -44,23 +54,24 @@ function initMails(pageNum = 1) {
             } else {
                 for (rawData of res.data) {
                     let data = makeMailData(rawData);
-                    // console.log(makeMailRow(data.mailId));
                     let processedRowData = fillMailRow(makeMailRow(data.mailId), data);
                     if (processedRowData.AttachmentIds == null) {
                         $("#mailboxbody").append(processedRowData.processedTableRow);
                     } else {
                         $("#mailboxbody").append(processedRowData.processedTableRow);
-                        //call api to append a row of attachment
+                        //call api to append a row of attachment, a little trivial probably not gonna make it
                     }
                 }
             }
             addEvents();
+            return;
         }
     ).catch(
         err => {
             console.log(err)
         }
     )
+    console.log("initialized");
 }
 
 
@@ -107,7 +118,6 @@ function makeMailData(data) {
  * @return {ProcessedRowData} - object containing attachment id array(if exists) and a tablerow filled with data
  */
 function fillMailRow(tableRow, mailData) {
-    console.log(mailData.important);
     if (mailData.starred == 1) $(tableRow.querySelector('.mailbox-star a i')).toggleClass('text-warning').toggleClass('text-secondary').toggleClass('starred');
     if (mailData.important == 1) $(tableRow.querySelector('.mailbox-important a i')).toggleClass('text-warning').toggleClass('text-secondary').toggleClass('important');
     $(tableRow.querySelector(".mailbox-name a")).html(mailData.from).attr("href", mailData.fromLink);
@@ -242,8 +252,9 @@ function toTimeAgo(seconds) {
  */
 function addEvents() {
     //Enable check and uncheck all functionality
+    $('.checkbox-toggle').unbind('click');
     $('.checkbox-toggle').click(function () {
-        var clicks = $(this).data('clicks')
+        var clicks = $(this).data('clicks');
         if (clicks) {
             //Uncheck all checkboxes
             $('.mailbox-messages input[type=\'checkbox\']').prop('checked', false)
@@ -322,21 +333,29 @@ function addEvents() {
             catch(error => console.log(error));
     })
     //handle deletion and recovery
-    if (window.location.href.split("/").pop() == "bin") {
+    let mailbox_ = window.location.href.split("/").pop();
+    if (mailbox_ == "bin") {
         $("#delete-mail").css("color", "red");
+        $('#delete-mail').unbind('click');
         $("#delete-mail").click(permanentDelete);
-        if($("#recovery-btn").length == 0){
+        if ($("#recovery-btn").length == 0 && (mailbox_ == "bin" || mailbox_ == "draft")) {
             addRecoveryBtn();
-        }  
+            addTooltip();
+        }
     } else {
+        $('#delete-mail').unbind('click');
         $("#delete-mail").click(deleteEvent);
     }
 
     //refresh
+    $('#refreshBtn').unbind('click');
     $("#refreshBtn").click(function () {
-        initMails();
-        updateSideBar();
+        initialize();
+        $(this).tooltip('hide');
     })
+
+    //add label list
+    addLabelLi();
 
 }
 
@@ -381,14 +400,17 @@ function deleteEvent() {
                 showConfirmButton: false,
                 timer: 1500
             })
-            initMails(1);
-            updateSideBar();
+            initialize();
         })
         .catch(error => console.log(error));
+    $(this).tooltip('hide');
 }
 
-
-function permanentDelete(numDeleted) {
+/**
+ * a call back function permanently delete mail
+ * @returns 
+ */
+function permanentDelete() {
     let trs = findChecked();
     if (trs.length == 0) return;
     let accountId = $("body").attr("data-ref");
@@ -442,21 +464,20 @@ function permanentDelete(numDeleted) {
             });
             (async function () {
                 await delay(1500);
-                initMails(1);
-                updateSideBar();
+                initialize();
             })();
         }
     })
+    $(this).tooltip('hide');
 }
 
 /**
  * update sidebar number for page
  */
-function updateSideBar() {
+async function updateSideBar() {
     let accountId = $("body").attr("data-ref");
     axios.get(`${contextRoot}mail/countall/${accountId}`)
         .then(response => {
-            console.log(response);
             $("#inbox-count").html(response.data.inboxCount == 0 ? "" : response.data.inboxCount);
             $("#sent-count").html(response.data.sentCount == 0 ? "" : response.data.sentCount);
             $("#draft-count").html(response.data.draftCount == 0 ? "" : response.data.draftCount);
@@ -468,30 +489,24 @@ function updateSideBar() {
             $("#important-count").html(response.data.importantCount == 0 ? "" : response.data.importantCount);
         })
         .catch(err => console.log(err));
+    console.log("side bar updated");
 }
 
-
-function addRecoveryBtn() {
+/**
+ * add recovery button
+ */
+async function addRecoveryBtn() {
     let newBtn = $('<button/>', {
         type: "button",
         class: "btn btn-default btn-sm",
         "data-toggle": "tooltip",
         "data-placement": "bottom",
-        "title": "復原刪除",
+        "title": "放入收件匣",
         "id": "recovery-btn",
-        append: $('<i/>', { class: "fas fa-reply" }),
+        append: $('<i/>', { class: "fa fa-inbox" }),
         click: function () {
-            let trs = findChecked();
-            if (trs.length == 0) return;
-            let accountId = $("body").attr("data-ref");
-            let mailIds = [];
-            for (tr of trs) {
-                let mailId = $(tr).attr("data-mailid");
-                if (mailId != null) mailIds.push(mailId);
-            }
-            let formData = new FormData();
-            formData.append("mailIds", mailIds);
-            formData.append("accountId", accountId);
+            let formData = getSelectedFormdata();
+            if (formData == null) return;
             axios.put(contextRoot + "mail/folder/1", formData)
                 .then(response => {
                     Swal.fire({
@@ -502,10 +517,69 @@ function addRecoveryBtn() {
                         showConfirmButton: false,
                         timer: 1500
                     })
-                    initMails(1);
-                    updateSideBar();
+                    initialize();
                 })
+            $(this).tooltip('hide');
         }
     })
-    newBtn.insertAfter($("#delete-mail"));
+    newBtn.insertBefore($("#reply-mail"));
+}
+/**
+ * add label list items for setting mail's label.
+ */
+function addLabelLi() {
+    $("#labelDropdown").html("");
+    let accountId = $("body").attr("data-ref");
+    axios.get(contextRoot + "mail/label/findall/" + accountId)
+        .then(
+            response => {
+                for (label of response.data) {
+                    $("#labelDropdown").append($("<a/>",
+                        {
+                            class: "dropdown-item",
+                            "data-labelId": label.labelId,
+                            html: label.labelName,
+                            href: "",
+                            click: function (event) {
+                                event.preventDefault();
+                                let formData = getSelectedFormdata();
+                                if (formData == null) return;
+                                console.log(label.labelId);
+                                axios.put(contextRoot + "mail/label/" + label.labelId, formData)
+                                    .then(res => {
+                                        Swal.fire({
+                                            position: 'bottom-start',
+                                            toast: true,
+                                            icon: 'success',
+                                            title: '已將' + res.data + '筆郵件加入標籤' + label.labelName,
+                                            showConfirmButton: false,
+                                            timer: 1500
+                                        })
+                                        initialize();
+                                    }).catch(
+                                        err => console.log(err)
+                                    )
+                            }
+                        }))
+                }
+            }
+        )
+}
+/**
+ * return formdata for selected mails status updates
+ * @returns {FormData} - formdata contains an array of accountmail's id and their account id 
+ */
+function getSelectedFormdata() {
+    let trs = findChecked();
+    if (trs.length == 0) return;
+    let accountId = $("body").attr("data-ref");
+    let mailIds = [];
+    for (tr of trs) {
+        let mailId = $(tr).attr("data-mailid");
+        if (mailId != null) mailIds.push(mailId);
+    }
+    let formData = new FormData();
+    formData.append("mailIds", mailIds);
+    formData.append("accountId", accountId);
+    return formData;
 }

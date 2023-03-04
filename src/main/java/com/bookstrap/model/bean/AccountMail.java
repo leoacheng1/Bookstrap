@@ -72,9 +72,9 @@ public class AccountMail {
 	
 	@PrePersist //things to do before  into persistent state
 	public void onCreate() {
-		if (starred == null) starred = 0;
-		if (important == null) important = 0;
-		if (hasread == null) hasread = 0;		
+		if (starred == null) starred = (short)0;
+		if (important == null) important = (short)0;
+		if (hasread == null) hasread = (short)0;		
 	}
 	public AccountMailPK getAccountMailId() {
 		return accountMailId;
