@@ -26,13 +26,9 @@ public class ShopEmployeesSchedule {
 	@Column(name = "schedule_id")
 	private Integer scheduleId;
 	
-//	@Column(name="schedule_empid")
-//	@Transient
-//	private Integer scheduleEmpid;
-	
-//	@Column(name="schedule_empid")
-//	@Transient
-//	private Integer schedule_empid;
+	@Column(name="schedule_empid")
+	@Transient
+	private Integer scheduleEmpid;
 	
 	@ManyToOne
 	@JsonBackReference
@@ -63,14 +59,16 @@ public class ShopEmployeesSchedule {
 		this.scheduleId = scheduleId;
 	}
 
-//
-//	public Integer getSchedule_empid() {
-//		return schedule_empid;
-//	}
-//
-//	public void setSchedule_empid(Integer schedule_empid) {
-//		this.schedule_empid = schedule_empid;
-//	}
+
+
+
+	public Integer getScheduleEmpid() {
+		return scheduleEmpid;
+	}
+
+	public void setScheduleEmpid(Integer scheduleEmpid) {
+		this.scheduleEmpid = scheduleEmpid;
+	}
 
 	public ShopEmployees getScheduleSemps() {
 		return scheduleSemps;

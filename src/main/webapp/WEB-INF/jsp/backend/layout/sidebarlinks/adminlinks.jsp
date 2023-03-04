@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
-=======
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
 
->>>>>>> 3788dcbefa42de2030c5cdecfd9bc4ed20661aca
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 	<li class="nav-item">
 	  <a href="${contextRoot}/backend/index" class="nav-link">
