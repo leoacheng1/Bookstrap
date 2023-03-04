@@ -171,7 +171,7 @@
 			</a>
 		  </li>
 		  <li class="nav-item">
-			<a href="${contextRoot}/sempsche/insertpage" class="nav-link">
+			<a href="${contextRoot}/sempsche/showpage" class="nav-link">
 			  <i class="far fa-circle nav-icon"></i>
 			  <p>排班</p>
 			</a>

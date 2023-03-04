@@ -21,6 +21,7 @@ public class ShopEmployeesScheduleService {
 	private ShopEmployeesScheduleRepository sempscheDao;
 	
 	public List<ShopEmployeesSchedule> getAllShopEmployeesSchedule() {
+		
 		return sempscheDao.findAll();
 	}
 

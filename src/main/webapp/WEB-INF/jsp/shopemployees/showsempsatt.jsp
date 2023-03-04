@@ -58,10 +58,15 @@
 						<input name="attVacation" type="hidden" value="${showsempatt.attVacation}" /> 
 						<input name="attReason" type="hidden" value="${showsempatt.attReason}" /> 
 						<input name="attTime" type="hidden" value="${showsempatt.attTime}" /> 
+					
+					<jstl:if test="${showsempatt.attAgree=='已提交'}">
 						<input name="attAgree" type="hidden" value="核准" /> 
-						<input type="submit" class="btn btn-info btn-sm" value="核准" />
+						<input id="${showsempatt.attId}"type="submit" class="btn btn-info btn-sm" value="核准" />
+					</jstl:if>
+					
+
 					</form></td>
-				<td><form action="${contextRoot}/sempsatt/upload" method="post">
+				<td><form action="${contextRoot}/sempsatt/unupload" method="post">
 						<input name="_method" type="hidden" value="put" />
 						<input name="attId" type="hidden" value="${showsempatt.attId}" /> 
 						<input name="attSempid" type="hidden" value="${showsempatt.attSemps.empId}" /> 
@@ -70,21 +75,14 @@
 						<input name="attVacation" type="hidden" value="${showsempatt.attVacation}" /> 
 						<input name="attReason" type="hidden" value="${showsempatt.attReason}" /> 
 						<input name="attTime" type="hidden" value="${showsempatt.attTime}" /> 
+					
+					<jstl:if test="${showsempatt.attAgree=='已提交'}">
 						<input name="attAgree" type="hidden" value="未核准" /> 
-						<input type="submit" class="btn btn-info btn-sm" value="未核准" />
+						<input name="${showsempatt.attId}"type="submit" class="btn btn-info btn-sm" value="未核准" />
+					</jstl:if>
+						
 					</form></td>
-				<td><form action="${contextRoot}/sempsatt/upload" method="post">
-						<input name="_method" type="hidden" value="put" />
-						<input name="attId" type="hidden" value="${showsempatt.attId}" /> 
-						<input name="attSempid" type="hidden" value="${showsempatt.attSemps.empId}" /> 
-						<input name="attStartDate" type="hidden" value="${showsempatt.attStartDate}" /> 
-						<input name="attEndDate" type="hidden" value="${showsempatt.attEndDate}" /> 
-						<input name="attVacation" type="hidden" value="${showsempatt.attVacation}" /> 
-						<input name="attReason" type="hidden" value="${showsempatt.attReason}" /> 
-						<input name="attTime" type="hidden" value="${showsempatt.attTime}" /> 
-						<input name="attAgree" type="hidden" value="待處理" /> 
-						<input type="submit" class="btn btn-info btn-sm" value="待處理" />
-					</form></td>		
+
 			</tr>
 
 		</jstl:forEach>
@@ -96,6 +94,9 @@
         <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
   		<!--版型需要的js-->
         <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+		<script>
+
+		</script>
     </body>
 
     </html>

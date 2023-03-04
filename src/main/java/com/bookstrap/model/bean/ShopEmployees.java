@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 
 import com.bookstrap.model.Shops;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -55,6 +56,7 @@ public class ShopEmployees{
 	private Employees employee;
 	
 	@JsonManagedReference
+//	@JsonIgnore
 	@OneToMany(mappedBy="attSemps", cascade = CascadeType.ALL)
 	private List<ShopEmployeesAttendance> attendances;
 
