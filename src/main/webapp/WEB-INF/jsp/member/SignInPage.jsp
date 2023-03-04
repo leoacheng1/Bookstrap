@@ -12,11 +12,11 @@
 <title>會員登入</title>
 </head>
 <body>
-	<section class="vh-100 gradient-custom">
-		<div class="container py-5 h-100">
+	<section class="gradient-custom">
+		<div class="container py-5 h-100 ">
 			<div
-				class="row d-flex justify-content-center align-items-center h-100">
-				<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+				class=" d-flex justify-content-center align-items-center h-100 ">
+				<div class="row col-12 col-md-8 col-lg-6 col-xl-5 ">
 					<div class="card bg-secondary text-white"
 						style="border-radius: 1rem;">
 						<div class="card-body p-5 text-center">
@@ -25,7 +25,7 @@
 								
 								<form action="${contextRoot}/member/checklogin" method="post">
 									<h2 class="fw-bold mb-2 text-uppercase">登入</h2>
-									<p class="text-white-50 mb-5">請出入帳號以及密碼!</p>
+									<p class="text-white-50 mb-5">請輸入帳號以及密碼!</p>
 
 									<div class="form-outline form-white mb-4">
 										<input type="email" id="typeEmailX"

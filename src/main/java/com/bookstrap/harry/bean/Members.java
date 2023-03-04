@@ -62,6 +62,9 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<UserCoupon> userCoupon;
 	
+	//For test
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private List<EBooks> eBooks;
 	
 	public Members() {
 	}

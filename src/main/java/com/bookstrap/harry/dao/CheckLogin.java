@@ -19,6 +19,9 @@ public class CheckLogin {
 		Session session = factory.openSession();
 		String querySring = "from Members m where m.memberAccount = :mEmail and m.memberPassword = :mPassword";
 
+		
+		
+		
 		Query<Members> result = session.createQuery(querySring, Members.class);
 
 		result.setParameter("mEmail", member.getMemberAccount());

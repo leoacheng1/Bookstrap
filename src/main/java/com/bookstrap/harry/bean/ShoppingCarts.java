@@ -37,14 +37,35 @@ public class ShoppingCarts implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id", insertable=false, updatable=false)
 	private Members member;
-
+	
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "book_id", insertable=false, updatable=false)
 	private Books book;
+	
+	@JsonBackReference
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ebook_id", insertable=false, updatable=false)
+	private EBooks eBook;
+	
+	
 
 	public ShoppingCarts() {
 	}
+
+	
+	
+	public Books getBook() {
+		return book;
+	}
+
+
+
+	public void setBook(Books book) {
+		this.book = book;
+	}
+
+
 
 	public Integer getMemberId() {
 		return memberId;
@@ -78,12 +99,14 @@ public class ShoppingCarts implements Serializable {
 		this.member = member;
 	}
 
-	public Books getBook() {
-		return book;
+	public EBooks geteBook() {
+		return eBook;
 	}
 
-	public void setBook(Books book) {
-		this.book = book;
+	public void seteBook(EBooks eBook) {
+		this.eBook = eBook;
 	}
+
+	
 
 }
