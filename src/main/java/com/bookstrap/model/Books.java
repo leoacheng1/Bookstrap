@@ -66,9 +66,11 @@ public class Books {
 	private String translator;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	@JsonManagedReference
 	@JoinColumn(name = "bookDetail_id")
 	private BookDetails bookDetails;
 	
+	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<Comment> comment;
 	
