@@ -137,9 +137,9 @@ public class MemberService {
 		return checkDao.checkLogin(member);
 	}
 	
+	//third party
 	public Integer checkLogin2(Members member) {
 		String memberPassword = member.getMemberPassword();
-		System.out.println("Before en:" + memberPassword);
 		
 		member.setMemberPassword(memberPassword);
 		

@@ -1,5 +1,6 @@
 package com.bookstrap.harry.bean;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,9 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.bookstrap.harry.security.Roles;
 
 @Entity
 @Table(name = "Members")
@@ -38,6 +44,12 @@ public class Members {
 	
 	@Column(name = "vertification_code")
 	private String vertificationCode;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "MemberRoles",
+	joinColumns = @JoinColumn(name = "FK_member_id"),
+	inverseJoinColumns = @JoinColumn(name = "FK_role_id"))
+	private Collection<Roles> roles;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "auth_provider")
@@ -81,10 +93,27 @@ public class Members {
 		super();
 		this.memberId = memberId;
 	}
+	
+	
+	
+	
 
-	
-	
-	
+	public Collection<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<Roles> roles) {
+		this.roles = roles;
+	}
+
+	public List<EBooks> geteBooks() {
+		return eBooks;
+	}
+
+	public void seteBooks(List<EBooks> eBooks) {
+		this.eBooks = eBooks;
+	}
+
 	public String getResetPasswordToken() {
 		return resetPasswordToken;
 	}

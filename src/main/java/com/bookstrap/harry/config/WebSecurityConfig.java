@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
@@ -32,12 +33,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	        this.uService = uService;
 	    }
 	   
+	   
+	   
 	
     @Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/index/");
+	}
+
+
+
+
+	@Override
     protected void configure(HttpSecurity http) throws Exception {
     	http.headers().frameOptions().sameOrigin();
+    	
+    	
     	http.httpBasic().and().csrf().disable().authorizeRequests()
-            .antMatchers("/", "/login", "/oauth/**","/guest/signin","/**").permitAll()
+            .antMatchers("/", "/oauth/**", "/**").permitAll()
             
             
             
@@ -75,6 +88,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 //                            response.sendRedirect("/Bookstrap/index");
                         }
                     });
+    	
+//    	 http.authorizeRequests()
+//         .antMatchers("/admin/**").hasRole("ADMIN")
+//         .antMatchers("/member/**").hasAnyRole("USER")
+//         .antMatchers("/").permitAll()
+//         .and()
+//         .formLogin()
+//         .loginPage("/guest/signin").permitAll()
+//         .and()
+//         .logout().permitAll();
     }
     
     
