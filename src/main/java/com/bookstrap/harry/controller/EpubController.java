@@ -58,31 +58,24 @@ public class EpubController {
 	        return new ResponseEntity<>(html, headers, HttpStatus.OK);
 	    }
 	
+	 //1010490082
+	 //1010490076
 	 @GetMapping("/epub/ebook/{id}")
-	 public ResponseEntity<byte[]> getEPUB(@PathVariable Integer id) throws IOException{
-		 String filePath = "C:/epub/1010490082.epub";
+	 public ResponseEntity<byte[]> getEPUB(@PathVariable String id) throws IOException{
+		 String filePath = "C:\\epub\\" + id ;
 		 File file = new File(filePath);
 		 if (file.exists()) {
-			 System.out.println("fileExistedfsfwfwefwefwef");
 		 }
 		 FileInputStream fileInputStream = new FileInputStream(file);
 		 byte[] fileByte = fileInputStream.readAllBytes();
 		 fileInputStream.close();
 		 
 		 HttpHeaders header = new HttpHeaders();
-//		 header.setContentType(MediaType.);
 		 header.add(HttpHeaders.CONTENT_TYPE, "application/epub+zip");
 		 header.setContentDisposition(ContentDisposition.attachment().filename("xxxx.epub", StandardCharsets.UTF_8).build());
 		 
 		 return new ResponseEntity<>(fileByte, header, HttpStatus.OK);
 	 }
-	
-//	 @GetMapping("/epub/get/epubfile")
-//	 public String getEPUBfile() {
-//		 String filePath = "C:\\epub\\1010490077";
-//		 
-//		 return "1010490077/OEBPS/content.opf";
-//	 }
 }
 
 
