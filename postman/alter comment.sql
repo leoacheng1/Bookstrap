@@ -19,16 +19,6 @@ use Bookstrap
 alter table Members add reset_password_token nvarchar(45);
 
 
-CREATE TABLE Gender(
-gender_id tinyint primary key not null identity(1,1),
-gender nvarchar(5)
-);
-
-INSERT INTO Gender (gender) VALUES
-('男'),
-('女'),
-('其他');
-
 
 DROP TABLE IF EXISTS MemberDetails;
 
@@ -83,3 +73,20 @@ ALTER TABLE Comment ADD ebook_id int null;
 ALTER TABLE ShoppingCarts ADD ebook_id int null;
 
 ALTER TABLE EBooks ADD member_id int null foreign key REFERENCES Members(member_id);
+
+
+-------3/5-------
+
+
+CREATE TABLE Roles (
+    roles_id INT IDENTITY(1,1) PRIMARY KEY,
+    roles_name NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE MemberRoles (
+    member_role_id INT IDENTITY(1,1) PRIMARY KEY,
+    FK_member_id INT NOT NULL,
+    FK_role_id INT NOT NULL,
+    FOREIGN KEY (FK_member_id) REFERENCES Members(member_id),
+    FOREIGN KEY (FK_role_id) REFERENCES Roles(roles_id)
+);
