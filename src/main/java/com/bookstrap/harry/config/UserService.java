@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.harry.bean.AuthenticationProvider;
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.security.CipherUtils;
 
 @Transactional
 @Service
@@ -20,13 +21,16 @@ public class UserService {
 		System.out.println("Email2: " + userEmail);
 		
 		Members memberAccount = uDao.getMemberAccountByUserEmail(userEmail);
+		String encryptPassword = CipherUtils.getStringSHA512(userEmail);
 		
 		if(memberAccount == null) {
 			Members newMember = new Members();
 			newMember.setMemberAccount(userEmail);
 			newMember.setMemberValid(1);  
 			newMember.setMemberLevel(1);
-			newMember.setMemberPassword(userEmail);
+			
+			
+			newMember.setMemberPassword(encryptPassword);
 			newMember.setAuthProvider(AuthenticationProvider.GOOGLE);
 			uDao.save(newMember);
 		}

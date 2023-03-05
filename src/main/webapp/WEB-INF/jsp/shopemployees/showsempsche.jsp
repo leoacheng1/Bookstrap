@@ -38,7 +38,45 @@
 			</div>
 			<section class="content">
 				<!-- fullcalendar container -->
-				<div id="calendar"></div>
+				<!-- 				<div id="calendar"></div> -->
+				<table>
+					<tr>
+						<th>排班編號</th>
+						<th>員工編號</th>
+						<th>起始</th>
+						<th>結束</th>
+						<th>假期</th>
+					</tr>
+					<jstl:forEach items="${sempsche}" var="sempsche">
+						<tr>
+							<td>${sempsche.scheduleId}</td>
+							<td>${sempsche.scheduleEmpid}</td>
+							<td>${sempsche.scheduleStartdate}</td>
+							<td>${sempsche.scheduleEnddate}</td>
+							<td>${sempsche.scheduleVacation}</td>
+						</tr>
+
+					</jstl:forEach>
+				</table><br/>
+				<table>
+					<tr>
+						<th>排班編號</th>
+						<th>員工編號</th>
+						<th>起始</th>
+						<th>結束</th>
+						<th>假期</th>
+					</tr>
+					<jstl:forEach items="${sempsche}" var="sempsche">
+						<tr>
+							<td>${sempsche.scheduleId}</td>
+							<td>${sempsche.scheduleSemps.empId}</td>
+							<td>${sempsche.scheduleStartdate}</td>
+							<td>${sempsche.scheduleEnddate}</td>
+							<td>${sempsche.scheduleVacation}</td>
+						</tr>
+
+					</jstl:forEach>
+				</table>
 			</section>
 		</div>
 	</div>
@@ -65,19 +103,19 @@
 				},
 				defaultDate : new Date(),
 				// 日历配置部分
-				locale: 'zh-cn',   //配置语言
-				firstDay: 1, 
-				timezone: 'local',//时区
-				displayEventEnd: true, //所有视图显示结束时间
-				editable: true,
+				locale : 'zh-cn', //配置语言
+				firstDay : 1,
+				timezone : 'local',//时区
+				displayEventEnd : true, //所有视图显示结束时间
+				editable : true,
 				// 开启更多链接/
-				eventLimit: true,
-				eventLimitText:"更多",
-				dayMaxEvents: true, 
-				contentHeight:750, //设置日历主体内容的高度，不包括header部分，默认未设置，高度根据aspectRatio值自适应。
-				aspectRatio:1.5,//设置日历单元格宽度与高度的比例。
+				eventLimit : true,
+				eventLimitText : "更多",
+				dayMaxEvents : true,
+				contentHeight : 750, //设置日历主体内容的高度，不包括header部分，默认未设置，高度根据aspectRatio值自适应。
+				aspectRatio : 1.5,//设置日历单元格宽度与高度的比例。
 				editable : false,// 不允许拖动
-				eventClick: function(event) {
+				eventClick : function(event) {
 					//单击已有日程安排
 				},
 				// 事件資料
@@ -85,8 +123,7 @@
 					title : 'Event 1',
 					start : '2023-03-05T12:30:00',
 					end : '2023-03-05T14:30:00',
-				}, 
-				{
+				}, {
 					title : 'Event 2',
 					start : '2023-03-08T14:30:00',
 					end : '2023-03-08T16:30:00',

@@ -1,6 +1,8 @@
 package com.bookstrap.model.bean;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,7 +19,6 @@ import javax.persistence.Transient;
 
 import com.bookstrap.model.Shops;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -56,10 +57,12 @@ public class ShopEmployees{
 	private Employees employee;
 	
 	@JsonManagedReference
-//	@JsonIgnore
 	@OneToMany(mappedBy="attSemps", cascade = CascadeType.ALL)
 	private List<ShopEmployeesAttendance> attendances;
 
+	@JsonManagedReference
+	@OneToMany(mappedBy="scheduleSemps", cascade = CascadeType.ALL)
+	private Set<ShopEmployeesSchedule> schedules = new HashSet<>();
 
 	public ShopEmployees() {
 	}
@@ -154,5 +157,17 @@ public class ShopEmployees{
 	public void setAttendances(List<ShopEmployeesAttendance> attendances) {
 		this.attendances = attendances;
 	}
+
+
+	public Set<ShopEmployeesSchedule> getSchedules() {
+		return schedules;
+	}
+
+
+	public void setSchedules(Set<ShopEmployeesSchedule> schedules) {
+		this.schedules = schedules;
+	}
+
+
 
 }

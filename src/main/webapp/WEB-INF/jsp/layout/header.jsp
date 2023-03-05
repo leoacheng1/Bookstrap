@@ -57,20 +57,20 @@ prefix="jstl"%>
           
           <jstl:when test="${member == null}">
           <a
-            href="${contextRoot}/member/signin"
+            href="${contextRoot}/guest/signin"
             class="text-light me-2 pe-2 border-light border-end"
           >
             <i class="fa-regular fa-user me-1"></i>會員登入
           </a>
 
-          <a href="${contextRoot}/member/signup" class="text-light me-5"
+          <a href="${contextRoot}/guest/signup" class="text-light me-5"
             >註冊會員
           </a>
           </jstl:when>
           
           <jstl:otherwise>
           <div class="nav-item text-nowrap ms-5"><a
-            href="${contextRoot}/member/signin"
+            href="${contextRoot}/guest/signin"
             class="text-light me-2 pe-2" style="text-decoration: none"
           >
           <i class="fa-regular fa-user me-1"></i>Hello ${memberName}</a>

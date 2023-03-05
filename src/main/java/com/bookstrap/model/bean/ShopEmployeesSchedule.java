@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class ShopEmployeesSchedule {
 	@Column(name = "schedule_id")
 	private Integer scheduleId;
 	
-	@Column(name="schedule_empid")
+	@Column(name = "schedule_empid")
 	@Transient
 	private Integer scheduleEmpid;
 	
@@ -45,7 +46,7 @@ public class ShopEmployeesSchedule {
 	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "GMT+8")
 	private Date scheduleEnddate;
 	
-	@Column(name="schedule_vacation")
+	@Column(name = "schedule_vacation")
 	private String scheduleVacation;
 	
 	public ShopEmployeesSchedule() {

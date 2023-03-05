@@ -51,6 +51,11 @@ public class Comment {
 	@JoinColumn(name = "book_id")
 	private Books book;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ebook_id")
+	private EBooks eBook;
+	
+	
 	public Integer getCommentId() {
 		return commentId;
 	}
@@ -116,6 +121,14 @@ public class Comment {
 
 	public void setBook(Books book) {
 		this.book = book;
+	}
+
+	public EBooks geteBook() {
+		return eBook;
+	}
+
+	public void seteBook(EBooks eBook) {
+		this.eBook = eBook;
 	}
 	
 	

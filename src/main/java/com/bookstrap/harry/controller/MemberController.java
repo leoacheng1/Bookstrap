@@ -23,42 +23,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.security.CipherUtils;
+import com.bookstrap.harry.security.MemberUserDetailService;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 import com.bookstrap.harry.service.SendEmailService;
 
 @Controller
-//@SessionAttributes("memberDetail")
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
 	@Autowired
 	private MemberDdetailService memberDetailService;
+	
+	@Autowired
+	private MemberUserDetailService muService;
 
-	@GetMapping("/member/signin")
-	public String memberSignIn(HttpSession session) {
-		if (session.getAttribute("member") != null) {
-			return "redirect:/member/main";
-		}
-		return "member/SignInPage";
-	}
-
-	@GetMapping("/member/signup")
-	public String memberSignUp() {
-
-		return "member/SignUpPage";
-	}
-
-	@GetMapping("/member/registrationpage")
-	public String registrationpage() {
-		return"member/Registration";
-	}
+//	@GetMapping("/member/registrationpage")
+//	public String registrationpage() {
+//		return"member/Registration";
+//	}
 	
 	// Registration 1
 
@@ -71,20 +63,20 @@ public class MemberController {
 		Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
 
-		if (memberAccount == null || memberAccount.length() == 0) {
+		if (memberAccount == null || memberAccount.length() == 0 ) {
 			errors.put("AccountWrong", "請輸入符合格式的電子郵件地址");
 		}
-
-		if (memberPassword == null || memberPassword.length() == 0 && memberPassword != memberRePassword) {
+			if (memberPassword == null || memberPassword.length() == 0 && memberPassword != memberRePassword) {
 			errors.put("PasswordWrong", "密碼不正確");
+			System.out.println("eeeeeeeeerrrror");
 		}
-
-	
-		
+			
 		
 		if (errors != null && !errors.isEmpty()) {
-			return "member/SignUpPage";
+			return "redirect:/guest/signup";
 		}
+		
+
 		
 		Members member = new Members();
 		member.setMemberAccount(memberAccount);
@@ -95,8 +87,8 @@ public class MemberController {
 		memberService.insertMember(member);
 		memberService.sendVertificationEnail(member);
 		
-		
 		return "member/RegistSuccess";
+		
 	}
 
 	// Registration 2
@@ -170,19 +162,24 @@ public class MemberController {
 		return "redirect:/member/main";
 	}
 
-//	@ResponseBody
-//	@GetMapping("/member/checkaccount")
-//	public boolean checkAccount(@RequestParam("memberEmail") String memberAccount) {
-//		
-//		boolean account = memberService.checkAccount(memberAccount);
-//		
-//		if(account) {
-//			
-//			return true;
-//		}
-//		
-//		return false;
-//	}
+	@ResponseBody
+	@PostMapping("/member/checkaccount")
+	public Map<String,String> checkAccount(@RequestParam(value = "memberEmail") String memberAccount,
+			Model m) {
+		Members account = memberService.checkAccount(memberAccount);
+		Map<String, String> errors = new HashMap<String, String>();
+	    HashMap<String, String> map = new HashMap<>();
+	    
+		
+		if(account != null) {
+			errors.put("AccountWrong", "此帳號已被註冊");
+			map.put("response", "Y");
+			return map;
+		}
+		m.addAttribute("Account", "此帳號可以被註冊");
+		map.put("response", "N");
+		return map;
+	}
 
 	@PostMapping("/member/checklogin")
 	public String checkLogin(@RequestParam("memberEmail") String memberEmail,
@@ -218,7 +215,8 @@ public class MemberController {
 			Members mEmail2 = memberService.useEmailFindId(memberEmail);
 			Integer result2 = mEmail2.getMemberId();
 			session.setAttribute("memberId", result2);
-			return "redirect:/member/registrationpage";
+			session.setAttribute("member", mEmail2);
+			return "member/Registration";
 					} else if (status == 2) {
 
 			// 要先得到由Email找出的Id
@@ -232,6 +230,8 @@ public class MemberController {
 			String memberName = idFindName.getMemberFirstName();
 
 			System.out.println("Name: " + memberName);
+			
+			
 
 			session.setAttribute("memberId", result);
 
@@ -282,7 +282,7 @@ public class MemberController {
 	@GetMapping("/member/main")
 	public String toMemberMain(HttpSession session) {
 
-		if (session.getAttribute("member") != null) {
+		if (session.getAttribute("memberId") != null) {
 
 			return "member/Main/MemberMainPage";
 		}
@@ -354,22 +354,30 @@ public class MemberController {
 //////////////////////
 
 	@GetMapping("/member/information")
-	public String personalInfo() {
+	public String personalInfo(HttpSession session) {
 		// 用if()判斷是否為google
+		if (session.getAttribute("member") != null) {
 		return "member/Main/MyInfo";
+		}
+		
+		return "/member/editpassword";
 	}
 
 	@GetMapping("/member/editpasswordpage")
-	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m) {
+	public String editPasswordpage(@RequestParam("memberId") Integer memberId, Model m, HttpSession session) {
 		// 因為session有直接設memberId所以在jsp頁面可透過${memberId}得到，並且放在input標籤中，且命名memberId既可在此方法由@RequestParam("memberId")得到
+		if(session.getAttribute("member") != null) {
 		m.addAttribute("memberId", memberId);
 		System.out.println("MemberId3: " + memberId);
 		return "member/Main/EditPassword";
+		}
+		return"redirect:/guest/signin";
 	}
 
 	@PostMapping("/member/editpassword")
 	public String editPassword(@RequestParam("oldPassword") String oldPassword,
-			@RequestParam("newPassword") String newPassword, @RequestParam("re_Password") String re_Password,
+			@RequestParam("newPassword") String newPassword, 
+			@RequestParam("re_Password") String re_Password,
 			@RequestParam("memberId") Integer memberId, Model m) {
 
 		Map<String, String> errors = new HashMap<String, String>();
@@ -380,25 +388,29 @@ public class MemberController {
 		System.out.println("new: " + newPassword);
 		System.out.println("Re: " + re_Password);
 		System.out.println("memberPassword:" + member.getMemberPassword());
-
-		if (oldPassword.equals(member.getMemberPassword()) && newPassword.equals(re_Password)
-				&& newPassword.length() != 0 || re_Password.length() != 0) {
+		
+		String encryptOldPassword = CipherUtils.getStringSHA512(oldPassword);
+		String encryptNewPassword = CipherUtils.getStringSHA512(newPassword);
+		String encryptReNewPassword = CipherUtils.getStringSHA512(re_Password);
+		
+		if (encryptOldPassword.equals(member.getMemberPassword()) && encryptNewPassword.equals(encryptReNewPassword)
+				&& encryptNewPassword.length() != 0 || encryptReNewPassword.length() != 0) {
 			member.setMemberPassword(newPassword);
 			memberService.insertMember(member);
 			return "redirect:/member/main";
 
 		}
 
-		if (!oldPassword.equals(member.getMemberPassword()) || oldPassword.equals(null) || oldPassword.isEmpty()) {
+		if (!encryptOldPassword.equals(member.getMemberPassword()) || encryptOldPassword.equals(null) || encryptOldPassword.isEmpty()) {
 
 			errors.put("WrongPassword", "請輸入正確之原有密碼");
 		}
 
-		if (newPassword.length() == 0 || re_Password.length() == 0) {
+		if (encryptNewPassword.length() == 0 || encryptReNewPassword.length() == 0) {
 			errors.put("NoPassword", "請輸入新密碼");
 		}
 
-		if (!newPassword.equals(re_Password) || newPassword.equals(null) || re_Password.equals(null)) {
+		if (!encryptNewPassword.equals(encryptReNewPassword) || encryptNewPassword.equals(null) || encryptReNewPassword.equals(null)) {
 
 			errors.put("checkProblem", "新密碼與確認新密碼不符");
 		}
@@ -411,17 +423,21 @@ public class MemberController {
 			@RequestParam("memberPassword") String memberPassword, Model m) {
 		Members member = memberService.findById(memberId);
 		MemberDetails memberDetail = memberDetailService.findMemberDetailsById(memberId);
-
+		
+		 String encryPassword= CipherUtils.getStringSHA512(memberPassword);
+		
+		
+		
 		Map<String, String> errors = new HashMap<String, String>();
 		m.addAttribute("errors", errors);
 
-		if (memberPassword.equals(member.getMemberPassword()) && !memberPassword.equals(null)) {
+		if (encryPassword.equals(member.getMemberPassword()) && !encryPassword.equals(null)) {
 
 			m.addAttribute("memberDetail", memberDetail);
 
 			return "member/Main/EditInformation";
 		}
-		if (memberPassword.equals(null) || !memberPassword.equals(member.getMemberPassword())) {
+		if (encryPassword.equals(null) || !encryPassword.equals(member.getMemberPassword())) {
 			errors.put("WrongPassword", "密碼不正確，請重新輸入");
 		}
 
@@ -448,14 +464,6 @@ public class MemberController {
 		return "member/Main/MyInfo";
 	}
 
-	@GetMapping("/member/getphoto")
-	public ResponseEntity<byte[]> getPhoto(@RequestParam("memberId") Integer memberId) {
-		MemberDetails photoId = memberDetailService.getPhotoById(memberId);
-		byte[] photoFile = photoId.getMemberPhoto();
-		HttpHeaders header = new HttpHeaders();
-		header.setContentType(MediaType.IMAGE_JPEG);
-
-		return new ResponseEntity<byte[]>(photoFile, header, HttpStatus.OK);
-	}
+	
 
 }

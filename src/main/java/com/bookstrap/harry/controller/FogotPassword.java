@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.security.CipherUtils;
 import com.bookstrap.harry.service.MemberNotFoundException;
 import com.bookstrap.harry.service.MemberService;
 
@@ -101,6 +102,7 @@ public class FogotPassword {
 	public String processResetPassword(HttpServletRequest request, Model model) {
 		String token = request.getParameter("token");
 		String password = request.getParameter("password");
+		
 		System.out.println(token);
 		
 		Members member = memberService.get(token);
