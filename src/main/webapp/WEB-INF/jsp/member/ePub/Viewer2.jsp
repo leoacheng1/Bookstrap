@@ -27,10 +27,9 @@
             "use strict";
               //https://s3.amazonaws.com/moby-dick/
               //${contextRoot}/epub/ebook/1
-              //http://localhost:8080/Bookstrap/epub/ebook/1.epub
             document.onreadystatechange = function () {
               if (document.readyState == "complete") {
-                window.reader = ePubReader("${contextRoot}/epub/ebook/1010490082.epub", {
+                window.reader = ePubReader("${contextRoot}/epub/1010490076.epub", {
                    restore: true
                  });
               }
