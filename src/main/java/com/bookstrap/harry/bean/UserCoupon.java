@@ -6,12 +6,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bookstrap.model.pk.UserCouponPK;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="UserCoupon")
+@IdClass(UserCouponPK.class)
 public class UserCoupon implements Serializable{
 
 
@@ -28,12 +33,14 @@ public class UserCoupon implements Serializable{
 	@Column(name = "amount")
 	private Integer amount;
 
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "member_id")
+	@JoinColumn(name = "member_id", insertable=false, updatable=false)
 	private Members member;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "coupon_id")
+	@JoinColumn(name = "coupon_id", insertable=false, updatable=false)
 	private Coupons coupon;
 	
 	public UserCoupon() {

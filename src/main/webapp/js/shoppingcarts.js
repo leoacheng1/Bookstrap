@@ -1,13 +1,13 @@
-// const deleteBtn = document.getElementsByClassName("delete-btn");
-// const deleteAllBtn = document.getElementsByClassName("delete-all-btn");
-// for (i = 0; i < deleteBtn.length; i++) {
-//   deleteBtn[i].addEventListener("click", function (e) {
-//     let bkID = this.getAttribute("data-bkid");
-//     console.log(bkID);
-//     //delete ajax
-//     deleteCartItemAjax(bkID);
-//   });
-// }
+const deleteBtn = document.getElementsByClassName("delete-btn");
+const deleteAllBtn = document.getElementsByClassName("delete-all-btn");
+for (i = 0; i < deleteBtn.length; i++) {
+  deleteBtn[i].addEventListener("click", function (e) {
+    let bkID = this.getAttribute("data-bkid");
+    console.log(bkID);
+    //delete ajax
+    deleteCartItemAjax(bkID);
+  });
+}
 ////////////////////////// 更新商品數量 //////////////////////////
 function updateCartItemAmount(bookId, amount, action) {
   if (action === "add") {
@@ -126,12 +126,43 @@ function clearCart(mId) {
 // }
 
 ////////////////////////// 總金額計算 //////////////////////////
+
+// 取得全選checkbox元素
+const checkall = document.getElementsByClassName("book-checkbox-all")[0];
 // 取得所有checkbox元素
 const checkboxes = document.querySelectorAll(".book-checkbox");
 // 取得總金額元素
 const totalPriceEl = document.getElementById("total-price");
+// 取得所有的coupon checkbox元素
+const couponCheckboxes = document.getElementsByName("coupon");
 // 初始化總金額為0
 let totalPrice = 0;
+// 取得折扣後金額元素
+const discountedPriceEl = document.getElementById("discounted-price");
+// 初始化折扣後金額為0
+let discountedPrice = 0;
+
+checkall.addEventListener("change", () => {
+  if (checkall.checked) {
+    totalPrice = 0;
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = true;
+      if (checkbox.checked) {
+        totalPrice += parseInt(checkbox.dataset.price);
+      }
+    });
+  } else {
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+      couponCheckboxes.checked = false;
+      totalPrice = 0;
+      discountedPrice = 0;
+    });
+  }
+  // 更新總金額的顯示
+  totalPriceEl.innerText = totalPrice;
+  discountedPriceEl.innerText = discountedPrice;
+});
 
 // 為每個checkbox加入事件監聽
 checkboxes.forEach((checkbox) => {
@@ -142,7 +173,76 @@ checkboxes.forEach((checkbox) => {
     } else {
       totalPrice -= parseInt(checkbox.dataset.price);
     }
+
+    // 檢查所有checkbox是否都被選取，若是則勾選全選checkbox，否則取消勾選全選checkbox
+    const allChecked = Array.from(checkboxes).every(
+      (checkbox) => checkbox.checked
+    );
+    checkall.checked = allChecked;
+
     // 更新總金額的顯示
-    totalPriceEl.innerText = totalPrice;
+    totalPriceEl.innerText =
+      totalPrice > 0 || checkbox.checked ? totalPrice : 0;
   });
 });
+
+// 綁定事件
+
+for (var i = 0; i < couponCheckboxes.length; i++) {
+  couponCheckboxes[i].addEventListener("change", function () {
+    // 取消其他checkbox的選擇狀態
+
+    for (var j = 0; j < couponCheckboxes.length; j++) {
+      if (couponCheckboxes[j] !== this) {
+        couponCheckboxes[j].checked = false;
+      }
+    }
+
+    // 取得被選取的折價券 checkbox 元素
+    const selectedCoupon = document.querySelector(
+      "input[name='coupon']:checked"
+    );
+
+    // 判斷totalPrice是否為0
+    if (totalPrice === 0 && selectedCoupon) {
+      // 若為0，則顯示alert並取消選取的折價券
+      alert("總金額為0，無法使用折價券。");
+      selectedCoupon.checked = false;
+      return;
+    }
+
+    // 確認是否有被選取的折價券，若有則取得其折扣值
+    let discount = 0;
+    if (selectedCoupon) {
+      console.log(selectedCoupon.value);
+      discount = parseInt(selectedCoupon.value);
+      // 將總金額扣除折扣值，得到折扣後的金額
+      console.log(totalPrice);
+      console.log(discount);
+      const discountedPrice = totalPrice - discount;
+
+      // 更新折扣後金額的顯示
+
+      discountedPriceEl.innerText = discountedPrice;
+    }
+  });
+}
+
+// // 獲取所選折價券的折扣金額
+// var couponDiscount = 0;
+// var selectedCoupon = document.querySelector('input[name="coupon"]:checked');
+// console.log(selectedCoupon);
+// if (selectedCoupon) {
+//   couponDiscount = parseInt(selectedCoupon.value);
+//   console.log(couponDiscount);
+// }
+
+// // 獲取消費總金額
+// var totalAmount = parseInt(document.querySelector("#total-price").textContent);
+
+// // 計算應付金額
+// var payableAmount = totalAmount - couponDiscount;
+
+// // 更新顯示的應付金額
+// document.querySelector("#payable-amount").textContent =
+//   payableAmount.toFixed(2);
