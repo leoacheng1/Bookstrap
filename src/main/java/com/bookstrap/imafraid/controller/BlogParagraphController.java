@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,12 +75,12 @@ public class BlogParagraphController {
 		blogParaService.deleteParaById(id);
 		return "delete success";
 	}
-	@PostMapping("/blog/updatePara")
-	public String updatePara(@RequestParam Integer id,@RequestParam String pTitle, @RequestParam String pContent, @RequestParam String pAuther,
-			@RequestParam String pCatagory) {
-	blogParaService.updatePara(id,pTitle,pContent,pAuther,pCatagory);
-		return "/blog/blogIndex";
-	}	
+	@ResponseBody
+	@PutMapping("/blog/updatePara")
+	public String updatePara(@RequestParam Integer id,@RequestParam String pTitle,@RequestParam String pContent,@RequestParam String pAuther,@RequestParam String pCatagory,@RequestParam("pPhoto") MultipartFile[] pPhoto){
+	blogParaService.updatePara(id, pTitle, pContent, pAuther, pCatagory, pPhoto);
+	return "成功";
+	}
 //	@ResponseBody
 	@GetMapping("/blog/getParaById")
 	public String getParaById(@RequestParam("id") Integer id,Model model) {

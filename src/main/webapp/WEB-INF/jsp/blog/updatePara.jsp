@@ -31,12 +31,52 @@
 
 				<label for="pContent">文章內文:</label>
 				<input type="text" id="pContent" name="pContent" value="${updateBlog.paragraphContent}"><br>
-				<img src="#">
-				<input type="submit" value="Submit">
+
+				<label for="pPhoto">文章圖片:</label>
+				<input type="file" id="pPhoto" multiple name="pPhoto" value=""><br>
+
+				<input type="submit" value="送出更新" id="updatebtn" class="updatebtn">
 			</form>
 
 			<script>
-Const id = document.
+				const updatecon = document.getElementsByClassName("updatebtn")
+
+				for (i = 0; i < updatecon.length; i++) {
+					updatecon[i].addEventListener('click', function (e) {
+						e.preventDefault()
+
+						const id = document.getElementById('pId').value
+						const Title = document.getElementById('pTitle').value
+						const Catagory = document.getElementById('pCatagory').value
+						const Auther = document.getElementById('pAuther').value
+						const Content = document.getElementById('pContent').value
+						const Photo = document.getElementById('pPhoto').files
+						console.log(id, Title, Catagory, Auther, Content, Photo)
+						let form = new FormData()
+						form.append("id", id)
+						form.append("pTitle", Title)
+						form.append("pCatagory", Catagory)
+						form.append("pAuther", Auther)
+						form.append("pContent", Content)
+						for (let i = 0; i < Photo.length; i++) {
+							form.append("pPhoto", Photo[i])
+						}
+						axios({
+							url: "http://localhost:8080/Bookstrap/blog/updatePara",
+							method: "put",
+							data: form,
+							headers: { "Content-Type": "multipart/form-data" }
+						})
+							.then(res => {
+								console.log('更新成功')
+								window.location.href = 'http://localhost:8080/Bookstrap/blog/backIndex'
+							})
+							.catch(err => {
+								console.log(err)
+							})
+					})
+				}
+
 
 
 

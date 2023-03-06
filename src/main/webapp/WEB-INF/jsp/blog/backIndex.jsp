@@ -20,20 +20,15 @@
 
 			<script type="text/javascript">
 				fetch("${contextRoot}/blog/getAllBlogParagraph", { method: "POST" }).then(rs => rs.json()).then(function (data) {
-
 					let outPutString = "";
 					for (let item of data) {
-
 						// outPutString += "<div>" + "<button name=delebtn  data-id=" + item.paragraphId + ">刪除</button>" + "</div>"
 						// outPutString += "<div>" + "<button name=delebtn  data-id=" + item.paragraphId + ">修改</button>" + "</div>"
 						//listener fetch delete
-
 						outPutString += "<div>文章標題：" + item.paragraphTitle + "<button name=delebtn  data-id=" + item.paragraphId + ">刪除</button>" + "</div>"
-						outPutString += "<div>文章內文：" + item.paragraphContent + `<a href= "http://localhost:8080/Bookstrap/blog/getParaById?id=` + item.paragraphId + `"<button name=updatebtn  data-id=` + item.paragraphId + "  > 修改</button></a>" + "</div>"
+						outPutString += "<div>文章內文：" + item.paragraphContent + '<a href= "http://localhost:8080/Bookstrap/blog/getParaById?id=' + item.paragraphId + '"<button name=updatebtn  data-id= + item.paragraphId + "  > 修改</button></a></div>'
 						outPutString += "===================="
-
 					}
-
 					document.getElementById("dataHome").innerHTML = outPutString
 					const delecon = document.getElementsByName("delebtn")
 					for (let i = 0; i < delecon.length; i++) {
@@ -44,28 +39,20 @@
 						})
 					}
 				})
-
-
 				function deleteById(id) {
 					axios({
 						url: "http://localhost:8080/Bookstrap/blog/deleteParaById",
 						method: "delete",
-
 						params: { id: id }
 					})
 						.then(res => {
 							console.log('delete成功')
 							window.location.href = 'http://localhost:8080/Bookstrap/blog/backIndex'
 						})
-
 						.catch(err => {
 							console.log(err)
 						})
 				}
-
-
-
-
 			</script>
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">

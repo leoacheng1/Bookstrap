@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "BlogPhotos")
 public class BlogPhotos {
@@ -27,7 +29,7 @@ public class BlogPhotos {
 	@Column(name="fk_paragraph_id")
 	@Transient
 	private Integer paragraphId;
-	
+	@JsonBackReference
 	@ManyToOne(fetch=FetchType.EAGER)
 	private BlogParagraph blogparagraph;
 	

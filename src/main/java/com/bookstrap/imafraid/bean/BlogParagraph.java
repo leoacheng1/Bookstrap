@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "BlogParagraph")
 public class BlogParagraph {
@@ -28,6 +30,7 @@ public class BlogParagraph {
 	private String paragraphAuther;
 	@Column(name = "paragraphCatagory")
 	private String paragraphCatagory;
+	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blogparagraph", cascade = CascadeType.ALL)
 	private List<BlogPhotos> blogPhotos = new ArrayList<>();
 
