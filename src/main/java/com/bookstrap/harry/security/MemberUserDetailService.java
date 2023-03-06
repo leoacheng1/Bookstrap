@@ -22,14 +22,13 @@ public class MemberUserDetailService implements UserDetailsService{
 		
 		final Members member = memberDao.findAccountByEmail(memberEmail);
 		if (member == null) {
-			throw new UsernameNotFoundException("No member found.");
+			throw new UsernameNotFoundException(memberEmail);
 		}
-//		UserDetails user = User.withUsername(member.getMemberAccount())
-//		.password(member.getMemberPassword())
-//		.authorities("USER").build();   //設定Authority
-//		return user;
+		UserDetails user = User.withUsername(member.getMemberAccount())
+		.password(member.getMemberPassword())
+		.authorities("USER").build();   //設定Authority
 		
-		return new CustomUserDetails(member);
+		return user;
 	}  
 
 }

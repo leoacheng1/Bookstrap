@@ -1,6 +1,5 @@
 package com.bookstrap.harry.security;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -13,10 +12,6 @@ import com.bookstrap.harry.bean.Members;
 
 public class CustomUserDetails implements UserDetails {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	@Autowired
 	private Members member;
 
@@ -27,42 +22,45 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
-		ArrayList<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(member.getRole().toString()));
-		return authorities;
-//		return member.getRoles().stream()
-//				.map((Roles role) -> new SimpleGrantedAuthority(role.getRolesName()))
-//				.collect(Collectors.toList());
+		return member.getRoles().stream()
+				.map((Roles role) -> new SimpleGrantedAuthority(role.getRolesName()))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public String getPassword() {
-		return member.getMemberPassword();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getUsername() {
-		return member.getMemberAccount();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

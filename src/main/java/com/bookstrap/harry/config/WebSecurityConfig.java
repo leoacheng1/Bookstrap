@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
@@ -37,35 +36,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	   
 	   
 	
+    @Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/index/");
+	}
+
+
 
 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
     	http.headers().frameOptions().sameOrigin();
-    	//"/", "/oauth/**", "/**" .authorizeRequests()
     	
-//    	http.authorizeRequests().antMatchers("/").permitAll();
-            
-//            http
-//            .antMatcher("/member/**")
-//            .authorizeRequests()
-//            .anyRequest()
-//            .hasAuthority("USER")
+    	
+    	http.httpBasic().and().csrf().disable().authorizeRequests()
+            .antMatchers("/", "/oauth/**", "/**").permitAll()
             
             
-            http.authorizeRequests().antMatchers("/").permitAll()
+            
+            .anyRequest()
+            .authenticated()
+            
             
             .and()
             .formLogin()
-            		.loginPage("/guest/signin")
-		            .usernameParameter("memberEmail")
-		            .defaultSuccessUrl("/member/main")
-            .and()
-            .logout()
-            	.logoutUrl("/member/logout")
-            	.logoutSuccessUrl("/index")
-            		
-            		
+            .permitAll()
+            
             .and()
             .oauth2Login()
                 .loginPage("/guest/signin")
@@ -92,7 +88,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 //                            response.sendRedirect("/Bookstrap/index");
                         }
                     });
-            
     	
 //    	 http.authorizeRequests()
 //         .antMatchers("/admin/**").hasRole("ADMIN")
@@ -106,7 +101,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     }
     
     
-	
      
 
 

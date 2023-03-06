@@ -55,9 +55,6 @@ public class Members {
 	@Column(name = "auth_provider")
 	private AuthenticationProvider authProvider;
 	
-	@Enumerated(EnumType.STRING)
-	private Role role;
-	
 	@Column(name = "reset_password_token")
 	private String resetPasswordToken;
 
@@ -92,15 +89,6 @@ public class Members {
 	
 	
 	
-	
-
-	public Members(String memberAccount, String memberPassword, Role role) {
-		super();
-		this.memberAccount = memberAccount;
-		this.memberPassword = memberPassword;
-		this.role = role;
-	}
-
 	public Members(Integer memberId) {
 		super();
 		this.memberId = memberId;
@@ -109,14 +97,6 @@ public class Members {
 	
 	
 	
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	public Collection<Roles> getRoles() {
 		return roles;
