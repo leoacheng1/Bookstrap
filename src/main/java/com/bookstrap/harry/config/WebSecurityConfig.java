@@ -83,18 +83,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         }
                     });
     	
-//    	 http.authorizeRequests()
-//         .antMatchers("/admin/**").hasRole("ADMIN")
-//         .antMatchers("/member/**").hasAnyRole("USER")
-//         .antMatchers("/").permitAll()
-//         .and()
-//         .formLogin()
-//         .loginPage("/guest/signin").permitAll()
-//         .and()
-//         .logout().permitAll();
+//    	
     }
     
-    
+	
+	
+//	http.authorizeRequests().antMatchers("/").permitAll();
+//	
+//	http
+//    .antMatcher("/member/**")
+//    .authorizeRequests()
+//    .anyRequest()
+//    .hasAuthority("USER")
+//	
+//	  .and()
+//      .formLogin()
+//      		.loginPage("/guest/signin")
+//	            .usernameParameter("memberEmail")
+//	            .loginProcessingUrl("/member/checklogin")
+//	            .defaultSuccessUrl("/member/main")
+//      .and()
+//      .logout()
+//      	.logoutUrl("/member/logout")
+//      	.logoutSuccessUrl("/index")
      
 
 

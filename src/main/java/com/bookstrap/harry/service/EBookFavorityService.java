@@ -69,4 +69,8 @@ public class EBookFavorityService {
 		return ebfDao.findByMember(member);
 	}
 	
+	public Optional<EBookFavorite> finByMemberAndEBook(Members member, EBooks ebook) {
+		return ebfDao.findByMemberAndEBook(member, ebook);
+	}
+	
 }
