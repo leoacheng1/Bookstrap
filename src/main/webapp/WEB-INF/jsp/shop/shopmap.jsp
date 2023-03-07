@@ -141,7 +141,7 @@
                     text-align: left;
 
                     padding: 5px;
-                    margin-top:300px;
+                    margin-top: 300px;
                     width: 350px;
                     max-height: 500px;
 
@@ -282,459 +282,964 @@
 
 
                     })
-                    var checkbox1 = document.getElementById("defaultCheck1");
-                    checkbox1.addEventListener("change", function () {
-                        if (checkbox1.checked) {
-                            checkbox2.checked = false;
-                        }
-                        axios({
-                            url: 'http://localhost:8080/Bookstrap/shops/allshopslist',
-                            method: 'get',
+
+                  
+                    axios({
+                        url: 'http://localhost:8080/Bookstrap/shops/allshopslist',
+                        method: 'get',
+                    })
+                        .then(res => {
+                            console.log(res.data)
+                            showlike(res.data)
                         })
-                            .then(res => {
-                                console.log(res.data)
-                                showcloseshop(res.data)
-                            })
-                            .catch(err => {
-                                console.log(err)
-                            })
-                        function showcloseshop(data) {
-
-                            var locations = [];
-                            data.forEach(element => {
-                                let shopid = element.id
-                                let shopAddress = element.shopAddress
-                                let shopPhone = element.shopPhone
-                                locations.push(element.shopAddress)
-                                // locations.push(new google.maps.LatLng(element.latitude, element.longitude))
-                            })
-                            var locationdetails = [];
-                            data.forEach(element => {
-                                let shopid = element.id
-                                let shopName = element.shopName
-                                let shopAddress = element.shopAddress
-                                let shopPhone = element.shopPhone
-                                let shoptime = element.shopOpenHour + "-" + element.shopcloseHour
-
-                                locationdetails.push({
-                                    shopid: shopid, shopName: shopName, shopAddress: shopAddress
-                                    , shopPhone: shopPhone, shoptime: shoptime
-                                })
-
-                            })
+                        .catch(err => {
+                            console.log(err)
+                        })
 
 
 
-                            var lat, lon;
-                            var promise1 = new Promise(function (resolve, reject) {
-                                navigator.geolocation.getCurrentPosition(function (pos) {
-                                    lat = pos.coords.latitude
-                                    lon = pos.coords.longitude
-
-                                    resolve({ lat, lon })
-                                })
-                            })
-
-                            promise1.then(function (value) {
-                                let originPosition = new google.maps.LatLng(value.lat, value.lon);
-                                console.log('opop:' + originPosition)
+                    function showlike(res) {
+                        const locationdetails = data.map(({ id, shopName, shopAddress, shopPhone, shopOpenHour, shopcloseHour }) => {
 
 
-                                const service = new google.maps.DistanceMatrixService();
-                                service.getDistanceMatrix({
-                                    origins: [originPosition],
-                                    destinations: locations,
-                                    travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
-                                    unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
-                                    avoidHighways: false, // 是否避開高速公路
-                                    avoidTolls: false // 是否避開收費路線
-                                }, callback);
+                            return {
+                                shopid: id,
+                                shopName,
+                                shopAddress,
+                                shopPhone,
+                                shopOpenHour,
+                                shopcloseHour
+                            };
+                        });
 
-                                function callback(response, status) {
-                                    if (status === "OK") {
-                                        console.log("goodgood");
-                                        console.log(response);
-                                        let len = locations.length
-                                        let places = [];
-                                        console.log("location" + locations[0]);
-                                        console.log("distancevalue" + response.rows[0].elements[1].distance.value);
-                                        console.log("distance" + response.rows[0].elements[1].distance.text);
-                                        console.log("duration" + response.rows[0].elements[1].duration.text);
+                        return new Promise((resolve, reject) => {
+                            const geocoder = new google.maps.Geocoder();
+                            const resultsPromise = res.map(e => {
+                                const address = e.shopAddress;
+                                return new Promise((resolve, reject) => {
+                                    geocoder.geocode({ 'address': address }, (results, status) => {
+                                        if (status === google.maps.GeocoderStatus.OK) {
+                                            const county1 = results[0].address_components.find(component =>
+                                                component.types.includes('administrative_area_level_1')
+                                            )?.long_name;
 
-                                        for (let i = 0; i < len; i++) {
-                                            let placedetail = {
-                                                shopAddress: locations[i],
-                                                durationvalue: response.rows[0].elements[i].duration.value,
+                                            const county2 = results[0].address_components.find(component =>
+                                                component.types.includes('administrative_area_level_2')
+                                            )?.long_name;
 
-                                                distance: response.rows[0].elements[i].distance.text,
-                                                duration: response.rows[0].elements[i].duration.text
+                                            const fincounty = county1 ?? county2;
+
+                                            const formattedAddress = results[0].formatted_address;
+
+                                            const addressObj = {
+                                                county: fincounty,
+                                                address: formattedAddress
                                             };
-                                            places.push(placedetail)
+
+                                            resolve(addressObj);
+                                        } else {
+                                            reject(status);
                                         }
+                                    });
+                                });
+                            });
 
-                                        places.sort((a, b) => {
-                                            return a.durationvalue - b.durationvalue;
-                                        });
-                                        var shopshow = ""
-                                        for (let i = 0; i < places.length; i++) {
+                            Promise.all(resultsPromise)
+                                .then(addresses => {
+                                    const counties = addresses.map(obj => obj.county);
 
-                                            let viewright = document.getElementById('viewright')
-
-                                            viewright.innerHTML = ""
-                                            const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
-
-                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
-                                                + '<div class="card-body row justify-content-center">'
-                                                + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
-                                                + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
-                                                + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
-                                                + ' <p class="card-text text-center">距離:' + places[i].distance + '</p>'
-                                                + ' <p class="card-text text-center">預估花費時間:' + places[i].duration + '</p>'
-                                                + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
-                                                + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
-                                                + '</div>'
-                                                + '</div>'
-                                                + '</div>'
-                                                + '</br>'
-
+                                    const LocationDetails = counties.map((county, index) => {
+                                        return {
+                                            ...locationdetails[index],
+                                            county
                                         };
+                                    });
+                                    const northBtn = document.getElementById("north");
+                                    const southBtn = document.getElementById("south");
+                                    const westBtn = document.getElementById("west");
+                                    const eastBtn = document.getElementById("east");
+                                    const defaultCheck1 = document.getElementById("defaultCheck1");
+                                    const defaultCheck2 = document.getElementById("defaultCheck2");
+                                    var ans = []
+                                    northBtn.addEventListener('change', function () {
+                                        console.log("okok")
+                                        ans.splice(0, ans.length);
+                                        if (northBtn.checked) {
+                                            ans.push("臺北市", "新北市", "基隆市", "新竹市", "桃園市", "新竹縣", "宜蘭縣", "新北市", "台北市")
+                                        }
+                                        if (westBtn.checked) {
+                                            ans.push("臺中市", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "台中市")
+                                        }
+                                        if (southBtn.checked) {
+                                            ans.push("高雄市", "臺南市", "嘉義市", "嘉義縣", "屏東縣", "澎湖縣", "台南市")
+                                        }
+                                        if (eastBtn.checked) {
+                                            ans.push("花蓮縣", "臺東縣")
+                                        }
+                                        if (defaultCheck1.checked) {
+                                            showfar(ans)
+                                        }
+                                        if (defaultCheck2.checked) {
+                                            showfar2(ans)
+                                        }
+                                        if (defaultCheck1.checked == false && defaultCheck2.checked == false) {
 
-
-                                        viewright.innerHTML = shopshow
-
-
-
-
-
-
-                                        var directionsService = new google.maps.DirectionsService();
-                                        var directionsDisplay = new google.maps.DirectionsRenderer();
-
-                                        const deleteroad1 = document.getElementsByClassName("deleteroad");
-
-                                        for (i = 0; i < deleteroad1.length; i++) {
-                                            deleteroad1[i].addEventListener('click', function (e) {
-                                                directionsDisplay.setMap(null);
-                                                document.getElementById('roaddetail').innerHTML = ""
-
-                                            })
+                                            showfar(ans)
                                         }
 
-                                        const roadguideBtn = document.getElementsByClassName("road");
-                                        for (i = 0; i < roadguideBtn.length; i++) {
-                                            roadguideBtn[i].addEventListener('click', function (e) {
-                                                let msgID = this.getAttribute('data-msgid');
-                                                let address = this.getAttribute('address')
-                                                console.log("msgID:" + msgID)
-                                                directionsDisplay.setMap(null);
-                                                console.log(address)
-                                                showroad(address)
+                                    })
+                                    southBtn.addEventListener('change', function () {
+                                        console.log("okok")
+                                        ans.splice(0, ans.length);
+                                        if (northBtn.checked) {
+                                            ans.push("臺北市", "新北市", "基隆市", "新竹市", "桃園市", "新竹縣", "宜蘭縣", "新北市", "台北市")
+                                        }
+                                        if (westBtn.checked) {
+                                            ans.push("臺中市", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "台中市")
+                                        }
+                                        if (southBtn.checked) {
+                                            ans.push("高雄市", "臺南市", "嘉義市", "嘉義縣", "屏東縣", "澎湖縣", "台南市")
+                                        }
+                                        if (eastBtn.checked) {
+                                            ans.push("花蓮縣", "臺東縣")
+                                        }
+                                        if (defaultCheck1.checked) {
+                                            showfar(ans)
+                                        }
+                                        if (defaultCheck2.checked) {
+                                            showfar2(ans)
+                                        }
+                                        if (defaultCheck1.checked == false && defaultCheck2.checked == false) {
+                                            showfar(ans)
+                                        }
 
-                                            })
+                                    })
+
+
+                                    eastBtn.addEventListener('change', function () {
+                                        console.log("okok")
+                                        ans.splice(0, ans.length);
+                                        if (northBtn.checked) {
+                                            ans.push("臺北市", "新北市", "基隆市", "新竹市", "桃園市", "新竹縣", "宜蘭縣", "新北市", "台北市")
+                                        }
+                                        if (westBtn.checked) {
+                                            ans.push("臺中市", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "台中市")
+                                        }
+                                        if (southBtn.checked) {
+                                            ans.push("高雄市", "臺南市", "嘉義市", "嘉義縣", "屏東縣", "澎湖縣", "台南市")
+                                        }
+                                        if (eastBtn.checked) {
+                                            ans.push("花蓮縣", "臺東縣")
+                                        }
+                                        if (defaultCheck1.checked) {
+                                            showfar(ans)
+                                        }
+                                        if (defaultCheck2.checked) {
+                                            showfar2(ans)
+                                        }
+                                        if (defaultCheck1.checked == false && defaultCheck2.checked == false) {
+                                            showfar(ans)
+                                        }
+
+                                    })
+                                    westBtn.addEventListener('change', function () {
+                                        console.log("okok")
+                                        ans.splice(0, ans.length);
+                                        if (northBtn.checked) {
+                                            ans.push("臺北市", "新北市", "基隆市", "新竹市", "桃園市", "新竹縣", "宜蘭縣", "新北市", "台北市")
+                                        }
+                                        if (westBtn.checked) {
+                                            ans.push("臺中市", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "台中市")
+                                        }
+                                        if (southBtn.checked) {
+                                            ans.push("高雄市", "臺南市", "嘉義市", "嘉義縣", "屏東縣", "澎湖縣", "台南市")
+                                        }
+                                        if (eastBtn.checked) {
+                                            ans.push("花蓮縣", "臺東縣")
+                                        }
+                                        if (defaultCheck1.checked) {
+                                            showfar(ans)
+                                        }
+                                        if (defaultCheck2.checked) {
+                                            showfar2(ans)
+                                        }
+                                        if (defaultCheck1.checked == false && defaultCheck2.checked == false) {
+                                            showfar(ans)
                                         }
 
 
-                                        function showroad(address) {
-                                            console.log(address)
+                                    })
+                                    defaultCheck1.addEventListener('change', function () {
+                                        console.log("okok")
+                                        ans.splice(0, ans.length);
+                                        if (defaultCheck1.checked) {
+                                            defaultCheck2.checked = false;
+                                        }
+                                        if (northBtn.checked) {
+                                            ans.push("臺北市", "新北市", "基隆市", "新竹市", "桃園市", "新竹縣", "宜蘭縣", "新北市", "台北市")
+                                        }
+                                        if (westBtn.checked) {
+                                            ans.push("臺中市", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "台中市")
+                                        }
+                                        if (southBtn.checked) {
+                                            ans.push("高雄市", "臺南市", "嘉義市", "嘉義縣", "屏東縣", "澎湖縣", "台南市")
+                                        }
+                                        if (eastBtn.checked) {
+                                            ans.push("花蓮縣", "臺東縣")
+                                        }
+                                        if (defaultCheck1.checked) {
+                                            showfar(ans)
+                                        }
 
-                                            directionsDisplay.setMap(map);
-                                            var request = {
-                                                origin: { lat: lat, lng: lon },
-                                                destination: address,
-                                                travelMode: 'DRIVING',
-                                                language: 'zh-TW'
-                                            };
+                                        if (northBtn.checked == false && westBtn.checked == false && southBtn.checked == false && eastBtn.checked == false) {
 
-                                            directionsService.route(request, function (result, status) {
-                                                if (status == 'OK') {
-                                                    // 回傳路線上每個步驟的細節
-                                                    directionsDisplay.setDirections(result);  // 顯示路線
+                                            showalldur()
+                                        }
 
-                                                    directionsDisplay.setMap(map);
-                                                    var steps = result.routes[0].legs[0].steps;
-                                                    var html = '<div>路徑:</div>';
-                                                    for (var i = 0; i < steps.length; i++) {
-                                                        html += '<p class ="instructions">' + steps[i].instructions + '<p>';
+                                    })
+
+                                    defaultCheck2.addEventListener('change', function () {
+                                        console.log("okok")
+                                        ans.splice(0, ans.length);
+                                        if (defaultCheck1.checked) {
+                                            defaultCheck2.checked = false;
+                                        }
+                                        if (northBtn.checked) {
+                                            ans.push("臺北市", "新北市", "基隆市", "新竹市", "桃園市", "新竹縣", "宜蘭縣", "新北市", "台北市")
+                                        }
+                                        if (westBtn.checked) {
+                                            ans.push("臺中市", "苗栗縣", "彰化縣", "南投縣", "雲林縣", "台中市")
+                                        }
+                                        if (southBtn.checked) {
+                                            ans.push("高雄市", "臺南市", "嘉義市", "嘉義縣", "屏東縣", "澎湖縣", "台南市")
+                                        }
+                                        if (eastBtn.checked) {
+                                            ans.push("花蓮縣", "臺東縣")
+                                        }
+                                        if (defaultCheck2.checked) {
+                                            showfar(ans)
+                                        }
+
+                                        if (northBtn.checked == false && westBtn.checked == false && southBtn.checked == false && eastBtn.checked == false) {
+
+                                            showalldis()
+                                        }
+
+                                    })
+
+
+
+                                    function showfar(ans) {
+                                        console.log(ans);
+                                        var result = LocationDetails.filter(item => ans.includes(item.county));
+                                        var shopAddresses = result.map(item => item.shopAddress);
+
+
+
+                                        var lat, lon;
+                                        var promise1 = new Promise(function (resolve, reject) {
+                                            navigator.geolocation.getCurrentPosition(function (pos) {
+                                                lat = pos.coords.latitude
+                                                lon = pos.coords.longitude
+
+                                                resolve({ lat, lon })
+                                            })
+                                        })
+
+                                        promise1.then(function (value) {
+                                            let originPosition = new google.maps.LatLng(value.lat, value.lon);
+                                            console.log('opop:' + originPosition)
+
+
+                                            const service = new google.maps.DistanceMatrixService();
+                                            service.getDistanceMatrix({
+                                                origins: [originPosition],
+                                                destinations: shopAddresses,
+                                                travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
+                                                unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
+                                                avoidHighways: false, // 是否避開高速公路
+                                                avoidTolls: false // 是否避開收費路線
+                                            }, callback);
+
+                                            function callback(response, status) {
+                                                if (status === "OK") {
+
+                                                    console.log(response);
+                                                    let len = shopAddresses.length
+                                                    let places = [];
+                                                    // console.log("location" + shopAddresses[0]);
+                                                    // console.log("distancevalue" + response.rows[0].elements[1].distance.value);
+                                                    // console.log("distance" + response.rows[0].elements[1].distance.text);
+                                                    // console.log("duration" + response.rows[0].elements[1].duration.text);
+
+                                                    for (let i = 0; i < len; i++) {
+                                                        let placedetail = {
+                                                            shopAddress: shopAddresses[i],
+                                                            durationvalue: response.rows[0].elements[i].duration.value,
+
+                                                            distance: response.rows[0].elements[i].distance.text,
+                                                            duration: response.rows[0].elements[i].duration.text
+                                                        };
+                                                        places.push(placedetail)
                                                     }
-                                                    document.getElementById('roaddetail').innerHTML = html;
+
+                                                    places.sort((a, b) => {
+                                                        return a.durationvalue - b.durationvalue;
+                                                    });
+                                                    var shopshow = ""
+                                                    for (let i = 0; i < places.length; i++) {
+
+                                                        let viewright = document.getElementById('viewright')
+
+                                                        viewright.innerHTML = ""
+                                                        const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
+
+                                                        shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                                            + '<div class="card-body row justify-content-center">'
+                                                            + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
+                                                            + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
+                                                            + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
+                                                            + ' <p class="card-text text-center">距離:' + places[i].distance + '</p>'
+                                                            + ' <p class="card-text text-center">預估花費時間:' + places[i].duration + '</p>'
+                                                            + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
+                                                            + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
+                                                            + '</div>'
+                                                            + '</div>'
+                                                            + '</div>'
+                                                            + '</br>'
+
+                                                    };
+
+
+                                                    viewright.innerHTML = shopshow
+
+
+
+
+
+
+                                                    var directionsService = new google.maps.DirectionsService();
+                                                    var directionsDisplay = new google.maps.DirectionsRenderer();
+
+                                                    const deleteroad1 = document.getElementsByClassName("deleteroad");
+
+                                                    for (i = 0; i < deleteroad1.length; i++) {
+                                                        deleteroad1[i].addEventListener('click', function (e) {
+                                                            directionsDisplay.setMap(null);
+                                                            document.getElementById('roaddetail').innerHTML = ""
+
+                                                        })
+                                                    }
+
+                                                    const roadguideBtn = document.getElementsByClassName("road");
+                                                    for (i = 0; i < roadguideBtn.length; i++) {
+                                                        roadguideBtn[i].addEventListener('click', function (e) {
+                                                            let msgID = this.getAttribute('data-msgid');
+                                                            let address = this.getAttribute('address')
+                                                            console.log("msgID:" + msgID)
+                                                            directionsDisplay.setMap(null);
+                                                            console.log(address)
+                                                            showroad(address)
+
+                                                        })
+                                                    }
+
+
+                                                    function showroad(address) {
+                                                        console.log(address)
+
+                                                        directionsDisplay.setMap(map);
+                                                        var request = {
+                                                            origin: { lat: lat, lng: lon },
+                                                            destination: address,
+                                                            travelMode: 'DRIVING',
+                                                            language: 'zh-TW'
+                                                        };
+
+                                                        directionsService.route(request, function (result, status) {
+                                                            if (status == 'OK') {
+                                                                // 回傳路線上每個步驟的細節
+                                                                directionsDisplay.setDirections(result);  // 顯示路線
+
+                                                                directionsDisplay.setMap(map);
+                                                                var steps = result.routes[0].legs[0].steps;
+                                                                var html = '<div>路徑:</div>';
+                                                                for (var i = 0; i < steps.length; i++) {
+                                                                    html += '<p class ="instructions">' + steps[i].instructions + '<p>';
+                                                                }
+                                                                document.getElementById('roaddetail').innerHTML = html;
+
+                                                            } else {
+                                                                console.log(status);
+                                                            }
+                                                        })
+                                                    }
+
+
+
 
                                                 } else {
-                                                    console.log(status);
+                                                    console.error("Failed to get distance matrix: " + status);
                                                 }
-                                            })
-                                        }
+                                            }
 
 
 
 
-                                    } else {
-                                        console.error("Failed to get distance matrix: " + status);
+                                        })
+
+
                                     }
-                                }
+
+                                    function showfar2(ans) {
+                                        console.log(ans);
+                                        var result = LocationDetails.filter(item => ans.includes(item.county));
+                                        var shopAddresses = result.map(item => item.shopAddress);
 
 
 
+                                        var lat, lon;
+                                        var promise1 = new Promise(function (resolve, reject) {
+                                            navigator.geolocation.getCurrentPosition(function (pos) {
+                                                lat = pos.coords.latitude
+                                                lon = pos.coords.longitude
 
-                            })
-                        }
-
-
-                    })
-                    var checkbox2 = document.getElementById("defaultCheck2");
-                    checkbox2.addEventListener("change", function () {
-                        if (checkbox2.checked) {
-                            checkbox1.checked = false;
-                        }
-                        axios({
-                            url: 'http://localhost:8080/Bookstrap/shops/allshopslist',
-                            method: 'get',
-                        })
-                            .then(res => {
-                                console.log(res.data)
-                                showcloseshop(res.data)
-                            })
-                            .catch(err => {
-                                console.log(err)
-                            })
-                        function showcloseshop(data) {
-
-                            var locations = [];
-                            data.forEach(element => {
-                                let shopid = element.id
-                                let shopAddress = element.shopAddress
-                                let shopPhone = element.shopPhone
-                                locations.push(element.shopAddress)
-                                // locations.push(new google.maps.LatLng(element.latitude, element.longitude))
-                            })
-                            var locationdetails = [];
-                            data.forEach(element => {
-                                let shopid = element.id
-                                let shopName = element.shopName
-                                let shopAddress = element.shopAddress
-                                let shopPhone = element.shopPhone
-                                let shoptime = element.shopOpenHour + "-" + element.shopcloseHour
-
-                                locationdetails.push({
-                                    shopid: shopid, shopName: shopName, shopAddress: shopAddress
-                                    , shopPhone: shopPhone, shoptime: shoptime
-                                })
-
-                            })
-
-
-
-                            var lat, lon;
-                            var promise1 = new Promise(function (resolve, reject) {
-                                navigator.geolocation.getCurrentPosition(function (pos) {
-                                    lat = pos.coords.latitude
-                                    lon = pos.coords.longitude
-
-                                    resolve({ lat, lon })
-                                })
-                            })
-
-                            promise1.then(function (value) {
-                                let originPosition = new google.maps.LatLng(value.lat, value.lon);
-                                console.log('opop:' + originPosition)
-
-
-                                const service = new google.maps.DistanceMatrixService();
-                                service.getDistanceMatrix({
-                                    origins: [originPosition],
-                                    destinations: locations,
-                                    travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
-                                    unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
-                                    avoidHighways: false, // 是否避開高速公路
-                                    avoidTolls: false // 是否避開收費路線
-                                }, callback);
-
-                                function callback(response, status) {
-                                    if (status === "OK") {
-                                        console.log("goodgood");
-                                        console.log(response);
-                                        let len = locations.length
-                                        let places = [];
-                                        console.log("location" + locations[0]);
-                                        console.log("distancevalue" + response.rows[0].elements[1].distance.value);
-                                        console.log("distance" + response.rows[0].elements[1].distance.text);
-                                        console.log("duration" + response.rows[0].elements[1].duration.text);
-
-                                        for (let i = 0; i < len; i++) {
-                                            let placedetail = {
-                                                shopAddress: locations[i],
-                                                distancevalue: response.rows[0].elements[i].distance.value,
-
-                                                distance: response.rows[0].elements[i].distance.text,
-                                                duration: response.rows[0].elements[i].duration.text
-                                            };
-                                            places.push(placedetail)
-                                        }
-
-                                        places.sort((a, b) => {
-                                            return a.distancevalue - b.distancevalue;
-                                        });
-                                        var shopshow = ""
-                                        for (let i = 0; i < places.length; i++) {
-
-                                            let viewright = document.getElementById('viewright')
-
-                                            viewright.innerHTML = ""
-                                            const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
-
-                                            shopshow += '<div   class="card" style="width: 15rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
-                                                + '<div class="card-body row justify-content-center">'
-                                                + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
-                                                + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
-                                                + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
-                                                + ' <p class="card-text text-center">距離:' + places[i].distance + '</p>'
-                                                + ' <p class="card-text text-center">預估花費時間:' + places[i].duration + '</p>'
-                                                + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
-                                                + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
-                                                + '</div>'
-                                                + '</div>'
-                                                + '<br>'
-
-                                        };
-
-
-                                        viewright.innerHTML = shopshow
-
-
-
-                                        const roadguideBtn = document.getElementsByClassName("road");
-
-
-
-
-                                        for (i = 0; i < roadguideBtn.length; i++) {
-                                            roadguideBtn[i].addEventListener('click', function (e) {
-                                                let msgID = this.getAttribute('data-msgid');
-                                                let address = this.getAttribute('address')
-                                                console.log("msgID:" + msgID)
-                                                directionsDisplay.setMap(null);
-                                                console.log(address)
-                                                showroad(address)
-
+                                                resolve({ lat, lon })
                                             })
-                                        }
+                                        })
 
-                                        var directionsService = new google.maps.DirectionsService();
-                                        var directionsDisplay = new google.maps.DirectionsRenderer();
-
-                                        const deleteroad1 = document.getElementsByClassName("deleteroad");
-
-                                        for (i = 0; i < deleteroad1.length; i++) {
-                                            deleteroad1[i].addEventListener('click', function (e) {
-                                                directionsDisplay.setMap(null);
-                                                document.getElementById('roaddetail').innerHTML = ""
-                                            })
-                                        }
+                                        promise1.then(function (value) {
+                                            let originPosition = new google.maps.LatLng(value.lat, value.lon);
+                                            console.log('opop:' + originPosition)
 
 
+                                            const service = new google.maps.DistanceMatrixService();
+                                            service.getDistanceMatrix({
+                                                origins: [originPosition],
+                                                destinations: shopAddresses,
+                                                travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
+                                                unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
+                                                avoidHighways: false, // 是否避開高速公路
+                                                avoidTolls: false // 是否避開收費路線
+                                            }, callback);
 
+                                            function callback(response, status) {
+                                                if (status === "OK") {
 
+                                                    console.log(response);
+                                                    let len = shopAddresses.length
+                                                    let places = [];
 
-                                        function showroad(address) {
-                                            console.log(address)
+                                                    for (let i = 0; i < len; i++) {
+                                                        let placedetail = {
+                                                            shopAddress: shopAddresses[i],
 
-                                            var request = {
-                                                origin: { lat: lat, lng: lon },
-                                                destination: address,
-                                                travelMode: 'DRIVING',
-                                                language: 'zh-TW'
-                                            };
-
-                                            directionsService.route(request, function (result, status) {
-                                                if (status == 'OK') {
-                                                    // 回傳路線上每個步驟的細節
-
-                                                    directionsDisplay.setDirections(result);  // 顯示路線
-
-                                                    directionsDisplay.setMap(map);            // 再設置地圖
-
-                                                    var steps = result.routes[0].legs[0].steps;
-                                                    var html = '<div>路徑:</div>';
-                                                    for (var i = 0; i < steps.length; i++) {
-                                                        html += '<p class ="instructions">' + steps[i].instructions + '<p>';
+                                                            distancevalue: response.rows[0].elements[i].distance.value,
+                                                            distance: response.rows[0].elements[i].distance.text,
+                                                            duration: response.rows[0].elements[i].duration.text
+                                                        };
+                                                        places.push(placedetail)
                                                     }
-                                                    document.getElementById('roaddetail').innerHTML = html
+
+                                                    places.sort((a, b) => {
+                                                        return a.distancevalue - b.distancevalue;
+                                                    });
+                                                    var shopshow = ""
+                                                    for (let i = 0; i < places.length; i++) {
+
+                                                        let viewright = document.getElementById('viewright')
+
+                                                        viewright.innerHTML = ""
+                                                        const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
+
+                                                        shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                                            + '<div class="card-body row justify-content-center">'
+                                                            + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
+                                                            + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
+                                                            + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
+                                                            + ' <p class="card-text text-center">距離:' + places[i].distance + '</p>'
+                                                            + ' <p class="card-text text-center">預估花費時間:' + places[i].duration + '</p>'
+                                                            + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
+                                                            + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
+                                                            + '</div>'
+                                                            + '</div>'
+                                                            + '</div>'
+                                                            + '</br>'
+
+                                                    };
+
+                                                    viewright.innerHTML = shopshow
+                                                    var directionsService = new google.maps.DirectionsService();
+                                                    var directionsDisplay = new google.maps.DirectionsRenderer();
+
+                                                    const deleteroad1 = document.getElementsByClassName("deleteroad");
+
+                                                    for (i = 0; i < deleteroad1.length; i++) {
+                                                        deleteroad1[i].addEventListener('click', function (e) {
+                                                            directionsDisplay.setMap(null);
+                                                            document.getElementById('roaddetail').innerHTML = ""
+
+                                                        })
+                                                    }
+
+                                                    const roadguideBtn = document.getElementsByClassName("road");
+                                                    for (i = 0; i < roadguideBtn.length; i++) {
+                                                        roadguideBtn[i].addEventListener('click', function (e) {
+                                                            let msgID = this.getAttribute('data-msgid');
+                                                            let address = this.getAttribute('address')
+                                                            console.log("msgID:" + msgID)
+                                                            directionsDisplay.setMap(null);
+                                                            console.log(address)
+                                                            showroad(address)
+
+                                                        })
+                                                    }
+
+
+                                                    function showroad(address) {
+                                                        console.log(address)
+
+                                                        directionsDisplay.setMap(map);
+                                                        var request = {
+                                                            origin: { lat: lat, lng: lon },
+                                                            destination: address,
+                                                            travelMode: 'DRIVING',
+                                                            language: 'zh-TW'
+                                                        };
+
+                                                        directionsService.route(request, function (result, status) {
+                                                            if (status == 'OK') {
+                                                                // 回傳路線上每個步驟的細節
+                                                                directionsDisplay.setDirections(result);  // 顯示路線
+
+                                                                directionsDisplay.setMap(map);
+                                                                var steps = result.routes[0].legs[0].steps;
+                                                                var html = '<div>路徑:</div>';
+                                                                for (var i = 0; i < steps.length; i++) {
+                                                                    html += '<p class ="instructions">' + steps[i].instructions + '<p>';
+                                                                }
+                                                                document.getElementById('roaddetail').innerHTML = html;
+
+                                                            } else {
+                                                                console.log(status);
+                                                            }
+                                                        })
+                                                    }
+
                                                 } else {
-                                                    console.log(status);
+                                                    console.error("Failed to get distance matrix: " + status);
                                                 }
+                                            }
+                                        })
+                                    }
+
+                                    function showalldur() {
+
+                                        axios({
+                                            url: 'http://localhost:8080/Bookstrap/shops/allshopslist',
+                                            method: 'get',
+                                        })
+                                            .then(res => {
+                                                console.log(res.data)
+                                                showcloseshop(res.data)
+                                            })
+                                            .catch(err => {
+                                                console.log(err)
+                                            })
+                                        function showcloseshop(data) {
+
+                                            var locations = [];
+                                            data.forEach(element => {
+                                                let shopid = element.id
+                                                let shopAddress = element.shopAddress
+                                                let shopPhone = element.shopPhone
+                                                locations.push(element.shopAddress)
+                                                // locations.push(new google.maps.LatLng(element.latitude, element.longitude))
+                                            })
+                                            var locationdetails = [];
+                                            data.forEach(element => {
+                                                let shopid = element.id
+                                                let shopName = element.shopName
+                                                let shopAddress = element.shopAddress
+                                                let shopPhone = element.shopPhone
+                                                let shoptime = element.shopOpenHour + "-" + element.shopcloseHour
+
+                                                locationdetails.push({
+                                                    shopid: shopid, shopName: shopName, shopAddress: shopAddress
+                                                    , shopPhone: shopPhone, shoptime: shoptime
+                                                })
+
+                                            })
+
+
+
+                                            var lat, lon;
+                                            var promise1 = new Promise(function (resolve, reject) {
+                                                navigator.geolocation.getCurrentPosition(function (pos) {
+                                                    lat = pos.coords.latitude
+                                                    lon = pos.coords.longitude
+
+                                                    resolve({ lat, lon })
+                                                })
+                                            })
+
+                                            promise1.then(function (value) {
+                                                let originPosition = new google.maps.LatLng(value.lat, value.lon);
+                                                console.log('opop:' + originPosition)
+
+
+                                                const service = new google.maps.DistanceMatrixService();
+                                                service.getDistanceMatrix({
+                                                    origins: [originPosition],
+                                                    destinations: locations,
+                                                    travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
+                                                    unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
+                                                    avoidHighways: false, // 是否避開高速公路
+                                                    avoidTolls: false // 是否避開收費路線
+                                                }, callback);
+
+                                                function callback(response, status) {
+                                                    if (status === "OK") {
+                                                        console.log("goodgood");
+                                                        console.log(response);
+                                                        let len = locations.length
+                                                        let places = [];
+                                                        console.log("location" + locations[0]);
+                                                        console.log("distancevalue" + response.rows[0].elements[1].distance.value);
+                                                        console.log("distance" + response.rows[0].elements[1].distance.text);
+                                                        console.log("duration" + response.rows[0].elements[1].duration.text);
+
+                                                        for (let i = 0; i < len; i++) {
+                                                            let placedetail = {
+                                                                shopAddress: locations[i],
+                                                                durationvalue: response.rows[0].elements[i].duration.value,
+
+                                                                distance: response.rows[0].elements[i].distance.text,
+                                                                duration: response.rows[0].elements[i].duration.text
+                                                            };
+                                                            places.push(placedetail)
+                                                        }
+
+                                                        places.sort((a, b) => {
+                                                            return a.durationvalue - b.durationvalue;
+                                                        });
+                                                        var shopshow = ""
+                                                        for (let i = 0; i < places.length; i++) {
+
+                                                            let viewright = document.getElementById('viewright')
+
+                                                            viewright.innerHTML = ""
+                                                            const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
+
+                                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                                                + '<div class="card-body row justify-content-center">'
+                                                                + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
+                                                                + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
+                                                                + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
+                                                                + ' <p class="card-text text-center">距離:' + places[i].distance + '</p>'
+                                                                + ' <p class="card-text text-center">預估花費時間:' + places[i].duration + '</p>'
+                                                                + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
+                                                                + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
+                                                                + '</div>'
+                                                                + '</div>'
+                                                                + '</div>'
+                                                                + '</br>'
+
+                                                        };
+
+
+                                                        viewright.innerHTML = shopshow
+
+
+
+
+
+
+                                                        var directionsService = new google.maps.DirectionsService();
+                                                        var directionsDisplay = new google.maps.DirectionsRenderer();
+
+                                                        const deleteroad1 = document.getElementsByClassName("deleteroad");
+
+                                                        for (i = 0; i < deleteroad1.length; i++) {
+                                                            deleteroad1[i].addEventListener('click', function (e) {
+                                                                directionsDisplay.setMap(null);
+                                                                document.getElementById('roaddetail').innerHTML = ""
+
+                                                            })
+                                                        }
+
+                                                        const roadguideBtn = document.getElementsByClassName("road");
+                                                        for (i = 0; i < roadguideBtn.length; i++) {
+                                                            roadguideBtn[i].addEventListener('click', function (e) {
+                                                                let msgID = this.getAttribute('data-msgid');
+                                                                let address = this.getAttribute('address')
+                                                                console.log("msgID:" + msgID)
+                                                                directionsDisplay.setMap(null);
+                                                                console.log(address)
+                                                                showroad(address)
+
+                                                            })
+                                                        }
+
+
+                                                        function showroad(address) {
+                                                            console.log(address)
+
+                                                            directionsDisplay.setMap(map);
+                                                            var request = {
+                                                                origin: { lat: lat, lng: lon },
+                                                                destination: address,
+                                                                travelMode: 'DRIVING',
+                                                                language: 'zh-TW'
+                                                            };
+
+                                                            directionsService.route(request, function (result, status) {
+                                                                if (status == 'OK') {
+                                                                    // 回傳路線上每個步驟的細節
+                                                                    directionsDisplay.setDirections(result);  // 顯示路線
+
+                                                                    directionsDisplay.setMap(map);
+                                                                    var steps = result.routes[0].legs[0].steps;
+                                                                    var html = '<div>路徑:</div>';
+                                                                    for (var i = 0; i < steps.length; i++) {
+                                                                        html += '<p class ="instructions">' + steps[i].instructions + '<p>';
+                                                                    }
+                                                                    document.getElementById('roaddetail').innerHTML = html;
+
+                                                                } else {
+                                                                    console.log(status);
+                                                                }
+                                                            })
+                                                        }
+
+
+
+
+                                                    } else {
+                                                        console.error("Failed to get distance matrix: " + status);
+                                                    }
+                                                }
+
+
+
+
                                             })
                                         }
-                                    } else {
-                                        console.error("Failed to get distance matrix: " + status);
+
+
+
                                     }
-                                }
-                            })
-                        }
-                    })
 
-                    const northBtn = document.getElementById("north");
-                    const southBtn = document.getElementById("south");
-                    const westBtn = document.getElementById("west");
-                    const eastBtn = document.getElementById("east");
 
-                    northBtn.addEventListener("change", function () {
-                        console.log("okok")
-                        console.log(northBtn.value)
-                        let place = ""
+                                    function showalldis() {
 
-                        // %臺北市% OR address LIKE %新北市% OR address LIKE %基隆市% OR address LIKE %新竹市% OR address LIKE %宜蘭縣% OR address LIKE %台北市% OR address LIKE %花蓮縣%
+                                        axios({
+                                            url: 'http://localhost:8080/Bookstrap/shops/allshopslist',
+                                            method: 'get',
+                                        })
+                                            .then(res => {
+                                                console.log(res.data)
+                                                showcloseshop(res.data)
+                                            })
+                                            .catch(err => {
+                                                console.log(err)
+                                            })
+                                        function showcloseshop(data) {
 
-                        place += " '%臺北市%' or address LIKE '%花蓮縣%'"
-                        // if (southBtn.checked == true) {
-                        //     console.log(southBtn.value)
-                        // }
-                        // if (westBtn.checked == true) {
-                        //     console.log(westBtn.value)
-                        // }
-                        // if (eastBtn.checked == true) {
-                        //     console.log(eastBtn.value)
-                        // }
-console.log(place)
-                        axios({
-                            url: 'http://localhost:8080/Bookstrap/shops/likeaddress',
-                            method: 'get',
-                            params:{
-                                place:place
-                            }
-                        })
-                            .then(res => {
-                                console.log(res.data)
-                                // showcloseshop(res.data)
-                            })
-                            .catch(err => {
-                                console.log(err)
-                            })
+                                            var locations = [];
+                                            data.forEach(element => {
+                                                let shopid = element.id
+                                                let shopAddress = element.shopAddress
+                                                let shopPhone = element.shopPhone
+                                                locations.push(element.shopAddress)
+                                                // locations.push(new google.maps.LatLng(element.latitude, element.longitude))
+                                            })
+                                            var locationdetails = [];
+                                            data.forEach(element => {
+                                                let shopid = element.id
+                                                let shopName = element.shopName
+                                                let shopAddress = element.shopAddress
+                                                let shopPhone = element.shopPhone
+                                                let shoptime = element.shopOpenHour + "-" + element.shopcloseHour
 
-                        function showcloseshop(data) {
+                                                locationdetails.push({
+                                                    shopid: shopid, shopName: shopName, shopAddress: shopAddress
+                                                    , shopPhone: shopPhone, shoptime: shoptime
+                                                })
 
-                            var locations = [];
-                            data.forEach(element => {
-                                let shopid = element.id
-                                let shopAddress = element.shopAddress
-                                let shopPhone = element.shopPhone
-                                locations.push(element.shopAddress)
-                                // locations.push(new google.maps.LatLng(element.latitude, element.longitude))
-                            })
-                            var locationdetails = [];
-                            data.forEach(element => {
-                                let shopid = element.id
-                                let shopName = element.shopName
-                                let shopAddress = element.shopAddress
-                                let shopPhone = element.shopPhone
-                                let shoptime = element.shopOpenHour + "-" + element.shopcloseHour
+                                            })
 
-                                locationdetails.push({
-                                    shopid: shopid, shopName: shopName, shopAddress: shopAddress
-                                    , shopPhone: shopPhone, shoptime: shoptime
+
+
+                                            var lat, lon;
+                                            var promise1 = new Promise(function (resolve, reject) {
+                                                navigator.geolocation.getCurrentPosition(function (pos) {
+                                                    lat = pos.coords.latitude
+                                                    lon = pos.coords.longitude
+
+                                                    resolve({ lat, lon })
+                                                })
+                                            })
+
+                                            promise1.then(function (value) {
+                                                let originPosition = new google.maps.LatLng(value.lat, value.lon);
+                                                console.log('opop:' + originPosition)
+
+
+                                                const service = new google.maps.DistanceMatrixService();
+                                                service.getDistanceMatrix({
+                                                    origins: [originPosition],
+                                                    destinations: locations,
+                                                    travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
+                                                    unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
+                                                    avoidHighways: false, // 是否避開高速公路
+                                                    avoidTolls: false // 是否避開收費路線
+                                                }, callback);
+
+                                                function callback(response, status) {
+                                                    if (status === "OK") {
+                                                        console.log("goodgood");
+                                                        console.log(response);
+                                                        let len = locations.length
+                                                        let places = [];
+                                                        console.log("location" + locations[0]);
+                                                        console.log("distancevalue" + response.rows[0].elements[1].distance.value);
+                                                        console.log("distance" + response.rows[0].elements[1].distance.text);
+                                                        console.log("duration" + response.rows[0].elements[1].duration.text);
+
+                                                        for (let i = 0; i < len; i++) {
+                                                            let placedetail = {
+                                                                shopAddress: locations[i],
+                                                                distancevalue: response.rows[0].elements[i].distance.value,
+
+                                                                distance: response.rows[0].elements[i].distance.text,
+                                                                duration: response.rows[0].elements[i].duration.text
+                                                            };
+                                                            places.push(placedetail)
+                                                        }
+
+                                                        places.sort((a, b) => {
+                                                            return a.distancevalue - b.distancevalue;
+                                                        });
+                                                        var shopshow = ""
+                                                        for (let i = 0; i < places.length; i++) {
+
+                                                            let viewright = document.getElementById('viewright')
+
+                                                            viewright.innerHTML = ""
+                                                            const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
+
+                                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                                                + '<div class="card-body row justify-content-center">'
+                                                                + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
+                                                                + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
+                                                                + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
+                                                                + ' <p class="card-text text-center">距離:' + places[i].distance + '</p>'
+                                                                + ' <p class="card-text text-center">預估花費時間:' + places[i].duration + '</p>'
+                                                                + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
+                                                                + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
+                                                                + '</div>'
+                                                                + '</div>'
+                                                                + '</div>'
+                                                                + '</br>'
+
+                                                        };
+
+
+                                                        viewright.innerHTML = shopshow
+
+
+
+
+
+
+                                                        var directionsService = new google.maps.DirectionsService();
+                                                        var directionsDisplay = new google.maps.DirectionsRenderer();
+
+                                                        const deleteroad1 = document.getElementsByClassName("deleteroad");
+
+                                                        for (i = 0; i < deleteroad1.length; i++) {
+                                                            deleteroad1[i].addEventListener('click', function (e) {
+                                                                directionsDisplay.setMap(null);
+                                                                document.getElementById('roaddetail').innerHTML = ""
+
+                                                            })
+                                                        }
+
+                                                        const roadguideBtn = document.getElementsByClassName("road");
+                                                        for (i = 0; i < roadguideBtn.length; i++) {
+                                                            roadguideBtn[i].addEventListener('click', function (e) {
+                                                                let msgID = this.getAttribute('data-msgid');
+                                                                let address = this.getAttribute('address')
+                                                                console.log("msgID:" + msgID)
+                                                                directionsDisplay.setMap(null);
+                                                                console.log(address)
+                                                                showroad(address)
+
+                                                            })
+                                                        }
+
+
+                                                        function showroad(address) {
+                                                            console.log(address)
+
+                                                            directionsDisplay.setMap(map);
+                                                            var request = {
+                                                                origin: { lat: lat, lng: lon },
+                                                                destination: address,
+                                                                travelMode: 'DRIVING',
+                                                                language: 'zh-TW'
+                                                            };
+
+                                                            directionsService.route(request, function (result, status) {
+                                                                if (status == 'OK') {
+                                                                    // 回傳路線上每個步驟的細節
+                                                                    directionsDisplay.setDirections(result);  // 顯示路線
+
+                                                                    directionsDisplay.setMap(map);
+                                                                    var steps = result.routes[0].legs[0].steps;
+                                                                    var html = '<div>路徑:</div>';
+                                                                    for (var i = 0; i < steps.length; i++) {
+                                                                        html += '<p class ="instructions">' + steps[i].instructions + '<p>';
+                                                                    }
+                                                                    document.getElementById('roaddetail').innerHTML = html;
+
+                                                                } else {
+                                                                    console.log(status);
+                                                                }
+                                                            })
+                                                        }
+
+
+
+
+                                                    } else {
+                                                        console.error("Failed to get distance matrix: " + status);
+                                                    }
+                                                }
+
+
+
+
+                                            })
+                                        }
+
+
+
+                                    }
+
+                                    resolve(addresses);
                                 })
+                                .catch(error => {
+                                    console.error(error);
+                                    reject(error);
+                                });
+                        });
+                    }
 
-                            })
-                        }
-                    })
+
+
+
                 }
 
 
@@ -750,4 +1255,3 @@ console.log(place)
         </body>
 
         </html>
-        <script
