@@ -1,6 +1,8 @@
-package com.bookstrap.harry.security;
+package com.bookstrap.harry.newsecurity;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import com.bookstrap.harry.bean.Members;
 
 public class CustomUserDetails implements UserDetails {
 
-	@Autowired
 	private Members member;
 
 	public CustomUserDetails(Members member) {
@@ -22,45 +23,39 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
-		return member.getRoles().stream()
-				.map((Roles role) -> new SimpleGrantedAuthority(role.getRolesName()))
-				.collect(Collectors.toList());
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(member.getRole().toString()));
+			return authorities;
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		return member.getMemberPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return member.getMemberAccount();
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 	

@@ -46,11 +46,16 @@ public class Members {
 	@Column(name = "vertification_code")
 	private String vertificationCode;
 	
+	//test
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "MemberRoles",
 	joinColumns = @JoinColumn(name = "FK_member_id"),
 	inverseJoinColumns = @JoinColumn(name = "FK_role_id"))
 	private Collection<Roles> roles;
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "auth_provider")
@@ -95,6 +100,15 @@ public class Members {
 	
 	
 	
+	
+	
+	public Members(String memberAccount, String memberPassword, Role role) {
+		super();
+		this.memberAccount = memberAccount;
+		this.memberPassword = memberPassword;
+		this.role = role;
+	}
+
 	public Members(Integer memberId) {
 		super();
 		this.memberId = memberId;
@@ -102,6 +116,14 @@ public class Members {
 	
 	
 	
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	public Set<Favorite> getFavorite() {
 		return favorite;

@@ -19,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
-
+//https://www.codejava.net/frameworks/spring-boot/multiple-login-pages-examples
 
 @Configuration
 @EnableWebSecurity
