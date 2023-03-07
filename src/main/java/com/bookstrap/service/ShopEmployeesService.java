@@ -1,17 +1,20 @@
 package com.bookstrap.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bookstrap.model.NewScheduleDto;
+import com.bookstrap.model.ShopEmployeesDto;
 import com.bookstrap.model.ShopEmployeesRepository;
 import com.bookstrap.model.Shops;
 import com.bookstrap.model.ShopsRepository;
 import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.ShopEmployees;
+import com.bookstrap.model.bean.ShopEmployeesSchedule;
 
 @Service
 @Transactional
@@ -28,10 +31,20 @@ public class ShopEmployeesService {
   }
 
   public ShopEmployees getShopEmployeeById(int id) {
-//	  Optional<ShopEmployees> semp = sempDao.findById(id);
-//	  ShopEmployees shopId = semp.get();
-//	  return shopId;
     return sempDao.findById(id).orElse(null);
+  }
+  
+  public List<ShopEmployeesDto> getAllIdNameByShopEmployees(){
+	  List<ShopEmployeesDto> sempDtos = new ArrayList<>();
+	  List<ShopEmployees> semps = sempDao.findAll();
+	  for (ShopEmployees semp : semps) {
+		  ShopEmployeesDto sempDto =new ShopEmployeesDto();
+		  sempDto.setSempId(semp.getEmpId());
+		  sempDto.setSempName(semp.getEmpName());
+		  sempDtos.add(sempDto);
+	  }
+	return sempDtos;
+	  
   }
 
   public ShopEmployees addShopEmployee(ShopEmployees shopEmployee) {
@@ -53,5 +66,7 @@ public class ShopEmployeesService {
   public void deleteShopEmployee(int id) {
 	  sempDao.deleteByIdQuery(id);
   }
+
+
 }
 

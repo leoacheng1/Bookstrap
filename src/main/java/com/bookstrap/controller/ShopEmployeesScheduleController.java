@@ -3,47 +3,60 @@ package com.bookstrap.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookstrap.model.NewScheduleDto;
+import com.bookstrap.model.ShopEmployeesDto;
 import com.bookstrap.model.bean.ShopEmployeesSchedule;
 import com.bookstrap.service.ShopEmployeesScheduleService;
+import com.bookstrap.service.ShopEmployeesService;
 
-@RestController
+@Controller
 public class ShopEmployeesScheduleController {
 
-//	@Autowired
-//	private NewScheduleService newscheduleService;
-//	
+
 	@Autowired
     private ShopEmployeesScheduleService sempscheService;
 	
-//	@GetMapping("/sempsche/showpage")
-//	public String showPage(Model m) {
-//		List<ShopEmployeesSchedule> sempsche = sempscheService.getAllShopEmployeesSchedule();
-//		m.addAttribute("sempsche",sempsche);
-//		return "shopemployees/showsempsche";
-//
-//	}
+	@Autowired
+	private ShopEmployeesService sempService;
 	
-//	@GetMapping("/sempsche/showall")
-//	@ResponseBody
-//	public List<NewSchedule> findAll(){
-//		return newscheduleService.getAllSchedule();
-//		
-//	}
+
+	@GetMapping("/sempsche/showpage")
+	public String insertSchedule() {
+		
+		return "shopemployees/showsempsche";
+	}
 	
-	@GetMapping("/sempsche/showall")
+	@GetMapping("/sempsche/showsche")
+	@ResponseBody
 	public List<NewScheduleDto> findAll(){
 		return sempscheService.getAllSchedules();
 	}
 	
-	@PostMapping("/sempsche/insertpage")
-	public String insertSchedule() {
+	@GetMapping("/sempsche/showsemp")
+	@ResponseBody
+	public List<ShopEmployeesDto> findAllEmployees(){
+		return sempService.getAllIdNameByShopEmployees();
 		
-		return "shopemployees/home";
 	}
+	
+	@ResponseBody
+	@PostMapping("/sempsche/addsemp")
+	public String addSchedule(@RequestParam("scheduleVacation") String scheduleVacation,@RequestParam("scheduleVacation") Integer id) {
+		try {
+			ShopEmployeesSchedule sempsche = new ShopEmployeesSchedule();
+			sempsche.setScheduleVacation(scheduleVacation);
+			sempsche.setScheduleEmpid(id);
+			sempscheService.addShopEmployeesSchedule(sempsche);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	   return "shopemployees/home";
+	}
+
 }
