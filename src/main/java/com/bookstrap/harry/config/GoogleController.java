@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.security.CipherUtils;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 
@@ -36,9 +37,12 @@ public class GoogleController {
 		
 		String uEmail = user.getMemberAccount();
 		String uPassword = user.getMemberPassword();
+		System.out.println("GGGGGoogle controller: " + uPassword);
+		
+		
 		Members loginUser = new Members(uEmail, uPassword);
 		
-		Integer status = memberService.checkLogin(loginUser);
+		Integer status = memberService.checkLogin2(loginUser);
 		
 		
 		if (status == null) {
@@ -48,7 +52,7 @@ public class GoogleController {
 			Members mEmail2 = memberService.useEmailFindId(mEmail);
 			Integer result2 = mEmail2.getMemberId();
 			session.setAttribute("memberId", result2);
-			return "redirect:/member/registrationpage";
+			return "member/Registration";
 					}else if (status == 2) {
 
 						// 要先得到由Email找出的Id
@@ -73,7 +77,7 @@ public class GoogleController {
 
 						System.out.println("status: " + status);
 						
-						return "redirect:main";
+						return "redirect:/member/main";
 						
 					} else if (status == 0) {
 						return "member/VertifyStatus";

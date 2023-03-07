@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
+
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 	<li class="nav-item">
-	  <a href="pages/calendar.html" class="nav-link">
+	  <a href="${contextRoot}/backend/index" class="nav-link">
 		<i class="nav-icon fas fa-calendar-alt"></i>
 		<p>
 		  首頁
@@ -10,7 +12,7 @@
 
 	  </a>
 	</li>
-	<li class="nav-header">分店管理</li>
+	<li class="nav-header">商城管理</li>
 	<li class="nav-item">
 		<a href="pages/calendar.html" class="nav-link">
 		  <i class="nav-icon fas fa-calendar-alt"></i>
@@ -25,21 +27,21 @@
 	  <a href="#" class="nav-link">
 		<i class="nav-icon fas fa-table"></i>
 		<p>
-		  分店管理
+		  商城管理
 		  <i class="fas fa-angle-left right"></i>
 		</p>
 	  </a>
 	  <ul class="nav nav-treeview" style="display: none;">
 		<li class="nav-item">
-		  <a href="pages/tables/simple.html" class="nav-link">
+		  <a href="${contextRoot}/books/page" class="nav-link">
 			<i class="far fa-circle nav-icon"></i>
-			<p>功能1</p>
+			<p>所有書籍</p>
 		  </a>
 		</li>
 		<li class="nav-item">
-		  <a href="pages/tables/data.html" class="nav-link">
+		  <a href="${contextRoot}/books/add" class="nav-link">
 			<i class="far fa-circle nav-icon"></i>
-			<p>功能2</p>
+			<p>新增書籍</p>
 		  </a>
 		</li>
 		<li class="nav-item">
@@ -50,7 +52,7 @@
 		</li>
 	  </ul>
 	</li>
-	<li class="nav-header">員工管理</li>
+	<li class="nav-header">會員管理</li>
 	<li class="nav-item">
 		<a href="pages/calendar.html" class="nav-link">
 		  <i class="nav-icon fas fa-calendar-alt"></i>
@@ -65,7 +67,7 @@
 		<a href="#" class="nav-link">
 		  <i class="nav-icon fas fa-table"></i>
 		  <p>
-			員工管理
+			會員管理
 			<i class="fas fa-angle-left right"></i>
 		  </p>
 		</a>

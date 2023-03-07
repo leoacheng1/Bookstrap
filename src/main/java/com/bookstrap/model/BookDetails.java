@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "BookDetails")
 public class BookDetails {
@@ -29,6 +31,7 @@ public class BookDetails {
 	@Column(name ="grade" )
 	private String grade;
 	
+	@JsonBackReference
 	@OneToOne(mappedBy = "bookDetails")
 	private Books books;
 	
