@@ -9,6 +9,18 @@
 			<meta charset="UTF-8">
 			<title>blog後台首頁</title>
 			<link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet">
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+			<script type="text/javascript">
+				function showTable() {
+					$.ajax({
+						type: "POST",
+						url: "table.php",
+						success: function (data) {
+							$('#tableContainer').html(data);
+						}
+					});
+				}
+			</script>
 		</head>
 
 		<body>
@@ -79,11 +91,26 @@
 							console.log(err)
 						})
 				}
-
-
-
-
 			</script>
+
+			<!--table test-->
+			<button onclick="showTable()">Show Table</button>
+			<div id="tableContainer"></div>
+
+
+
+
+			<!--table test end-->
+
+
+
+
+
+
+
+
+
+
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				Launch demo modal

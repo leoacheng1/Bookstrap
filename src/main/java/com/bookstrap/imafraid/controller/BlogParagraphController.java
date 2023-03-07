@@ -78,9 +78,11 @@ public class BlogParagraphController {
 	@ResponseBody
 	@PutMapping("/blog/updatePara")
 	public String updatePara(@RequestParam Integer id,@RequestParam String pTitle,@RequestParam String pContent,@RequestParam String pAuther,@RequestParam String pCatagory,@RequestParam("pPhoto") MultipartFile[] pPhoto){
-	blogParaService.updatePara(id, pTitle, pContent, pAuther, pCatagory, pPhoto);
+	
+		blogParaService.updatePara(id, pTitle, pContent, pAuther, pCatagory, pPhoto);
 	return "成功";
 	}
+	
 //	@ResponseBody
 	@GetMapping("/blog/getParaById")
 	public String getParaById(@RequestParam("id") Integer id,Model model) {

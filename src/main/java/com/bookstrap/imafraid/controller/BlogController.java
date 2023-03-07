@@ -21,5 +21,8 @@ public class BlogController {
 	public String goToupdate() {
 		return "/blog/updatePara";
 	}
-	
+	@GetMapping("/blog/testPage")
+	public String goToTestPage() {
+		return "/blog/testPage";
+	}
 }
