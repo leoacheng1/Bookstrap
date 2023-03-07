@@ -2,6 +2,7 @@ package com.bookstrap.harry.bean;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -78,6 +79,12 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<EBooks> eBooks;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private Set<Favorite> favorite;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private Set<EBookFavorite> eBookFavorite;
+	
 	public Members() {
 	}
 	
@@ -88,7 +95,6 @@ public class Members {
 	
 	
 	
-	
 	public Members(Integer memberId) {
 		super();
 		this.memberId = memberId;
@@ -96,7 +102,22 @@ public class Members {
 	
 	
 	
-	
+
+	public Set<Favorite> getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(Set<Favorite> favorite) {
+		this.favorite = favorite;
+	}
+
+	public Set<EBookFavorite> geteBookFavorite() {
+		return eBookFavorite;
+	}
+
+	public void seteBookFavorite(Set<EBookFavorite> eBookFavorite) {
+		this.eBookFavorite = eBookFavorite;
+	}
 
 	public Collection<Roles> getRoles() {
 		return roles;

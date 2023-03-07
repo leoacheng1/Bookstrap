@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstrap.harry.bean.Comment;
+import com.bookstrap.harry.bean.Favorite;
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -81,6 +82,9 @@ public class Books {
 	@OneToMany(mappedBy="book", cascade = CascadeType.ALL)
 	private Set<ShopStock> shopStocks;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	private List<Favorite> favorite;
+	
 	public List<Comment> getComment() {
 		return comment;
 	}
@@ -90,6 +94,24 @@ public class Books {
 	}
 
 	public Books() {
+	}
+	
+	
+
+	public Set<ShoppingCarts> getShoppingCarts() {
+		return shoppingCarts;
+	}
+
+	public void setShoppingCarts(Set<ShoppingCarts> shoppingCarts) {
+		this.shoppingCarts = shoppingCarts;
+	}
+
+	public List<Favorite> getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(List<Favorite> favorite) {
+		this.favorite = favorite;
 	}
 
 	public Integer getId() {
