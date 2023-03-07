@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
+<jstl:set var="watchlist" value="false" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,6 +67,11 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+      
+      #addToWatchlistButton.watchlist-added {
+    background-color: green;
+    color: white;
+}
     </style>
 
 
@@ -109,7 +115,15 @@
                   content. This content is a little bit longer.</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    	<a href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary">View</a>
+                    	<a href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary" id="watchlist-btn" onclick="toggleWatchlist()">
+                    		<jstl:if test="${watchlist eq 'true'}">
+						        Remove from Watchlist
+						    </jstl:if>
+						    <jstl:if test="${watchlist ne 'true'}">
+						        Add to Watchlist
+						    </jstl:if>
+                    	
+                    	</a>
                   </div>
                   <a type="button" href="${contextRoot}/eBook/get/pdfpage?eBookId=${eBook.eBookId}">Go to PDF</a>
                   <small class="text-muted">${eBook.eBookPublishDate}</small>
@@ -165,8 +179,36 @@
 
 
     <script src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
-
-      
+    <script src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+    <script  src="${contextRoot}/js/member/axios.min.js"></script>
+    <script>
+//     function toggleWatchlist() {
+//         // Get the book ID and current watchlist state from the JSP page
+//         const bookId = ${book.id};
+//         const watchlist = ${watchlist};
+        
+//         // Make a POST request to the Spring Boot backend to add or remove the book from the watchlist
+//         axios.get("http://localhost:8080/favorite/ebook/add", {
+//             bookId: bookId,
+//             watchlist: !watchlist
+//         })
+//         .then(response => {
+//             // If the request was successful, update the watchlist variable and button's state
+//             const newWatchlistState = response.data.watchlist;
+//             ${watchlist = newWatchlistState};
+//             const watchlistBtn = document.getElementById("watchlist-btn");
+//             if (newWatchlistState) {
+//                 watchlistBtn.innerText = "Remove from Watchlist";
+//             } else {
+//                 watchlistBtn.innerText = "Add to Watchlist";
+//             }
+//         })
+//         .catch(error => {
+//             console.log(error);
+//         });
+//     }
+</script>
+	
 
 
 

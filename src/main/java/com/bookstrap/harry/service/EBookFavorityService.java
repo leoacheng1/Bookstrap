@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.harry.bean.EBookFavorite;
+import com.bookstrap.harry.bean.EBooks;
+import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.dao.EBookFavorityRepository;
 
 @Service
@@ -19,21 +21,34 @@ public class EBookFavorityService {
 
 	
 	
-	public EBookFavorite insertEbookFavority(EBookFavorite ebf) {
+	public void insertEbookFavority(EBookFavorite ebf) {
 
-		return ebfDao.save(ebf);
-	}
-	
-	
-	public boolean deleteEbookFavority(Integer ebfId) {
+		Optional<EBookFavorite> op = ebfDao.findByMemberAndEBook(ebf.getMember(), ebf.geteBook());
 		
-		if(ebfId != null) {
-			ebfDao.deleteById(ebfId);
-			return true;
+		if(!op.isPresent()) {
+			EBookFavorite eBookFavorite = new EBookFavorite();
+			eBookFavorite.setMember(ebf.getMember());
+			eBookFavorite.seteBook(ebf.geteBook());
+			ebfDao.save(eBookFavorite);
 		}
-			return false;
-				
+		
 	}
+	
+	
+//	public boolean deleteEbookFavority(Integer ebfId) {
+//		
+//		if(ebfId != null) {
+//			ebfDao.deleteById(ebfId);
+//			return true;
+//		}
+//			return false;
+//				
+//	}
+	
+	public void deleteEBookFavorite(Members member, EBooks eBook) {
+		ebfDao.deleteByMemberAndEBook(member.getMemberId(), eBook.geteBookId());
+	}
+	
 	
 	public EBookFavorite findEBookFavorityById(Integer ebfId) {
 		Optional<EBookFavorite> op = ebfDao.findById(ebfId);
@@ -50,4 +65,8 @@ public class EBookFavorityService {
 		return ebfDao.findAll();
 	}
 
+	public List<EBookFavorite> getBookFavoriteByMember(Members member){
+		return ebfDao.findByMember(member);
+	}
+	
 }
