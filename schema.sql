@@ -25,7 +25,7 @@ Create Table MemberDetails(
 
 CREATE TABLE Gender(
 gender_id tinyint primary key not null identity(1,1),
-gender nvarchar(5)
+gender nvarchar(6)
 );
 
 INSERT INTO Gender (gender) VALUES

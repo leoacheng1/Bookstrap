@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
@@ -37,6 +38,7 @@ import com.bookstrap.harry.service.MemberService;
 import com.bookstrap.harry.service.SendEmailService;
 
 @Controller
+@SessionAttributes({"member", "memberId", "memberName"})
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
@@ -214,8 +216,12 @@ public class MemberController {
 		} else if(status == 1) {
 			Members mEmail2 = memberService.useEmailFindId(memberEmail);
 			Integer result2 = mEmail2.getMemberId();
-			session.setAttribute("memberId", result2);
-			session.setAttribute("member", mEmail2);
+//			session.setAttribute("memberId", result2);
+//			session.setAttribute("member", mEmail2);
+			
+			m.addAttribute("memberId", result2);
+			m.addAttribute("member", mEmail2);
+			
 			return "member/Registration";
 					} else if (status == 2) {
 
@@ -233,11 +239,15 @@ public class MemberController {
 			
 			
 
-			session.setAttribute("memberId", result);
-
-			session.setAttribute("member", logInmember);
-
-			session.setAttribute("memberName", memberName);
+//			session.setAttribute("memberId", result);
+//			session.setAttribute("member", logInmember);
+//			session.setAttribute("memberName", memberName);
+			
+			
+			m.addAttribute("memberId", result);
+			m.addAttribute("member", logInmember);
+			m.addAttribute("memberName", memberName);
+			
 
 			System.out.println("status: " + status);
 			
@@ -291,10 +301,11 @@ public class MemberController {
 	}
 
 	@GetMapping("/member/logout")
-	public String logOut(HttpSession session) {
+	public String logOut(HttpSession session, SessionStatus status) {
 
 		if (session.getAttribute("member") != null) {
-			session.invalidate();
+//			session.invalidate();
+			status.setComplete();
 			return "redirect:/index";
 		}
 		return "member/SignInPage";
