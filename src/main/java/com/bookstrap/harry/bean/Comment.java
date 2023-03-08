@@ -39,8 +39,6 @@ public class Comment {
 	private Integer evaluation;
 
 	// ??最愛 0:沒有 1:有
-	@Column(name = "favorite")
-	private Integer favorite;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id")
@@ -99,13 +97,6 @@ public class Comment {
 		this.evaluation = evaluation;
 	}
 
-	public Integer getFavorite() {
-		return favorite;
-	}
-
-	public void setFavorite(Integer favorite) {
-		this.favorite = favorite;
-	}
 
 	public Members getMember() {
 		return member;

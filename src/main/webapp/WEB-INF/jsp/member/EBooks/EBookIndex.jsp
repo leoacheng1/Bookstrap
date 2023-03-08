@@ -119,13 +119,13 @@
                   content. This content is a little bit longer.</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    	<a type="button" href="{contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary " id="addToWatchlistButton" >
+                    	<a type="button"  class="btn btn-sm btn-outline-secondary " id="addToWatchlistButton" >
                     		
 <%--                     		${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId} --%>
 <%-- 						        addToWatchlist(${eBook.eBookId}) --%>
-						        <div id="watchListString">
+						        
 						        Add to Watchlist
-						  		</div>
+						  
                     	
                     	</a>
                   </div>
@@ -185,6 +185,7 @@
     <script src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
     <script src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
     <script  src="${contextRoot}/js/member/axios.min.js"></script>
+    
     <script  src="${contextRoot}/js/member/watchlist.js"></script>
    
 	

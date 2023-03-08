@@ -12,16 +12,18 @@ watchListBtn.addEventListener('click', function(){
    addToWatchlist()
 })
 
-function addToWatchlist(eBookId1){
+function addToWatchlist(){
     let memberId1 = document.getElementById('memberId');
     let eBookId1 = document.getElementById('eBookId');
 
     console.log('=============')
     console.log(memberId1.value)
     console.log(eBookId1.value)
+
      let formdata = new FormData();
     formdata.append("eBookId",eBookId1.value);
     formdata.append(" memberId",memberId1.value);
+
     let requestUrl = 'http://localhost:8080/Bookstrap/favorite/ebook/checkfavority';
     axios.post(requestUrl, 
         formdata

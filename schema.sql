@@ -149,7 +149,7 @@ Create Table Comment(
 	book_id int foreign key references Books(book_id),
 	content nvarchar(max), --內文
 	rating tinyint not null,  --打分 eg.星星 1~5顆星
-	favorite tinyint not null --最愛 0:沒有 1:有
+	
 );
 
 Create Table Visited( --商城曾經看過功能
