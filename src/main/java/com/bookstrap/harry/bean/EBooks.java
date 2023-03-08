@@ -83,9 +83,42 @@ public class EBooks {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id")
 	private Members member;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	private List<Favorite> favorite;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
+	private Set<EBookFavorite> eBookfavorite;
+	
 	public EBooks() {
 	}
+
+	
+	
+	public List<Favorite> getFavorite() {
+		return favorite;
+	}
+
+
+
+	public void setFavorite(List<Favorite> favorite) {
+		this.favorite = favorite;
+	}
+
+
+	
+
+	public Set<EBookFavorite> geteBookfavorite() {
+		return eBookfavorite;
+	}
+
+
+
+	public void seteBookfavorite(Set<EBookFavorite> eBookfavorite) {
+		this.eBookfavorite = eBookfavorite;
+	}
+
+
 
 	public Integer geteBookId() {
 		return eBookId;

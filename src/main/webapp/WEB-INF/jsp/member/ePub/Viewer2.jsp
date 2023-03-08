@@ -29,7 +29,7 @@
               //${contextRoot}/epub/ebook/1
             document.onreadystatechange = function () {
               if (document.readyState == "complete") {
-                window.reader = ePubReader("${contextRoot}/epub/1010490082.epub", {
+                window.reader = ePubReader("${contextRoot}/epub/1010490076.epub", {
                    restore: true
                  });
               }
@@ -50,11 +50,11 @@
         <script src="${contextRoot}/js/reader.js"></script>
 
         <!-- Plugins -->
-        <!-- <script src="js/plugins/search.js"></script> -->
+<%--         <script src="${contextRoot}/js/plugins/search.js"></script> --%>
 
         <!-- Highlights -->
-        <!-- <script src="js/libs/jquery.highlight.js"></script> -->
-        <!-- <script src="js/hooks/extensions/highlight.js"></script> -->
+<%--         <script src="${contextRoot}/js/libs/jquery.highlight.js"></script> --%>
+<%--         <script src="${contextRoot}/js/hooks/extensions/highlight.js"></script> --%>
 </head>
 <body>
    <div id="sidebar">

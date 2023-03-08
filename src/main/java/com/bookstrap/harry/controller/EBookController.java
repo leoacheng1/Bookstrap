@@ -2,6 +2,7 @@ package com.bookstrap.harry.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +33,13 @@ public class EBookController {
 	@Autowired
 	private EBookDetailService eBookDetailService;
 	
-	
+	@ModelAttribute
+	public void mainController(Model m) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("response", "N");
+		m.addAttribute("default", map);
+		return;
+	}
 	
 //	@GetMapping("/ebook/index")
 //	public String toEBookIndex() {
