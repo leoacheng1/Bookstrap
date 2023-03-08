@@ -47,13 +47,13 @@ public class EBookController {
 	@Autowired
 	private MemberService mService;
 	
-	@ModelAttribute
-	public void mainController(Model m) {
-		HashMap<String, String> map = new HashMap<>();
-		map.put("response", "N");
-		m.addAttribute("default", map);
-		return;
-	}
+//	@ModelAttribute
+//	public void mainController(Model m) {
+//		HashMap<String, String> map = new HashMap<>();
+//		map.put("response", "N");
+//		m.addAttribute("default", map);
+//		return;
+//	}
 	
 //	@GetMapping("/ebook/index")
 //	public String toEBookIndex() {
@@ -84,6 +84,12 @@ public class EBookController {
 		m.addAttribute("favorite",favorite);
 		
 		return "member/EBooks/EBookIndex";
+	}
+	
+	@GetMapping("/ebook/get/epub")
+	public String toEPUBpage(@RequestParam("eBookId") Integer eBookId) {
+		
+		return"member/ePub/Viewer2";
 	}
 	
 	@PostMapping("/ebook/post/addebook")

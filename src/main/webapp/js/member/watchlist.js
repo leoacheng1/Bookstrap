@@ -30,14 +30,16 @@ function addToWatchlist(event){
         if (res.data == 'Y') {
             // this.classList.add("btn");
             // this.classList.add("btn-sm");
-            // this.classList.add("btn-outline-secondary");
+            this.classList.remove("btn-outline-secondary");
+            this.classList.add("btn-danger");
             this.innerHTML = "Remove from WatchList"
                 
                 
         }else {
             // this.classList.remove("btn");
             // this.classList.remove("btn-sm");
-            // this.classList.remove("btn-outline-secondary");
+            this.classList.add("btn-outline-secondary");
+            this.classList.remove("btn-danger");
             this.innerHTML = "Add to Watchlist"    
             
         }

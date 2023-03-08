@@ -124,7 +124,7 @@
                   <jstl:choose>
                   
                   	<jstl:when test="${favorite[eBook.eBookId]}">
-                  		<a type="button" href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary addToWatchlistButton"  >
+                  		<a type="button" href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-danger addToWatchlistButton"  >
 
 						       Remove from Watchlist
                     	                   	</a>
@@ -150,8 +150,13 @@
                     	                   	
                     	                   	
                   </div>
-                  <a type="button" href="${contextRoot}/eBook/get/pdfpage?eBookId=${eBook.eBookId}">Go to PDF</a>
-                  <small class="text-muted">${eBook.eBookPublishDate}</small>
+                  <br>
+                  <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/eBook/get/pdfpage?eBookId=${eBook.eBookId}">Go to PDF</a>
+                  <br>
+											<!--                   這裡還沒給值 -->
+                  <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBookNumber}" >View eBook</a>
+                  <br>
+                  <small class="text-muted mx-1">${eBook.eBookPublishDate}</small>
                 </div>
               </div>
             </div>
