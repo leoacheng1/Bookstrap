@@ -3,9 +3,13 @@ package com.bookstrap.harry.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,9 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.harry.bean.EBookDetails;
+import com.bookstrap.harry.bean.EBookFavorite;
 import com.bookstrap.harry.bean.EBooks;
+import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.service.EBookDetailService;
+import com.bookstrap.harry.service.EBookFavorityService;
 import com.bookstrap.harry.service.EBookService;
+import com.bookstrap.harry.service.MemberService;
 
 @Controller
 public class EBookController {
@@ -32,6 +40,12 @@ public class EBookController {
 	
 	@Autowired
 	private EBookDetailService eBookDetailService;
+	
+	@Autowired
+	private EBookFavorityService ebfService;
+	
+	@Autowired
+	private MemberService mService;
 	
 	@ModelAttribute
 	public void mainController(Model m) {
@@ -53,9 +67,22 @@ public class EBookController {
 	
 	@GetMapping("/ebook/get/allebook")
 	public String findAllEbooks(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
-			Model m){
+			Model m, HttpSession session){
 		Page<EBooks> page = eBookService.getEBooksByPage(pageNumber);
 		m.addAttribute("page", page);
+		LinkedHashMap<Integer, Boolean> favorite = new LinkedHashMap<Integer,Boolean>();
+		Integer memberId = (Integer)session.getAttribute("memberId");
+		if (memberId == null) return "member/EBooks/EBookIndex";
+		
+		Members member = mService.findById(memberId);
+
+		List<EBooks> ebooks = page.getContent();
+		for (EBooks ebook : ebooks) {
+			Optional<EBookFavorite> optional = ebfService.finByMemberAndEBook(member, ebook);			
+			favorite.put(ebook.geteBookId(), optional.isPresent() ? true : false);
+		}
+		m.addAttribute("favorite",favorite);
+		
 		return "member/EBooks/EBookIndex";
 	}
 	

@@ -75,7 +75,7 @@
 	
 
     </style>
-
+<jsp:include page="../../layout/headerCss.jsp"/>
 
 
 <title>Insert title here</title>
@@ -83,7 +83,7 @@
 <body>
 
    
-<jsp:include page="../layout/MainHeader.jsp"/>
+<jsp:include page="../../layout/header.jsp"/>
 
 <main>
 
@@ -110,24 +110,45 @@
               <div class="card-body">
               <h4>${eBook.eBookName} testTitle</h4>
               <br>
-              <input value = "${eBook.eBookId}" id ="eBookId">
-              <br>
-              <input value = "${memberId}" id = "memberId">
-              <br>
+              
+<%--               <input value = "${eBook.eBookId}" id ="eBookId"> --%>
+<!--               <br> -->
+<%--               <input value = "${memberId}" id = "memberId"> --%>
+<!--               <br> -->
               
                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
                   content. This content is a little bit longer.</p>
                 <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    	<a type="button"  class="btn btn-sm btn-outline-secondary " id="addToWatchlistButton" >
-                    		
-<%--                     		${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId} --%>
-<%-- 						        addToWatchlist(${eBook.eBookId}) --%>
-						        
+                  <div class="btn-group" data-eBookId="${eBook.eBookId}" data-memberId="${memberId}">
+                  
+                  <jstl:choose>
+                  
+                  	<jstl:when test="${favorite[eBook.eBookId]}">
+                  		<a type="button" href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary addToWatchlistButton"  >
+
+						       Remove from Watchlist
+                    	                   	</a>
+                  	</jstl:when>
+                  
+                  <jstl:otherwise>
+                  <a type="button" href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary addToWatchlistButton" >
+
 						        Add to Watchlist
-						  
+                    	                   	</a>
+                  </jstl:otherwise>
+                  
+                  </jstl:choose>
                     	
-                    	</a>
+<%--                     	<a type="button" href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary " id="addToWatchlistButton" > --%>
+
+<!-- 						        Add to Watchlist -->
+<!--                     	                   	</a> -->
+                    	            
+                    	                   	
+                    	                   	
+                    	                   	
+                    	                   	
+                    	                   	
                   </div>
                   <a type="button" href="${contextRoot}/eBook/get/pdfpage?eBookId=${eBook.eBookId}">Go to PDF</a>
                   <small class="text-muted">${eBook.eBookPublishDate}</small>
