@@ -29,10 +29,8 @@ public class BackendRestApi {
 	
 	//=================================Mail Controller=============================================//
 	@GetMapping("test/test")
-	public Integer test() {
-//		32,104,2
-		Integer[] arr = {104};
-		return mailService.addLabelToMail(32, arr, 2);
+	public Long test() {
+		return mailService.getMailCountInLabel(49,2);
 	}
 
 }

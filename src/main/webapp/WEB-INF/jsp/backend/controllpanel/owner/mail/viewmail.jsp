@@ -272,6 +272,7 @@
         <script src="${contextRoot}/eddie/js/axios.min.js"></script>
         <script src="${contextRoot}/eddie/js/sweetalert2.all.min.js"></script>
         <script src="${contextRoot}/eddie/js/mail/viewmail.js"></script>
+        <script src="${contextRoot}/eddie/js/mail/mailside.js"></script>
   </body>
 
   </html>

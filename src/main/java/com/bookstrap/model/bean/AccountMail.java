@@ -1,5 +1,6 @@
 package com.bookstrap.model.bean;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -68,7 +69,7 @@ public class AccountMail {
 	@JoinTable(name = "MailAccountLabel", joinColumns = {@JoinColumn(name="mail_id", referencedColumnName = "mail_id"),
 	@JoinColumn(name="account_id", referencedColumnName = "account_id")},
 	inverseJoinColumns = {@JoinColumn(name = "label_id", referencedColumnName = "label_id")})
-	private Set<AccountLabel> accountLabels;
+	private List<AccountLabel> accountLabels;
 	
 	@PrePersist //things to do before  into persistent state
 	public void onCreate() {
@@ -163,10 +164,10 @@ public class AccountMail {
 	public void setMailfrom(Short mailfrom) {
 		this.mailfrom = mailfrom;
 	}
-	public Set<AccountLabel> getAccountLabels() {
+	public List<AccountLabel> getAccountLabels() {
 		return accountLabels;
 	}
-	public void setAccountLabels(Set<AccountLabel> accountLabels) {
+	public void setAccountLabels(List<AccountLabel> accountLabels) {
 		this.accountLabels = accountLabels;
 	}
 	

@@ -206,7 +206,7 @@
                       <!-- /.card-header -->
                       <div class="card-body">
                         <div class="form-group">
-                          <input class="form-control" placeholder="收件者" name = "mailTo">
+                          <input class="form-control" placeholder="收件者" name = "mailTo" value="${mailTo}">
                         </div>
                         <div class="form-group">
                           <input class="form-control" placeholder="主旨" name = "mailSubject">

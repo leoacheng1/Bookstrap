@@ -48,6 +48,7 @@ import com.bookstrap.service.MailService;
 
 @Controller
 public class BackendNormal {
+//too lazy to move to rest controller
 
 	@Autowired
 	private EmployeesService empService;
@@ -173,8 +174,8 @@ public class BackendNormal {
 		LinkedHashSet<AllMailDto> mails = new LinkedHashSet<AllMailDto>();
 		for (AccountMail accountMail : accountMails) {
 			AllMailDto mailToSend = new AllMailDto();
-			mailToSend.setFrom(accountMail.getMailAccount().getAccount());
-			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to="+accountMail.getMail().getAccountTo().getAccount());
+			mailToSend.setFrom(accountMail.getMail().getAccountFrom().getAccount());
+			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to="+accountMail.getMail().getAccountFrom().getAccount());
 			mailToSend.setImportant(accountMail.getImportant());
 			mailToSend.setStarred(accountMail.getStarred());
 			mailToSend.setSubject(accountMail.getMail().getMailSubject());
@@ -184,6 +185,9 @@ public class BackendNormal {
 			mailToSend.setMailId(accountMail.getMail().getMailId());
 			mailToSend.setAttachmentIds(accountMail.getMail().getMailAttachment().stream().map(attachment -> attachment.getAttachmentId()).toArray(Integer[]::new));
 			mailToSend.setMailContent(Jsoup.parse(accountMail.getMail().getMailContent()).text());
+			mailToSend.setMailCategory(accountMail.getMailCategory());
+			mailToSend.setMailFolder(accountMail.getMailFolder());
+			mailToSend.setMailLabels(accountMail.getAccountLabels());
 			mails.add(mailToSend);
 		};
 		return mails; 	
@@ -206,9 +210,9 @@ public class BackendNormal {
 		List<AllMailDto> mails = new ArrayList<AllMailDto>();
 		for (AccountMail accountMail : accountMails) {
 			AllMailDto mailToSend = new AllMailDto();
-			mailToSend.setFrom(accountMail.getMailAccount().getAccount());
-			MailAccount mailTo = accountMail.getMail().getAccountTo();
-			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to=" + (mailTo == null ? "" : mailTo.getAccount()));
+			mailToSend.setFrom(accountMail.getMail().getAccountFrom().getAccount());
+			MailAccount mailFrom = accountMail.getMail().getAccountFrom();
+			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to=" + (mailFrom == null ? "" : mailFrom.getAccount()));
 			mailToSend.setImportant(accountMail.getImportant());
 			mailToSend.setStarred(accountMail.getStarred());
 			mailToSend.setSubject(accountMail.getMail().getMailSubject());
@@ -218,6 +222,9 @@ public class BackendNormal {
 			mailToSend.setMailId(accountMail.getMail().getMailId());
 			mailToSend.setAttachmentIds(accountMail.getMail().getMailAttachment().stream().map(attachment -> attachment.getAttachmentId()).toArray(Integer[]::new));
 			mailToSend.setMailContent(Jsoup.parse(accountMail.getMail().getMailContent()).text());
+			mailToSend.setMailCategory(accountMail.getMailCategory());
+			mailToSend.setMailFolder(accountMail.getMailFolder());
+			mailToSend.setMailLabels(accountMail.getAccountLabels());
 			mails.add(mailToSend);
 		};
 		return mails; 	
@@ -239,9 +246,9 @@ public class BackendNormal {
 		List<AllMailDto> mails = new ArrayList<AllMailDto>();
 		for (AccountMail accountMail : accountMails) {
 			AllMailDto mailToSend = new AllMailDto();
-			mailToSend.setFrom(accountMail.getMailAccount().getAccount());
-			MailAccount mailTo = accountMail.getMail().getAccountTo();
-			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to=" + (mailTo == null ? "" : mailTo.getAccount()));
+			mailToSend.setFrom(accountMail.getMail().getAccountFrom().getAccount());
+			MailAccount mailFrom = accountMail.getMail().getAccountFrom();
+			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to=" + (mailFrom == null ? "" : mailFrom.getAccount()));
 			mailToSend.setImportant(accountMail.getImportant());
 			mailToSend.setStarred(accountMail.getStarred());
 			mailToSend.setSubject(accountMail.getMail().getMailSubject());
@@ -251,6 +258,9 @@ public class BackendNormal {
 			mailToSend.setMailId(accountMail.getMail().getMailId());
 			mailToSend.setAttachmentIds(accountMail.getMail().getMailAttachment().stream().map(attachment -> attachment.getAttachmentId()).toArray(Integer[]::new));
 			mailToSend.setMailContent(Jsoup.parse(accountMail.getMail().getMailContent()).text());
+			mailToSend.setMailCategory(accountMail.getMailCategory());
+			mailToSend.setMailFolder(accountMail.getMailFolder());
+			mailToSend.setMailLabels(accountMail.getAccountLabels());
 			mails.add(mailToSend);
 		};
 		return mails; 	
@@ -273,9 +283,9 @@ public class BackendNormal {
 		List<AllMailDto> mails = new ArrayList<AllMailDto>();
 		for (AccountMail accountMail : accountMails) {
 			AllMailDto mailToSend = new AllMailDto();
-			mailToSend.setFrom(accountMail.getMailAccount().getAccount());
-			MailAccount mailTo = accountMail.getMail().getAccountTo();
-			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to=" + (mailTo == null ? "" : mailTo.getAccount()));
+			mailToSend.setFrom(accountMail.getMail().getAccountFrom().getAccount());
+			MailAccount mailFrom = accountMail.getMail().getAccountFrom();
+			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to=" + (mailFrom == null ? "" : mailFrom.getAccount()));
 			mailToSend.setImportant(accountMail.getImportant());
 			mailToSend.setStarred(accountMail.getStarred());
 			mailToSend.setSubject(accountMail.getMail().getMailSubject());
@@ -285,6 +295,9 @@ public class BackendNormal {
 			mailToSend.setMailId(accountMail.getMail().getMailId());
 			mailToSend.setAttachmentIds(accountMail.getMail().getMailAttachment().stream().map(attachment -> attachment.getAttachmentId()).toArray(Integer[]::new));
 			mailToSend.setMailContent(Jsoup.parse(accountMail.getMail().getMailContent()).text());
+			mailToSend.setMailCategory(accountMail.getMailCategory());
+			mailToSend.setMailFolder(accountMail.getMailFolder());
+			mailToSend.setMailLabels(accountMail.getAccountLabels());
 			mails.add(mailToSend);
 		};
 		return mails; 	
@@ -305,6 +318,27 @@ public class BackendNormal {
 		dto.setStarredCount(mailService.getstarredMailCount(accountId));
 		dto.setWorkCount(mailService.getMailCountInCategory(mailService.findByCategoryName("job").getCategoryId(), accountId));
 		return dto;
+	}
+	
+	@GetMapping("mail/count/{type}/{identifier}/{accountId}")
+	@ResponseBody
+	public Long getCount(@PathVariable("type") String type, @PathVariable("identifier") String identifier, @PathVariable("accountId") Integer accountId) {
+		if (type.equals("folder")) {
+			return mailService.getMailCountInFolder(mailService.findByFolderName(identifier).getFolderId(),accountId);
+		}else if (type.equals("category")) {
+			return mailService.getMailCountInCategory(mailService.findByCategoryName(identifier).getCategoryId(), accountId);
+		}else if (type.equals("label")) {
+			if (identifier.equals("important")) {
+				return mailService.getImportantMailCount(accountId);
+			}else if (identifier.equals("starred")) {
+				return mailService.getstarredMailCount(accountId);
+			}else {
+				Integer labelId = Integer.parseInt(identifier);
+				return mailService.getMailCountInLabel(labelId, accountId);
+			}
+		}else {
+			return null;
+		}
 	}
 	
 	@GetMapping("mail/label/findall/{accountId}")
@@ -330,6 +364,12 @@ public class BackendNormal {
 		return mailService.setHasread(hasread, mailId, accId);
 	}
 	
+	@PutMapping("mail/hasreads/{hasread}")
+	@ResponseBody
+	public Integer updateHasreads(@RequestParam("mailIds") Integer[] mailIds, @RequestParam("accountId") Integer accountId, @PathVariable("hasread") Short hasread) {
+		return mailService.setHasreads(hasread, mailIds, accountId);
+	}
+	
 	@PutMapping("mail/folder/{folderId}")
 	@ResponseBody
 	public Integer updateFolder(@PathVariable("folderId") Integer folderId, @RequestParam("accountId") Integer accId,@RequestParam("mailIds") Integer[] mailIds) {
@@ -340,6 +380,12 @@ public class BackendNormal {
 	@ResponseBody
 	public Integer addLabel(@PathVariable("labelId") Integer labelId, @RequestParam("accountId") Integer accId, @RequestParam("mailIds") Integer[] mailIds) {
 		return mailService.addLabelToMail(labelId, mailIds, accId);
+	}
+	
+	@PutMapping("mail/labels")
+	@ResponseBody
+	public Integer setLabels(@RequestParam("labelIds") Integer[] labelIds, @RequestParam("mailIds") Integer[] mailIds, @RequestParam("accountId") Integer accountId) {
+		return mailService.setLabelsToMails(labelIds, mailIds, accountId);
 	}
 //===================================================DELETING==========================================================
 	@DeleteMapping("mail/label/{labelId}") 

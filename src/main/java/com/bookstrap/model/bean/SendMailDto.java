@@ -18,6 +18,8 @@ public class SendMailDto implements Serializable{
 	@JsonProperty("mailContent")
 	private String mailContent;
 	
+	@JsonProperty("mailCategory")
+	private String mailCategory;
 	//for establishing attachments
 	private MultipartFile[] file;
 	
@@ -58,4 +60,11 @@ public class SendMailDto implements Serializable{
 		this.file = file;
 	}
 
+	public String getMailCategory() {
+		return mailCategory;
+	}
+
+	public void setMailCategory(String mailCategory) {
+		this.mailCategory = mailCategory;
+	}
 }

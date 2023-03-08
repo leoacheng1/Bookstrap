@@ -46,7 +46,13 @@ public class AllMailDto implements Serializable{
 	private String mailContent;
 	
 	@JsonProperty
-	private List<AccountLabel> accountLabel;
+	private List<AccountLabel> mailLabels;
+	
+	@JsonProperty
+	private MailCategory mailCategory;
+	
+	@JsonProperty
+	private MailFolder mailFolder;
 	
 	@JsonProperty
 	@Temporal(TemporalType.TIMESTAMP) 
@@ -57,9 +63,11 @@ public class AllMailDto implements Serializable{
 	public AllMailDto() {
 	}
 
+
+
 	public AllMailDto(Short starred, Short important, Short hasread, String from, String fromLink, String subject,
-			String mailLink, Integer mailId, Integer[] attachmentIds, String mailContent,
-			List<AccountLabel> accountLabel, Date mailTime) {
+			String mailLink, Integer mailId, Integer[] attachmentIds, String mailContent, List<AccountLabel> mailLabels,
+			MailCategory mailCategory, MailFolder mailFolder, Date mailTime) {
 		super();
 		this.starred = starred;
 		this.important = important;
@@ -71,11 +79,11 @@ public class AllMailDto implements Serializable{
 		this.mailId = mailId;
 		this.attachmentIds = attachmentIds;
 		this.mailContent = mailContent;
-		this.accountLabel = accountLabel;
+		this.mailLabels = mailLabels;
+		this.mailCategory = mailCategory;
+		this.mailFolder = mailFolder;
 		this.mailTime = mailTime;
 	}
-
-
 
 
 
@@ -175,12 +183,34 @@ public class AllMailDto implements Serializable{
 		this.mailContent = mailContent;
 	}
 
-	public List<AccountLabel> getAccountLabel() {
-		return accountLabel;
+
+
+	public List<AccountLabel> getMailLabels() {
+		return mailLabels;
 	}
 
-	public void setAccountLabel(List<AccountLabel> accountLabel) {
-		this.accountLabel = accountLabel;
+
+
+	public void setMailLabels(List<AccountLabel> mailLabels) {
+		this.mailLabels = mailLabels;
+	}
+
+
+
+	public MailCategory getMailCategory() {
+		return mailCategory;
+	}
+
+	public MailFolder getMailFolder() {
+		return mailFolder;
+	}
+
+	public void setMailCategory(MailCategory mailCategory) {
+		this.mailCategory = mailCategory;
+	}
+
+	public void setMailFolder(MailFolder mailFolder) {
+		this.mailFolder = mailFolder;
 	}
 
 }

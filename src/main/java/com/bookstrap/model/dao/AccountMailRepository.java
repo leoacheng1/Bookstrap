@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.bookstrap.model.bean.AccountLabel;
 import com.bookstrap.model.bean.AccountMail;
 import com.bookstrap.model.bean.MailAccount;
 import com.bookstrap.model.bean.MailCategory;
@@ -19,11 +20,11 @@ public interface AccountMailRepository extends JpaRepository<AccountMail, Accoun
 	
 	public Page<AccountMail> findByMailAccountAndMailFolder(MailAccount account, MailFolder folder ,Pageable pageable);
 	
-	public Page<AccountMail> findByMailAccountAndMailCategory(MailAccount account, MailCategory category, Pageable pageable);
+	public Page<AccountMail> findByMailAccountAndMailCategoryAndMailFolder_FolderNameNot(MailAccount account, MailCategory category, Pageable pageable, String folderName);
 	
-	public Page<AccountMail> findByAccountMailIdAndAccountLabelsLabelId(AccountMailPK Id,Integer labelId, Pageable pageable);
+	public Page<AccountMail> findByAccountMailIdAndAccountLabelsLabelIdAndMailFolder_FolderNameNot(AccountMailPK Id,Integer labelId, Pageable pageable, String folderName);
 	
-	public Page<AccountMail> findByAccountLabelsLabelId(Integer labelId, Pageable pageable);
+	public Page<AccountMail> findByAccountLabelsLabelIdAndMailFolder_FolderNameNot(Integer labelId, Pageable pageable, String folderName);
 	
 	public Page<AccountMail> findByImportant(Short important, Pageable pageable);
 	
@@ -35,14 +36,17 @@ public interface AccountMailRepository extends JpaRepository<AccountMail, Accoun
 	@Query("SELECT COUNT(mail) FROM AccountMail mail WHERE mail.mailFolder.folderId=:fid AND mailAccount.id=:aid")
 	public Long getMailCountInFolder(@Param("fid") Integer folderId, @Param("aid") Integer accountId);
 	
-	@Query("SELECT COUNT(mail) FROM AccountMail mail WHERE mail.mailCategory.categoryId=:cid AND mailAccount.id=:aid")
-	public Long getMailCountInCategory(@Param("cid") Integer categoryId, @Param("aid") Integer accountId);
+	@Query("SELECT COUNT(mail) FROM AccountMail mail WHERE mail.mailCategory.categoryId=:cid AND mailAccount.id=:aid And mail.mailFolder.folderName !=:folderName")
+	public Long getMailCountInCategory(@Param("cid") Integer categoryId, @Param("aid") Integer accountId, @Param("folderName") String folderName);
 	
 	@Query("SELECT COUNT(mail) FROM AccountMail mail WHERE mail.important=1 AND mailAccount.id=:aid")
 	public Long getImportantMailCount(@Param("aid") Integer accountId);
 
 	@Query("SELECT COUNT(mail) FROM AccountMail mail WHERE mail.starred=1 AND mailAccount.id=:aid")
 	public Long getstarredMailCount(@Param("aid") Integer accountId);
+	
+	@Query("SELECT COUNT(mail) FROM AccountMail mail join mail.accountLabels labels WHERE labels.labelId =:labelId AND mail.mailAccount.id=:aid")
+	public Long getLabelMailCount(@Param("labelId") Integer labelId, @Param("aid") Integer accountId);
 	
 	@Query("SELECT mail FROM AccountMail mail WHERE mail.mailCategory.categoryId=:cid AND mailAccount.id=:aid")
 	public List<AccountMail> getMailInCategory(@Param("cid") Integer categoryId, @Param("aid") Integer accountId);

@@ -1,7 +1,7 @@
 package com.bookstrap.model.dao;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,14 +34,33 @@ public class MailEMRepository {
 			AccountMail mail = em.find(AccountMail.class, accountMailPK);
 			AccountLabel label = em.find(AccountLabel.class, labelId);
 			if (mail == null || label == null) continue; //maybe some handling later
-			Set<AccountLabel> labels = mail.getAccountLabels();
+			List<AccountLabel> labels = mail.getAccountLabels();
 			labels.add(label);
 			mail.setAccountLabels(labels);
 			em.merge(mail);
 			count ++;
 		}
 		return count;
-		
-	
 	}
+	
+	public Integer setLabelsToMails(Integer[] labelIds, Integer[] mailIds, Integer accountId) {
+		Integer count = 0;
+		List<AccountLabel> labels = new LinkedList<AccountLabel>();
+		for (Integer labelId : labelIds) {
+			AccountLabel label = em.find(AccountLabel.class, labelId);
+			if (label == null) continue;
+			labels.add(label);
+		}
+		
+		for (Integer mailId : mailIds) {
+			AccountMailPK accountMailPK = new AccountMailPK(mailId, accountId);
+			AccountMail mail = em.find(AccountMail.class, accountMailPK);
+			if (mail == null) continue; //maybe some handling later
+			mail.setAccountLabels(labels);
+			em.merge(mail);
+			count ++;
+		}
+		return count;
+	}
+	
 }

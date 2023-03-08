@@ -38,6 +38,7 @@ import com.bookstrap.model.pk.AccountMailPK;
 @Service
 @Transactional
 public class MailService {
+	private static Integer NUM_IN_PAGE = 10;
 	
 	@Autowired
 	private MailRepository mailDao;
@@ -71,7 +72,7 @@ public class MailService {
 		return accountMailDao.getMailCountInFolder(folderId, accountId);
 	};
 	public Long getMailCountInCategory(Integer categoryId, Integer accountId) {
-		return accountMailDao.getMailCountInCategory(categoryId, accountId);
+		return accountMailDao.getMailCountInCategory(categoryId, accountId, "bin");
 	};
 	public Long getImportantMailCount(Integer accountId) {
 		return accountMailDao.getImportantMailCount(accountId);
@@ -79,6 +80,10 @@ public class MailService {
 	public Long getstarredMailCount(Integer accountId) {
 		return accountMailDao.getstarredMailCount(accountId);
 	};
+	
+	public Long getMailCountInLabel(Integer labelId, Integer accountId) {
+		return accountMailDao.getLabelMailCount(labelId, accountId);
+	}
 // ================================================= for Searching =============================================================
 	public List<AccountLabel> findAllLabelByAccountId(Integer accountId) {
 		return emDao.findAllLabelByAccountId(accountId);
@@ -137,7 +142,7 @@ public class MailService {
 	}
 	
 	public Page<AccountMail> findMailByFolderAndPage(MailAccount account,Integer folderId, Integer pageNum) {
-		PageRequest pageRequest = PageRequest.of(pageNum - 1, 20, Sort.by("mail_mailTime").descending());
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, NUM_IN_PAGE, Sort.by("mail_mailTime").descending());
 		Optional<MailFolder> folder = mailFolderDao.findById(folderId);
 		if (folder.isEmpty()) {
 			return null;
@@ -147,23 +152,23 @@ public class MailService {
 	}
 	
 	public Page<AccountMail> findMailByCategoryAndPage(MailAccount account,Integer categoryId, Integer pageNum) {
-		PageRequest pageRequest = PageRequest.of(pageNum - 1, 20, Sort.by("mail_mailTime").descending());
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, NUM_IN_PAGE, Sort.by("mail_mailTime").descending());
 		Optional<MailCategory> category = mailCategoryDao.findById(categoryId);
 		if (category.isEmpty()) {
 			return null;
 		}
-		Page<AccountMail> page = accountMailDao.findByMailAccountAndMailCategory(account, category.get(), pageRequest);
+		Page<AccountMail> page = accountMailDao.findByMailAccountAndMailCategoryAndMailFolder_FolderNameNot(account, category.get(), pageRequest,"bin");
 		return page;
 	}
 	
 	public Page<AccountMail> findMailByLabelAndPage(Integer labelId, Integer pageNum) {
-		PageRequest pageRequest = PageRequest.of(pageNum - 1, 20, Sort.by("mail_mailTime").descending());
-		Page<AccountMail> page = accountMailDao.findByAccountLabelsLabelId(labelId, pageRequest);
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, NUM_IN_PAGE, Sort.by("mail_mailTime").descending());
+		Page<AccountMail> page = accountMailDao.findByAccountLabelsLabelIdAndMailFolder_FolderNameNot(labelId, pageRequest, "bin");
 		return page;
 	}
 	
 	public Page<AccountMail> findMailByImportantOrStarredAndPage(String importantOrStarred, Integer pageNum){
-		PageRequest pageRequest = PageRequest.of(pageNum - 1, 20, Sort.by("mail_mailTime").descending());
+		PageRequest pageRequest = PageRequest.of(pageNum - 1, NUM_IN_PAGE, Sort.by("mail_mailTime").descending());
 		if (importantOrStarred.equals("important")) {
 			Page<AccountMail> page = accountMailDao.findByImportant((short)1, pageRequest);
 			return page;
@@ -225,9 +230,17 @@ public class MailService {
 		to.setMailfrom((short)0);
 		
 		
+		
 		from.setMailFolder(mailFolderDao.findById(2).get());
 		from.setHasread((short)1);
 		to.setMailFolder(mailFolderDao.findById(1).get());
+		MailCategory category = mailCategoryDao.findByCategoryName(mailDto.getMailCategory());
+		if (category == null) {
+			category = mailCategoryDao.findByCategoryName("normal");
+		}
+		from.setMailCategory(category);
+		to.setMailCategory(category);
+		
 		
 		accountMailDao.save(from);
 		accountMailDao.save(to);
@@ -271,6 +284,11 @@ public class MailService {
 		from.onCreate();
 		from.setMailfrom((short)1);		
 		from.setMailFolder(mailFolderDao.findById(3).get());
+		MailCategory category = mailCategoryDao.findByCategoryName(mailDto.getMailCategory());
+		if (category == null) {
+			category = mailCategoryDao.findByCategoryName("normal");
+		}
+		from.setMailCategory(category);
 		
 		accountMailDao.save(from);
 		return newMail;		
@@ -285,6 +303,20 @@ public class MailService {
 			return accountMailDao.save(mail);
 		}
 		return null;
+	}
+	
+	public Integer setHasreads(Short hasread,Integer[] mailIds,Integer accountId) {
+		Integer count = 0;
+		for (Integer mailId : mailIds) {
+			AccountMailPK accountMailPK = new AccountMailPK(mailId,accountId);
+			Optional<AccountMail> optional = accountMailDao.findById(accountMailPK);
+			if (optional.isEmpty()) continue;
+			AccountMail mail = optional.get();
+			mail.setHasread(hasread);
+			accountMailDao.save(mail);
+			count += 1;
+		}
+		return count;
 	}
 	
 	public AccountMail setImportant(Short important,Integer mailId,Integer accountId) {
@@ -328,6 +360,10 @@ public class MailService {
 	
 	public Integer addLabelToMail(Integer labelId, Integer[] mailIds, Integer accountId) {
 		return emDao.addLabelToMail(labelId, mailIds, accountId);
+	}
+	
+	public Integer setLabelsToMails(Integer[] labelIds, Integer[] mailIds, Integer accountId) {
+		return emDao.setLabelsToMails(labelIds, mailIds, accountId);
 	}
 //================================================= for Deleting =============================================================
 	public boolean deleteLabel(Integer labelId) {

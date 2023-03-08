@@ -1,8 +1,4 @@
 var contextRoot = "http://localhost:8080/Bookstrap/";
-
-
-
-
 $("#add-label").click(function (event) {
     event.preventDefault();
     addLabelModal();
@@ -58,15 +54,6 @@ function addLabelModal() {
         }
     })
 }
-// function addLabelRow(labelData) {
-//     let li = $(".label-li");
-//     if (li != null) {
-//         let newLi = $(li[0]).clone(true,true);
-//         labelData.labelName
-//         labelData.
-//     }
-// }
-
 
 for (li of document.getElementsByClassName("label-li")) {
     addLabelEvent(li);

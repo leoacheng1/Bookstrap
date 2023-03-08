@@ -1,12 +1,24 @@
 
 var contextRoot = "http://localhost:8080/Bookstrap/";
-initialize();
-window.onpageshow = function (event) {
-    if (event.persisted) {
-        console.log("executed")
-        initialize();
+/**
+ * iife executed when the page is first loaded
+ */
+(function startup() {
+    initialize();
+    $("#add-label").click(function (event) {
+        event.preventDefault();
+        addLabelModal();
+    })
+    for (li of document.getElementsByClassName("label-li")) {
+        addLabelEvent(li);
     }
-};
+    window.onpageshow = function (event) {
+        if (event.persisted) {
+            console.log("executed")
+            initialize();
+        }
+    };
+})()
 /**
  * operations to update scene
  * 1. init mail table
@@ -14,9 +26,11 @@ window.onpageshow = function (event) {
  * 3. fix tool tip
  */
 async function initialize() {
+    await addPagination();
     await initMails();
     await updateSideBar();
     await addTooltip();
+
 }
 
 /**
@@ -28,7 +42,8 @@ async function addTooltip() { $('[data-toggle="tooltip"]').tooltip() };
 /**
  * prepare an interactive mail table after submitting a request to get all mail data, and place them in the table.
  */
-async function initMails(pageNum = 1) {
+async function initMails(conditions) {
+    let pageNum = $("body").attr("data-pagenum");
     $("#mailboxbody").html("");
     let url = window.location.href.split("/");
     let tname = url.pop();
@@ -43,6 +58,7 @@ async function initMails(pageNum = 1) {
         method: "get"
     }).then(
         res => {
+            console.log(res.data);
             $("#mailboxbody").html("");
             if (res.data.length == 0) {
                 let tr = document.createElement("tr");
@@ -106,7 +122,10 @@ function makeMailData(data) {
         'important': data.important,
         'mailId': data.mailId,
         'mailContent': data.mailContent,
-        'attachmentIds': data.attachmentIds
+        'attachmentIds': data.attachmentIds,
+        'mailLabels': data.mailLabels,
+        'mailCategory': data.mailCategory,
+        'mailFolder': data.mailFolder
     }
     return mailData
 }
@@ -118,11 +137,30 @@ function makeMailData(data) {
  * @return {ProcessedRowData} - object containing attachment id array(if exists) and a tablerow filled with data
  */
 function fillMailRow(tableRow, mailData) {
+    // <span class="badge badge-pill badge-primary">folder</span>
+    // <span class="badge badge-pill badge-success">category</span>
+    // <span class="badge badge-pill badge-info">label</span>
     if (mailData.starred == 1) $(tableRow.querySelector('.mailbox-star a i')).toggleClass('text-warning').toggleClass('text-secondary').toggleClass('starred');
     if (mailData.important == 1) $(tableRow.querySelector('.mailbox-important a i')).toggleClass('text-warning').toggleClass('text-secondary').toggleClass('important');
     $(tableRow.querySelector(".mailbox-name a")).html(mailData.from).attr("href", mailData.fromLink);
     $(tableRow.querySelector(".mailbox-subject a")).html(mailData.subject).attr("href", mailData.mailLink);
     $(tableRow.querySelector(".mailbox-subject")).click(() => window.location = mailData.mailLink);
+    const folderNameMapping = {
+        "inbox": "收件匣",
+        "sent": "已寄出",
+        "draft":"草稿",
+        "bin":" 回收桶"
+    }
+    const categoryNameMapping = {
+        "normal": "一般信件",
+        "job": "工作指派",
+        "company": "公司訊息"
+    }
+    $("<span/>",{class: "badge badge-pill badge-primary mr-1", html: folderNameMapping[mailData.mailFolder.folderName]}).insertBefore($(tableRow.querySelector(".mailbox-subject a")))
+    $("<span/>",{class: "badge badge-pill badge-success mr-1", html: categoryNameMapping[mailData.mailCategory.categoryName]}).insertBefore($(tableRow.querySelector(".mailbox-subject a")))
+    for (label of mailData.mailLabels) {
+        $("<span/>",{class: "badge badge-pill badge-info mr-1", html: label.labelName}).insertBefore($(tableRow.querySelector(".mailbox-subject a")));
+    }
     $(tableRow.querySelector(".mailbox-date")).html(mailData.timeago);
     if (mailData.mailContent != null) {
         $(tableRow.querySelector(".mailbox-subject")).append(mailData.mailContent.length == 0 ? "&nbsp;&nbsp;(無內文)" : " - "
@@ -253,6 +291,7 @@ function toTimeAgo(seconds) {
 function addEvents() {
     //Enable check and uncheck all functionality
     $('.checkbox-toggle').unbind('click');
+    $('.checkbox-toggle .far.fa-check-square').removeClass('fa-check-square').addClass('fa-square')
     $('.checkbox-toggle').click(function () {
         var clicks = $(this).data('clicks');
         if (clicks) {
@@ -334,14 +373,16 @@ function addEvents() {
     })
     //handle deletion and recovery
     let mailbox_ = window.location.href.split("/").pop();
-    if (mailbox_ == "bin") {
-        $("#delete-mail").css("color", "red");
-        $('#delete-mail').unbind('click');
-        $("#delete-mail").click(permanentDelete);
-        if ($("#recovery-btn").length == 0 && (mailbox_ == "bin" || mailbox_ == "draft")) {
+    if (mailbox_ == "bin" || mailbox_ == "draft") {
+        if ($("#recovery-btn").length == 0) {
             addRecoveryBtn();
             addTooltip();
         }
+
+        $("#delete-mail").css("color", "red");
+        $('#delete-mail').unbind('click');
+        $("#delete-mail").click(permanentDelete);
+
     } else {
         $('#delete-mail').unbind('click');
         $("#delete-mail").click(deleteEvent);
@@ -353,6 +394,12 @@ function addEvents() {
         initialize();
         $(this).tooltip('hide');
     })
+
+    //read and unread buttons
+    $("#hasread-mail").unbind('click');
+    $("#hasread-mail").click(function()  { setHasreads(1); $(this).tooltip('hide'); });
+    $("#notread-mail").unbind('click');
+    $("#notread-mail").click(function() { setHasreads(0); $(this).tooltip('hide'); });
 
     //add label list
     addLabelLi();
@@ -379,17 +426,8 @@ function findChecked() {
  * @returns 
  */
 function deleteEvent() {
-    let trs = findChecked();
-    if (trs.length == 0) return;
-    let accountId = $("body").attr("data-ref");
-    let mailIds = [];
-    for (tr of trs) {
-        let mailId = $(tr).attr("data-mailid");
-        if (mailId != null) mailIds.push(mailId);
-    }
-    let formData = new FormData();
-    formData.append("mailIds", mailIds);
-    formData.append("accountId", accountId);
+    let formData = getSelectedFormdata();
+    if (formData == null) return;
     axios.put(contextRoot + "mail/folder/4", formData)
         .then(response => {
             Swal.fire({
@@ -413,18 +451,9 @@ function deleteEvent() {
 function permanentDelete() {
     let trs = findChecked();
     if (trs.length == 0) return;
-    let accountId = $("body").attr("data-ref");
-    let mailIds = [];
-    for (tr of trs) {
-        let mailId = $(tr).attr("data-mailid");
-        if (mailId != null) mailIds.push(mailId);
-    }
-    let formData = new FormData();
-    formData.append("mailIds", mailIds);
-    formData.append("accountId", accountId);
     Swal.fire({
         title: '永久刪除',
-        text: "刪除後無法復原，確認刪除此" + mailIds.length + "筆郵件?",
+        text: "刪除後無法復原，確認刪除此" + trs.length + "筆郵件?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -432,16 +461,8 @@ function permanentDelete() {
         cancelButtonText: '取消',
         width: 400,
         preConfirm: () => {
-            let trs = findChecked();
-            let accountId = $("body").attr("data-ref");
-            let mailIds = [];
-            for (tr of trs) {
-                let mailId = $(tr).attr("data-mailid");
-                if (mailId != null) mailIds.push(mailId);
-            }
-            let formData = new FormData();
-            formData.append("mailIds", mailIds);
-            formData.append("accountId", accountId);
+            let formData = getSelectedFormdata();
+            if (formData == null) return;
             axios.delete(contextRoot + "mail/multiple", { data: formData }).then(
                 response => response
             ).catch(error => {
@@ -522,7 +543,7 @@ async function addRecoveryBtn() {
             $(this).tooltip('hide');
         }
     })
-    newBtn.insertBefore($("#reply-mail"));
+    newBtn.insertAfter($("#delete-mail"));
 }
 /**
  * add label list items for setting mail's label.
@@ -533,41 +554,60 @@ function addLabelLi() {
     axios.get(contextRoot + "mail/label/findall/" + accountId)
         .then(
             response => {
-                for (label of response.data) {
-                    $("#labelDropdown").append($("<a/>",
-                        {
-                            class: "dropdown-item",
-                            "data-labelId": label.labelId,
-                            html: label.labelName,
-                            href: "",
-                            click: function (event) {
-                                event.preventDefault();
-                                let formData = getSelectedFormdata();
-                                if (formData == null) return;
-                                console.log(label.labelId);
-                                axios.put(contextRoot + "mail/label/" + label.labelId, formData)
-                                    .then(res => {
-                                        Swal.fire({
-                                            position: 'bottom-start',
-                                            toast: true,
-                                            icon: 'success',
-                                            title: '已將' + res.data + '筆郵件加入標籤' + label.labelName,
-                                            showConfirmButton: false,
-                                            timer: 1500
-                                        })
-                                        initialize();
-                                    }).catch(
-                                        err => console.log(err)
-                                    )
-                            }
-                        }))
+                if (response.data.length == 0) {
+                    $("#labelDropdown").append($("<span/>", { class: "dropdown-item", html: "目前尚無標籤" }));
+                    return;
                 }
+                for (label of response.data) {
+                    $("#labelDropdown").append($("<div/>", {
+                        class: "form-check form-control-md pl-5 pb-2",
+                        style: "font-size:1.0rem",
+                        append: [
+                            $("<input/>", { class: "form-check-input label-checkbox", type: "checkbox", "data-labelId": label.labelId }),
+                            $("<label/>", { class: "form-check-label", html: label.labelName })
+                        ]
+                    }))
+                }
+                $("#labelDropdown").append($("<a/>", {
+                    class: "dropdown-item border-top text-center",
+                    href: "#",
+                    html: "套用標籤",
+                    click: function (event) {
+                        event.preventDefault();
+                        let labelIds = [];
+                        for (input of $(".label-checkbox")) {
+                            if (input.checked) {
+                                labelIds.push(Number($(input).attr("data-labelId")));
+                            }
+                        }
+                        let formData = getSelectedFormdata();
+                        if (formData == null) return;
+                        formData.append("labelIds", labelIds);
+                        axios.put(contextRoot + "mail/labels", formData)
+                        .then(
+                            response => {Swal.fire({
+                                position: 'bottom-start',
+                                toast: true,
+                                icon: 'success',
+                                title: '已更改' + response.data + '筆郵件的標籤',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            initialize();}
+                        )
+                        .catch(
+                            errors => console.log(errors)
+                        )
+
+                    }
+                }))
             }
         )
 }
+
 /**
  * return formdata for selected mails status updates
- * @returns {FormData} - formdata contains an array of accountmail's id and their account id 
+ * @returns {FormData} - formdata contains an array of accountmail's id and their account id {"mailIds": int[], "accountId": int}
  */
 function getSelectedFormdata() {
     let trs = findChecked();
@@ -582,4 +622,233 @@ function getSelectedFormdata() {
     formData.append("mailIds", mailIds);
     formData.append("accountId", accountId);
     return formData;
+}
+
+
+
+/**
+ * fire a modal that accept user input 
+ */
+function addLabelModal() {
+    Swal.fire({
+        title: '請輸入標籤名稱',
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: '新增標籤',
+        cancelButtonText: '取消',
+        showLoaderOnConfirm: true,
+        preConfirm: (labelName) => {
+            let accountId = $("body").attr("data-ref");
+            let formData = new FormData();
+            formData.append("labelName", labelName);
+            formData.append("accountId", accountId);
+            return fetch(contextRoot + "mail/label", { method: "post", body: formData })
+                .then(response => {
+                    if (!response.ok) {
+                        console.log(response);
+                        throw new Error(response.statusText)
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    Swal.showValidationMessage(
+                        `新增失敗: ${error}`
+                    )
+                })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let row = createLabelRow(result)[0];
+            addLabelEvent(row);
+            $(row).insertBefore($("#add-label"));
+            console.log(result);
+            Swal.fire({
+                position: 'bottom-start',
+                toast: true,
+                icon: 'success',
+                title: '新增標籤成功',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            addLabelLi();
+        }
+    })
+}
+/**
+ * for passing into
+ * @param {Object} response - json response after insert label, with attribute value : {labelId, labelName, accountId(null)}
+ */
+function createLabelRow(response) {
+    let a = $('<a/>', {
+        class: "nav-link user-label", href: contextRoot + "backend/mailpage/mailbox/l/label/" + response.value.labelId
+        , "data-typeName": response.value.labelId, append: [
+            $('<i/>', { class: "fa fa-tag text-secondary", style: "padding-left:3px;padding-right: 2px;" }), " ", response.value.labelName, $('<i/>', { class: "fa fa-trash text-primary invisible float-right" })
+        ]
+    });
+    let li = $('<li/>', { class: "nav-item label-li", "data-lid": response.value.labelId, append: a });
+    return li;
+}
+/**
+ * - add events to elements in li
+ * @param {Element} li - a  <li> at side bar 
+ */
+function addLabelEvent(li) {
+    $(li.firstElementChild.lastElementChild).click(function (e) {
+        e.preventDefault();
+        let id = $(li).attr("data-lid");
+        Swal.fire({
+            title: '刪除標籤',
+            text: "確認進行刪除?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: '刪除',
+            cancelButtonText: '取消',
+            preConfirm: () => {
+                axios.delete(contextRoot + "mail/label/" + id).then(
+                    response => response
+                ).catch(error => {
+                    Swal.showValidationMessage(
+                        `刪除失敗: ${error}`
+                    )
+                })
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    position: 'bottom-start',
+                    toast: true,
+                    icon: 'success',
+                    title: '移除標籤成功',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                $(li).remove();
+                addLabelLi();
+                initMails();
+            }
+        })
+    })
+    li.addEventListener("mouseover", function () {
+        $(this.firstElementChild.lastElementChild).toggleClass("invisible");
+    })
+    li.addEventListener("mouseout", function () {
+        $(this.firstElementChild.lastElementChild).toggleClass("invisible");
+    })
+    $(li.firstElementChild.lastElementChild).mouseover(function () { $(this).toggleClass("text-danger").toggleClass("text-primary"); });
+    $(li.firstElementChild.lastElementChild).mouseout(function () { $(this).toggleClass("text-danger").toggleClass("text-primary"); });
+}
+
+/**
+ * - set selected mails read or not read
+ * @param {Number} hasread - 0 or 1, represent not read and read 
+ */
+function setHasreads(hasread) {
+    let formData = getSelectedFormdata();
+    axios.put(contextRoot + "mail/hasreads/" + hasread, formData)
+        .then(
+            response => initMails()
+        )
+        .catch(
+            error => console.log(error)
+        )
+}
+/**
+ * add pagination too mailbox
+ */
+async function addPagination() {
+    let accountId = $("body").attr("data-ref");
+    let url = window.location.href.split("/");
+    let tname = url.pop();
+    let type = url.pop();
+    axios.get(contextRoot + `mail/count/${type}/${tname}/${accountId}`)
+        .then(
+            response => {
+                console.log("make pagination")
+                let onePageMail = 10;
+                let numOfPages = Math.ceil(response.data / onePageMail);
+                if (numOfPages < Number($("body").attr("data-pagenum"))) {
+                    $("body").attr("data-pagenum", numOfPages);
+                    initMails();
+                }
+                makePagination(numOfPages);
+            }
+        )
+}
+/**
+ * make elements with event handlers to deal with paging
+ * @param {Number} pageNum - total number of pages of the specified mailbox 
+ */
+function makePagination(pageNum) {
+    $(".page-number").remove();
+    $("#prevPageLi").addClass("disabled");
+    for (let i = 1; i <= pageNum; i++) {
+        let li = $("<li/>", { class: "page-item page-number", append: $("<a/>", { class: "page-link", href: "#", html: i }) });
+        li.insertBefore($("#nextPageLi"));
+    }
+    if (pageNum == 1) {
+        $("#prevPageLi").addClass("disabled");
+        $("#nextPageLi").addClass("disabled");
+    }
+    $($(".page-number")[Number($("body").attr("data-pagenum")) - 1]).addClass("active");
+    $("#nextPageLi a").click(function (event) {
+        event.preventDefault();
+        $("body").attr("data-pagenum", Number($("body").attr("data-pagenum")) + 1);
+        initMails();
+        $("#prevPageLi").removeClass("disabled");
+        if ($("body").attr("data-pagenum") == pageNum) {
+            $("#nextPageLi").addClass("disabled");
+        }
+        let a = $(".page-number.active");
+        a.next(".page-number").addClass("active");
+        a.removeClass("active")
+    })
+    $("#prevPageLi a").click(function (event) {
+        event.preventDefault();
+        $("body").attr("data-pagenum", Number($("body").attr("data-pagenum")) - 1);
+        initMails();
+        $("#nextPageLi").removeClass("disabled");
+        if ($("body").attr("data-pagenum") == 1) {
+            $("#prevPageLi").addClass("disabled");
+        }
+        let a = $(".page-number.active");
+        a.prev(".page-number").addClass("active");
+        a.removeClass("active")
+    })
+    for (a of $(".page-number a")) {
+        $(a).click(function (event) {
+            event.preventDefault();
+            $("body").attr("data-pagenum", this.innerHTML);
+            $(".page-number").removeClass("active");
+            $(this).parent(".page-number").addClass("active");
+            if ($(this).parent(".page-number").hasClass("active")) {
+                if (pageNum == 1 || pageNum == 0) {
+                    $("#nextPageLi").addClass("disabled");
+                    $("#prevPageLi").addClass("disabled");
+                } else if (this.innerHTML == 1) {
+                    $("#nextPageLi").removeClass("disabled");
+                    $("#prevPageLi").addClass("disabled");
+                } else if (this.innerHTML == pageNum) {
+                    $("#prevPageLi").removeClass("disabled");
+                    $("#nextPageLi").addClass("disabled");
+                } else {
+                    $("#prevPageLi").removeClass("disabled");
+                    $("#nextPageLi").removeClass("disabled");
+                }
+            }
+            initMails();
+        })
+    }
+}
+
+$("#condition-unread, #condition-hasAttachments").click(function() {
+    $(this).toggleClass("active");
+})
+
+function getCondtions() {
+    
 }

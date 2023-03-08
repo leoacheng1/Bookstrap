@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bookstrap.model.bean.MailAccount;
 import com.bookstrap.model.bean.MailCountDto;
@@ -77,11 +78,12 @@ public class MailPageController {
 	}
 	
 	@GetMapping("/composemail")
-	public String composeMail(HttpSession session,Model m) {
+	public String composeMail(HttpSession session,Model m,@RequestParam(name="to", required = false) String mailTo) {
 		if (session.getAttribute("empAccount") == null) {
 			m.addAttribute("error", "請先登入");
 			return "backend/login";
 		}
+		m.addAttribute("mailTo",mailTo);
 		return "/backend/controllpanel/owner/mail/writemail";
 	}
 
