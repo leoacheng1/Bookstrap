@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,8 @@ public class MemberFavoriteController {
 
 	@Autowired
 	private EBookFavorityService ebfService;
+	
+	
 	
 	@GetMapping("/favorite/ebook/add")
 	public String addEBookFavorite(@RequestParam("eBookId") EBooks eBook, 
@@ -65,13 +68,24 @@ public class MemberFavoriteController {
 			
 	}
 	
+	
+	
 	@ResponseBody
 	@PostMapping("/favorite/ebook/checkfavority")
-	public Map<String, String> checkList(@RequestParam("eBookId") EBooks eBook, 
-			@RequestParam("member") Members member){
+	public Map<String, String> checkList(@RequestParam("eBookId") Integer eBook, 
+			@RequestParam("memberId") Integer member){
+			
+		
+		Members memberObj = new Members();
+		memberObj.setMemberId(member);
+		
+		EBooks eBookObj = new EBooks();
+		eBookObj.seteBookId(eBook);
+		
+		System.out.println("=================");
 		
 		HashMap<String, String> map = new HashMap<>();
-		Optional<EBookFavorite> op = ebfService.finByMemberAndEBook(member, eBook);
+		Optional<EBookFavorite> op = ebfService.finByMemberAndEBook(memberObj, eBookObj);
 		
 		if(op.isPresent()) {
 			map.put("response", "Y");

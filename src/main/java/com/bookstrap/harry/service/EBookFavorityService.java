@@ -50,6 +50,7 @@ public class EBookFavorityService {
 	}
 	
 	
+	
 	public EBookFavorite findEBookFavorityById(Integer ebfId) {
 		Optional<EBookFavorite> op = ebfDao.findById(ebfId);
 	
@@ -72,5 +73,7 @@ public class EBookFavorityService {
 	public Optional<EBookFavorite> finByMemberAndEBook(Members member, EBooks ebook) {
 		return ebfDao.findByMemberAndEBook(member, ebook);
 	}
+	
+	
 	
 }

@@ -90,3 +90,5 @@ CREATE TABLE MemberRoles (
     FOREIGN KEY (FK_member_id) REFERENCES Members(member_id),
     FOREIGN KEY (FK_role_id) REFERENCES Roles(roles_id)
 );
+
+ALTER TABLE Members ADD Role nvarchar(50) null;

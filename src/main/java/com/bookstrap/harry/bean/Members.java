@@ -54,6 +54,7 @@ public class Members {
 	private Collection<Roles> roles;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name = "Role")
 	private Role role;
 	
 	
