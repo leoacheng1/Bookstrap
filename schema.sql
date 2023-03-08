@@ -7,7 +7,8 @@ Create Table Members(
 	valid tinyint not null, --驗證，有沒有停權
 	vertification_code nvarchar(255),
 	member_level nvarchar(50),
-	reset_password_token nvarchar(45)
+	reset_password_token nvarchar(45),
+	Role nvarchar(50) null
 );
 
 Create Table MemberDetails(
@@ -25,7 +26,7 @@ Create Table MemberDetails(
 
 CREATE TABLE Gender(
 gender_id tinyint primary key not null identity(1,1),
-gender nvarchar(5)
+gender nvarchar(6)
 );
 
 INSERT INTO Gender (gender) VALUES
@@ -148,7 +149,7 @@ Create Table Comment(
 	book_id int foreign key references Books(book_id),
 	content nvarchar(max), --內文
 	rating tinyint not null,  --打分 eg.星星 1~5顆星
-	favorite tinyint not null --最愛 0:沒有 1:有
+	
 );
 
 Create Table Visited( --商城曾經看過功能
@@ -184,3 +185,35 @@ schedule_date date,
 schedule_empid int foreign key references ShopEmployees(emp_id),
 schedule_shiftid int foreign key references Shift(shift_id),
 )
+
+----------------------------------------------------
+CREATE TABLE Favorite(
+favorite_id int NOT NULL PRIMARY KEY IDENTITY(1,1),
+FK_book_id int NOT NULL,
+FK_member_id int NOT NULL,
+
+FOREIGN KEY (FK_book_id) REFERENCES Books(book_id),
+FOREIGN KEY (FK_member_id) REFERENCES Members(member_id)
+);
+
+CREATE TABLE EBookFavorite(
+ebook_favorite_id int NOT NULL PRIMARY KEY IDENTITY(1,1),
+FK_ebook_id int NOT NULL,
+FK_member_id int NOT NULL,
+
+FOREIGN KEY (FK_ebook_id) REFERENCES EBooks(ebook_id),
+FOREIGN KEY (FK_member_id) REFERENCES Members(member_id)
+);
+
+CREATE TABLE Roles (
+    roles_id INT IDENTITY(1,1) PRIMARY KEY,
+    roles_name NVARCHAR(255) NOT NULL
+);
+
+CREATE TABLE MemberRoles (
+    member_role_id INT IDENTITY(1,1) PRIMARY KEY,
+    FK_member_id INT NOT NULL,
+    FK_role_id INT NOT NULL,
+    FOREIGN KEY (FK_member_id) REFERENCES Members(member_id),
+    FOREIGN KEY (FK_role_id) REFERENCES Roles(roles_id)
+);
