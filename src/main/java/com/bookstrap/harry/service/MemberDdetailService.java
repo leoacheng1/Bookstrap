@@ -5,10 +5,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.harry.bean.MemberDetails;
+import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.dao.MemberDetailRepository;
 
 
@@ -33,8 +38,13 @@ public class MemberDdetailService {
 		return null;	
 				}
 	
-	public void deleteMemberDetailByID(Integer memberId) {
-		 memberDetailDao.deleteById(memberId);
+	public boolean deleteMemberDetailByID(Integer memberId) {
+		
+		if(memberId != null){
+		memberDetailDao.deleteById(memberId);
+		return true;
+		}
+		return false;
 	}
 
 	public MemberDetails insertMemberDetails(MemberDetails memberDatil) {
@@ -75,6 +85,12 @@ public class MemberDdetailService {
 			}
 			
 			return null;
+		}
+		
+		public Page<MemberDetails> getMemberByPage(Integer pageNumber){
+			Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "memberId");
+				Page<MemberDetails> page = memberDetailDao.findAll(pgb);
+				return page;
 		}
 		
 		

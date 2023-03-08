@@ -2,17 +2,16 @@ package com.bookstrap.harry.config;
 
 import java.io.IOException;
 
-import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
@@ -20,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
+//https://www.codejava.net/frameworks/spring-boot/multiple-login-pages-examples
 
 @Configuration
 @EnableWebSecurity
@@ -33,21 +33,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	        this.uService = uService;
 	    }
 	   
-	   @Bean
-	   public BCryptPasswordEncoder passwoedEncoder() {
-		   return new BCryptPasswordEncoder();
-	   }
+	   
+	   
 	
     @Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/index/");
+	}
+
+
+
+
+	@Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().and().csrf().disable().authorizeRequests()
-            .antMatchers("/", "/login", "/oauth/**","/member/signin","/**").permitAll()
-            
-            
-            
-            .anyRequest()
-            .authenticated()
-            
+    	http.headers().frameOptions().sameOrigin();
+    	
+    	
+    	http.httpBasic().and().csrf().disable().authorizeRequests()
+            .antMatchers("/", "/oauth/**", "/**").permitAll()
             
             .and()
             .formLogin()
@@ -55,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
             
             .and()
             .oauth2Login()
-                .loginPage("/member/signin")
+                .loginPage("/guest/signin")
                 .userInfoEndpoint()
                     .userService(oauthUserService).and()
                     .successHandler(new AuthenticationSuccessHandler() {
@@ -79,11 +82,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 //                            response.sendRedirect("/Bookstrap/index");
                         }
                     });
+    	
+//    	
     }
+    
+	
+	
+//	http.authorizeRequests().antMatchers("/").permitAll();
+//	
+//	http
+//    .antMatcher("/member/**")
+//    .authorizeRequests()
+//    .anyRequest()
+//    .hasAuthority("USER")
+//	
+//	  .and()
+//      .formLogin()
+//      		.loginPage("/guest/signin")
+//	            .usernameParameter("memberEmail")
+//	            .loginProcessingUrl("/member/checklogin")
+//	            .defaultSuccessUrl("/member/main")
+//      .and()
+//      .logout()
+//      	.logoutUrl("/member/logout")
+//      	.logoutSuccessUrl("/index")
      
-    @Autowired
+
+
+
+	@Autowired
     private CustomOAuth2UserService oauthUserService;
      
  
 	
 }
+
