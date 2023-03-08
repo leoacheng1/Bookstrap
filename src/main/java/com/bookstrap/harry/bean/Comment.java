@@ -35,6 +35,7 @@ public class Comment {
 	@Column(name = "content")
 	private String content;
 
+	// 打分:1~5顆星
 	@Column(name = "rating")
 	private Integer evaluation;
 
