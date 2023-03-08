@@ -84,8 +84,8 @@ public class EBooks {
 	@JoinColumn(name = "member_id")
 	private Members member;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-	private List<Favorite> favorite;
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+//	private List<Favorite> favorite;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
 	private Set<EBookFavorite> eBookfavorite;
@@ -95,15 +95,6 @@ public class EBooks {
 
 	
 	
-	public List<Favorite> getFavorite() {
-		return favorite;
-	}
-
-
-
-	public void setFavorite(List<Favorite> favorite) {
-		this.favorite = favorite;
-	}
 
 
 	
