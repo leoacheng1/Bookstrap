@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,10 +92,10 @@ public class BlogParagraphController {
 		return "/blog/updatePara";
 	}
 	
-//	public String insertBlogImage(
-//			@RequestParam("")blogParagraphId,@RequestParam )) {}
-//		
-//		
-//		
+	@ResponseBody
+	@PutMapping("/blog/showPara/{id}/{showOrNot}")
+	public String updateShowOrNot(@PathVariable("id") Integer pId, @PathVariable("showOrNot") Integer showOrNot) {
+		return blogParaService.makeItCanSeen(pId, showOrNot);
+	}
 	}
 

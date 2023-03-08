@@ -33,7 +33,10 @@ public class BlogParagraph {
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blogparagraph", cascade = CascadeType.ALL)
 	private List<BlogPhotos> blogPhotos = new ArrayList<>();
-
+	@Column(name = "isThisParaShow")
+	private Integer isThisParaShow;
+	
+	
 	public Integer getParagraphId() {
 		return paragraphId;
 	}
@@ -81,6 +84,14 @@ public class BlogParagraph {
 
 	public void setBlogPhotos(List<BlogPhotos> blogPhotos) {
 		this.blogPhotos = blogPhotos;
+	}
+
+	public Integer getIsThisParaShow() {
+		return isThisParaShow;
+	}
+
+	public void setIsThisParaShow(Integer isThisParaShow) {
+		this.isThisParaShow = isThisParaShow;
 	}
 
 

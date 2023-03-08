@@ -90,4 +90,12 @@ public class BlogParaService {
 			
 	}	
 		
+	public String makeItCanSeen(Integer id,Integer showOrNot){
+		Optional<BlogParagraph> optional = blogParaDao.findById(id);
+		if (optional.isEmpty()) return null;
+		BlogParagraph paragraph = optional.get();
+		paragraph.setIsThisParaShow(showOrNot);
+		blogParaDao.save(paragraph);
+		return "ok";
+	}
 	}

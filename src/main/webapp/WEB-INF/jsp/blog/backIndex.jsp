@@ -9,6 +9,7 @@
 			<meta charset="UTF-8">
 			<title>blog後台首頁</title>
 			<link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet">
+			<link rel="stylesheet" href="${contextRoot}/css/blog.css" />
 		</head>
 
 		<body>
@@ -22,13 +23,15 @@
 				fetch("${contextRoot}/blog/getAllBlogParagraph", { method: "POST" }).then(rs => rs.json()).then(function (data) {
 
 					let outPutString = "";
-					outPutString += "<table>文章標題："
+					outPutString += "<div class=mtable>"
+						+ "<table>"
 						+ '<thead>'
-						+ '<th>文章標題</th>'
-						+ '<th>文章內文</th>'
+						+ '<th class=tth>文章標題</th>'
+						+ '<th class=tth>文章內文</th>'
 						// + '<th>圖片</th>'
-						+ '<th>刪除</th>'
-						+ '<th>修改</th>'
+						+ '<th class=deletepara danger>刪除</th>'
+						+ '<th class=tth2>修改</th>'
+						+ '<th class=tth2>是否顯示</th>'
 						+ '</thead>'
 					for (let item of data) {
 
@@ -46,12 +49,17 @@
 							// + '<td><img  src=" " '+  +'</td>'
 							+ '<td><button name=delebtn  data-id=' + item.paragraphId + '>刪除</button></td>'
 							+ '<td><a href= "http://localhost:8080/Bookstrap/blog/getParaById?id=' + item.paragraphId + '"><button name="updatebtn" type="button" data-id=' + item.paragraphId + '> 修改</button></a></td>'
+							+ '<td><input type="checkbox" name="showOrNot"  data-id=' + item.paragraphId + '></td>'
 							+ '</tbody>'
 
-
 					}
+					outPutString += "</table>"
+						+ "</div>"
 
 					document.getElementById("dataHome").innerHTML = outPutString
+
+
+
 					const delecon = document.getElementsByName("delebtn")
 					for (let i = 0; i < delecon.length; i++) {
 						delecon[i].addEventListener('click', function (e) {
@@ -60,8 +68,26 @@
 							deleteById(id);
 						})
 					}
+
+
+					const checkboxcon = document.getElementsByName("showOrNot")
+					for (let i = 0; i < checkboxcon.length; i++) {
+						checkboxcon[i].addEventListener('click', checkboxClicked);
+					}
+
 				})
 
+
+				function checkboxClicked() {
+					let piD = $(this).attr("data-id");
+					if (this.checked) {
+						axios.put("http://localhost:8080/Bookstrap/blog/showPara/" + piD + "/1");
+						console.log('Checkbox is checked!');
+					} else {
+						axios.put("http://localhost:8080/Bookstrap/blog/showPara/" + piD + "/0");
+						console.log('Checkbox is not checked!');
+					}
+				}
 
 				function deleteById(id) {
 					axios({
@@ -84,6 +110,8 @@
 
 
 			</script>
+
+
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				Launch demo modal
