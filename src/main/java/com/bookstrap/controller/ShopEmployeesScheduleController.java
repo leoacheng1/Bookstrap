@@ -1,8 +1,10 @@
 package com.bookstrap.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +24,10 @@ public class ShopEmployeesScheduleController {
 	@Autowired
     private ShopEmployeesScheduleService sempscheService;
 	
+	
 	@Autowired
-	private ShopEmployeesService sempService;
+	private ShopEmployeesService sempsService;
+	
 	
 
 	@GetMapping("/sempsche/showpage")
@@ -40,18 +44,21 @@ public class ShopEmployeesScheduleController {
 	
 	@GetMapping("/sempsche/showsemp")
 	@ResponseBody
-	public List<ShopEmployeesDto> findAllEmployees(){
-		return sempService.getAllIdNameByShopEmployees();
-		
+	public List<ShopEmployeesDto> get(){
+		return sempsService.getAllIdNameByShopEmployees();
 	}
 	
 	@ResponseBody
-	@PostMapping("/sempsche/addsemp")
-	public String addSchedule(@RequestParam("scheduleVacation") String scheduleVacation,@RequestParam("scheduleVacation") Integer id) {
+	@GetMapping("/sempsche/addsemp")
+	public String addSchedule(
+			@RequestParam("scheduleEmpid") Integer scheduleEmpid,
+			@RequestParam("scheduleStartdate")@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss") Date scheduleStartdate,
+			@RequestParam("scheduleEnddate")@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss") Date scheduleEnddate) {
 		try {
 			ShopEmployeesSchedule sempsche = new ShopEmployeesSchedule();
-			sempsche.setScheduleVacation(scheduleVacation);
-			sempsche.setScheduleEmpid(id);
+			sempsche.setScheduleEmpid(scheduleEmpid);
+			sempsche.setScheduleStartdate(scheduleStartdate);
+			sempsche.setScheduleEnddate(scheduleEnddate);
 			sempscheService.addShopEmployeesSchedule(sempsche);
 		} catch (Exception e) {
 			e.printStackTrace();

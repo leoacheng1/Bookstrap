@@ -94,39 +94,6 @@
 									}
 								}
 
-								// // 當選擇起始時間時
-								// start_time_select.addEventListener("change", function () {
-								// 	// 獲取起始時間和截止時間的值
-								// 	var start_time_value = start_time_select.value;
-								// 	var end_time_value = end_time_select.value;
-
-								// 	// 清空截止時間下拉式選單中的所有選項
-								// 	end_time_select.innerHTML = "";
-
-								// 	// 重新生成截止時間下拉式選單中的選項
-								// 	for (var hour = 0; hour < 24; hour++) {
-								// 		for (var minute = 0; minute < 60; minute += 30) {
-								// 			// 構建選項值和文本
-								// 			var option_value = hour + ":" + (minute === 0 ? "00" : "30");
-								// 			var option_text = hour + ":" + (minute === 0 ? "00" : "30");
-
-								// 			// 如果選項值大於起始時間的值，則添加到截止時間下拉式選單中
-								// 			if (option_value > start_time_value) {
-								// 				var option = document.createElement("option");
-								// 				option.value = option_value;
-								// 				option.text = option_text;
-								// 				end_time_select.add(option);
-								// 			}
-								// 		}
-								// 	}
-
-								// // 如果截止時間的值小於等於起始時間的值，則將其設置為空值
-								// if (end_time_select.value <= start_time_value) {
-								// 	end_time_select.value = "";
-								// }
-								// });
-
-
 
 								// 初始化 fullcalendar
 								$(document).ready(function () {
@@ -184,6 +151,7 @@
 											var popupContent = 'Title: ' + calEvent.title + '\n' +
 												'Start: ' + moment(calEvent.start).format('YYYY-MM-DD hh:mm:ss') + '\n' +
 												'End: ' + moment(calEvent.end).format('YYYY-MM-DD hh:mm:ss') + '\n' +
+												'Schedule ID: ' + calEvent.scheduleId + '\n' +
 												'Employee ID: ' + calEvent.scheduleEmpid + '\n' +
 												'Employee Name: ' + calEvent.scheduleEmpname + '\n' +
 												'All Day: ' + calEvent.allDay;
@@ -224,21 +192,35 @@
 															"確定": function () {
 																// 取得選擇的員工名稱和起始截止時間
 																var employeeName = $('#employee-name').val();
-																var startDate = $('#start-date').val();
-																var endDate = $('#end-date').val();
+																var startDate777 = $('#start-date').val();
+																var endDate777 = $('#end-date').val();
 
-																// 透過 AJAX 送出請求
+
+
+																var startDate1 = new Date($('#start-date').val() + ' ' + $('#start-time').val());
+																var endDate1 = new Date($('#end-date').val() + ' ' + $('#end-time').val());
+
+																// var startDate1 = moment($('#start-date').val() + 'T' + $('#start-time').val(), 'YYYY-MM-DDTHH:mm').toDate();
+																// var endDate1 = moment($('#end-date').val() + 'T' + $('#end-time').val(), 'YYYY-MM-DDTHH:mm').toDate();
+
+																console.log(employeeName);
+																console.log(startDate777);
+																console.log(endDate777);
+																console.log(startDate1);
+																console.log(endDate1);
+																var url = "http://localhost:8080/Bookstrap/sempsche/addsemp?scheduleEmpid=1&scheduleStartdate=" + encodeURIComponent(startDate1.toISOString()) + "&scheduleEnddate=" + encodeURIComponent(endDate1.toISOString());
+
+																console.log(url);
+																// 發送GET請求
 																$.ajax({
-																	url: 'your-server-side-script.php',
-																	type: 'POST',
-																	data: {
-																		employeeName: employeeName,
-																		startDate: startDate,
-																		endDate: endDate
-																	},
+																	url: url,
+																	type: 'GET',
 																	success: function (response) {
 																		// 請求成功後，重新載入事件
 																		$('#calendar').fullCalendar('refetchEvents');
+																	},
+																	error: function () {
+																		// 請求失敗時的處理
 																	}
 																});
 
