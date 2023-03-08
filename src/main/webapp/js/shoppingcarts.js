@@ -1,13 +1,3 @@
-const deleteBtn = document.getElementsByClassName("delete-btn");
-const deleteAllBtn = document.getElementsByClassName("delete-all-btn");
-for (i = 0; i < deleteBtn.length; i++) {
-  deleteBtn[i].addEventListener("click", function (e) {
-    let bkID = this.getAttribute("data-bkid");
-    console.log(bkID);
-    //delete ajax
-    deleteCartItemAjax(bkID);
-  });
-}
 ////////////////////////// 更新商品數量 //////////////////////////
 function updateCartItemAmount(bookId, amount, action) {
   if (action === "add") {
@@ -44,7 +34,16 @@ function updateCartItemAmount(bookId, amount, action) {
       });
   }
 }
-
+const deleteBtn = document.getElementsByClassName("delete-btn");
+const deleteAllBtn = document.getElementsByClassName("delete-all-btn");
+for (i = 0; i < deleteBtn.length; i++) {
+  deleteBtn[i].addEventListener("click", function (e) {
+    let bkID = this.getAttribute("data-bkid");
+    console.log(bkID);
+    //delete ajax
+    deleteCartItemAjax(bkID);
+  });
+}
 ////////////////////////// 刪除單項 //////////////////////////
 function deleteCartItemAjax(bkID) {
   axios({
@@ -225,6 +224,37 @@ for (var i = 0; i < couponCheckboxes.length; i++) {
 
       discountedPriceEl.innerText = discountedPrice;
     }
+  });
+}
+
+function checkout() {
+  // 取得已勾選的商品
+  var checkedItems = $('input[name="checkbook"]:checked');
+
+  // 將勾選的商品資料存成 JavaScript 物件
+  var cartItems = [];
+  checkedItems.each(function () {
+    var itemId = $(this).val();
+    var itemQty = $(this).closest("tr").find(".quantity").val();
+    console.log("itemId" + itemId);
+    console.log("itemQty" + itemQty);
+    cartItems.push({ id: itemId, qty: itemQty });
+  });
+
+  // 發送 AJAX 請求
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:8080/Bookstrap/shopping/cart/checkout",
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(cartItems),
+    success: function () {
+      // 成功處理後端儲存購物車商品的 Session
+      alert("結帳成功！");
+    },
+    error: function () {
+      // 處理錯誤
+      alert("結帳失敗！");
+    },
   });
 }
 

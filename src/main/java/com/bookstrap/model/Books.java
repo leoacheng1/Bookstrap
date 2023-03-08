@@ -79,7 +79,7 @@ public class Books {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<SaleItems> saleItems;
 	
-	@JsonManagedReference
+	@JsonManagedReference(value = "book-shopSotcks")
 	@OneToMany(mappedBy="book", cascade = CascadeType.ALL)
 	private Set<ShopStock> shopStocks;
 	

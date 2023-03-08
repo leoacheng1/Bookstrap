@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,28 +30,9 @@ public class ShoppingCartsController {
 
 	@Autowired
 	private ShoppingCartsService scService;
-	
+
 	@Autowired
 	private UserCouponService ucService;
-
-
-//	@GetMapping("/cart")
-//	public String checkSignIn(HttpSession session) {
-//		if (session.getAttribute("member") != null) {
-//			return "/shoppingcarts/shoppingcarts";
-//		}
-//		return "member/SignInPage";
-//	}
-
-//	@ResponseBody	
-//	@GetMapping("/carts")
-//	public String findAllCarts(Integer memberId, Model model) {
-//		Object id = session.getAttribute("memberId");
-//		System.out.println("idclass=" + id.getClass());
-//		List<ShoppingCarts> carts = scService.findCartsByMemberId(memberId);
-//		model.addAttribute("carts", carts);
-//		return "shoppingcarts/shoppingcarts";
-//	}
 
 	// 透過session 中的 memberId 取得所有購買的商品
 	@GetMapping("/cart")
@@ -72,7 +55,7 @@ public class ShoppingCartsController {
 
 			model.addAttribute("bookList", bookList);
 			model.addAttribute("cartItemList", cartItemList);
-			
+
 			List<Coupons> coupons = new ArrayList<Coupons>();
 			for (int n = 0; n < userCouponList.size(); n++) {
 				Coupons coupon = userCouponList.get(n).getCoupon();
@@ -103,10 +86,18 @@ public class ShoppingCartsController {
 	// 更新商品數量
 	@ResponseBody
 	@PutMapping("/cart/api/update")
-	public Integer updateCartItemAmount(@RequestParam("bookId") Integer bookId, @RequestParam("amount") Integer amount) {
+	public Integer updateCartItemAmount(@RequestParam("bookId") Integer bookId,
+			@RequestParam("amount") Integer amount) {
 		ShoppingCarts upAmount = scService.updateAmountByBookId(amount, bookId);
 		return upAmount.getAmount();
 
 	}
-	
+
+	@PostMapping("/cart/checkout")
+	@ResponseBody
+	public void checkout(HttpSession session, @RequestBody List<ShoppingCarts> cartItems) {
+		session.setAttribute("cartItems", cartItems);
+		System.out.println("已存入session");
+	}
+
 }

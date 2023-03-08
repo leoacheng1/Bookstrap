@@ -189,7 +189,9 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       </div>
       <div class="text-right">
         <h4>折價後金額: <span id="discounted-price">0</span>元</h4>
-        <button type="button" class="btn btn-info">結帳</button>
+        <button type="button" class="btn btn-info" onclick="checkout()">
+          結帳
+        </button>
       </div>
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

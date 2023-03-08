@@ -33,12 +33,12 @@ public class UserCoupon implements Serializable{
 	@Column(name = "amount")
 	private Integer amount;
 
-	@JsonBackReference
+	@JsonBackReference(value = "mamber-userCoupon")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id", insertable=false, updatable=false)
 	private Members member;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "coupon-userCoupon")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "coupon_id", insertable=false, updatable=false)
 	private Coupons coupon;
