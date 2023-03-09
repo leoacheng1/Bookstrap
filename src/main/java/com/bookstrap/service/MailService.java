@@ -3,6 +3,7 @@ package com.bookstrap.service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.model.bean.AccountLabel;
 import com.bookstrap.model.bean.AccountMail;
+import com.bookstrap.model.bean.ConditionDto;
 import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.Mail;
 import com.bookstrap.model.bean.MailAccount;
@@ -176,6 +178,14 @@ public class MailService {
 			Page<AccountMail> page = accountMailDao.findByStarred((short)1, pageRequest);
 			return page;
 		}
+	}
+	
+	public List<AccountMail> findMailByConditions(ConditionDto conditions, Integer accountId, Integer pageNum){
+		return emDao.findMailsByConditions(conditions, pageNum, accountId);
+	}
+
+	public LinkedHashSet<String> findAllSentAccount(Integer accountId) {
+		return mailDao.findAllSentAccount(accountId);
 	}
 // ================================================= for Inserting =============================================================
 	public AccountLabel addLabel(MailAccount account, String labelName) {

@@ -27,6 +27,7 @@ var contextRoot = "http://localhost:8080/Bookstrap/";
  */
 async function initialize() {
     await addPagination();
+    await prepareConditions();
     await initMails();
     await updateSideBar();
     await addTooltip();
@@ -45,20 +46,73 @@ async function addTooltip() { $('[data-toggle="tooltip"]').tooltip() };
 async function initMails(conditions) {
     let pageNum = $("body").attr("data-pagenum");
     $("#mailboxbody").html("");
-    let url = window.location.href.split("/");
-    let tname = url.pop();
-    let type = url.pop();
+    let currUrl = window.location.href.split("/");
+    let tname = currUrl.pop();
+    let type = currUrl.pop();
     let activeLi = $(`#${type}-ul a[data-typename=${tname}]`);
     if (!activeLi.hasClass("bg-info")) {
         activeLi.addClass("font-weight-bold").addClass("bg-info")
     }
+    // new request with conditions
+    if(conditions != null) {
+        // let conditions = getConditions();
+        if (type == "category") conditions["categoryName"] = tname;
+        if (type == "folder") conditions["folderName"] = tname;
+        if (type == "label") {
+            if (tname == "important"){
+                condtions["important"] = 1;
+            }else if (tname == "starred"){
+                conditions["starred"] = 1;
+            }else {
+                conditions["labelId"] = tname;
+            }
+        }
+        console.log(conditions);
+        axios({
+            url: contextRoot + `mail/conditions/${pageNum}`,
+            method: "post",
+            data: conditions
+        }).then(
+            res => {
+                // console.log(res.data);
+                $("#mailboxbody").html("");
+                if (res.data.length == 0) {
+                    let tr = document.createElement("tr");
+                    tr.setAttribute("style", "text-align:center; color: gray")
+                    let td = document.createElement("td");
+                    td.innerHTML = "目前尚無郵件";
+                    tr.appendChild(td);
+                    $("#mailboxbody").append(tr);
+                } else {
+                    for (rawData of res.data) {
+                        console.log(rawData);
+                        let data = makeMailData(rawData);
+                        let processedRowData = fillMailRow(makeMailRow(data.mailId), data);
+                        if (processedRowData.AttachmentIds == null) {
+                            $("#mailboxbody").append(processedRowData.processedTableRow);
+                        } else {
+                            $("#mailboxbody").append(processedRowData.processedTableRow);
+                            //call api to append a row of attachment, a little trivial probably not gonna make it
+                        }
+                    }
+                }
+                addEvents();
+                return;
+            }
+        ).catch(
+            err => {
+                console.log(err)
+            }
+        )
+    }else {
 
+    //original request
     axios({
         url: contextRoot + `mail/${type}/${tname}/${pageNum}`,
         method: "get"
     }).then(
         res => {
-            console.log(res.data);
+            // console.log(res.data);
             $("#mailboxbody").html("");
             if (res.data.length == 0) {
                 let tr = document.createElement("tr");
@@ -87,6 +141,7 @@ async function initMails(conditions) {
             console.log(err)
         }
     )
+    }
     console.log("initialized");
 }
 
@@ -137,9 +192,6 @@ function makeMailData(data) {
  * @return {ProcessedRowData} - object containing attachment id array(if exists) and a tablerow filled with data
  */
 function fillMailRow(tableRow, mailData) {
-    // <span class="badge badge-pill badge-primary">folder</span>
-    // <span class="badge badge-pill badge-success">category</span>
-    // <span class="badge badge-pill badge-info">label</span>
     if (mailData.starred == 1) $(tableRow.querySelector('.mailbox-star a i')).toggleClass('text-warning').toggleClass('text-secondary').toggleClass('starred');
     if (mailData.important == 1) $(tableRow.querySelector('.mailbox-important a i')).toggleClass('text-warning').toggleClass('text-secondary').toggleClass('important');
     $(tableRow.querySelector(".mailbox-name a")).html(mailData.from).attr("href", mailData.fromLink);
@@ -148,18 +200,19 @@ function fillMailRow(tableRow, mailData) {
     const folderNameMapping = {
         "inbox": "收件匣",
         "sent": "已寄出",
-        "draft":"草稿",
-        "bin":" 回收桶"
+        "draft": "草稿",
+        "bin": " 回收桶"
     }
     const categoryNameMapping = {
         "normal": "一般信件",
         "job": "工作指派",
         "company": "公司訊息"
     }
-    $("<span/>",{class: "badge badge-pill badge-primary mr-1", html: folderNameMapping[mailData.mailFolder.folderName]}).insertBefore($(tableRow.querySelector(".mailbox-subject a")))
-    $("<span/>",{class: "badge badge-pill badge-success mr-1", html: categoryNameMapping[mailData.mailCategory.categoryName]}).insertBefore($(tableRow.querySelector(".mailbox-subject a")))
+    console.log(mailData);
+    $("<span/>", { class: "badge badge-pill badge-primary mr-1", html: folderNameMapping[mailData.mailFolder.folderName] }).insertBefore($(tableRow.querySelector(".mailbox-subject a")))
+    $("<span/>", { class: "badge badge-pill badge-success mr-1", html: categoryNameMapping[mailData.mailCategory.categoryName] }).insertBefore($(tableRow.querySelector(".mailbox-subject a")))
     for (label of mailData.mailLabels) {
-        $("<span/>",{class: "badge badge-pill badge-info mr-1", html: label.labelName}).insertBefore($(tableRow.querySelector(".mailbox-subject a")));
+        $("<span/>", { class: "badge badge-pill badge-info mr-1", html: label.labelName }).insertBefore($(tableRow.querySelector(".mailbox-subject a")));
     }
     $(tableRow.querySelector(".mailbox-date")).html(mailData.timeago);
     if (mailData.mailContent != null) {
@@ -397,9 +450,9 @@ function addEvents() {
 
     //read and unread buttons
     $("#hasread-mail").unbind('click');
-    $("#hasread-mail").click(function()  { setHasreads(1); $(this).tooltip('hide'); });
+    $("#hasread-mail").click(function () { setHasreads(1); $(this).tooltip('hide'); });
     $("#notread-mail").unbind('click');
-    $("#notread-mail").click(function() { setHasreads(0); $(this).tooltip('hide'); });
+    $("#notread-mail").click(function () { setHasreads(0); $(this).tooltip('hide'); });
 
     //add label list
     addLabelLi();
@@ -584,20 +637,22 @@ function addLabelLi() {
                         if (formData == null) return;
                         formData.append("labelIds", labelIds);
                         axios.put(contextRoot + "mail/labels", formData)
-                        .then(
-                            response => {Swal.fire({
-                                position: 'bottom-start',
-                                toast: true,
-                                icon: 'success',
-                                title: '已更改' + response.data + '筆郵件的標籤',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            initialize();}
-                        )
-                        .catch(
-                            errors => console.log(errors)
-                        )
+                            .then(
+                                response => {
+                                    Swal.fire({
+                                        position: 'bottom-start',
+                                        toast: true,
+                                        icon: 'success',
+                                        title: '已更改' + response.data + '筆郵件的標籤',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    initialize();
+                                }
+                            )
+                            .catch(
+                                errors => console.log(errors)
+                            )
 
                     }
                 }))
@@ -845,10 +900,75 @@ function makePagination(pageNum) {
     }
 }
 
-$("#condition-unread, #condition-hasAttachments").click(function() {
-    $(this).toggleClass("active");
-})
+async function prepareConditions() {
+    axios.get(contextRoot + "mail/sent/" + $("body").attr("data-ref"))
+        .then(
+            response => {
+                for (account of response.data) {
+                    $("#sendByItems").html();
+                    let a = $("<a/>", {
+                        class: "dropdown-item", href: "#",
+                        html: account,
+                        click: function (event) {
+                            event.preventDefault();
+                            $("#condition-sendBy").html("寄件人 " + $(this).html());
+                            let conditions = getConditions()
+                            initMails(conditions);
+                        }
+                    })
+                    a.appendTo($("#sendByItems"))
+                }
+            }
+        )
+    $('#condition-daterange').on('apply.daterangepicker', function (ev, picker) {
+        $('#condition-daterange span').html(picker.chosenLabel);
+        let conditions = getConditions()
+        initMails(conditions);
+    });
 
-function getCondtions() {
-    
+    $("#condition-unread, #condition-hasAttachment").click(function () {
+        $(this).toggleClass("active");
+        let conditions = getConditions()
+        initMails(conditions);
+    })
+
+    $("#searchMailBtn").click(function(){
+        let conditions = getConditions();
+        let text = $("#searchText").val();
+        if (text.length == 0) return;
+        conditions.subject = text;
+        conditions.content = text;
+        // console.log(text);
+        initMails(conditions);
+    })
+}
+function getConditions() {
+    let conditions = {
+        sentBy: "",
+        sentTo: "",
+        subject: "",
+        content: "",
+        startDate: "",
+        endDate: "",
+        folderName: "",
+        categoryName: "",
+        labelId: -1,
+        hasread: -1,
+        hasAttachment: -1,
+        important: -1,
+        starred: -1
+
+    }
+    if ($("#condition-unread").hasClass("active")) conditions["hasread"] = 0;
+    if ($("#condition-hasAttachment").hasClass("active")) conditions["hasAttachment"] = 1;
+    let dateString = $("#condition-daterange input").val();
+    if (dateString.length > 0) {
+        let dates = dateString.split("to");
+        conditions["startDate"] = dates[0];
+        conditions["endDate"] = dates[1];
+    }
+    let sentBy = $("#condition-sendBy").html().split("寄件人")[1];
+    if (sentBy.length != 0) conditions["sentBy"] = sentBy.trim();
+    // console.log(conditions);
+    return conditions;
 }

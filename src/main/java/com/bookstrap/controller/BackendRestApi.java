@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bookstrap.model.bean.AccountLabel;
+import com.bookstrap.model.bean.AccountMail;
+import com.bookstrap.model.bean.ConditionDto;
 import com.bookstrap.model.dao.AccountMailRepository;
 import com.bookstrap.service.EmployeesService;
 import com.bookstrap.service.MailService;
@@ -28,9 +31,9 @@ public class BackendRestApi {
 	}
 	
 	//=================================Mail Controller=============================================//
-	@GetMapping("test/test")
-	public Long test() {
-		return mailService.getMailCountInLabel(49,2);
+	@PostMapping("test/test")
+	public List<AccountMail> test(@RequestBody ConditionDto dto) {
+		return mailService.findMailByConditions(dto,1,2);
 	}
 
 }

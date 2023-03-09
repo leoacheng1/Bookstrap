@@ -245,25 +245,23 @@
                             有附件
                           </button>
                           <button id="condition-daterange" class="btn btn-sm btn-light border rounded-pill mr-2">
-                            <span class="range-display">選擇時間</span>
-                            <span style="display: none" class="range-data"></span> <i class="fa fa-caret-down"></i>
+                            <span class="range-display">不限日期</span>
+                            <input style="display: none" class="range-data"></input> <i class="fa fa-caret-down"></i>
                           </button>
                           <button class="btn btn-sm btn-light border rounded-pill dropdown-toggle" type="button"
                             id="condition-sendBy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             寄件人
                           </button>
-                          <div class="dropdown-menu pb-0" aria-labelledby="condition-sendBy" style="min-width: 130px">
-                            <a class="dropdown-item" href="#">aaaaa</a>
-                            <a class="dropdown-item" href="#">aaaaa</a>
-                            <a class="dropdown-item" href="#">aaaaa</a>
+                          <div class="dropdown-menu pb-0" aria-labelledby="condition-sendBy" style="min-width: 130px" id="sendByItems">
+                            <a class="dropdown-item" href="#">不限</a>
                           </div>
                         </div>
                         <div class="card-tools">
                           <div class="input-group input-group-md">
-                            <input type="text" class="form-control" placeholder="搜尋">
+                            <input type="text" class="form-control" placeholder="搜尋" id="searchText">
                             <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
-                              <button class="btn btn-outline-secondary" type="button"><i class="fa fa-list"></i></button>
+                              <button class="btn btn-outline-secondary" type="button" id="searchMailBtn"><i class="fas fa-search"></i></button>
+                              <button class="btn btn-outline-secondary" type="button" id="searchFilterBtn" data-toggle="modal" data-target="#filterModal"><i class="fa fa-list"></i></button>
                             </div>
                           </div>
                         </div>
@@ -360,7 +358,35 @@
               <!-- /.content -->
             </div>
       </div>
-
+      <!-- modal偷藏區 -->
+      <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="filterModalLabel">New message</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary">送出</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <!--右側彈跳式功能列 -->
       <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/ownercontroll.jsp" %>
         <!--版型需要的js-->
@@ -384,14 +410,13 @@
         <script src="${contextRoot}/eddie/js/select2.min.js"></script>
         <script src="${contextRoot}/eddie/js/moment.min.js"></script>
         <script src="${contextRoot}/eddie/js/daterangepicker.min.js"></script>
-        <script src="${contextRoot}/eddie/js/mail/mailbox.js"></script>
         <script type="text/javascript">
           $(function () {
             console.log(moment());
-            var start = moment().subtract(29, 'days');
-            var end = moment();
+            var start = moment().subtract(100,'years');
+            var end =moment().add(100,'years');
             function cb(start, end) {
-              $('#condition-daterange span.range-data').html(start.format('YYYY-MM-DD') + 'to' + end.format('YYYY-MM-DD'));
+              $('#condition-daterange input.range-data').val(start.format('YYYY-MM-DD') + 'to' + end.format('YYYY-MM-DD'));
             }
             $('#condition-daterange').daterangepicker({
               showDropdowns: true,
@@ -441,6 +466,7 @@
 
           });
         </script>
+        <script src="${contextRoot}/eddie/js/mail/mailbox.js"></script>
     </body>
 
     </html>

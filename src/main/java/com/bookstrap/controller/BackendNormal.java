@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bookstrap.model.bean.AccountLabel;
 import com.bookstrap.model.bean.AccountMail;
 import com.bookstrap.model.bean.AllMailDto;
+import com.bookstrap.model.bean.ConditionDto;
 import com.bookstrap.model.bean.Employees;
 import com.bookstrap.model.bean.Mail;
 import com.bookstrap.model.bean.MailAccount;
@@ -130,6 +132,14 @@ public class BackendNormal {
 		
 	}
 //===================================================GETTING==========================================================
+	
+	@GetMapping("/mail/sent/{accountId}")
+	@ResponseBody
+	public LinkedHashSet<String> findAllSentAccount(@PathVariable("accountId") Integer accountId) {
+		return mailService.findAllSentAccount(accountId);
+	}
+	
+	
 	@GetMapping("/mail/{mailId}")
 	@ResponseBody
 	public ViewMailDto getMail(@PathVariable("mailId") Integer mailId) {
@@ -301,6 +311,38 @@ public class BackendNormal {
 			mails.add(mailToSend);
 		};
 		return mails; 	
+	}
+	
+	@PostMapping("mail/conditions/{pageNum}")
+	@ResponseBody
+	public List<AllMailDto> findMailByConditions(HttpSession session,@RequestBody ConditionDto dto, @PathVariable("pageNum") Integer pageNum) {
+		Integer empId = (Integer) session.getAttribute("empId");		
+		Employees employee = empService.findById(empId);
+		Integer AccountId = mailService.findByEmployees(employee).getAccountId();
+		List<AccountMail> accountMails = mailService.findMailByConditions(dto, AccountId, pageNum);
+		
+		List<AllMailDto> mails = new ArrayList<AllMailDto>();
+		for (AccountMail accountMail : accountMails) {
+			AllMailDto mailToSend = new AllMailDto();
+			mailToSend.setFrom(accountMail.getMail().getAccountFrom().getAccount());
+			MailAccount mailFrom = accountMail.getMail().getAccountFrom();
+			mailToSend.setFromLink("/Bookstrap/backend/mailpage/composemail?to=" + (mailFrom == null ? "" : mailFrom.getAccount()));
+			mailToSend.setImportant(accountMail.getImportant());
+			mailToSend.setStarred(accountMail.getStarred());
+			mailToSend.setSubject(accountMail.getMail().getMailSubject());
+			mailToSend.setMailLink("/Bookstrap/backend/mailpage/readmail/"+accountMail.getMail().getMailId());
+			mailToSend.setMailTime(accountMail.getMail().getMailTime());
+			mailToSend.setHasread(accountMail.getHasread());
+			mailToSend.setMailId(accountMail.getMail().getMailId());
+			mailToSend.setAttachmentIds(accountMail.getMail().getMailAttachment().stream().map(attachment -> attachment.getAttachmentId()).toArray(Integer[]::new));
+			mailToSend.setMailContent(Jsoup.parse(accountMail.getMail().getMailContent()).text());
+			mailToSend.setMailCategory(accountMail.getMailCategory());
+			mailToSend.setMailFolder(accountMail.getMailFolder());
+			mailToSend.setMailLabels(accountMail.getAccountLabels());
+			mails.add(mailToSend);
+		};
+		return mails; 	
+		
 	}
 
 	@GetMapping("mail/countall/{accountId}")
