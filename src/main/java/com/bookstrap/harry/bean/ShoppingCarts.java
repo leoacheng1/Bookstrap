@@ -13,7 +13,9 @@ import javax.persistence.Table;
 
 import com.bookstrap.model.Books;
 import com.bookstrap.model.pk.ShoppingCartsPK;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "ShoppingCarts")
@@ -33,12 +35,12 @@ public class ShoppingCarts implements Serializable {
 	@Column(name = "amount")
 	private Integer amount;
 
-	@JsonIgnoreProperties("shoppingCarts")
+	@JsonBackReference(value = "member-shoppingCarts")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id", insertable=false, updatable=false)
 	private Members member;
 
-	@JsonIgnoreProperties("shoppingCarts")
+	@JsonBackReference(value = "book-shoppingCarts")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "book_id", insertable=false, updatable=false)
 	private Books book;

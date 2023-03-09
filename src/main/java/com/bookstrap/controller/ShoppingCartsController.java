@@ -95,9 +95,16 @@ public class ShoppingCartsController {
 
 	@PostMapping("/cart/checkout")
 	@ResponseBody
-	public void checkout(HttpSession session, @RequestBody List<ShoppingCarts> cartItems) {
+	public String checkout(HttpSession session, @RequestBody List<ShoppingCarts> cartItems) {
 		session.setAttribute("cartItems", cartItems);
 		System.out.println("已存入session");
+		return "redirect:/shipping";
 	}
-
+	
+	@GetMapping("/shipping")
+	public String getCartItems(HttpSession session) {
+		session.getAttribute("cartItems");
+		System.out.println("HI");
+		return "shoppingcarts/orders";
+	}
 }

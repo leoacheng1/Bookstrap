@@ -52,6 +52,7 @@ public class Members {
 	@OneToOne(mappedBy ="member")
 	private MemberDetails memberDetails;
 	
+	@JsonManagedReference(value = "member-shoppingCarts")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<ShoppingCarts> shoppingCarts;
 	
@@ -61,7 +62,7 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<Sales> sales;
 	
-	@JsonManagedReference(value = "mamber-userCoupon")
+	@JsonManagedReference(value = "member-userCoupon")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<UserCoupon> userCoupon;
 	

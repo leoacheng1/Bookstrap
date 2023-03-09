@@ -230,15 +230,16 @@ for (var i = 0; i < couponCheckboxes.length; i++) {
 function checkout() {
   // 取得已勾選的商品
   var checkedItems = $('input[name="checkbook"]:checked');
+  var coupon = $('input[name="coupon"]:checked');
 
   // 將勾選的商品資料存成 JavaScript 物件
   var cartItems = [];
   checkedItems.each(function () {
-    var itemId = $(this).val();
-    var itemQty = $(this).closest("tr").find(".quantity").val();
-    console.log("itemId" + itemId);
-    console.log("itemQty" + itemQty);
-    cartItems.push({ id: itemId, qty: itemQty });
+    var bookId = $(this).val();
+    var amount = $(this).closest("tr").find(".quantity").val();
+    console.log("itemId" + bookId);
+    console.log("itemQty" + amount);
+    cartItems.push({ bookId: bookId, amount: amount, coupon: coupon });
   });
 
   // 發送 AJAX 請求
@@ -250,6 +251,8 @@ function checkout() {
     success: function () {
       // 成功處理後端儲存購物車商品的 Session
       alert("結帳成功！");
+      window.location.href =
+        "http://localhost:8080/Bookstrap/shopping/shipping";
     },
     error: function () {
       // 處理錯誤

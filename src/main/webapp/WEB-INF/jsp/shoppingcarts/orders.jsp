@@ -6,10 +6,10 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>結帳頁面 - Bookstrap</title>
- <link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>結帳頁面 - Bookstrap</title>
+    <link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -43,6 +43,24 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
   </head>
   <body>
     <jsp:include page="../layout/header.jsp"></jsp:include>
-	<form id = ""></form>
-</body>
+    <form id=""></form>
+    <h1>Shipping</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <c:forEach var="item" items="${sessionScope.cartItems}">
+          <tr>
+            <td>${item.bookId}</td>
+            <td>${item.amount}</td>
+          </tr>
+        </c:forEach>
+      </tbody>
+    </table>
+  </body>
 </html>
