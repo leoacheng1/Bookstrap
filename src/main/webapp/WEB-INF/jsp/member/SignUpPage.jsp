@@ -18,10 +18,12 @@
     
 
     <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100 ">
         <!-- col-lg-10可改註冊框大小 -->
         <div class="col-lg-10 col-xl-6">
-          <div class="card rounded-3">
+        
+<!--         body -->
+          <div class="card rounded-3 ">
             <img src="${contextRoot}/signupbackground/bg.png" class="w-100 "
               style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
             <div class="card-body p-4 p-md-5">
@@ -94,7 +96,7 @@
   
                  
   <script  src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
-  <script  src="${contextRoot}/js/form-validation.js"></script>
+<%--   <script  src="${contextRoot}/js/form-validation.js"></script> --%>
   <script  src="${contextRoot}/js/member/CheckAccount.js"></script>
   <script  src="${contextRoot}/js/member/axios.min.js"></script>
 

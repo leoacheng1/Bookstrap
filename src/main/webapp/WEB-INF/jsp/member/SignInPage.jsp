@@ -11,8 +11,10 @@
 <meta charset="UTF-8">
 <title>會員登入</title>
 </head>
-<body>
+<body> 
 	<section class="gradient-custom">
+		
+	<div class="container align-middle">
 		<div class="container py-5 h-100 ">
 			<div
 				class=" d-flex justify-content-center align-items-center h-100 ">
@@ -84,6 +86,8 @@
 				</div>
 			</div>
 		</div>
+	</div>
+		
 	</section>
 
 
