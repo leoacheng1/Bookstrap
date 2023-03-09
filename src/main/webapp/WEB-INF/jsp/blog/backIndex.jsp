@@ -13,6 +13,11 @@
 		</head>
 
 		<body>
+			<!--上面導覽列 -->
+            <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %> 
+            <!-- 左邊導覽列 -->
+            <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
+            
 			<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 			<script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
 			<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
