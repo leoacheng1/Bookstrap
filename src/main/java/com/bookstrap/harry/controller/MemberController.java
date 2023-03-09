@@ -484,7 +484,14 @@ public class MemberController {
 	@GetMapping("/member/myfavorite")
 	public String toMyFavoritePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
 			Model m) {
-		Page<EBookFavorite> page = ebfService.getAllFavotitesByPage(null);
+		
+		
+		
+		Page<EBookFavorite> page = ebfService.getAllFavotitesByPage(pageNumber);
+		if(page == null) {
+			return "member/Main/MyFavorite";
+		}
+		
 		m.addAttribute("page", page);
 		
 		return "member/Main/MyFavorite";
