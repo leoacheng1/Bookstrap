@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="${contextRoot}/eddie/css/summernote-bs4.min.css">
     <link rel="stylesheet" href="${contextRoot}/eddie/css/sweetalert2.min.css">
     <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
+    <link rel="stylesheet" href="${contextRoot}/eddie/css/select2.min.css">
     <link rel="stylesheet" href="${contextRoot}/eddie/css/mailside.css">
     <style>
       .remove-attachment{
@@ -205,8 +206,14 @@
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <input class="form-control" placeholder="收件者" name = "mailTo" value="${mailTo}">
+                        </div> -->
+                        <div class="form-group">
+                          <select class="select2 js-example-basic-multiple js-states form-control" multiple="multiple" data-placeholder="收件者" style="width: 100%;">
+                            <option data-select2-id="14">admin2</option>
+                            <option data-select2-id="15">mailbot</option>
+                          </select>
                         </div>
                         <div class="form-group">
                           <input class="form-control" placeholder="主旨" name = "mailSubject">
@@ -402,8 +409,14 @@
         <script src="${contextRoot}/eddie/js/summernote-bs4.min.js"></script>
         <script src="${contextRoot}/eddie/js/axios.min.js"></script>
         <script src="${contextRoot}/eddie/js/sweetalert2.all.min.js"></script>
+        <script src="${contextRoot}/eddie/js/select2.min.js"></script>
         <script src="${contextRoot}/eddie/js/mail/composemail.js"></script>
         <script src="${contextRoot}/eddie/js/mail/mailside.js"></script>
+        <script>         
+            $(function () {
+              $('.select2').select2()
+            });
+        </script>
   </body>
 
   </html>

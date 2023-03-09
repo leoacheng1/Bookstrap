@@ -424,8 +424,8 @@
               endDate: end,
               ranges: {
                 '不限日期': [moment().subtract(100,'years'),moment().add(100,'years')],
-                '今天': [moment(), moment()],
-                '昨天': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                '今天': [moment(), moment().add(1,'days')],
+                '昨天': [moment().subtract(1, 'days'), moment()],
                 '過去一星期': [moment().subtract(6, 'days'), moment()],
                 '過去三十天': [moment().subtract(29, 'days'), moment()],
                 '這個月': [moment().startOf('month'), moment().endOf('month')],

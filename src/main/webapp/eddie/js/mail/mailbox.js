@@ -611,6 +611,7 @@ function addLabelLi() {
                     $("#labelDropdown").append($("<span/>", { class: "dropdown-item", html: "目前尚無標籤" }));
                     return;
                 }
+                $("#labelDropdown").html("");
                 for (label of response.data) {
                     $("#labelDropdown").append($("<div/>", {
                         class: "form-check form-control-md pl-5 pb-2",
