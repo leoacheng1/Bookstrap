@@ -82,10 +82,7 @@ public class EBooks {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "eBook", cascade = CascadeType.ALL)
 	private Set<ShoppingCarts> shoppingCarts;
 	
-	//For test
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "member_id")
-	private Members member;
+	
 	
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 //	private List<Favorite> favorite;
@@ -97,10 +94,25 @@ public class EBooks {
 	}
 
 	
-	
+	public Integer geteBookNumber() {
+		return eBookNumber;
+	}
 
 
-	
+
+
+
+
+
+	public void seteBookNumber(Integer eBookNumber) {
+		this.eBookNumber = eBookNumber;
+	}
+
+
+
+
+
+
 
 	public Set<EBookFavorite> geteBookfavorite() {
 		return eBookfavorite;
@@ -234,13 +246,6 @@ public class EBooks {
 		this.shoppingCarts = shoppingCarts;
 	}
 
-	public Members getMember() {
-		return member;
-	}
-
-	public void setMember(Members member) {
-		this.member = member;
-	}
 
 	
 	

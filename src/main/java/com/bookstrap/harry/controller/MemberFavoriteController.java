@@ -53,22 +53,17 @@ public class MemberFavoriteController {
 			return "redirect:/ebook/get/allebook";
 		}
 		
-//		EBookFavorite eBookFavorite = new EBookFavorite();
-//		eBookFavorite.seteBook(eBookId);
-//		
-//		eBookFavorite.setMember(member);
-//		
-//		ebfService.insertEbookFavority(eBookFavorite);
 		
 		return "redirect:/ebook/get/allebook";
 			
 	}
 	
+	
+	
 	@PostMapping("/favorite/ebook/add")
 	@ResponseBody
 	public String addEBookFavorite2(@RequestParam("eBookId") EBooks eBook, 
 			@RequestParam("memberId") Members member) {
-//		System.out.println("name:  =============" + eBook.geteBookName());	
 		
 		List<EBookFavorite> favorites = ebfService.getBookFavoriteByMember(member);
 		boolean alreadyFavorite = false;
@@ -131,5 +126,7 @@ public class MemberFavoriteController {
 		return map;
 	
 	}
+	
+	
 
 }

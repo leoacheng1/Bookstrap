@@ -62,4 +62,5 @@ public class BookFavorityService {
 		return bfDao.findByMemberAndBook(member, book);
 	}
 	
+//	public Page<>
 }

@@ -154,7 +154,7 @@
                   <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/eBook/get/pdfpage?eBookId=${eBook.eBookId}">Go to PDF</a>
                   <br>
 											<!--                   這裡還沒給值 -->
-                  <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBookNumber}" >View eBook</a>
+                  <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBookNumber}" >View eBook</a>
                   <br>
                   <small class="text-muted mx-1">${eBook.eBookPublishDate}</small>
                 </div>
