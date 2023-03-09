@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.bookstrap.model.Books;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "Comment")
@@ -38,16 +39,20 @@ public class Comment {
 	private Integer evaluation;
 
 	// ??最愛 0:沒有 1:有
-	@Column(name = "favorite")
-	private Integer favorite;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id")
 	private	Members member;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)  //??
 	@JoinColumn(name = "book_id")
 	private Books book;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ebook_id")
+	private EBooks eBook;
+	
 	
 	public Integer getCommentId() {
 		return commentId;
@@ -92,13 +97,6 @@ public class Comment {
 		this.evaluation = evaluation;
 	}
 
-	public Integer getFavorite() {
-		return favorite;
-	}
-
-	public void setFavorite(Integer favorite) {
-		this.favorite = favorite;
-	}
 
 	public Members getMember() {
 		return member;
@@ -114,6 +112,14 @@ public class Comment {
 
 	public void setBook(Books book) {
 		this.book = book;
+	}
+
+	public EBooks geteBook() {
+		return eBook;
+	}
+
+	public void seteBook(EBooks eBook) {
+		this.eBook = eBook;
 	}
 	
 	

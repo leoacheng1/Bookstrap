@@ -52,9 +52,8 @@
 		</li>
 	  </ul>
 	</li>
-	
-	
-		<li class="nav-header">分店管理</li>
+
+<li class="nav-header">分店管理</li>
 	<li class="nav-item">
 		<a href="http://localhost:8080/Bookstrap/shops/shophome" class="nav-link">
 		  <i class="nav-icon fas fa-calendar-alt"></i>
@@ -65,8 +64,6 @@
   
 		</a>
 	  </li>	
-	
-	
 	<li class="nav-header">會員管理</li>
 	<li class="nav-item">
 		<a href="pages/calendar.html" class="nav-link">

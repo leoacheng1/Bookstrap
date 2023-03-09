@@ -6,10 +6,19 @@ import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.print.attribute.standard.PageRanges;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +27,7 @@ import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.dao.CheckLogin;
 import com.bookstrap.harry.dao.MemberRepository;
+import com.bookstrap.harry.security.CipherUtils;
 
 import net.bytebuddy.utility.RandomString;
 
@@ -33,12 +43,18 @@ public class MemberService {
 
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	
 
 	public Members insertMember(Members member) {
+		String memberPassword = member.getMemberPassword();
+		String encodePassword = CipherUtils.getStringSHA512(memberPassword);
+		
+		member.setMemberPassword(encodePassword);
+		
 		String randomCode = RandomString.make(64);
 		member.setVertificationCode(randomCode);
 
-//		sendVertificationEnail(member);
 
 		return mDao.save(member);
 	}
@@ -109,7 +125,26 @@ public class MemberService {
 	}
 
 	public Integer checkLogin(Members member) {
-
+		String memberPassword = member.getMemberPassword();
+		String encodePassword = CipherUtils.getStringSHA512(memberPassword);
+		System.out.println("Before en:" + memberPassword);
+		
+		
+		
+		System.out.println("after enc" + encodePassword);
+		member.setMemberPassword(encodePassword);
+			
+		return checkDao.checkLogin(member);
+	}
+	
+	//third party
+	public Integer checkLogin2(Members member) {
+		String memberPassword = member.getMemberPassword();
+		
+		member.setMemberPassword(memberPassword);
+		
+		
+			
 		return checkDao.checkLogin(member);
 	}
 
@@ -121,9 +156,9 @@ public class MemberService {
 		return mDao.findIdByEmail(memberEmail);
 	}
 
-//	public boolean checkAccount(String memberEmail) {
-//		return mDao.findEmailByid(memberEmail);
-//	}
+	public Members checkAccount(String memberEmail) {
+		return mDao.findAccountByEmail(memberEmail);
+	}
 
 	public boolean verify(String verificationCode) {
 		Members member = mDao.findByVerificationCode(verificationCode);
@@ -154,14 +189,24 @@ public class MemberService {
 
 	
 	public void updatePassword(Members member, String newPassword) {
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		String encodePassword = passwordEncoder.encode(newPassword);
+
+		String encodePassword = CipherUtils.getStringSHA512(newPassword);
 		
-		member.setMemberPassword(newPassword);
+		member.setMemberValid(2); //不知道要不要加?
+		member.setMemberPassword(encodePassword);
 		member.setResetPasswordToken(null);
 		//16:29
 		mDao.save(member);
 	}
+
+	
+	
+//	public Page<Members> getMemberByPage(Integer pageNumber){
+//		Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "memberId");
+//			Page<Members> page = mDao.findAll(pgb);
+//			return page;
+//	}
+	
 	
 	
 	//	public void sendVertificationEnail(Members member, MemberDetails memberDetail) throws UnsupportedEncodingException, MessagingException {

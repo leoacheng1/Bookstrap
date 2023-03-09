@@ -10,6 +10,8 @@
 
 <link rel="stylesheet" href="${contextRoot}/css/bootstrap.css">
 <link rel="stylesheet" href="${contextRoot}/css/SignUp.css">
+<%-- <link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css.map" type="application/octet-stream"> --%>
+<%-- <link rel="stylesheet" href="${contextRoot}/css/bootstrap.css.map" type="application/octet-stream"> --%>
 </head>
 <body>
   <section class="gradient-custom section-custom-hight section-custom-width">
@@ -36,21 +38,26 @@
 
                   <!-- md改input寬 -->
                  
-                    <div class="form-outline datepicker mb-3">
-                      <input type="email" class="form-control" id="exampleDatepicker1" name="memberEmail" required/>
-                      <label for="exampleDatepicker1" class="form-label" required>電子郵件地址</label>
+                    <div class=" mb-3">
+                      <input type="email" class="form-control" id="memberEmail" name="memberEmail" required/>
+                      <label for="exampleDatepicker1" class="form-label" >電子郵件地址</label>
                     </div>
-                        <div style="color: red;">
-                        ${errors.AccountWrong}
+                        <div style="color: red;" class="accountExist">
+                        
                         </div>
+                        <div style="color: green;" class="accountNotExist">
+                        
+                        </div>
+                    
+                        
                         <br>
-                    <div class="form-outline datepicker mb-3">
-                      <input type="password" class="form-control" id="exampleDatepicker1" name="memberPassword" required/>
+                    <div class="  mb-3">
+                      <input type="password" class="form-control"  name="memberPassword" required/>
                       <label for="exampleDatepicker1" class="form-label" >密碼</label>
                     </div>
                         <br>
-                    <div class="form-outline datepicker mb-3">
-                      <input type="password" class="form-control" id="exampleDatepicker1" name="re_memberPassword" required/>
+                    <div class="  mb-3">
+                      <input type="password" class="form-control"  name="re_memberPassword" required/>
                       <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
                     <div style="color: red;">
@@ -69,7 +76,7 @@
 
                   </div>
 
-                  <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
+                  <button type="submit" class="btn btn-success btn-lg mb-1" id="submitButton">Submit</button>
                   
                 </div>
                
@@ -83,7 +90,15 @@
       </div>
     </div>
   </section>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/form-validation.js"></script>
+
+  
+                 
+  <script  src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+  <script  src="${contextRoot}/js/form-validation.js"></script>
+  <script  src="${contextRoot}/js/member/CheckAccount.js"></script>
+  <script  src="${contextRoot}/js/member/axios.min.js"></script>
+
+  
+  
 </body>
 </html>
