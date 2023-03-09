@@ -92,3 +92,13 @@ CREATE TABLE MemberRoles (
 );
 
 ALTER TABLE Members ADD Role nvarchar(50) null;
+
+------3/9--------
+
+ALTER TABLE EBooks ADD ebook_number int NOT NULL;
+
+DROP TABLE IF EXISTS EBookDetails;
+
+DROP TABLE IF EXISTS EBooks;
+
+ALTER TABLE EBooks DROP CONSTRAINT [ebookDetail_id];

@@ -68,6 +68,9 @@ public class EBooks {
 	@Column(name = "ebook_file")
 	private byte[] eBookFile; 
 	
+	@Column(name ="ebook_number")
+	private Integer eBookNumber;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ebookDetail_id")
 	private EBookDetails eBookDetails;

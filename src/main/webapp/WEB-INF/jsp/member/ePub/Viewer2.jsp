@@ -29,7 +29,7 @@
               //${contextRoot}/epub/ebook/1
             document.onreadystatechange = function () {
               if (document.readyState == "complete") {
-                window.reader = ePubReader("${contextRoot}/epub/ebook/1010490076.epub", {
+                window.reader = ePubReader("${contextRoot}/epub/ebook/1010490082.epub", {
                    restore: true
                  });
               }
