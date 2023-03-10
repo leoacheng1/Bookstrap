@@ -91,120 +91,106 @@
 
   <div class="album py-5 bg-light">
     <div class="container">
+<!--    ///// -->
+    
+  <div id="console1" class="container" style="position: relative;">  
+    <div style="height: 13px; margin-right:30px;">
+  <nav aria-label="Page navigation example" >
+    <ul class="pagination justify-content-end">
+<jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+
+<li class="page-item"><a class="page-link likeBtn" data-likeId="${pageNumber}" data-name="${sessionScope.name}">${pageNumber}</a></li>
+
+</jstl:forEach>
+    </ul>
+  </nav>
+</div>
 
 <!-- 	single card top -->
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         
         
         <jstl:forEach var="eBook" items="${page.content}">
-         <!--  top ------------------ -->
-        <div class="col">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>${eBook.eBookName}</title>
-                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                  dy=".3em">Test</text>
-              </svg>
-
-              <div class="card-body">
-              <h4>${eBook.eBookName} testTitle</h4>
-              <br>
-              
-<%--               <input value = "${eBook.eBookId}" id ="eBookId"> --%>
-<!--               <br> -->
-<%--               <input value = "${memberId}" id = "memberId"> --%>
-<!--               <br> -->
-              
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group" data-eBookId="${eBook.eBookId}" data-memberId="${memberId}">
+  <div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:57px">
+    <a href='${contextRoot}/books/oneBook?id=${eBook.eBookId}'>
+      <img src="${contextRoot}/ebook/get/photo?eBookId=${eBook.eBookId}" class="card-img-top"
+      style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>
+  <div class="card-body">
+    <a href="${contextRoot}/books/oneBook?id=${eBook.eBookId}" style="text-decoration: none;">
+      <h5 class="card-title">${eBook.eBookName}</h5>
+    </a>
+    <p class="card-text" style="margin-bottom: 3px;">${eBook.eBookLanguages}書</p>
+    <a id="selectAuthor" class="selectAuthor" data-auName="${eBook.eBookAuthor}" style="text-decoration: none;">
+      <p class="card-text" style="margin-bottom: 3px;">${eBook.eBookAuthor}</p>
+    </a>
+    <p class="card-text" style="margin-bottom: 3px;display: none;">定價：<span class="priId" id="priId"
+      class="book"><s>${eBook.eBookPrice}</span>元</s></p>
+      <p class="card-text" style="margin-bottom: 3px;">優惠價：<strong class="disId" id="disId"
+        style="color: red;font-size: large;">${eBook.eBookDiscount}</strong>折,
+        <strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元
+      </p>
+    </p>
+    
+    <div class="btn-group" data-eBookId="${eBook.eBookId}" data-memberId="${memberId}">
                   
                   <jstl:choose>
                   
                   	<jstl:when test="${favorite[eBook.eBookId]}">
-                  		<a type="button" href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-danger addToWatchlistButton"  >
+                  		<a type="button" class="btn btn-sm btn-danger addToWatchlistButton"  >
 
-						       Remove from Watchlist
+						       移除追蹤
                     	                   	</a>
                   	</jstl:when>
                   
                   <jstl:otherwise>
-                  <a type="button" href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary addToWatchlistButton" >
+                  <a type="button" class="btn btn-sm btn-outline-secondary addToWatchlistButton" >
 
-						        Add to Watchlist
+						        追蹤商品
                     	                   	</a>
                   </jstl:otherwise>
                   
                   </jstl:choose>
                     	
-<%--                     	<a type="button" href="${contextRoot}/favorite/ebook/add?eBookId=${eBook.eBookId}&member=${memberId}" class="btn btn-sm btn-outline-secondary " id="addToWatchlistButton" > --%>
-
-<!-- 						        Add to Watchlist -->
-<!--                     	                   	</a> -->
-                    	            
                     	                   	
                     	                   	
-                    	                   	
-                    	                   	
-                    	                   	
+		    <a href="#" class="btn btn-primary ms-2">加入購物車</a>
                   </div>
+  
+<%--     <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBookNumber}" >View eBook</a> --%>
                   <br>
-                  <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/eBook/get/pdfpage?eBookId=${eBook.eBookId}">Go to PDF</a>
-                  <br>
-											<!--                   這裡還沒給值 -->
-                  <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBookNumber}" >View eBook</a>
-                  <br>
-                  <small class="text-muted mx-1">${eBook.eBookPublishDate}</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        <!--    bottom  ------------------ -->
-        </jstl:forEach>
+    
+  </div>
+  </div>
+</jstl:forEach>
  
- 
- 
- <jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
-
-					<jstl:choose>
-
-						<jstl:when test="${page.number != pageNumber-1}">
-							<a href="${contextRoot}/ebook/get/allebook?p=${pageNumber}">${pageNumber}</a>
-						</jstl:when>
-
-						<jstl:otherwise>
-	     				${pageNumber}
-	    				</jstl:otherwise>
-					</jstl:choose>
-
-					<jstl:if test="${pageNumber != page.totalPages}">
-						|
-				</jstl:if>
-
-
-				</jstl:forEach>
- 
-        
-        
-        
+                 
       </div>
       <!-- 	single card bottom -->
+       </div>
+      
+      
+      
       
     </div>
   </div>
 
 </main>
 
-<footer class="text-muted py-5">
-  <div class="container">
-    <p class="float-end mb-1">
-      <a href="#">Back to top</a>
-    </p>
-    <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="../getting-started/introduction/">getting started guide</a>.</p>
-  </div>
+<footer class="text-muted mt-5 border border-2 border-bottom-0 border-start-0 border-end-0">
+<div class="container">
+<p class="float-right justify-content-center">
+##########Test only############ 客戶服務專線：02-26535588
+傳真：02-27885008 服務時間：週一~五 8:00~19:00，週六~日、例假日
+9:00~18:00，365天全年無休 Bookstrap數位科技股份有限公司 統編 : 96922355
+地址：臺灣 115 台北市南港區八德路四段768巷1弄18號B1之1
+食品業者登陸字號：A-196922355-00000-9 Copyright © since 1995
+books.com.tw All Rights Reserved.
+</p>
+<div class="d-flex justify-content-center">
+<a href="">服務條款</a>
+<a href="" class="ms-2">隱私全政策</a>
+</div>
+</div>
 </footer>
 
 

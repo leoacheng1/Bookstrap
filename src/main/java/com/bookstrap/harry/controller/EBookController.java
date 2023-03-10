@@ -83,7 +83,9 @@ public class EBookController {
 		}
 		m.addAttribute("favorite",favorite);
 		
+//		return "books/search";
 		return "member/EBooks/EBookIndex";
+//		return "member/EBooks/NewEBookIndex";
 	}
 	
 	@GetMapping("/ebook/get/epub")
@@ -187,7 +189,15 @@ public class EBookController {
 		
 	}
 	
-	
+//	@GetMapping("/ebook/get/photo")
+//	public ResponseEntity<byte[]> getEBookFigureById(@RequestParam("eBookId") Integer eBookId){
+//		 EBooks eBookId1 = eBookService.getPhotoById(eBookId);
+//		 byte[] eBookPhoto = eBookId1.geteBookPhoto();
+//		 HttpHeaders headers = new HttpHeaders();
+//			
+//			headers.setContentType(MediaType.IMAGE_JPEG);
+//				return new ResponseEntity<byte[]>(eBookPhoto, headers, HttpStatus.OK);
+//	}
 	
 	
 }
