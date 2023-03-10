@@ -114,7 +114,13 @@
                         <li class="nav-item searchArea" id="searchArea">
                             <a class="nav-link active-2 text-dark fs-5 me-5 " aria-current="page"
                                 href="${contextRoot}/books/allpage2">
-                                條件搜尋
+                                實體書
+                            </a>
+                        </li>
+                        <li class="nav-item searchArea" id="searchArea">
+                            <a class="nav-link active-2 text-dark fs-5 me-5 " aria-current="page"
+                                href="${contextRoot}/books/allpage2">
+                                電子書
                             </a>
                         </li>
                         <li class="nav-item">

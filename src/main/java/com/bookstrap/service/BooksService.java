@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bookstrap.harry.bean.Comment;
 import com.bookstrap.model.BookDetailsRepository;
 import com.bookstrap.model.Books;
 import com.bookstrap.model.BooksRepository;
@@ -179,5 +180,15 @@ public class BooksService {
 	
 	public List<Books> getBookByDate(String languages) {
 		return bDao.getBookByDate(languages);
+	}
+	
+	public List<Comment> findCommentByBookId(Integer id) {
+		Optional<Books> book = bDao.findById(id);
+		
+		if(book.isPresent()) {
+			return book.get().getComment();
+		}else {
+			return new ArrayList<>();
+		}
 	}
 }

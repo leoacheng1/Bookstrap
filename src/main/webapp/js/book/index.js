@@ -1,3 +1,4 @@
+///////// 最新中文書推薦 ////////
 let chineseBtns = document.getElementsByClassName('chineseBtn')//因ClassName回傳的是NodeList，代表有多個元素符合指定的類別名稱，所以需要使用迴圈
 for (i = 0; i < chineseBtns.length; i++) {
   chineseBtns[i].addEventListener('click', function(e){
@@ -28,9 +29,9 @@ function photoMakerC(data){
     let photoC = ''
     data.forEach(element => {
         console.log(element.name)
-        photoC += `<li style="list-style: none;float: left;text-align: center;">
+        photoC += `<li style="list-style: none;float: left;text-align: center;margin-left:20px;margin-right:20px;">
                   <a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
-                  <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" style="width:157px;height:240px;margin-left:20px;margin-right:20px;" /></a>
+                  <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" style="width:157px;height:240px;" /></a>
                   <div style="text-align: center;margin-left:7px">`+element.name+`</div>
                   </li>`
     });
@@ -62,6 +63,7 @@ window.addEventListener('load', function(e){
     }
   })
 
+  ///////// 最新外文書推薦 ////////
   let foreignBtn = document.getElementsByClassName('foreignBtn')//因ClassName回傳的是NodeList，代表有多個元素符合指定的類別名稱，所以需要使用迴圈
   for (i = 0; i < foreignBtn.length; i++) {
     foreignBtn[i].addEventListener('click', function(e){
@@ -92,9 +94,11 @@ window.addEventListener('load', function(e){
     let photoF = ''
     data.forEach(element => {
         console.log(element.name)
-        photoF += `<li style="list-style: none;float: left;text-align: center;">
-                  <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" style="width:157px;height:240px;margin-left:20px;margin-right:20px;" />
-                  </li>`
+        photoF += `<li style="list-style: none;float: left;text-align: center;margin-left:20px;margin-right:20px;">
+                   <a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
+                   <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" style="width:157px;height:240px;" /></a>
+                   <div style="text-align: center;margin-left:7px">`+element.name+`</div>
+                   </li>`
     });
     photoArea.innerHTML = photoF
 
