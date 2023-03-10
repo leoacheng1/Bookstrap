@@ -77,10 +77,12 @@ public class EBookFavorityService {
 		return ebfDao.findByMemberAndEBook(member, ebook);
 	}
 	
-	public Page<EBookFavorite> getAllFavotitesByPage(Integer pageNumber){
-		PageRequest pgb = PageRequest.of(pageNumber-1, 5, Sort.Direction.DESC, "eBookFavoriteId");
-		Page<EBookFavorite> page = ebfDao.findAll(pgb);
-		return page;
+	public Page<EBookFavorite> getAllFavotitesByPage(Integer pageNumber, Integer memberId){
+		PageRequest pgb = PageRequest.of(pageNumber-1, 5, Sort.Direction.DESC, "member");
+		Page<EBookFavorite> page1 = ebfDao.findAlleBookFavorityById(pgb, memberId);
+
+//		Page<EBookFavorite> page = ebfDao.findAll(pgb);
+		return page1;
 	}
 	
 }

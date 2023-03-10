@@ -31,6 +31,7 @@
             </div>
 	
             <!-- /////// -->
+            <input type="text" value="${memberId}" >
             
             <jstl:forEach var="eBook" items="${page.content}">
             
