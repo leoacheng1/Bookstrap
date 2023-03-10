@@ -85,11 +85,84 @@
    
 <jsp:include page="../../layout/header.jsp"/>
 
+
+<div style="width:1300px;margin: 0 auto">
+<br />
+<table style="width:1255px;border: 1px solid silver;margin-left: 15px;">
+ <tbody style="border: 1px solid  silver;font-size: large;padding: 15px;">
+  <tr>
+   <th style="text-align: center;width: 100px;background-color:#F0F0F0;border: 1px solid  silver;padding: 15px;">
+    <label>語言：</label>
+   </th>
+   <td>
+    <label>
+      <input type="checkbox" name="hobby" value="中文" id="chinese">中文
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="外文" id="foreign">外文
+    </label>
+   </td>
+  </tr>
+  <tr style="border: 1px solid  silver;">
+   <th style="text-align: center;width: 100px;background-color:#F0F0F0;border: 1px solid  silver;">
+    <label>類別：</label>
+   </th>
+   <td>
+    <label>
+      <input type="checkbox" name="hobby" value="哲學" id="philosophy">哲學
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="宗教" id="religion">宗教
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="科學" id="science">科學
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="應用科學" id="appliedScience">應用科學
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="社會科學" id="socialScience">社會科學
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="歷史" id="history">歷史
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="地理" id="geography">地理
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="語言文學" id="foreignLan">語言文學
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="藝術" id="Art">藝術
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="其他" id="other">其他
+    </label>
+   </td>
+  </tr>
+ </tbody>
+ <tbody>
+  <tr style="background-color:#F0F0F0;font-size: large;">
+   <td></td>
+   <td style="text-align: right;padding: 10px;" colspan="2">
+<div style="width:1125px;">
+  <button type="button" id="clearBtnnn" class="clearBtnnn btn btn-info" 
+          style="margin-right: 5px;">清除篩選</button>
+  <button type="button" id="submitBtnnnn" class="submitBtnnnn btn btn-info"
+          style="margin-right: 5px;">確認送出</button>
+</div>
+   </td>
+  </tr>
+ </tbody>
+</table>
+</div>
+<br>
+
 <main>
 
   
 
-  <div class="album py-5 bg-light">
+  <div class="album py-5 ">
     <div class="container">
 <!--    ///// -->
     
@@ -156,7 +229,7 @@
 		    <a href="#" class="btn btn-primary ms-2">加入購物車</a>
                   </div>
   
-<%--     <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBookNumber}" >View eBook</a> --%>
+    <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBookNumber}" >View eBook</a>
                   <br>
     
   </div>
