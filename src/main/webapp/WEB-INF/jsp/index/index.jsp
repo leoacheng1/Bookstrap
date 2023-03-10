@@ -114,7 +114,13 @@
                         <li class="nav-item searchArea" id="searchArea">
                             <a class="nav-link active-2 text-dark fs-5 me-5 " aria-current="page"
                                 href="${contextRoot}/books/allpage2">
-                                條件搜尋
+                                實體書
+                            </a>
+                        </li>
+                        <li class="nav-item searchArea" id="searchArea">
+                            <a class="nav-link active-2 text-dark fs-5 me-5 " aria-current="page"
+                                href="${contextRoot}/books/allpage2">
+                                電子書
                             </a>
                         </li>
                         <li class="nav-item">
@@ -223,7 +229,7 @@
                 <!-- <img src="sildePage/adv1.jpg" class="w-100 mt-5" alt="" /> -->
             </div>
 
-            <!-- 即將上架 頭 寫死 僅供參考-->
+            <!-- 新書推薦 頭 寫死 僅供參考-->
 
             <div class="container mt-5">
                 <nav>
@@ -235,97 +241,30 @@
                     <div class="nav nav-tabs" id=" nav-tab" role="tablist">
                         <!-- 要改改這裡的data-bs-target="#..." -->
                         <!-- id 中間名稱 改  新書推薦t1 內附類別 i1、 i2 依此類推-->
-                        <button class="btn btn-light rounded-0  active" id="nav-t1i1-tab" data-bs-toggle="tab"
+                        <button class="btn btn-light rounded-0 active chineseBtn" id="nav-t1i1-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-t1i1" type="button" role="button" aria-controls="nav-t1i1"
-                            aria-selected="true">
+                            aria-selected="true" data-languages="中文" name="中文">
                             中文
                         </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t1i2-tab" data-bs-toggle="tab"
+                        <button class="btn btn-light rounded-0 foreignBtn" id="nav-t1i2-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-t1i2" type="button" role="tab" aria-controls="nav-t1i2"
-                            aria-selected="false">
+                            aria-selected="false" data-languages="外文" name="外文">
                             外文
-                        </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t1i3-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t1i3" type="button" role="tab" aria-controls="nav-t1i3"
-                            aria-selected="false">
-                            人氣小說
-                        </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t1i4-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t1i4" type="button" role="tab" aria-controls="nav-t1i4"
-                            aria-selected="false">
-                            雜誌新刊
-                        </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t1i5-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t1i5" type="button" role="tab" aria-controls="nav-t1i5"
-                            aria-selected="false">
-                            人氣小說
-                        </button>
-                        <button class="btn btn-light rounded-0 " id="nav-t1i6-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-t1i6" type="button" role="tab" aria-controls="nav-t1i6"
-                            aria-selected="false">
-                            創意生活
                         </button>
                     </div>
                 </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <!-- nav-home 改此id -->
-                    <div class="tab-pane fade show active" id="nav-t1i1" role="tabpanel" aria-labelledby="nav-home-tab"
-                        tabindex="0">
-                        <!-- slick slider -->
-                        <div class="container">
-                            <div class="homeslider">
-                                <div class="slider">
-                                    <img src="sildePage/i1.jpg" />
-                                </div>
+                <div class="tab-content" id="nav-tabContent" style="display: inline-block;">
+                    <ul class="photoArea" id="photoArea" style="display: block;display: inline-block;">
 
-                                <div class="slider">
-                                    <img src="sildePage/i2.jpg" />
-                                </div>
+                    </ul>
 
-                                <div class="slider">
-                                    <img src="sildePage/i3.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i1.jpg" />
-                                </div>
-                                <div class="slider">
-                                    <img src="sildePage/i2.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i3.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i1.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i2.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i3.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i1.jpg" />
-                                </div>
-                                <div class="slider">
-                                    <img src="sildePage/i2.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i3.jpg" />
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
-                    <div class="tab-pane fade" id="nav-t1i2" role="tabpanel" aria-labelledby="nav-profile-tab"
-                        tabindex="0">
+                </div>
+                    <!-- <div class="tab-pane fade" id="nav-t1i2" role="tabpanel" aria-labelledby="nav-profile-tab"
+                        tabindex="0"> -->
                         <!-- slick slider -->
-                        <div class="container">
+                        <!-- <div class="container">
                             <div class="homeslider">
                                 <div class="slider">
                                     <img src="sildePage/i4.jpg" />
@@ -363,8 +302,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="nav-t1i3" role="tabpanel" aria-labelledby="nav-contact-tab"
+                    </div> -->
+                    <!-- <div class="tab-pane fade" id="nav-t1i3" role="tabpanel" aria-labelledby="nav-contact-tab"
                         tabindex="0">
                         t1i3
                     </div>
@@ -382,7 +321,7 @@
                     <div class="tab-pane fade" id="nav-t1i6" role="tabpanel" aria-labelledby="nav-contact-tab"
                         tabindex="0">
                         t1i6
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <!-- 即將上架 尾 -->
@@ -684,6 +623,7 @@
             <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
             <script type="text/javascript" src="js/slick.js"></script>
             <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+            <script src="${contextRoot}/js/book/index.js" type="text/javascript"></script>
 
 
             <script>
@@ -717,34 +657,6 @@
                     slidesToShow: 5,
                     slidesToScroll: 1,
                 });
-
-                // var sendOutBtn = document.querySelector(`[data-btnid="sendOutBtn"]`)
-                // sendOutBtn.addEventListener('click', function (e) {
-                //     console.log("有抓到")
-                //     let searchField = ""
-                //     let searchArea = document.querySelector(`[data-search="searchArea"]`).value
-                //     if (searchArea != null) {
-                //         searchField += searchArea
-                //     }
-                //     console.log("searchField:" + searchField)
-
-                //     axios({
-                //         method: 'post',
-                //         url: "http://localhost:8080/Bookstrap/books/page3",
-                //         params: {
-                //             p: 1,
-                //             name: searchField
-                //         }
-                //     })
-                //         .then(res => {
-                //             console.log("OK")
-                //             window.location.href = 'http://localhost:8080/Bookstrap/books/search';
-                //         })
-                //         .catch(err => {
-                //             console.log("noooo")
-                //         })
-                // })
-
 
 
             </script>

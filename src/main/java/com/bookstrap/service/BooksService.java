@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bookstrap.harry.bean.Comment;
 import com.bookstrap.model.BookDetailsRepository;
 import com.bookstrap.model.Books;
 import com.bookstrap.model.BooksRepository;
@@ -42,7 +43,15 @@ public class BooksService {
 	}
 
 	public Page<Books> getBookByPage(Integer pageNumber) {
-		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.DESC, "id");
+		Pageable pgb = PageRequest.of(pageNumber - 1, 5, Sort.Direction.DESC, "id");
+
+		Page<Books> page = bDao.findAll(pgb);
+		return page;
+
+	}
+	
+	public Page<Books> showBookByPageAjax(Integer pageNumber) {
+		Pageable pgb = PageRequest.of(pageNumber - 1, 5, Sort.Direction.DESC, "id");
 
 		Page<Books> page = bDao.findAll(pgb);
 		return page;
@@ -57,12 +66,30 @@ public class BooksService {
 
 	}
 	
-	public Page<Books> getBookByPage2(Integer pageNumber,String name) {
-//		Pageable pgb = PageRequest.of(pageNumber - 1, 20, Sort.Direction.DESC, "id");
-		List<Books> list = bDao.findBookLikeSelector(name);
-		 Page<Books> userPage = new PageImpl<Books>(list, PageRequest.of(pageNumber - 1, 2, Sort.Direction.DESC, "id"), list.size());
+//	public Page<Books> getBookByPage2(Integer pageNumber,String name) {
+////		Pageable pgb = PageRequest.of(pageNumber - 1, 20, Sort.Direction.DESC, "id");
+//		List<Books> list = bDao.findBookLikeSelector(name);
+//		Page<Books> userPage = new PageImpl<Books>(list, PageRequest.of(pageNumber - 1, 2, Sort.Direction.DESC, "id"), list.size());
+//
+//		return userPage;
+//
+//	}
+	
+	public Page<Books> getBookByPage2(Integer pageNumber, String name) {
+		System.out.println("pageNumber:"+pageNumber);
+	    Pageable pageable = PageRequest.of(pageNumber - 1, 20, Sort.Direction.DESC, "id");
+	    List<Books> list = bDao.findBookLikeSelector(name);
+	    int start = (int) pageable.getOffset();
+	    int end = Math.min((start + pageable.getPageSize()), list.size());
+	    Page<Books> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
+	    return page;
+	}
+	
+	public Page<Books> getBookByPage3(Integer pageNumber) {
+		Pageable pgb = PageRequest.of(pageNumber - 1, 20, Sort.Direction.DESC, "id");
 
-		return userPage;
+		Page<Books> page = bDao.findAll(pgb);
+		return page;
 
 	}
 	
@@ -145,5 +172,23 @@ public class BooksService {
 	
 	public List<Books> findBookByCategory(String category) {
 		return bDao.findBookByCategory(category);
+	}
+	
+	public List<Books> findBookByAuthor(String author) {
+		return bDao.findBookByAuthor(author);
+	}
+	
+	public List<Books> getBookByDate(String languages) {
+		return bDao.getBookByDate(languages);
+	}
+	
+	public List<Comment> findCommentByBookId(Integer id) {
+		Optional<Books> book = bDao.findById(id);
+		
+		if(book.isPresent()) {
+			return book.get().getComment();
+		}else {
+			return new ArrayList<>();
+		}
 	}
 }
