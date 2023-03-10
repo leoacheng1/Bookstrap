@@ -23,7 +23,10 @@ import com.bookstrap.harry.bean.Favorite;
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 @Entity
 @Table(name = "Books")
@@ -71,7 +74,7 @@ public class Books {
 	@JoinColumn(name = "bookDetail_id")
 	private BookDetails bookDetails;
 	
-	@JsonManagedReference
+	@JsonManagedReference	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<Comment> comment;
 	

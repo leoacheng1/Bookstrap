@@ -34,7 +34,7 @@ prefix="jstl"%>
 
         <div class="input-group d-flex mx-auto my-auto">
 <!-- 模糊搜尋 -->
-<form action="${contextRoot}/books/page3" method="post" modelAttribute="book" style="width: 800px;text-align: center;">
+<form action="${contextRoot}/books/page3" method="get" modelAttribute="book" style="width: 800px;text-align: center;">
   <input style="display: inline;vertical-align: middle;"
          type="text" name="name" 
          class="form-control w-50 searchArea" id="searchArea" data-search="searchArea"

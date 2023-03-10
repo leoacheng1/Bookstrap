@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,7 +32,9 @@ import com.bookstrap.model.BookDetails;
 import com.bookstrap.model.Books;
 import com.bookstrap.service.BookDetailsService;
 import com.bookstrap.service.BooksService;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
+@SessionAttributes("name")
 @Controller
 public class BooksController {
 
@@ -148,14 +153,24 @@ public class BooksController {
 
 	@ResponseBody
 	@GetMapping("/books/api/page")
-	public Page<Books> showBookByPageAjax(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber) {
+	public Page<Books> allBookByPageAjax(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber) {
 
-		Page<Books> page = bService.getBookByPage(pageNumber);
+		Page<Books> page = bService.getBookByPage3(pageNumber);
 
 		return page;
 	}
+	
+	// 全部書籍頁面的分頁
+	@GetMapping("/books/api/allpage")
+	public String showBookByPageAjax(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
 
-	// 分頁功能
+		Page<Books> page = bService.showBookByPageAjax(pageNumber);
+		model.addAttribute("page", page);
+
+		return "books/showBooks";
+	}
+
+	// 全部書籍頁面(後台)的分頁功能
 	@GetMapping("/books/page")
 	public String showBookByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
 
@@ -164,7 +179,8 @@ public class BooksController {
 
 		return "books/showBooks";
 	}
-	// 分頁功能
+	
+	// 全部書籍分頁功能
 	@ResponseBody
 	@GetMapping("/books/allpage")
 	public Page<Books> AllBookByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber) {
@@ -180,6 +196,19 @@ public class BooksController {
 	public Page<Books> showLessThreeBooks(@RequestBody Books book) {
 
 		Page<Books> page = bService.getBookByPage(1);
+
+		return page;
+	}
+	
+
+	// 模糊搜尋(商城)的分頁
+	@ResponseBody
+	@GetMapping("/books/ajax/like")
+	public Page<Books> likeBook(Integer pageNumber,@RequestParam("name")String name,HttpSession session) {
+		session.setAttribute("name", name);
+        String result = (String) session.getAttribute("name");
+        
+		Page<Books> page = bService.getBookByPage2(pageNumber,result);
 
 		return page;
 	}
@@ -262,13 +291,15 @@ public class BooksController {
 	}
 
 	// 模糊搜尋ver.3 + 結果分頁
-	@PostMapping("/books/page3")
+	@GetMapping("/books/page3")
 	public String showBookByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber
-			                    ,@RequestParam("name") String name,Model model) {
-
-		Page<Books> page = bService.getBookByPage2(pageNumber,name);
-		model.addAttribute("book", page);
-			
+			                    ,@RequestParam("name") String name,Model model,HttpSession session) {
+		session.setAttribute("name", name);
+        String result = (String) session.getAttribute("name");
+		Page<Books> page = bService.getBookByPage2(pageNumber,result);
+		Model addAttribute = model.addAttribute("book", page);
+		System.out.println(addAttribute);
+		
 		return "/books/search";
 	}
 	
@@ -276,14 +307,36 @@ public class BooksController {
 	@GetMapping("/books/allpage2")
 	public String AllBookByPage2(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,Model model) {
 
-		Page<Books> page = bService.ALLBookByPage(pageNumber);
-		model.addAttribute("book", page);
+		Page<Books> list = bService.ALLBookByPage(pageNumber);
+		model.addAttribute("allbook", list);
 		return "/books/search";
 	}
 	
+	// 推薦同類別的書籍
 	@ResponseBody
 	@GetMapping("/books/category")
 	public List<Books> findBookByCategory(@RequestParam("category") String category) {
 		return bService.findBookByCategory(category);
+	}
+	
+	@ResponseBody
+	@GetMapping("/books/author")
+	public List<Books> findBookByAuthor(@RequestParam("author") String author) {
+		return bService.findBookByAuthor(author);
+	}
+	
+	// 新書推薦(語言分類)
+//	@GetMapping("/books/date")
+//	public String getBookByDate(@RequestParam("languages")String languages,Model model) {
+//		List<Books> list = bService.getBookByDate(languages);
+//		model.addAttribute("photoC",list);
+//		return "/index/index";
+//	}
+	
+	@ResponseBody
+	@GetMapping("/books/date")
+	public List<Books> getBookByDate(@RequestParam("languages")String languages) {
+		return bService.getBookByDate(languages);
+		
 	}
 }
