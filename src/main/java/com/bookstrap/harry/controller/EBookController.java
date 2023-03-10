@@ -189,15 +189,21 @@ public class EBookController {
 		
 	}
 	
-//	@GetMapping("/ebook/get/photo")
-//	public ResponseEntity<byte[]> getEBookFigureById(@RequestParam("eBookId") Integer eBookId){
-//		 EBooks eBookId1 = eBookService.getPhotoById(eBookId);
-//		 byte[] eBookPhoto = eBookId1.geteBookPhoto();
-//		 HttpHeaders headers = new HttpHeaders();
-//			
-//			headers.setContentType(MediaType.IMAGE_JPEG);
-//				return new ResponseEntity<byte[]>(eBookPhoto, headers, HttpStatus.OK);
-//	}
+	//連結至eBook內容詳細頁
+	@GetMapping("/ebook/ebookpage")
+	public String toEbookDetailPage(@RequestParam("eBookId") Integer eBookId,Model m) {
+		
+		EBooks eBook = eBookService.getEBookFileById(eBookId);
+		EBookDetails eBookDetail = eBookDetailService.getDetailById(eBookId);
+		m.addAttribute("book", eBook);
+		m.addAttribute("detail", eBookDetail);
+		
+//			return "member/EBooks/EBookPage";
+			return "books/EBookPage";
+//			return "books/bookPage";
+		
+	
+	}
 	
 	
 }

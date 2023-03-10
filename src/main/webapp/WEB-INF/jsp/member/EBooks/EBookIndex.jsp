@@ -185,7 +185,7 @@
         
         <jstl:forEach var="eBook" items="${page.content}">
   <div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:57px">
-    <a href='${contextRoot}/books/oneBook?id=${eBook.eBookId}'>
+    <a href='${contextRoot}/ebook/ebookpage?eBookId=${eBook.eBookId}'>
       <img src="${contextRoot}/ebook/get/photo?eBookId=${eBook.eBookId}" class="card-img-top"
       style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>
   <div class="card-body">
