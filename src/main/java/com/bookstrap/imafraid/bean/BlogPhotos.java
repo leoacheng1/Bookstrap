@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "BlogPhotos")
@@ -29,7 +30,8 @@ public class BlogPhotos {
 	@Column(name="fk_paragraph_id")
 	@Transient
 	private Integer paragraphId;
-	@JsonBackReference
+	@JsonBackReference	
+//	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER)
 	private BlogParagraph blogparagraph;
 	

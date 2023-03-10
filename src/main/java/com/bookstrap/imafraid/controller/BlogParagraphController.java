@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.imafraid.bean.BlogParagraph;
 import com.bookstrap.imafraid.bean.BlogPhotos;
+import com.bookstrap.imafraid.model.BlogParagraphRepository;
 import com.bookstrap.imafraid.service.BlogParaService;
 
 @Controller
@@ -25,6 +26,9 @@ public class BlogParagraphController {
 
 	@Autowired
 	private BlogParaService blogParaService;
+	
+	@Autowired
+	private BlogParagraphRepository blogParaDao;
 
 	@PostMapping("/blog/createParagraph")
 	public String createPara(@RequestParam String pTitle, @RequestParam String pContent, @RequestParam String pAuther,
@@ -97,5 +101,17 @@ public class BlogParagraphController {
 	public String updateShowOrNot(@PathVariable("id") Integer pId, @PathVariable("showOrNot") Integer showOrNot) {
 		return blogParaService.makeItCanSeen(pId, showOrNot);
 	}
+	
+	@ResponseBody
+	@GetMapping("/blog/showLatestPara")
+	public BlogParagraph findLatestParaByIdNativeQuery() {
+		System.out.println(blogParaDao.findLatestParaByIdNativeQuery());
+		return blogParaDao.findLatestParaByIdNativeQuery();
+	}
+	
+	
+	
+	
+	
 	}
 

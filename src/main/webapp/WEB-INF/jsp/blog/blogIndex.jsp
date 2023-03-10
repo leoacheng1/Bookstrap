@@ -76,6 +76,25 @@
 
       <link rel="stylesheet" href="${contextRoot}/css/blog.css" />
 
+      <!-- <script type="text/javascript">
+        fetch("${contextRoot}/blog/getAllBlogParagraph", { method: "POST" }).then(rs => rs.json()).then(function (data) {
+          console.log(data)
+        })
+        for (let item of data) {
+
+          let string = item.paragraphContent
+          let index = string.indexOf("。"); // 查找逗號的位置
+          let substring = string.substring(0, index); // 提取從開頭到逗號的子串
+          console.log(substring);
+
+          outPutString += substring
+        }
+        document.getElementById("weeklyPara").innerHTML = outPutString
+
+
+
+
+      </script> -->
     </head>
 
     <body>
@@ -129,10 +148,7 @@
             <h1 class="display-4 fst-italic text-light">每週專欄</h1>
             <div id="box">
 
-              <p class="lead my-3 text-light">Multiple lines of text that form the lede, informing new readers quickly
-                and
-                efficiently
-                about what’s most interesting in this post’s contents.</p>
+              <p id="weeklyPara"></p>
               <p class="lead mb-0"><a href="#" class="text-white fw-bold">繼續閱讀...</a></p>
             </div>
           </div>
@@ -390,7 +406,33 @@
           <a href="#">Back to top</a>
         </p>
       </footer>
+      <script type="text/javascript">
+        // function getLatesPara() {
 
+        axios({
+
+          url: "http://localhost:8080/Bookstrap/blog/showLatestPara",
+
+          method: "get",
+
+
+        })
+          .then(res => {
+            console.log(res.data)
+            var data = res.data;
+
+            // var id = res.id;
+            var content = data.paragraphContent
+              ;
+            document.getElementById('weeklyPara').innerHTML = content;
+
+            // window.location.href = 'http://localhost:8080/Bookstrap/blog/blogIndex'
+          })
+        // }
+
+
+
+      </script>
 
 
     </body>

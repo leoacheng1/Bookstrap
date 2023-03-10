@@ -30,7 +30,7 @@ public class BlogParagraph {
 	private String paragraphAuther;
 	@Column(name = "paragraphCatagory")
 	private String paragraphCatagory;
-	@JsonManagedReference
+	@JsonManagedReference	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blogparagraph", cascade = CascadeType.ALL)
 	private List<BlogPhotos> blogPhotos = new ArrayList<>();
 	@Column(name = "isThisParaShow")
