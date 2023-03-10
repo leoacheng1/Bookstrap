@@ -164,6 +164,12 @@ public class MemberController {
 		memberDetail.setMemberAddress(memberAddress);
 
 		memberDetailService.insertMemberDetails(memberDetail);
+		
+		MemberDetails memberNameById = memberDetailService.useIdFindName(memberId);
+		String memberName = memberNameById.getMemberFirstName();
+		
+		session.setAttribute("memberName", memberName);
+		
 		session.setAttribute("member", memberDetail);
 //		memberService.sendVertificationEnail(member, memberDetail);
 

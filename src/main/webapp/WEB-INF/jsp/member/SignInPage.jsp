@@ -77,7 +77,7 @@
 
 							<div>
 								<p class="mb-0">
-									還未註冊? <a href="#!" class="text-white-50 fw-bold">註冊會員</a>
+									還未註冊? <a href="${contextRoot}/guest/signup" class="text-white-50 fw-bold">註冊會員</a>
 								</p>
 							</div>
 
