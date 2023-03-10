@@ -81,9 +81,6 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<UserCoupon> userCoupon;
 	
-	//For test
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
-	private List<EBooks> eBooks;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private Set<Favorite> favorite;
@@ -150,13 +147,7 @@ public class Members {
 		this.roles = roles;
 	}
 
-	public List<EBooks> geteBooks() {
-		return eBooks;
-	}
-
-	public void seteBooks(List<EBooks> eBooks) {
-		this.eBooks = eBooks;
-	}
+	
 
 	public String getResetPasswordToken() {
 		return resetPasswordToken;

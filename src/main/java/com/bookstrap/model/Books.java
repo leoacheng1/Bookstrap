@@ -86,7 +86,7 @@ public class Books {
 	private Set<ShopStock> shopStocks;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-	private List<Favorite> favorite;
+	private Set<Favorite> favorite;
 	
 	public List<Comment> getComment() {
 		return comment;
@@ -109,11 +109,13 @@ public class Books {
 		this.shoppingCarts = shoppingCarts;
 	}
 
-	public List<Favorite> getFavorite() {
+	
+	
+	public Set<Favorite> getFavorite() {
 		return favorite;
 	}
 
-	public void setFavorite(List<Favorite> favorite) {
+	public void setFavorite(Set<Favorite> favorite) {
 		this.favorite = favorite;
 	}
 

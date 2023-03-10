@@ -8,11 +8,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,11 +25,10 @@ public class MemberFavoriteController {
 	private EBookFavorityService ebfService;
 	
 	
-	
 	@GetMapping("/favorite/ebook/add")
 	public String addEBookFavorite(@RequestParam("eBookId") EBooks eBook, 
 			@RequestParam("member") Members member) {
-		
+//		System.out.println("name:  =============" + eBook.geteBookName());	
 		
 		List<EBookFavorite> favorites = ebfService.getBookFavoriteByMember(member);
 		 boolean alreadyFavorite = false;
@@ -57,6 +53,41 @@ public class MemberFavoriteController {
 			return "redirect:/ebook/get/allebook";
 		}
 		
+		
+		return "redirect:/ebook/get/allebook";
+			
+	}
+	
+	
+	
+	@PostMapping("/favorite/ebook/add")
+	@ResponseBody
+	public String addEBookFavorite2(@RequestParam("eBookId") EBooks eBook, 
+			@RequestParam("memberId") Members member) {
+		
+		List<EBookFavorite> favorites = ebfService.getBookFavoriteByMember(member);
+		boolean alreadyFavorite = false;
+		for(EBookFavorite favorite : favorites) {
+			if(favorite.geteBook().geteBookId().equals(eBook.geteBookId())) {
+				alreadyFavorite = true;
+				ebfService.deleteEBookFavorite(member, eBook);
+				
+				break;
+				
+			}
+		}
+		if(!alreadyFavorite) {
+			
+			
+			EBookFavorite eBookFavorite = new EBookFavorite();
+			eBookFavorite.seteBook(eBook);
+			
+			eBookFavorite.setMember(member);
+			
+			ebfService.insertEbookFavority(eBookFavorite);
+			return "Y";
+		}
+		
 //		EBookFavorite eBookFavorite = new EBookFavorite();
 //		eBookFavorite.seteBook(eBookId);
 //		
@@ -64,8 +95,8 @@ public class MemberFavoriteController {
 //		
 //		ebfService.insertEbookFavority(eBookFavorite);
 		
-		return "redirect:/ebook/get/allebook";
-			
+		return "N";
+		
 	}
 	
 	
@@ -95,5 +126,7 @@ public class MemberFavoriteController {
 		return map;
 	
 	}
+	
+	
 
 }

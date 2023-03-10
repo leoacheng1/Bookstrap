@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,10 +30,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.bookstrap.harry.bean.EBookFavorite;
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.security.CipherUtils;
 import com.bookstrap.harry.security.MemberUserDetailService;
+import com.bookstrap.harry.service.EBookFavorityService;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 import com.bookstrap.harry.service.SendEmailService;
@@ -48,6 +51,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberUserDetailService muService;
+	
+	@Autowired
+	private EBookFavorityService ebfService;
 
 //	@GetMapping("/member/registrationpage")
 //	public String registrationpage() {
@@ -158,6 +164,12 @@ public class MemberController {
 		memberDetail.setMemberAddress(memberAddress);
 
 		memberDetailService.insertMemberDetails(memberDetail);
+		
+		MemberDetails memberNameById = memberDetailService.useIdFindName(memberId);
+		String memberName = memberNameById.getMemberFirstName();
+		
+		session.setAttribute("memberName", memberName);
+		
 		session.setAttribute("member", memberDetail);
 //		memberService.sendVertificationEnail(member, memberDetail);
 
@@ -475,6 +487,21 @@ public class MemberController {
 		return "member/Main/MyInfo";
 	}
 
+	@GetMapping("/member/myfavorite")
+	public String toMyFavoritePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+			 Model m, @RequestParam("memberId") Integer memberId) {
+		
+		
+		
+		Page<EBookFavorite> page = ebfService.getAllFavotitesByPage(pageNumber, memberId);
+		if(page == null) {
+			return "member/Main/MyFavorite";
+		}
+		
+		m.addAttribute("page", page);
+		
+		return "member/Main/MyFavorite";
+	}
 	
 
 }
