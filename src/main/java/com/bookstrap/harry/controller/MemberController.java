@@ -1,5 +1,6 @@
 package com.bookstrap.harry.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.harry.bean.EBookFavorite;
 import com.bookstrap.harry.bean.MemberDetails;
@@ -105,8 +107,8 @@ public class MemberController {
 			@RequestParam("memberFirstName") String memberFirstName,
 			@RequestParam("memberSex") Integer memberSex, @RequestParam("memberBirthday") Date memberBirthday,
 			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPhone") String memberCellPhone,
-			@RequestParam("memberAddress") String memberAddress, Model m, HttpSession session)
-			throws UnsupportedEncodingException, MessagingException {
+			@RequestParam("memberAddress") String memberAddress, @RequestParam("memberPhoto") MultipartFile memberPhoto, Model m, HttpSession session)
+			throws MessagingException, IOException {
 
 		java.util.Date jDate = new java.util.Date();
 		long time = jDate.getTime();
@@ -162,6 +164,9 @@ public class MemberController {
 		memberDetail.setMemberBirthday(memberBirthday);
 		memberDetail.setMemberPhone(memberPhone);
 		memberDetail.setMemberAddress(memberAddress);
+		
+		byte[] photo = memberPhoto.getBytes();
+		memberDetail.setMemberPhoto(photo);
 
 		memberDetailService.insertMemberDetails(memberDetail);
 		
