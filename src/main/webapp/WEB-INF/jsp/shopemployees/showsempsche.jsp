@@ -39,7 +39,7 @@
 										<!-- fullcalendar container -->
 										<div id="calendar"></div>
 										<div id="dialog" title="新增員工事件" style="display:none;">
-											<form>
+											<form id="event-form">
 												<label for="employee-name">員工名稱</label>
 												<select id="employee-name" name="employee-name"></select><br>
 												<label for="start-date">起始日期</label>
@@ -50,8 +50,24 @@
 												<input type="date" id="end-date" name="end-date"><br>
 												<label for="end-time">截止時間</label>
 												<select id="end-time" name="end-time"></select><br>
+												<label for="is-leave-requested">是否申請假別？</label>
+												<input type="radio" id="is-leave-requested-yes"
+													name="is-leave-requested" value="yes">是
+												<input type="radio" id="is-leave-requested-no" name="is-leave-requested"
+													value="no" checked>否
+												<br>
+												<div id="leave-type" style="display:none;">
+													<label for="leave-type-select">假別</label>
+													<select id="leave-type-select" name="leave-type-select">
+														<option selected="selected" value=""></option>
+														<option value="休假">休假</option>
+														<option value="病假">病假</option>
+														<option value="特休">特休</option>
+													</select>
+												</div>
 											</form>
 										</div>
+
 
 
 
@@ -72,6 +88,23 @@
 							<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 
 							<script>
+								document.querySelectorAll('input[name="is-leave-requested"]').forEach(function (el) {
+									el.addEventListener('change', function () {
+										if (document.getElementById('is-leave-requested-yes').checked) {
+											document.getElementById('leave-type').style.display = 'block';
+										} else {
+											document.getElementById('leave-type').style.display = 'none';
+										}
+									});
+								});
+								// $('input[name="is-leave-requested"]').change(function () {
+								// 	// 如果選擇否
+								// 	if ($(this).val() == "no") {
+								// 		// 將假別選擇框的值設為空
+								// 		$('#leave-type-select').val("");
+								// 		console.log($('#leave-type-select').val(""));
+								// 	}
+								// });
 								// 起始時間的下拉式選單
 								var start_time_select = document.getElementById("start-time");
 								for (var hour = 0; hour < 24; hour++) {
@@ -97,6 +130,7 @@
 
 								// 初始化 fullcalendar
 								$(document).ready(function () {
+
 									$('#calendar').fullCalendar({
 										// 設定日曆樣式
 										header: {
@@ -110,14 +144,9 @@
 										firstDay: 1,
 										timezone: 'local',//时区
 										displayEventEnd: true, //所有视图显示结束时间
-										editable: true,
-										// 开启更多链接/
-										// eventLimit: true,
-										// eventLimitText: "更多",
 										dayMaxEvents: true,
-										// contentHeight : 750, //设置日历主体内容的高度，不包括header部分，默认未设置，高度根据aspectRatio值自适应。
 										aspectRatio: 1.5,//设置日历单元格宽度与高度的比例。
-										editable: false,// 不允许拖动
+										editable: true,
 
 										events: function (start, end, timezone, callback) {
 											// 使用AJAX請求從後端獲取資料
@@ -146,17 +175,52 @@
 												}
 											});
 										},
+
 										eventClick: function (calEvent, jsEvent, view) {
 											// 將事件物件中的詳細資料顯示在彈出視窗或側邊欄中
-											var popupContent = 'Title: ' + calEvent.title + '\n' +
-												'Start: ' + moment(calEvent.start).format('YYYY-MM-DD hh:mm:ss') + '\n' +
-												'End: ' + moment(calEvent.end).format('YYYY-MM-DD hh:mm:ss') + '\n' +
-												'Schedule ID: ' + calEvent.scheduleId + '\n' +
-												'Employee ID: ' + calEvent.scheduleEmpid + '\n' +
-												'Employee Name: ' + calEvent.scheduleEmpname + '\n' +
+											var popupContent = 'Title: ' + calEvent.title + '<br>' +
+												'Start: ' + moment(calEvent.start).format('YYYY-MM-DD hh:mm:ss') + '<br>' +
+												'End: ' + moment(calEvent.end).format('YYYY-MM-DD hh:mm:ss') + '<br>' +
+												'Schedule ID: ' + calEvent.scheduleId + '<br>' +
+												'Employee ID: ' + calEvent.scheduleEmpid + '<br>' +
+												'Employee Name: ' + calEvent.scheduleEmpname + '<br>' +
 												'All Day: ' + calEvent.allDay;
-											alert(popupContent);
+
+											// 建立對話框
+											var dialog = $('<div></div>').html(popupContent).dialog({
+												autoOpen: false, // 初始不顯示
+												modal: true, // 鎖定背景
+
+												buttons: {
+													'確定': function () {
+														$(this).dialog('close'); // 關閉對話框
+													},
+													'刪除': function () {
+														// 發送 GET 請求
+														alert('您即將刪除這筆資料');
+														var deleteurl = "http://localhost:8080/Bookstrap/sempsche/deletesemp?scheduleId=" + calEvent.scheduleId
+														$.ajax({
+															url: deleteurl,
+															type: 'GET',
+															success: function (response) {
+																// 成功刪除事件
+																alert(response)
+																$('#calendar').fullCalendar('refetchEvents'); // 重新載入日曆資料
+																dialog.dialog('close'); // 關閉對話框
+															},
+															error: function (xhr, status, error) {
+																// 刪除事件失敗
+																alert('刪除失敗');
+															}
+														});
+													}
+												}
+											});
+
+											// 顯示對話框
+											dialog.dialog('open');
 										},
+
 
 										dayClick: function (date, jsEvent, view) {
 											// 設定起始和截止時間的值為當天的日期
@@ -188,27 +252,31 @@
 													$('#dialog').dialog({
 														title: '新增員工事件',
 														modal: true,
+														close: function () {
+															$('#event-form')[0].reset();
+														},
 														buttons: {
 															"確定": function () {
+
 																// 取得選擇的員工名稱和起始截止時間
 																var employeeName = $('#employee-name').val();
 																var startDate777 = $('#start-date').val();
 																var endDate777 = $('#end-date').val();
+																var scheduleVacation = $('#leave-type-select').val();
 
 
 
-																var startDate1 = new Date($('#start-date').val() + ' ' + $('#start-time').val());
-																var endDate1 = new Date($('#end-date').val() + ' ' + $('#end-time').val());
-
-																// var startDate1 = moment($('#start-date').val() + 'T' + $('#start-time').val(), 'YYYY-MM-DDTHH:mm').toDate();
-																// var endDate1 = moment($('#end-date').val() + 'T' + $('#end-time').val(), 'YYYY-MM-DDTHH:mm').toDate();
+																var startDate1 = $('#start-date').val() + ' ' + $('#start-time').val();
+																var endDate1 = $('#end-date').val() + ' ' + $('#end-time').val();
 
 																console.log(employeeName);
 																console.log(startDate777);
 																console.log(endDate777);
 																console.log(startDate1);
 																console.log(endDate1);
-																var url = "http://localhost:8080/Bookstrap/sempsche/addsemp?scheduleEmpid=1&scheduleStartdate=" + encodeURIComponent(startDate1.toISOString()) + "&scheduleEnddate=" + encodeURIComponent(endDate1.toISOString());
+																console.log('靠杯阿' + scheduleVacation);
+																var url = "http://localhost:8080/Bookstrap/sempsche/addsemp?scheduleEmpid=" + employeeName
+																	+ "&scheduleStartdate=" + startDate1 + "&scheduleEnddate=" + endDate1 + "&scheduleVacation=" + scheduleVacation;
 
 																console.log(url);
 																// 發送GET請求
@@ -217,24 +285,30 @@
 																	type: 'GET',
 																	success: function (response) {
 																		// 請求成功後，重新載入事件
+																		alert(response)
+																		$('#event-form')[0].reset();
 																		$('#calendar').fullCalendar('refetchEvents');
 																	},
 																	error: function () {
 																		// 請求失敗時的處理
+																		$('#event-form')[0].reset();
 																	}
 																});
 
 																// 關閉對話框
 																$(this).dialog("close");
+																$('#event-form')[0].reset();
 															},
 															"取消": function () {
 																$(this).dialog("close");
+																$('#event-form')[0].reset();
 															}
 														}
 													});
 												}
 											});
-										}
+										},
+
 
 									});
 								});

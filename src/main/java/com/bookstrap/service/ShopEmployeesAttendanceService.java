@@ -1,16 +1,18 @@
 package com.bookstrap.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.model.ShopEmployeesAttendanceRepository;
 import com.bookstrap.model.ShopEmployeesRepository;
-import com.bookstrap.model.Shops;
 import com.bookstrap.model.bean.ShopEmployees;
 import com.bookstrap.model.bean.ShopEmployeesAttendance;
 
+@Transactional
 @Service
 public class ShopEmployeesAttendanceService {
 
@@ -50,4 +52,11 @@ public class ShopEmployeesAttendanceService {
 		return sempattDao.selectShopEmployeesAttendanceByIdQuery(attSempid);
 	}
 
+	public List<Integer> findAttendanceByCriteria(LocalDate attStartDate, LocalDate attEndDate, String attVacation, Integer empId) {
+        return sempattDao.findAttendanceByCriteria(attStartDate, attEndDate, attVacation, empId);
+    }
+	
+	public void updateAttendanceAgreeById(Integer attId) {
+		sempattDao.updateAttendanceAgreeById(attId);
+    }
 }
