@@ -73,7 +73,7 @@ public class EBookService {
 	
 	//最後一個字串為找javaBean的那個Id
 	public Page<EBooks> getEBooksByPage(Integer pageNumber){
-			Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "eBookId");
+			Pageable pgb = PageRequest.of(pageNumber-1, 20, Sort.Direction.DESC, "eBookId");
 			Page<EBooks> page = eBookDao.findAll(pgb);
 			return page;
 	}

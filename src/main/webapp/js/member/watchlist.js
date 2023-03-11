@@ -32,7 +32,7 @@ function addToWatchlist(event){
             // this.classList.add("btn-sm");
             this.classList.remove("btn-outline-secondary");
             this.classList.add("btn-danger");
-            this.innerHTML = "Remove from WatchList"
+            this.innerHTML = "移除追蹤"
                 
                 
         }else {
@@ -40,7 +40,7 @@ function addToWatchlist(event){
             // this.classList.remove("btn-sm");
             this.classList.add("btn-outline-secondary");
             this.classList.remove("btn-danger");
-            this.innerHTML = "Add to Watchlist"    
+            this.innerHTML = "追蹤商品"    
             
         }
     })
