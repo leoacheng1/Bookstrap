@@ -1,5 +1,6 @@
 package com.bookstrap.harry.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,11 +30,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.bookstrap.harry.bean.EBookFavorite;
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.security.CipherUtils;
 import com.bookstrap.harry.security.MemberUserDetailService;
+import com.bookstrap.harry.service.EBookFavorityService;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 import com.bookstrap.harry.service.SendEmailService;
@@ -48,6 +53,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberUserDetailService muService;
+	
+	@Autowired
+	private EBookFavorityService ebfService;
 
 //	@GetMapping("/member/registrationpage")
 //	public String registrationpage() {
@@ -99,8 +107,8 @@ public class MemberController {
 			@RequestParam("memberFirstName") String memberFirstName,
 			@RequestParam("memberSex") Integer memberSex, @RequestParam("memberBirthday") Date memberBirthday,
 			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPhone") String memberCellPhone,
-			@RequestParam("memberAddress") String memberAddress, Model m, HttpSession session)
-			throws UnsupportedEncodingException, MessagingException {
+			@RequestParam("memberAddress") String memberAddress, @RequestParam("memberPhoto") MultipartFile memberPhoto, Model m, HttpSession session)
+			throws MessagingException, IOException {
 
 		java.util.Date jDate = new java.util.Date();
 		long time = jDate.getTime();
@@ -156,8 +164,17 @@ public class MemberController {
 		memberDetail.setMemberBirthday(memberBirthday);
 		memberDetail.setMemberPhone(memberPhone);
 		memberDetail.setMemberAddress(memberAddress);
+		
+		byte[] photo = memberPhoto.getBytes();
+		memberDetail.setMemberPhoto(photo);
 
 		memberDetailService.insertMemberDetails(memberDetail);
+		
+		MemberDetails memberNameById = memberDetailService.useIdFindName(memberId);
+		String memberName = memberNameById.getMemberFirstName();
+		
+		session.setAttribute("memberName", memberName);
+		
 		session.setAttribute("member", memberDetail);
 //		memberService.sendVertificationEnail(member, memberDetail);
 
@@ -475,6 +492,21 @@ public class MemberController {
 		return "member/Main/MyInfo";
 	}
 
+	@GetMapping("/member/myfavorite")
+	public String toMyFavoritePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+			 Model m, @RequestParam("memberId") Integer memberId) {
+		
+		
+		
+		Page<EBookFavorite> page = ebfService.getAllFavotitesByPage(pageNumber, memberId);
+		if(page == null) {
+			return "member/Main/MyFavorite";
+		}
+		
+		m.addAttribute("page", page);
+		
+		return "member/Main/MyFavorite";
+	}
 	
 
 }

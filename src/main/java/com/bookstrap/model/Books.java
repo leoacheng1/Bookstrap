@@ -23,7 +23,10 @@ import com.bookstrap.harry.bean.Favorite;
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 @Entity
 @Table(name = "Books")
@@ -71,7 +74,7 @@ public class Books {
 	@JoinColumn(name = "bookDetail_id")
 	private BookDetails bookDetails;
 	
-	@JsonManagedReference
+	@JsonManagedReference	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<Comment> comment;
 	
@@ -83,7 +86,7 @@ public class Books {
 	private Set<ShopStock> shopStocks;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-	private List<Favorite> favorite;
+	private Set<Favorite> favorite;
 	
 	public List<Comment> getComment() {
 		return comment;
@@ -106,11 +109,13 @@ public class Books {
 		this.shoppingCarts = shoppingCarts;
 	}
 
-	public List<Favorite> getFavorite() {
+	
+	
+	public Set<Favorite> getFavorite() {
 		return favorite;
 	}
 
-	public void setFavorite(List<Favorite> favorite) {
+	public void setFavorite(Set<Favorite> favorite) {
 		this.favorite = favorite;
 	}
 

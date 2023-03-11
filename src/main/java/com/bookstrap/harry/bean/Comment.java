@@ -14,6 +14,10 @@ import javax.persistence.Transient;
 
 import com.bookstrap.model.Books;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 @Entity
 @Table(name = "Comment")
@@ -35,20 +39,22 @@ public class Comment {
 	@Column(name = "content")
 	private String content;
 
+	// 打分:1~5顆星
 	@Column(name = "rating")
 	private Integer evaluation;
 
-	// ??最愛 0:沒有 1:有
-
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id")
 	private	Members member;
 	
-	@JsonBackReference
+//	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)  //??
 	@JoinColumn(name = "book_id")
 	private Books book;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ebook_id")
 	private EBooks eBook;

@@ -41,7 +41,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="${contextRoot}/member/myfavorite?memberId=${memberId}">
                 <span data-feather="heart" class="align-text-bottom"></span>
                 追蹤商品
               </a>

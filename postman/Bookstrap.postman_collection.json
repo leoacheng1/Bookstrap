@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6e600e50-5962-4d0a-9c8c-7d3b73436626",
+		"_postman_id": "910ff366-8ecb-4a90-92fe-34b3f995f71d",
 		"name": "Bookstrap",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -172,7 +172,7 @@
 						},
 						{
 							"key": "eBookPublishDate",
-							"value": "2007/01/12",
+							"value": "2007-01-12",
 							"type": "default"
 						},
 						{
@@ -198,7 +198,7 @@
 						{
 							"key": "eBookFile",
 							"type": "file",
-							"src": "/C:/temp/pdf/Amplified Silencing.pdf"
+							"src": "/C:/epub/Amplified Silencing.pdf"
 						},
 						{
 							"key": "eBookSize",
@@ -223,13 +223,121 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/ebook/post/addebook",
+					"raw": "http://localhost:8080/Bookstrap/ebook/post/addebook",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"Bookstrap",
+						"ebook",
+						"post",
+						"addebook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addepub",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "eBookName",
+							"value": "眼中沙",
+							"type": "default"
+						},
+						{
+							"key": "eBookCategory",
+							"value": "stories",
+							"type": "default"
+						},
+						{
+							"key": "eBookLanguages",
+							"value": "Chinese",
+							"type": "default"
+						},
+						{
+							"key": "eBookAuthor",
+							"value": " 奥罕．帕慕克",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublisher",
+							"value": "unknow",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublishDate",
+							"value": "2013-04-25",
+							"type": "default"
+						},
+						{
+							"key": "eBookPhoto",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookDiscount",
+							"value": "85",
+							"type": "default"
+						},
+						{
+							"key": "eBookPrice",
+							"value": "150",
+							"type": "default"
+						},
+						{
+							"key": "eBookTranslator",
+							"value": "黃志坤\n",
+							"type": "default"
+						},
+						{
+							"key": "eBookFile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookSize",
+							"value": "A4",
+							"type": "default"
+						},
+						{
+							"key": "eBookPage",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "eBookIntro",
+							"value": "這是泰戈爾以孟加拉文寫就的文學珠玉，一個迷人的加爾各答故事：原本平靜的家庭，因為一個有著神性和魔性的少女到來，命運的渦漩將所有人捲入其中，有如星宿位移。",
+							"type": "default"
+						},
+						{
+							"key": "eBookGrade",
+							"value": "normal",
+							"type": "default"
+						},
+						{
+							"key": "eBookNumber",
+							"value": "1010490077",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Bookstrap/ebook/post/addebook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
 						"ebook",
 						"post",
 						"addebook"

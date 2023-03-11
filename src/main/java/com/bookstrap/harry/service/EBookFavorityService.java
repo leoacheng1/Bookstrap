@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,6 +77,12 @@ public class EBookFavorityService {
 		return ebfDao.findByMemberAndEBook(member, ebook);
 	}
 	
-	
+	public Page<EBookFavorite> getAllFavotitesByPage(Integer pageNumber, Integer memberId){
+		PageRequest pgb = PageRequest.of(pageNumber-1, 5, Sort.Direction.DESC, "member");
+		Page<EBookFavorite> page1 = ebfDao.findAlleBookFavorityById(pgb, memberId);
+
+//		Page<EBookFavorite> page = ebfDao.findAll(pgb);
+		return page1;
+	}
 	
 }

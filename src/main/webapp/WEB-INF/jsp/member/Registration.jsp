@@ -81,8 +81,8 @@
             <br>
             
             
-            <form class="needs-validation" novalidate action="${contextRoot}/member/post" method="post">
-            <input type="text" value="${memberId}" readonly  name="memberId">
+            <form class="needs-validation" novalidate action="${contextRoot}/member/post" method="post" enctype="multipart/form-data">
+            <input type="text" value="${memberId}" readonly  name="memberId" hidden>
               <div class="row g-3">
                 <div class="col-sm-6">
                   <label for="lastName" class="form-label">姓<span class="text-muted">*</span></label>
@@ -128,6 +128,11 @@
                     請選擇出生年月日
                   </div>
                 </div>
+                <div class="col-12">
+                  <label for="photo" class="form-label">大頭照 <span class="text-muted"></span></label>
+                  <input type="file" class="form-control" id="photo" required name="memberPhoto">
+                  
+                </div>
     
                 <div class="col-md-5">
                   <label for="gender" class="form-label" >性別<span class="text-muted">*</span></label>
@@ -142,6 +147,7 @@
                     Please select a valid country.
                   </div>
                 </div>
+                
     
                
               <hr class="my-4">

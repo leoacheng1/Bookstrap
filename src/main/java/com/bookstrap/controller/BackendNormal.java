@@ -26,8 +26,13 @@ public class BackendNormal {
 	@PostMapping("backend/login")
 	public String loginCheck(@RequestParam("account") String account, @RequestParam("password") String password,
 			HttpSession session, Model m) {
+		System.out.println("==================");
+		System.out.println("empAccount:" + account);
+		System.out.println("emppassword:" + password);
+		
 		Employees emp = empService.findByUsername(account);
 		if (emp == null) {
+			System.out.println("In if");
 			m.addAttribute("error", "無法找到該使用者");
 			return "backend/login";
 		} else if (!emp.getPassword().equals(password)) {

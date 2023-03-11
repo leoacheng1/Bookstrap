@@ -186,7 +186,34 @@ schedule_empid int foreign key references ShopEmployees(emp_id),
 schedule_shiftid int foreign key references Shift(shift_id),
 )
 
-----------------------------------------------------
+-----------------------eBook
+Create Table EBookDetails(
+	ebook_detail_id int identity(1,1) primary key,
+	size nvarchar(50), --重量
+	pages_amount int,
+	book_intro nvarchar(max), --書簡介
+	grade nvarchar(50), --分級: adult, child......
+);
+
+Create Table EBooks(
+	ebook_id int identity(1,1) primary key,
+	ebook_name nvarchar(50),
+	category nvarchar(50), --語言類別 >> 類別(eg. 中文書 >> 歷史) 
+	languages nvarchar(50), --語言類別
+	author nvarchar(50),
+	publisher nvarchar(50),
+	publish_date Date,
+	ebook_photo varbinary(max), --封面圖片
+	discount int, --ex.79折，存成整數79
+	price int,
+	translator nvarchar(50),
+	ebookDetail_id int references EBookDetails(ebook_detail_id),
+	ebook_file varbinary(max),
+	ebook_number int NOT NULL
+);
+
+
+------------------------Favorite--------------------------
 CREATE TABLE Favorite(
 favorite_id int NOT NULL PRIMARY KEY IDENTITY(1,1),
 FK_book_id int NOT NULL,
@@ -205,6 +232,8 @@ FOREIGN KEY (FK_ebook_id) REFERENCES EBooks(ebook_id),
 FOREIGN KEY (FK_member_id) REFERENCES Members(member_id)
 );
 
+
+--------role-------
 CREATE TABLE Roles (
     roles_id INT IDENTITY(1,1) PRIMARY KEY,
     roles_name NVARCHAR(255) NOT NULL

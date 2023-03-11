@@ -1,6 +1,7 @@
 package com.bookstrap.harry.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,11 @@ public class EBookDetailService {
 	
 	public List<EBookDetails> findAllEBookDetails(){
 		return eBookDetialDao.findAll();
+	}
+	
+	public EBookDetails getDetailById(Integer eBookId) {
+		Optional<EBookDetails> op = eBookDetialDao.findById(eBookId);
+	
+		return op.get();
 	}
 }
