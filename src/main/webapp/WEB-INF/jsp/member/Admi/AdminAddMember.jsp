@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="../layout/AdminCss.jsp" />
+<%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
 <style>
 
         .bd-placeholder-img {
@@ -71,9 +71,8 @@
 
 </head>
 <body class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
-<jsp:include page="../layout/AdminNavBar.jsp" />
-
-<jsp:include page="../layout/AdminSideBar.jsp" />
+<%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %> 
+<%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 
   <div class="wrapper">
         
@@ -225,6 +224,12 @@
 
 
 
-<jsp:include page="../layout/AdminJs.jsp" />
+	<!--右側彈跳式功能列 -->
+<%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+<!--版型需要的js-->
+<%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+<script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 </body>
 </html>
