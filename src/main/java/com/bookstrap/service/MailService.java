@@ -3,6 +3,7 @@ package com.bookstrap.service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bookstrap.model.EmployeesRepository;
 import com.bookstrap.model.bean.AccountLabel;
 import com.bookstrap.model.bean.AccountMail;
 import com.bookstrap.model.bean.ConditionDto;
@@ -63,6 +65,9 @@ public class MailService {
 	@Autowired
 	private MailCategoryRepository mailCategoryDao;
 	
+	@Autowired
+	private EmployeesRepository empDao;
+	
 	@Autowired 
 	private MailEMRepository emDao;
 	
@@ -85,6 +90,10 @@ public class MailService {
 	
 	public Long getMailCountInLabel(Integer labelId, Integer accountId) {
 		return accountMailDao.getLabelMailCount(labelId, accountId);
+	}
+	
+	public Long getMailsCountByConditions(ConditionDto condition, Integer accountId) {
+		return emDao.findMailsCountByConditions(condition, accountId);
 	}
 // ================================================= for Searching =============================================================
 	public List<AccountLabel> findAllLabelByAccountId(Integer accountId) {
@@ -133,6 +142,15 @@ public class MailService {
 		}
 		return null;
 	}
+	
+	public AccountMail findAccountMailBy2Id(Integer mailId, Integer accountId) {
+		AccountMailPK accountMailPK = new AccountMailPK(mailId, accountId);
+		Optional<AccountMail> mail = accountMailDao.findById(accountMailPK);
+		if(mail.isEmpty()) return null;
+		return mail.get();
+	}
+	
+	
 	
 	
 	public MailAttachment findMailAttachmentById(Integer mailAttachmentId) {
@@ -186,6 +204,21 @@ public class MailService {
 
 	public LinkedHashSet<String> findAllSentAccount(Integer accountId) {
 		return mailDao.findAllSentAccount(accountId);
+	}
+	
+	public LinkedHashSet<String> findAllFromAccount(Integer accountId) {
+		return mailDao.findAllFromAccount(accountId);
+	}
+
+	public LinkedHashMap<String,String> findAllAccountWithName() {
+		LinkedHashMap<String, String> empAndAccount = new LinkedHashMap<String,String>();
+		List<MailAccount> mailAccounts = mailAccountDao.findAll();
+		for (MailAccount mailAccount : mailAccounts) {
+			String empName = mailAccount.getEmployee().getEmpName();
+			String account = mailAccount.getAccount();
+			empAndAccount.put(empName, account);
+		}
+		return empAndAccount;
 	}
 // ================================================= for Inserting =============================================================
 	public AccountLabel addLabel(MailAccount account, String labelName) {
@@ -402,8 +435,14 @@ public class MailService {
 			Optional<AccountMail> optional = accountMailDao.findById(accountMailPK);
 			if (optional.isEmpty()) continue;
 			AccountMail mail = optional.get();
-			accountMailDao.delete(mail);
-			deleted.add(mailId);			
+			Mail rootMail = mail.getMail();
+			if (rootMail.getAccountMails().size() == 1) {
+				mailDao.delete(rootMail);
+				deleted.add(mailId);
+			}else {
+				accountMailDao.delete(mail);
+				deleted.add(mailId);							
+			}
 		}
 		return deleted.toArray(new Integer[deleted.size()]);
 		

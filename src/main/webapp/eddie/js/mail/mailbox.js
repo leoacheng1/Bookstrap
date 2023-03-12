@@ -1,5 +1,5 @@
 
-var contextRoot = "http://localhost:8080/Bookstrap/";
+const contextRoot = "http://localhost:8080/Bookstrap/";
 /**
  * iife executed when the page is first loaded
  */
@@ -43,73 +43,41 @@ async function addTooltip() { $('[data-toggle="tooltip"]').tooltip() };
 /**
  * prepare an interactive mail table after submitting a request to get all mail data, and place them in the table.
  */
-async function initMails(conditions) {
+async function initMails(conditions, advanceFilters = false) {
     let pageNum = $("body").attr("data-pagenum");
     $("#mailboxbody").html("");
     let currUrl = window.location.href.split("/");
     let tname = currUrl.pop();
     let type = currUrl.pop();
     let activeLi = $(`#${type}-ul a[data-typename=${tname}]`);
-    if (!activeLi.hasClass("bg-info")) {
-        activeLi.addClass("font-weight-bold").addClass("bg-info")
+    if (!activeLi.hasClass("active_")) {
+        activeLi.addClass("font-weight-bold").addClass("bg-info").addClass("active_");
+    }else {
+        if (advanceFilters) activeLi.removeClass("font-weight-bold").removeClass("bg-info").removeClass("active_");
     }
     // new request with conditions
-    if(conditions != null) {
+    if (!advanceFilters) {
         // let conditions = getConditions();
+        if (conditions == null) {
+            conditions = getConditions();
+        }
         if (type == "category") conditions["categoryName"] = tname;
         if (type == "folder") conditions["folderName"] = tname;
         if (type == "label") {
-            if (tname == "important"){
-                condtions["important"] = 1;
-            }else if (tname == "starred"){
+            if (tname == "important") {
+                conditions["important"] = 1;
+            } else if (tname == "starred") {
                 conditions["starred"] = 1;
-            }else {
+            } else {
                 conditions["labelId"] = tname;
             }
         }
         console.log(conditions);
-        axios({
-            url: contextRoot + `mail/conditions/${pageNum}`,
-            method: "post",
-            data: conditions
-        }).then(
-            res => {
-                // console.log(res.data);
-                $("#mailboxbody").html("");
-                if (res.data.length == 0) {
-                    let tr = document.createElement("tr");
-                    tr.setAttribute("style", "text-align:center; color: gray")
-                    let td = document.createElement("td");
-                    td.innerHTML = "目前尚無郵件";
-                    tr.appendChild(td);
-                    $("#mailboxbody").append(tr);
-                } else {
-                    for (rawData of res.data) {
-                        console.log(rawData);
-                        let data = makeMailData(rawData);
-                        let processedRowData = fillMailRow(makeMailRow(data.mailId), data);
-                        if (processedRowData.AttachmentIds == null) {
-                            $("#mailboxbody").append(processedRowData.processedTableRow);
-                        } else {
-                            $("#mailboxbody").append(processedRowData.processedTableRow);
-                            //call api to append a row of attachment, a little trivial probably not gonna make it
-                        }
-                    }
-                }
-                addEvents();
-                return;
-            }
-        ).catch(
-            err => {
-                console.log(err)
-            }
-        )
-    }else {
-
-    //original request
+    }
     axios({
-        url: contextRoot + `mail/${type}/${tname}/${pageNum}`,
-        method: "get"
+        url: contextRoot + `mail/conditions/${pageNum}`,
+        method: "post",
+        data: conditions
     }).then(
         res => {
             // console.log(res.data);
@@ -123,6 +91,7 @@ async function initMails(conditions) {
                 $("#mailboxbody").append(tr);
             } else {
                 for (rawData of res.data) {
+                    // console.log(rawData);
                     let data = makeMailData(rawData);
                     let processedRowData = fillMailRow(makeMailRow(data.mailId), data);
                     if (processedRowData.AttachmentIds == null) {
@@ -141,7 +110,45 @@ async function initMails(conditions) {
             console.log(err)
         }
     )
-    }
+
+    //original request
+    // else {
+
+    // axios({
+    //     url: contextRoot + `mail/${type}/${tname}/${pageNum}`,
+    //     method: "get"
+    // }).then(
+    //     res => {
+    //         // console.log(res.data);
+    //         $("#mailboxbody").html("");
+    //         if (res.data.length == 0) {
+    //             let tr = document.createElement("tr");
+    //             tr.setAttribute("style", "text-align:center; color: gray")
+    //             let td = document.createElement("td");
+    //             td.innerHTML = "目前尚無郵件";
+    //             tr.appendChild(td);
+    //             $("#mailboxbody").append(tr);
+    //         } else {
+    //             for (rawData of res.data) {
+    //                 let data = makeMailData(rawData);
+    //                 let processedRowData = fillMailRow(makeMailRow(data.mailId), data);
+    //                 if (processedRowData.AttachmentIds == null) {
+    //                     $("#mailboxbody").append(processedRowData.processedTableRow);
+    //                 } else {
+    //                     $("#mailboxbody").append(processedRowData.processedTableRow);
+    //                     //call api to append a row of attachment, a little trivial probably not gonna make it
+    //                 }
+    //             }
+    //         }
+    //         addEvents();
+    //         return;
+    //     }
+    // ).catch(
+    //     err => {
+    //         console.log(err)
+    //     }
+    // )
+    // }
     console.log("initialized");
 }
 
@@ -208,7 +215,7 @@ function fillMailRow(tableRow, mailData) {
         "job": "工作指派",
         "company": "公司訊息"
     }
-    console.log(mailData);
+
     $("<span/>", { class: "badge badge-pill badge-primary mr-1", html: folderNameMapping[mailData.mailFolder.folderName] }).insertBefore($(tableRow.querySelector(".mailbox-subject a")))
     $("<span/>", { class: "badge badge-pill badge-success mr-1", html: categoryNameMapping[mailData.mailCategory.categoryName] }).insertBefore($(tableRow.querySelector(".mailbox-subject a")))
     for (label of mailData.mailLabels) {
@@ -502,6 +509,7 @@ function deleteEvent() {
  * @returns 
  */
 function permanentDelete() {
+    $(this).tooltip('hide');
     let trs = findChecked();
     if (trs.length == 0) return;
     Swal.fire({
@@ -579,6 +587,7 @@ async function addRecoveryBtn() {
         "id": "recovery-btn",
         append: $('<i/>', { class: "fa fa-inbox" }),
         click: function () {
+            $(this).tooltip('hide');
             let formData = getSelectedFormdata();
             if (formData == null) return;
             axios.put(contextRoot + "mail/folder/1", formData)
@@ -608,7 +617,7 @@ function addLabelLi() {
         .then(
             response => {
                 if (response.data.length == 0) {
-                    $("#labelDropdown").append($("<span/>", { class: "dropdown-item", html: "目前尚無標籤" }));
+                    $("#labelDropdown").append($("<span/>", { class: "dropdown-item text-center", html: "尚無標籤" }));
                     return;
                 }
                 $("#labelDropdown").html("");
@@ -816,41 +825,81 @@ function setHasreads(hasread) {
 /**
  * add pagination too mailbox
  */
-async function addPagination() {
-    let accountId = $("body").attr("data-ref");
+async function addPagination(conditions, advanceFilters = false) {
     let url = window.location.href.split("/");
     let tname = url.pop();
     let type = url.pop();
-    axios.get(contextRoot + `mail/count/${type}/${tname}/${accountId}`)
+    if (conditions == null) conditions = getConditions();
+    if (!advanceFilters) {
+        if (type == "category") conditions["categoryName"] = tname;
+        if (type == "folder") conditions["folderName"] = tname;
+        if (type == "label") {
+            if (tname == "important") {
+                conditions["important"] = 1;
+            } else if (tname == "starred") {
+                conditions["starred"] = 1;
+            } else {
+                conditions["labelId"] = tname;
+            }
+        }
+    }
+    axios.post(contextRoot + `mail/conditions/count`, conditions)
         .then(
             response => {
                 console.log("make pagination")
+                console.log(response.data);
                 let onePageMail = 10;
                 let numOfPages = Math.ceil(response.data / onePageMail);
+                if (numOfPages == 0) numOfPages = 1;
                 if (numOfPages < Number($("body").attr("data-pagenum"))) {
                     $("body").attr("data-pagenum", numOfPages);
                     initMails();
                 }
-                makePagination(numOfPages);
+                console.log(numOfPages);
+                if (advanceFilters) {
+                    makePagination(numOfPages, true);
+                } else {
+                    makePagination(numOfPages);
+                }
             }
         )
 }
+//old pagination
+// async function addPagination() {
+//     let accountId = $("body").attr("data-ref");
+//     let url = window.location.href.split("/");
+//     let tname = url.pop();
+//     let type = url.pop();
+//     axios.get(contextRoot + `mail/count/${type}/${tname}/${accountId}`)
+//         .then(
+//             response => {
+//                 console.log("make pagination")
+//                 let onePageMail = 10;
+//                 let numOfPages = Math.ceil(response.data / onePageMail);
+//                 if (numOfPages < Number($("body").attr("data-pagenum"))) {
+//                     $("body").attr("data-pagenum", numOfPages);
+//                     initMails();
+//                 }
+//                 makePagination(numOfPages);
+//             }
+//         )
+// }
 /**
  * make elements with event handlers to deal with paging
  * @param {Number} pageNum - total number of pages of the specified mailbox 
  */
-function makePagination(pageNum) {
+function makePagination(pageNum, advanceFilters = false) {
     $(".page-number").remove();
     $("#prevPageLi").addClass("disabled");
+    $("#nextPageLi").removeClass("disabled");
+    if (pageNum == 1) $("#nextPageLi").addClass("disabled");
     for (let i = 1; i <= pageNum; i++) {
         let li = $("<li/>", { class: "page-item page-number", append: $("<a/>", { class: "page-link", href: "#", html: i }) });
         li.insertBefore($("#nextPageLi"));
     }
-    if (pageNum == 1) {
-        $("#prevPageLi").addClass("disabled");
-        $("#nextPageLi").addClass("disabled");
-    }
+
     $($(".page-number")[Number($("body").attr("data-pagenum")) - 1]).addClass("active");
+    $("#nextPageLi a").off('click');
     $("#nextPageLi a").click(function (event) {
         event.preventDefault();
         $("body").attr("data-pagenum", Number($("body").attr("data-pagenum")) + 1);
@@ -863,6 +912,7 @@ function makePagination(pageNum) {
         a.next(".page-number").addClass("active");
         a.removeClass("active")
     })
+    $("#prevPageLi a").off('click');
     $("#prevPageLi a").click(function (event) {
         event.preventDefault();
         $("body").attr("data-pagenum", Number($("body").attr("data-pagenum")) - 1);
@@ -875,6 +925,34 @@ function makePagination(pageNum) {
         a.prev(".page-number").addClass("active");
         a.removeClass("active")
     })
+    if (advanceFilters) {
+        for (a of $(".page-number a")) {
+            $(a).click(function (event) {
+                event.preventDefault();
+                $("body").attr("data-pagenum", this.innerHTML);
+                $(".page-number").removeClass("active");
+                $(this).parent(".page-number").addClass("active");
+                if ($(this).parent(".page-number").hasClass("active")) {
+                    if (pageNum == 1 || pageNum == 0) {
+                        $("#nextPageLi").addClass("disabled");
+                        $("#prevPageLi").addClass("disabled");
+                    } else if (this.innerHTML == 1) {
+                        $("#nextPageLi").removeClass("disabled");
+                        $("#prevPageLi").addClass("disabled");
+                    } else if (this.innerHTML == pageNum) {
+                        $("#prevPageLi").removeClass("disabled");
+                        $("#nextPageLi").addClass("disabled");
+                    } else {
+                        $("#prevPageLi").removeClass("disabled");
+                        $("#nextPageLi").removeClass("disabled");
+                    }
+                }
+                let conditions = getFilterConditions();
+                initMails(conditions);
+            })
+        }
+        return;
+    }
     for (a of $(".page-number a")) {
         $(a).click(function (event) {
             event.preventDefault();
@@ -900,49 +978,71 @@ function makePagination(pageNum) {
         })
     }
 }
-
+/**
+ * create and add eventListeners to buttons that set conditions,
+ */
 async function prepareConditions() {
     axios.get(contextRoot + "mail/sent/" + $("body").attr("data-ref"))
         .then(
             response => {
+                $("#sendByItems").html("");
+                let a0 = $("<a/>", {
+                    class: "dropdown-item", href: "#",
+                    html: "不限",
+                    click: function (event) {
+                        event.preventDefault();
+                        $("#condition-sendBy").html("寄件人 ");
+                        let conditions = getConditions();
+                        initMails(conditions);
+                        addPagination();
+                    }
+                });
+                a0.appendTo($("#sendByItems"));
                 for (account of response.data) {
-                    $("#sendByItems").html();
                     let a = $("<a/>", {
                         class: "dropdown-item", href: "#",
                         html: account,
                         click: function (event) {
                             event.preventDefault();
                             $("#condition-sendBy").html("寄件人 " + $(this).html());
-                            let conditions = getConditions()
+                            let conditions = getConditions();
                             initMails(conditions);
+                            addPagination();
                         }
                     })
                     a.appendTo($("#sendByItems"))
-                }
+                };
             }
         )
     $('#condition-daterange').on('apply.daterangepicker', function (ev, picker) {
         $('#condition-daterange span').html(picker.chosenLabel);
-        let conditions = getConditions()
+        let conditions = getConditions();
         initMails(conditions);
+        addPagination();
     });
 
     $("#condition-unread, #condition-hasAttachment").click(function () {
-        $(this).toggleClass("active");
-        let conditions = getConditions()
+        $(this).toggleClass("active").trigger("blur");
+        let conditions = getConditions();
         initMails(conditions);
+        addPagination();
     })
 
-    $("#searchMailBtn").click(function(){
+    $("#searchMailBtn").click(function () {
         let conditions = getConditions();
         let text = $("#searchText").val();
-        if (text.length == 0) return;
+        // if (text.length == 0) return;
         conditions.subject = text;
         conditions.content = text;
         // console.log(text);
         initMails(conditions);
+        addPagination(conditions);
     })
 }
+/**
+ * get condition object based on top bar buttons
+ * @returns {conditions}
+ */
 function getConditions() {
     let conditions = {
         sentBy: "",
@@ -958,7 +1058,6 @@ function getConditions() {
         hasAttachment: -1,
         important: -1,
         starred: -1
-
     }
     if ($("#condition-unread").hasClass("active")) conditions["hasread"] = 0;
     if ($("#condition-hasAttachment").hasClass("active")) conditions["hasAttachment"] = 1;
@@ -972,4 +1071,112 @@ function getConditions() {
     if (sentBy.length != 0) conditions["sentBy"] = sentBy.trim();
     // console.log(conditions);
     return conditions;
+}
+
+
+$("#searchFilterBtn").click(initFilterModal);
+$("#filterModalSend").click(
+    function () {
+        let conditions = getFilterConditions();
+        initMails(conditions,true);
+        addPagination(conditions,true);
+    }
+);
+
+/**
+ * init filter modal, a callback function passed to #searchFilterBtn click eventlistener
+ */
+function initFilterModal() {
+    //init mailTo
+    axios.get(contextRoot + "mail/from/" + $("body").attr("data-ref")).
+        then(
+            res => {
+                $("#mailFromC").html("");
+                $("#mailFromC").append($("<option/>", { value: "", html: "不限" }));
+                let accounts = res.data;
+                if (accounts.length == 0) {
+                    $("#mailFromC").append($("<option/>", { html: "無收件人", disabled: true }));
+                    return;
+                }
+                for (acc of accounts) {
+                    $("#mailFromC").append($("<option/>", { html: acc }));
+                };
+            }
+        );
+    //init mailFrom
+    axios.get(contextRoot + "mail/sent/" + $("body").attr("data-ref")).
+        then(
+            res => {
+                $("#mailToC").html("");
+                $("#mailToC").append($("<option/>", { value: "", html: "不限" }));
+                let accounts = res.data;
+                if (accounts.length == 0) {
+                    $("#mailToC").append($("<option/>", { html: "無寄件人", disabled: true }));
+                    return;
+                }
+                for (acc of accounts) {
+                    $("#mailToC").append($("<option/>", { html: acc }));
+                };
+            }
+        );
+    //init labels
+    axios.get(contextRoot + "mail/label/findall/" + $("body").attr("data-ref")).
+        then(
+            res => {
+                $("#labelC").html("");
+                $("#labelC").append($("<option/>", { value: -1, html: "不限" }));
+                if (res.data.length == 0) {
+                    $("#labelC").append($("<option/>", { html: "(目前無標籤)", disabled: true, style: "background-color: lightgray" }));
+                    return;
+                }
+                for (label of res.data) {
+                    $("#labelC").append($("<option/>", { html: label.labelName, value: label.labelId }));
+                }
+            }
+        )
+}
+
+/**
+ * get conditions based on modal fields, a callback function passed to #filterModalSend click eventListener
+ * @returns {conditions}
+ */
+function getFilterConditions() {
+    let conditions = {
+        sentBy: "",
+        sentTo: "",
+        subject: "",
+        content: "",
+        startDate: "",
+        endDate: "",
+        folderName: "",
+        categoryName: "",
+        labelId: -1,
+        hasread: -1,
+        hasAttachment: -1,
+        important: -1,
+        starred: -1
+    }
+    conditions.sentTo = $("#mailToC").val();
+    conditions.sentBy = $("#mailFromC").val();
+    conditions.subject = $("#subjectC").val();
+    conditions.content = $("#contentC").val();
+    conditions.startDate = $("#startDateC").val();
+    conditions.endDate = $("#endDateC").val();
+    conditions.folderName = $("#folderC").val();
+    conditions.categoryName = $("#categoryC").val();
+    conditions.labelId = Number($("#labelC").val());
+    conditions.hasread = $("#hasreadC").prop("checked") ? 0 : -1;
+    conditions.hasAttachment = $("#hasAttachmentC").prop("checked") ? 1 : -1;
+    conditions.important = $("#importantC").prop("checked") ? 1 : -1;
+    conditions.starred = $("#starredC").prop("checked") ? 1 : -1;
+    console.log(conditions);
+    return conditions;
+}
+
+//not finished
+function checkFilterConditions(conditions) {
+    if (conditions.endDate < conditions.firstDate) {
+        let error = "結束日期不能大於開始日期";
+    }
+    return;
 }

@@ -1,4 +1,4 @@
-var contextRoot = "http://localhost:8080/Bookstrap/";
+
 $("#add-label").click(function (event) {
     event.preventDefault();
     addLabelModal();

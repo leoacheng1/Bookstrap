@@ -252,16 +252,18 @@
                             id="condition-sendBy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             寄件人
                           </button>
-                          <div class="dropdown-menu pb-0" aria-labelledby="condition-sendBy" style="min-width: 130px" id="sendByItems">
-                            <a class="dropdown-item" href="#">不限</a>
+                          <div class="dropdown-menu pb-0" aria-labelledby="condition-sendBy" style="min-width: 130px"
+                            id="sendByItems">
                           </div>
                         </div>
                         <div class="card-tools">
                           <div class="input-group input-group-md">
                             <input type="text" class="form-control" placeholder="搜尋" id="searchText">
                             <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" id="searchMailBtn"><i class="fas fa-search"></i></button>
-                              <button class="btn btn-outline-secondary" type="button" id="searchFilterBtn" data-toggle="modal" data-target="#filterModal"><i class="fa fa-list"></i></button>
+                              <button class="btn btn-outline-secondary" type="button" id="searchMailBtn"><i
+                                  class="fas fa-search"></i></button>
+                              <button class="btn btn-outline-secondary" type="button" id="searchFilterBtn"
+                                data-toggle="modal" data-target="#filterModal"><i class="fa fa-list"></i></button>
                             </div>
                           </div>
                         </div>
@@ -363,25 +365,108 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="filterModalLabel">New message</h5>
+              <h5 class="modal-title" id="filterModalLabel">進階搜尋</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <form>
-                <div class="form-group">
-                  <label for="recipient-name" class="col-form-label">Recipient:</label>
-                  <input type="text" class="form-control" id="recipient-name">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="mailToC" class="col-form-label">收件人</label>
+                      <select class="form-control" id="mailToC">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="mailFromC" class="col-form-label">寄件人</label>
+                      <select class="form-control" id="mailFromC">
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                    <div class="form-group">
+                      <label for="folderC" class="col-form-label">郵件匣</label>
+                      <select class="form-control" id="folderC">
+                        <option value="">不限</option>
+                        <option value="inbox">收件匣</option>
+                        <option value="sent">已寄出</option>
+                        <option value="draft">草稿</option>
+                        <option value="bin">回收桶</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <label for="categoryC" class="col-form-label">類別</label>
+                    <select class="form-control" id="categoryC">
+                      <option value="">不限</option>
+                      <option value="normal">一般信件</option>
+                      <option value="job">工作指派</option>
+                      <option value="company">公司訊息</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <label for="labelC" class="col-form-label">標籤</label>
+                    <select class="form-control" id="labelC">
+                      <option value="">不限</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="message-text" class="col-form-label">Message:</label>
-                  <textarea class="form-control" id="message-text"></textarea>
+                  <label for="subjectC" class="col-form-label">主旨包含</label>
+                  <input type="text" class="form-control" id="subjectC">
+                  <label for="contentC" class="col-form-label">內文包含</label>
+                  <input type="text" class="form-control" id="contentC">
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="startDateC" class="col-form-label">開始日期</label>
+                      <input type="date" class="form-control" id="startDateC">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="endDateC" class="col-form-label">結束日期</label>
+                      <input type="date" class="form-control" id="endDateC">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-3">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="hasreadC" value="option1">
+                      <label for="hasreadC" class="custom-control-label">未讀過</label>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="hasAttachmentC" value="option1">
+                      <label for="hasAttachmentC" class="custom-control-label">有附件</label>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="importantC" value="option1">
+                      <label for="importantC" class="custom-control-label">重要郵件</label>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="starredC" value="option1">
+                      <label for="starredC" class="custom-control-label">已加星號</label>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">送出</button>
+              <button type="button" class="btn btn-primary" id="filterModalSend">送出</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
             </div>
           </div>
@@ -413,8 +498,8 @@
         <script type="text/javascript">
           $(function () {
             console.log(moment());
-            var start = moment().subtract(100,'years');
-            var end =moment().add(100,'years');
+            var start = moment().subtract(100, 'years');
+            var end = moment().add(100, 'years');
             function cb(start, end) {
               $('#condition-daterange input.range-data').val(start.format('YYYY-MM-DD') + 'to' + end.format('YYYY-MM-DD'));
             }
@@ -423,13 +508,13 @@
               startDate: start,
               endDate: end,
               ranges: {
-                '不限日期': [moment().subtract(100,'years'),moment().add(100,'years')],
-                '今天': [moment(), moment().add(1,'days')],
-                '昨天': [moment().subtract(1, 'days'), moment()],
-                '過去一星期': [moment().subtract(6, 'days'), moment()],
-                '過去三十天': [moment().subtract(29, 'days'), moment()],
-                '這個月': [moment().startOf('month'), moment().endOf('month')],
-                '上個月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                '不限日期': [moment().subtract(100, 'years'), moment().add(100, 'years')],
+                '今天': [moment().subtract(1, 'days').endOf('day'), moment().add(1, 'days').startOf('day')],
+                '昨天': [moment().subtract(2, 'days').endOf('day'), moment().subtract(1, 'days').endOf('day')],
+                '過去七天': [moment().subtract(7, 'days').endOf('day'), moment().add(1, 'days').startOf('day')],
+                '過去三十天': [moment().subtract(30, 'days').endOf('day'), moment().add(1, 'days').startOf('day')],
+                '這個月': [moment().startOf('month').startOf('day'), moment().endOf('month').endOf('day')],
+                '上個月': [moment().subtract(1, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
               },
               locale: {
                 format: "YYYY-MM-DD",

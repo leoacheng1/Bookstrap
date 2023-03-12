@@ -1,5 +1,9 @@
 
 const contextRoot = "http://localhost:8080/Bookstrap/";
+$(document).ready(function () {
+    setMailContent(location.href.slice(location.href.lastIndexOf("/") + 1));
+    addEvents();
+});
 /**
  * a recursive function that fetch multiple attachment and set URIs for download.(confidence boost ><)
  * @param {Array<Number>} attachmentIds -id of the attachment
@@ -46,18 +50,11 @@ function setMailContent(mailId) {
     }).then(response => {
         let data = response.data;
         console.log(response);
-        $('.mailbox-read-info h5').html(data.mailSubject).siblings('h6').html(`From: ${data.mailFrom}` + `<span class="mailbox-read-time float-right">${data.mailTime}</span>`);
+        $('.mailbox-read-info h5').html(data.mailSubject).siblings('h6').html(`寄件人: ${data.mailFrom}` + `<span class="mailbox-read-time float-right">${data.mailTime}</span>`);
         $('.mailbox-read-message').html(data.mailContent);
         setAttachment(response.data.attachmentIds);
     }).catch(err => console.log(err))
 }
-
-
-
-setMailContent(location.href.slice(location.href.lastIndexOf("/") + 1));
-
-const link = document.createElement('a');
-
 
 function makeAttachment(attachmentData) {
     let extension = attachmentData.extension;
@@ -80,9 +77,9 @@ function makeAttachment(attachmentData) {
     let filesize = $('<span/>', { class: 'filesize', append: attachmentData.size });
     let downloadLink = $('<a/>', {
         download: attachmentData.name,
-        href : attachmentData.uri,
+        href: attachmentData.uri,
         class: "btn btn-default btn-sm float-right",
-        append: $("<i/>", { class: "fas fa-cloud-download-alt"}),
+        append: $("<i/>", { class: "fas fa-cloud-download-alt" }),
     });
     let attachmentSize = $('<span/>', { class: "mailbox-attachment-size clearfix mt-1", append: [filesize, downloadLink] });
     let attachmentName = $('<a/>', {
@@ -93,7 +90,7 @@ function makeAttachment(attachmentData) {
     })
     let attachmentIcon = $("<span/>", {
         class: isImg ? "mailbox-attachment-icon has-img" : "mailbox-attachment-icon",
-        style : "min-height: 114px;",
+        style: "min-height: 114px;",
         append: isImg ? $("<img/>", { src: attachmentData.uri, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
     });
     let attachmentInfo = $("<div/>", { class: "mailbox-attachment-info", append: [attachmentName, attachmentSize] });
@@ -108,18 +105,59 @@ function makeAttachment(attachmentData) {
 function updateSideBar() {
     let accountId = $("body").attr("data-ref");
     axios.get(`${contextRoot}mail/countall/${accountId}`)
-    .then(response => {
-        console.log(response);
-        $("#inbox-count").html(response.data.inboxCount == 0 ? "" : response.data.inboxCount);
-        $("#sent-count").html(response.data.sentCount == 0 ? "" : response.data.sentCount);
-        $("#draft-count").html(response.data.draftCount == 0 ? "" : response.data.draftCount);
-        $("#bin-count").html(response.data.binCount == 0 ? "" : response.data.binCount);
-        $("#normal-count").html(response.data.normalCount == 0 ? "" : response.data.normalCount);
-        $("#job-count").html(response.data.workCount == 0 ? "" : response.data.workCount);
-        $("#company-count").html(response.data.companyCount == 0 ? "" : response.data.companyCount);
-        $("#starred-count").html(response.data.starredCount == 0 ? "" : response.data.starredCount);
-        $("#important-count").html(response.data.importantCount == 0 ? "" : response.data.importantCount);
-    })
-    .catch(err => console.log(err)); 
+        .then(response => {
+            console.log(response);
+            $("#inbox-count").html(response.data.inboxCount == 0 ? "" : response.data.inboxCount);
+            $("#sent-count").html(response.data.sentCount == 0 ? "" : response.data.sentCount);
+            $("#draft-count").html(response.data.draftCount == 0 ? "" : response.data.draftCount);
+            $("#bin-count").html(response.data.binCount == 0 ? "" : response.data.binCount);
+            $("#normal-count").html(response.data.normalCount == 0 ? "" : response.data.normalCount);
+            $("#job-count").html(response.data.workCount == 0 ? "" : response.data.workCount);
+            $("#company-count").html(response.data.companyCount == 0 ? "" : response.data.companyCount);
+            $("#starred-count").html(response.data.starredCount == 0 ? "" : response.data.starredCount);
+            $("#important-count").html(response.data.importantCount == 0 ? "" : response.data.importantCount);
+        })
+        .catch(err => console.log(err));
 }
 
+
+/**
+ * a call back function permanently delete mail, bind to #deleteMailBtn
+ * @returns 
+ */
+function permanentDelete() {
+    Swal.fire({
+        title: '永久刪除',
+        text: "刪除後無法復原，確認刪除此郵件?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: '刪除',
+        cancelButtonText: '取消',
+        width: 400,
+        preConfirm: () => {
+            let accountId = $("body").attr("data-ref");
+            let mailIds = [window.location.href.split("/").pop()];
+            let formData = new FormData();
+            formData.append("mailIds", mailIds);
+            formData.append("accountId", accountId);
+            axios.delete(contextRoot + "mail/multiple", { data: formData }).then(
+                response => window.history.back()
+            ).catch(error => {
+                Swal.showValidationMessage(
+                    `刪除失敗: ${error}`
+                )
+            })
+        }
+    }).then((result) => {
+        
+    }
+    )
+}
+
+function addEvents() {
+    $("#printMailBtn").click(()=>{window.print()});
+    if ($("#permanentdeleteMailBtn") != null) {
+        $("#permanentdeleteMailBtn").click(permanentDelete);        
+    }
+}

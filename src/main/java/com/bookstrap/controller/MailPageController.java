@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookstrap.model.bean.AccountMail;
+import com.bookstrap.model.bean.Mail;
 import com.bookstrap.model.bean.MailAccount;
 import com.bookstrap.model.bean.MailCountDto;
 import com.bookstrap.service.EmployeesService;
@@ -52,11 +54,14 @@ public class MailPageController {
 	
 	
 	@GetMapping("/readmail/{mailId}")
-	public String viewMail(@PathVariable("mailId") Integer mailId, HttpSession session, Model m) {
+	public String viewMail(@PathVariable("mailId") Integer mailId, HttpSession session, Model m, @ModelAttribute("mailAccount") MailAccount account) {
 		if (session.getAttribute("empAccount") == null) {
 			m.addAttribute("error", "請先登入");
 			return "backend/login";
 		}
+		Integer accountId = account.getAccountId();
+		AccountMail accountMail = mailService.findAccountMailBy2Id(mailId, accountId);
+		m.addAttribute("accountMail",accountMail);
 		return "/backend/controllpanel/owner/mail/viewmail";
 	}
 		
@@ -78,12 +83,20 @@ public class MailPageController {
 	}
 	
 	@GetMapping("/composemail")
-	public String composeMail(HttpSession session,Model m,@RequestParam(name="to", required = false) String mailTo) {
+	public String composeMail(HttpSession session,Model m,
+			@RequestParam(name="to", required = false) String mailTo,@RequestParam(name="mtd", required = false) Integer mailToDraft,
+			@RequestParam(name="rp", required = false) Integer replyMail,@RequestParam(name="fw", required = false) Integer forwardMail
+			) {
 		if (session.getAttribute("empAccount") == null) {
 			m.addAttribute("error", "請先登入");
 			return "backend/login";
 		}
 		m.addAttribute("mailTo",mailTo);
+		m.addAttribute("allEmpWithAcc",mailService.findAllAccountWithName());
+		
+		if (mailToDraft != null) m.addAttribute("draftMail", mailService.findMailById(mailToDraft));
+		if (replyMail != null) m.addAttribute("replyMail", mailService.findMailById(replyMail));
+		if (forwardMail != null) m.addAttribute("forwardMail", mailService.findMailById(forwardMail));
 		return "/backend/controllpanel/owner/mail/writemail";
 	}
 

@@ -1,8 +1,9 @@
-var contextRoot = "http://localhost:8080/Bookstrap/";
+const contextRoot = "http://localhost:8080/Bookstrap/";
 $(document).ready(function () {
   initSummerNote();
   addEvents();
-
+  initSelect2();
+  initializeAttachment();
 });
 
 /**
@@ -13,7 +14,9 @@ function addEvents() {
   document.getElementById("draftBtn").addEventListener("click", draftEmail);
   document.getElementById("dropMailBtn").addEventListener("click", dropEmail);
   $("#attachments").change(inputEffect);
+  $("#attachments").focus (inputEffect);
   window.onbeforeunload = draftOnLeave; //draft unsaved mail on leave
+  chooseCategory();
 }
 
 
@@ -21,16 +24,18 @@ function addEvents() {
  * initialize summernote
  */
 function initSummerNote() {
-  $('#compose-textarea').summernote({ height: "500px",toolbar: [
-    ['style', ['style']],
-    ['font', ['bold', 'underline', 'clear']],
-    ['fontname', ['fontname','fontsize']],
-    ['color', ['color']],
-    ['para', ['ul', 'ol', 'paragraph']],
-    ['table', ['table']],
-    ['insert', ['link', 'picture', 'video','hr']],
-    ['view', ['fullscreen', 'codeview', 'help']],
-  ] });
+  $('#compose-textarea').summernote({
+    height: "500px", toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'underline', 'clear']],
+      ['fontname', ['fontname', 'fontsize']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture', 'video', 'hr']],
+      ['view', ['fullscreen', 'codeview', 'help']],
+    ]
+  });
   //resolve tool tip misposition issue
   $('#compose-textarea').summernote('fullscreen.toggle');
   $('#compose-textarea').summernote('fullscreen.toggle');
@@ -63,15 +68,17 @@ function getFileInfo(file) {
  * @param {File} file 
  */
 function getRawFileType(file) {
-  if (file.type.startsWith("image")) {
+  let extension = file.name.split(".").slice(-1)[0];
+  console.log(extension);
+  if (file.type.startsWith("image") || ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'tif', 'tiff', 'ico'].includes(extension)) {
     return "image";
-  } else if (file.type.includes("wordprocessingml")) {
+  } else if (['doc', 'docx'].includes(extension)) {
     return "word";
-  } else if (file.name.endsWith("rar") || file.name.endsWith("zip")) {
+  } else if (['zip', 'rar', 'tar', 'gz', '7z'].includes(extension)) {
     return "archive";
-  } else if (file.name.endsWith(".xlsx")) {
+  } else if (['xls', 'xlsx'].includes(extension)) {
     return "excel";
-  } else if (file.type == "text/plain") {
+  } else if (["txt"].includes(extension)) {
     return "text";
   } else if (file.name.endsWith("pdf")) {
     return "pdf";
@@ -106,7 +113,8 @@ function deleteAttachmentBtn() {
  * @returns 
  */
 function inputEffect() {
-  $("#fileplace").empty()
+  console.log("gen");
+  $("#fileplace").empty();
   let files = this.files;
   let maxLength = Math.max.apply(Math, $.map(files, function (el) { return el.name.length }));
   let totalSize = 0;
@@ -156,15 +164,29 @@ function clearEditArea() {
  * @param {Event} event - input as callback function for addEventListener
  */
 function sendEmail(event) {
-  let mailTo = $('[name="mailTo"]').val();
+  // let mailTo = $('[name="mailTo"]').val();
+  let mailTo = $('#mailToSelect').select2('data')[0].id;
   let subject = $('[name="mailSubject"]').val();
   let content = $('.note-editable.card-block').html();
+  let category;
+  switch ($("#categoryMenuButton").html()) {
+    case '一般信件':
+      category = "normal";
+      break;
+    case '工作指派':
+      category = "job";
+      break;
+    case '公司訊息':
+      category = "company";
+      break;
+  }
   let files = document.getElementById('attachments').files;
 
   let formData = new FormData();
   formData.append("mailTo", mailTo);
   formData.append("mailSubject", subject);
   formData.append("mailContent", content);
+  formData.append("mailCategory", category);
   for (f of files) {
     formData.append("file", f);
   }
@@ -208,15 +230,29 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
  */
 async function draftEmail(event) {
   //save data 
-  let mailTo = $('[name="mailTo"]').val();
+  // let mailTo = $('[name="mailTo"]').val();
+  let mailTo = $('#mailToSelect').select2('data')[0].id;
   let subject = $('[name="mailSubject"]').val();
   let content = $('.note-editable.card-block').html();
+  let category;
+  switch ($("#categoryMenuButton").html()) {
+    case '一般信件':
+      category = "normal";
+      break;
+    case '工作指派':
+      category = "job";
+      break;
+    case '公司訊息':
+      category = "company";
+      break;
+  }
   let files = document.getElementById('attachments').files;
-  if (mailTo.length == 0 && subject.length == 0 && content.length == 26 && files.length == 0) return;
+
   let formData = new FormData();
   formData.append("mailTo", mailTo);
   formData.append("mailSubject", subject);
   formData.append("mailContent", content);
+  formData.append("mailCategory", category);
   for (f of files) {
     formData.append("file", f);
   }
@@ -229,7 +265,7 @@ async function draftEmail(event) {
     await delay(3000);
   }
   //return if restore button in toast is clicked
-  if ($('.card.card-primary.card-outline .card-body').attr("data-ready") == "0") return; 
+  if ($('.card.card-primary.card-outline .card-body').attr("data-ready") == "0") return;
   axios({
     url: contextRoot + "mail/draft",
     method: "post",
@@ -253,7 +289,8 @@ async function draftEmail(event) {
  */
 function dropEmail() {
   $('#dropModal').modal('hide');
-  location.href = contextRoot + "backend/mailpage/folder/inbox";
+  $('.card.card-primary.card-outline .card-body').attr("data-ready", "0");
+  location.href = contextRoot + "backend/mailpage/mailbox/folder/inbox";
 }
 
 
@@ -286,15 +323,30 @@ function draftToast(cardBackup, formData, skip) {
  * @returns 
  */
 function draftOnLeave() {
-  let mailTo = $('[name="mailTo"]').val();
+  if ($('.card.card-primary.card-outline .card-body').attr("data-ready") == "0") return;
+  // let mailTo = $('[name="mailTo"]').val();
+  let mailTo = $('#mailToSelect').select2('data')[0].id;
   let subject = $('[name="mailSubject"]').val();
   let content = $('.note-editable.card-block').html();
+  let category;
+  switch ($("#categoryMenuButton").html()) {
+    case '一般信件':
+      category = "normal";
+      break;
+    case '工作指派':
+      category = "job";
+      break;
+    case '公司訊息':
+      category = "company";
+      break;
+  }
   let files = document.getElementById('attachments').files;
   if (mailTo.length == 0 && subject.length == 0 && content.length == 26 && files.length == 0) return;
   let formData = new FormData();
   formData.append("mailTo", mailTo);
   formData.append("mailSubject", subject);
   formData.append("mailContent", content);
+  formData.append("mailCategory", category);
   for (f of files) {
     formData.append("file", f);
   }
@@ -310,7 +362,7 @@ function draftOnLeave() {
 function updateSideBar() {
   let accountId = $("body").attr("data-ref");
   axios.get(`${contextRoot}mail/countall/${accountId}`)
-  .then(response => {
+    .then(response => {
       console.log(response);
       $("#inbox-count").html(response.data.inboxCount == 0 ? "" : response.data.inboxCount);
       $("#sent-count").html(response.data.sentCount == 0 ? "" : response.data.sentCount);
@@ -321,12 +373,103 @@ function updateSideBar() {
       $("#company-count").html(response.data.companyCount == 0 ? "" : response.data.companyCount);
       $("#starred-count").html(response.data.starredCount == 0 ? "" : response.data.starredCount);
       $("#important-count").html(response.data.importantCount == 0 ? "" : response.data.importantCount);
-  })
-  .catch(err => console.log(err)); 
+    })
+    .catch(err => console.log(err));
 }
+
+/**
+ * choose category event
+ */
+function chooseCategory() {
+  $("#categoryDropdown a").click(function (event) {
+    event.preventDefault();
+    $("#categoryMenuButton").html(this.innerHTML);
+  })
+}
+
+
 //not finished
 function checkSend() {
   let mailTo = $('[name="mailTo"]').val();
   let subject = $('[name="mailSubject"]').val();
   let content = $('.note-editable.card-block').html();
+}
+
+//==========================================select 2 related function ========================================================
+function initSelect2() {
+  let optLanguage = {
+    "noResults": () => "查無結果",
+    "removeItem": () => "移除"
+  }
+  let options = {
+    language: optLanguage,
+    templateResult: function(markup) {
+      let arr = markup.text.split(','),
+          name = arr[0],
+          account = arr[1],
+          template = $(`<span>${name}</span><span style="visibility:hidden">${account}</span>`);      
+      return template;
+    },
+    templateSelection: function(markup) {
+      let arr = markup.text.split(','),
+          name = arr[0],
+          account = arr[1],
+          template = $(`<span>${name}</span><span style="visibility:hidden">${account}</span>`);      
+      return template;
+    }
+  }
+  $('#mailToSelect').select2(options);
+}
+
+/**
+ * a recursive function that fetch multiple attachment and set URIs for download.
+ * @param {Array<Number>} attachmentIds -id of the attachment
+ * @returns 
+ */
+function setAttachment(attachmentIds, attachmentDataArray = []) {
+  if (attachmentIds.length != 0) {
+      axios({
+          url: contextRoot + 'mail/attachment/' + attachmentIds[0],
+          method: 'GET',
+          responseType: 'blob'
+      }).then(response => {
+        console.log(response);
+          let disposition = response.headers['content-disposition'];
+          let file = new File([response.data],decodeURIComponent(disposition.split("'").pop()));
+          attachmentDataArray.push(file);
+          attachmentIds.shift();
+          if (attachmentIds.length == 0) {
+              let temp = new DataTransfer();
+              for (data of attachmentDataArray) {
+                  temp.items.add(data);
+              }
+              document.getElementById("attachments").files = temp.files;
+              $("#attachments").trigger("change");
+          };
+          setAttachment(attachmentIds, attachmentDataArray);
+      }).catch(err => console.log(err))
+  }
+}
+
+/**
+ * initialize attachments for different usage
+ */
+function initializeAttachment() {
+  let dmailId = $("body").attr("data-draftMail"),
+      rmailId = $("body").attr("data-replyMail"),
+      fmailId = $("body").attr("data-forwardMail"),
+      mailId;
+  if (dmailId != null){
+    mailId = dmailId;
+  }else if(rmailId != null) {
+    mailId = rmailId;
+  }else if(fmailId != null) {
+    mailId = fmailId;
+  }
+  axios({
+    url: contextRoot + 'mail/' + mailId,
+    method: 'GET'
+}).then(response => {
+    setAttachment(response.data.attachmentIds);
+}).catch(err => console.log(err))
 }

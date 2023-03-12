@@ -1,5 +1,6 @@
 package com.bookstrap.model.dao;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,15 +78,20 @@ public class MailEMRepository {
 		if (conditions.getLabelId() != -1) basicQuery += (" AND :label MEMBER OF aMail.accountLabels");
 		if (conditions.getStartDate()!=null && conditions.getEndDate() != null) basicQuery += (" AND aMail.mail.mailTime BETWEEN :startDate AND :endDate");
 		if (conditions.getSentBy().length() != 0) basicQuery += (" AND aMail.mail.accountFrom.account = :sentBy");
+		if (conditions.getSentTo().length() != 0) basicQuery += (" AND aMail.mail.accountTo.account = :sentTo");
 		if (conditions.getHasAttachment() != -1) basicQuery += (" AND SIZE(aMail.mail.mailAttachment) != 0");
 		if (conditions.getContent().length() != 0 && conditions.getSubject().length() != 0) {
 			basicQuery += (" AND (aMail.mail.mailContent LIKE :content OR aMail.mail.mailSubject LIKE :subject)");
+			basicQuery += (" AND aMail.mail.mailContent  NOT LIKE :contentTag");
 		}else if (conditions.getContent().length() != 0) {
 			basicQuery += (" AND aMail.mail.mailContent LIKE :content");
+			basicQuery += (" AND aMail.mail.mailContent  NOT LIKE :contentTag");
 		}else if (conditions.getSubject().length() != 0) {
 			basicQuery += (" AND aMail.mail.mailSubject LIKE :subject");
 		}
-		
+		if (conditions.getImportant() != -1) basicQuery += (" AND aMail.important = :important");
+		if (conditions.getStarred() != -1) basicQuery += (" AND aMail.starred = :starred"); 
+		basicQuery += " ORDER BY aMail.mail.mailTime DESC";
 		System.out.println("============================================================================================");
 		System.out.println(basicQuery);
 		TypedQuery<AccountMail> query = em.createQuery(basicQuery, AccountMail.class);
@@ -111,15 +117,89 @@ public class MailEMRepository {
 			query.setParameter("endDate",conditions.getEndDate());
 		}
 		if (conditions.getSentBy().length() != 0) query.setParameter("sentBy", conditions.getSentBy());
+		if (conditions.getSentTo().length() != 0) query.setParameter("sentTo", conditions.getSentTo());
 		if (conditions.getContent().length() != 0 && conditions.getSubject().length() != 0) {
 			query.setParameter("content", "%"+conditions.getContent()+"%");
 			query.setParameter("subject", "%"+conditions.getSubject()+"%");
+			query.setParameter("contentTag", "%<%"+conditions.getContent()+"%>%");
 		}else if (conditions.getContent().length() != 0) {
 			query.setParameter("content", "%"+conditions.getContent()+"%");
+			query.setParameter("contentTag", "%<%"+conditions.getContent()+"%>%");
 		}else if (conditions.getSubject().length() != 0) {
 			query.setParameter("subject", "%"+conditions.getSubject()+"%");
 		}
+		if (conditions.getImportant() != -1) query.setParameter("important", conditions.getImportant());
+		if (conditions.getStarred() != -1) query.setParameter("starred", conditions.getStarred());
 		List<AccountMail> result = query.getResultList();
+//		Collections.reverse(result);	
+		return result;
+	}
+	
+	
+	
+	public Long findMailsCountByConditions(ConditionDto conditions, Integer accountId){
+		String basicQuery = "SELECT COUNT(aMail) From AccountMail aMail WHERE aMail.accountMailId.accountId = :accountId";
+		
+		
+		//building query 
+		if (conditions.getHasread() == 0 || conditions.getHasread() == 1) basicQuery += (" AND aMail.hasread = :hasread");
+		if (conditions.getCategoryName().length() > 0) basicQuery += (" AND aMail.mailCategory.categoryName =:categoryName");
+		if (conditions.getFolderName().length() > 0) basicQuery += (" AND aMail.mailFolder.folderName =:folderName");
+		if (conditions.getLabelId() != -1) basicQuery += (" AND :label MEMBER OF aMail.accountLabels");
+		if (conditions.getStartDate()!=null && conditions.getEndDate() != null) basicQuery += (" AND aMail.mail.mailTime BETWEEN :startDate AND :endDate");
+		if (conditions.getSentBy().length() != 0) basicQuery += (" AND aMail.mail.accountFrom.account = :sentBy");
+		if (conditions.getSentTo().length() != 0) basicQuery += (" AND aMail.mail.accountTo.account = :sentTo");
+		if (conditions.getHasAttachment() != -1) basicQuery += (" AND SIZE(aMail.mail.mailAttachment) != 0");
+		if (conditions.getContent().length() != 0 && conditions.getSubject().length() != 0) {
+			basicQuery += (" AND (aMail.mail.mailContent LIKE :content OR aMail.mail.mailSubject LIKE :subject)");
+			basicQuery += (" AND aMail.mail.mailContent  NOT LIKE :contentTag");
+		}else if (conditions.getContent().length() != 0) {
+			basicQuery += (" AND aMail.mail.mailContent LIKE :content");
+			basicQuery += (" AND aMail.mail.mailContent  NOT LIKE :contentTag");
+		}else if (conditions.getSubject().length() != 0) {
+			basicQuery += (" AND aMail.mail.mailSubject LIKE :subject");
+		}
+		if (conditions.getImportant() != -1) basicQuery += (" AND aMail.important = :important");
+		if (conditions.getStarred() != -1) basicQuery += (" AND aMail.starred = :starred"); 
+		
+		System.out.println("============================================================================================");
+		System.out.println(basicQuery);
+		Query query = em.createQuery(basicQuery);
+		
+		
+
+		query.setParameter("accountId", accountId);
+		
+		//setting query param
+		if (conditions.getHasread() == 0 || conditions.getHasread() == 1) query.setParameter("hasread", conditions.getHasread());
+		if (conditions.getCategoryName().length() > 0) query.setParameter("categoryName", conditions.getCategoryName());
+		if (conditions.getFolderName().length() > 0) query.setParameter("folderName", conditions.getFolderName());
+		if (conditions.getLabelId() != -1) {
+			AccountLabel label = em.find(AccountLabel.class, conditions.getLabelId());
+			if (label == null) return null;
+			query.setParameter("label", label);
+		}
+		if (conditions.getStartDate()!=null && conditions.getEndDate() != null) {
+			query.setParameter("startDate",conditions.getStartDate());
+			query.setParameter("endDate",conditions.getEndDate());
+		}
+		if (conditions.getSentBy().length() != 0) query.setParameter("sentBy", conditions.getSentBy());
+		if (conditions.getSentTo().length() != 0) query.setParameter("sentTo", conditions.getSentTo());
+		if (conditions.getContent().length() != 0 && conditions.getSubject().length() != 0) {
+			query.setParameter("content", "%"+conditions.getContent()+"%");
+			query.setParameter("subject", "%"+conditions.getSubject()+"%");
+			query.setParameter("contentTag", "%<%"+conditions.getContent()+"%>%");
+		}else if (conditions.getContent().length() != 0) {
+			query.setParameter("content", "%"+conditions.getContent()+"%");
+			query.setParameter("contentTag", "%<%"+conditions.getContent()+"%>%");
+		}else if (conditions.getSubject().length() != 0) {
+			query.setParameter("subject", "%"+conditions.getSubject()+"%");
+		}
+		if (conditions.getImportant() != -1) query.setParameter("important", conditions.getImportant());
+		if (conditions.getStarred() != -1) query.setParameter("starred", conditions.getStarred());
+		
+		Long result = (Long) query.getSingleResult();
+		
 		return result;
 	}
 	

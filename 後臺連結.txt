@@ -1,0 +1,26 @@
+admin:
+會員管理(標籤)
+	查詢所有會員${contextRoot}/admin/get/allmember
+	查詢會員${contextRoot}/admin/get/member
+分店管理(標籤)
+	修改分店${contextRoot}/shops/shophome
+商城管理(標籤)
+	所有書籍:${contextRoot}/books/page
+	新增書籍:${contextRoot}/books/add
+	所有評論:(未設連結先留坑)
+	所有訂單:(未設連結先留坑)
+部落格管理(標籤)
+	部落格: ${contextRoot}/Bookstrap/blog/backIndex
+owner:
+員工管理(標籤)
+	新增分店員工:${contextRoot}/semps/insertpage
+	分店員工管理:${contextRoot}/semps/all
+	請假簽核:${contextRoot}/sempsatt/all
+	排班:${contextRoot}/sempsche/showpage
+
+employee:
+個人功能(標籤)
+	系統功能:(未設連結先留坑)
+	假單申請:${contextRoot}/sempsatt/insertpage
+	我的出勤:${contextRoot}/sempsatt/myvacationpage?empId=${empId}
+

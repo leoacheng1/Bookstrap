@@ -139,6 +139,11 @@ public class BackendNormal {
 		return mailService.findAllSentAccount(accountId);
 	}
 	
+	@GetMapping("/mail/from/{accountId}")
+	@ResponseBody
+	public LinkedHashSet<String> findAllFromAccount(@PathVariable("accountId") Integer accountId) {
+		return mailService.findAllFromAccount(accountId);
+	}
 	
 	@GetMapping("/mail/{mailId}")
 	@ResponseBody
@@ -318,8 +323,8 @@ public class BackendNormal {
 	public List<AllMailDto> findMailByConditions(HttpSession session,@RequestBody ConditionDto dto, @PathVariable("pageNum") Integer pageNum) {
 		Integer empId = (Integer) session.getAttribute("empId");		
 		Employees employee = empService.findById(empId);
-		Integer AccountId = mailService.findByEmployees(employee).getAccountId();
-		List<AccountMail> accountMails = mailService.findMailByConditions(dto, AccountId, pageNum);
+		Integer accountId = mailService.findByEmployees(employee).getAccountId();
+		List<AccountMail> accountMails = mailService.findMailByConditions(dto, accountId, pageNum);
 		
 		List<AllMailDto> mails = new ArrayList<AllMailDto>();
 		for (AccountMail accountMail : accountMails) {
@@ -383,6 +388,16 @@ public class BackendNormal {
 		}
 	}
 	
+	@PostMapping("mail/conditions/count")
+	@ResponseBody
+	public Long getMailsCountByConditions(HttpSession session,@RequestBody ConditionDto dto) {
+		Integer empId = (Integer) session.getAttribute("empId");		
+		Employees employee = empService.findById(empId);
+		Integer accountId = mailService.findByEmployees(employee).getAccountId();
+		return mailService.getMailsCountByConditions(dto, accountId);
+		
+	}
+		
 	@GetMapping("mail/label/findall/{accountId}")
 	@ResponseBody
 	public List<AccountLabel> getAllLabels(@PathVariable("accountId") Integer accountId) {
