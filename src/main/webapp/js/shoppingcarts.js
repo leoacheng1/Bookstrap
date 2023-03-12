@@ -231,6 +231,7 @@ function checkout() {
   // 取得已勾選的商品
   var checkedItems = $('input[name="checkbook"]:checked');
   var coupon = $('input[name="coupon"]:checked');
+  console.log(coupon);
 
   // 將勾選的商品資料存成 JavaScript 物件
   var cartItems = [];
@@ -239,7 +240,7 @@ function checkout() {
     var amount = $(this).closest("tr").find(".quantity").val();
     console.log("itemId" + bookId);
     console.log("itemQty" + amount);
-    cartItems.push({ bookId: bookId, amount: amount, coupon: coupon });
+    cartItems.push({ bookId: bookId, amount: amount });
   });
 
   // 發送 AJAX 請求

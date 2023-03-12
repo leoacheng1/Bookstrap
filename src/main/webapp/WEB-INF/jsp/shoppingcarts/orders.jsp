@@ -43,24 +43,53 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
   </head>
   <body>
     <jsp:include page="../layout/header.jsp"></jsp:include>
-    <form id=""></form>
-    <h1>Shipping</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <c:forEach var="item" items="${sessionScope.cartItems}">
-          <tr>
-            <td>${item.bookId}</td>
-            <td>${item.amount}</td>
-          </tr>
-        </c:forEach>
-      </tbody>
-    </table>
+    <div class="container">
+      <form id="">
+        <div class="card">
+          <div class="card-header">
+            <h2>取貨方式</h2>
+          </div>
+          <div class="card-body">
+            <div>便利商店取貨</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h2>付款方式</h2>
+          </div>
+          <div class="card-body">
+            <div>超商取貨付款</div>
+            <div>Line pay</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h2>收件人資訊</h2>
+          </div>
+          <div class="card-body">
+            <h3>收件人姓名</h3>
+            <input type="text" value="${sessionScope.memberFullName} " />
+            <h3>手機</h3>
+            <input
+              type="text"
+              value="${sessionScope.memberDetails.memberPhone}"
+            />
+
+            <h3>E-mail</h3>
+            <input
+              type="text"
+              value="${sessionScope.memberDetails.memberEmail}"
+            />
+
+            <h3>地址</h3>
+            <input
+              type="text"
+              value="${sessionScope.memberDetails.memberAddress}"
+            />
+          </div>
+        </div>
+        <input type="button" value="下一步" />
+      </form>
+    </div>
   </body>
 </html>

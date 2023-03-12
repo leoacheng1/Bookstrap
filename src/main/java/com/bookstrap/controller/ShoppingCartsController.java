@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookstrap.harry.bean.Coupons;
+import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.harry.bean.UserCoupon;
+import com.bookstrap.harry.service.MemberDdetailService;
+import com.bookstrap.harry.service.SendEmailService;
 import com.bookstrap.model.Books;
 import com.bookstrap.service.ShoppingCartsService;
 import com.bookstrap.service.UserCouponService;
@@ -33,6 +36,12 @@ public class ShoppingCartsController {
 
 	@Autowired
 	private UserCouponService ucService;
+	
+	@Autowired
+	private MemberDdetailService mdService;
+	
+	@Autowired
+	private SendEmailService emailService;
 
 	// 透過session 中的 memberId 取得所有購買的商品
 	@GetMapping("/cart")
@@ -97,14 +106,29 @@ public class ShoppingCartsController {
 	@ResponseBody
 	public String checkout(HttpSession session, @RequestBody List<ShoppingCarts> cartItems) {
 		session.setAttribute("cartItems", cartItems);
+	
 		System.out.println("已存入session");
 		return "redirect:/shipping";
 	}
-	
+
 	@GetMapping("/shipping")
-	public String getCartItems(HttpSession session) {
-		session.getAttribute("cartItems");
-		System.out.println("HI");
-		return "shoppingcarts/orders";
+	public String getCartItems(ModelMap model, HttpSession session) {
+		Integer memberId = (Integer) session.getAttribute("memberId");
+		
+		
+
+		if (memberId != null) {
+			MemberDetails memberDetails = mdService.findMemberDetailsById(memberId);
+			session.setAttribute("memberDetails", memberDetails);
+			String memberFullName = memberDetails.getMemberLastName() + memberDetails.getMemberFirstName();
+			session.setAttribute("memberFullName", memberFullName);
+			List<ShoppingCarts> cartItemList = scService.findCartItemsByMemberId(memberId);
+			session.getAttribute("cartItems");
+			System.out.println(session.getAttribute("coupon"));
+
+			
+			return "shoppingcarts/orders";
+		}
+		return "member/SignInPage";
 	}
 }
