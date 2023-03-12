@@ -55,14 +55,25 @@
 	<li class="nav-header">會員管理</li>
 	<li class="nav-item">
 		<a href="${contextRoot}/admin/get/allmember" class="nav-link">
-		  <i class="nav-icon fas fa-calendar-alt"></i>
+		  <i class="nav-icon far fa-circle nav-icon"></i>
 		  <p>
-			查看所有會員
+			查尋所有會員  
+			<span class="badge badge-info right"></span>
+		  </p>
+		</a>
+	  </li>	
+	  
+	<li class="nav-item">
+		<a href="${contextRoot}/admin/get/member" class="nav-link">
+		  <i class="nav-icon far fa-circle nav-icon"></i>
+		  <p>
+			查尋會員
 			<span class="badge badge-info right"></span>
 		  </p>
   
 		</a>
 	  </li>	
+	  
 <!-- 	<li class="nav-item"> -->
 <!-- 		<a href="#" class="nav-link"> -->
 <!-- 		  <i class="nav-icon fas fa-table"></i> -->

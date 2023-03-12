@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,19 @@ public class MemberAdmiController {
 		map.addAttribute("memberDetail", memberDetail);
 
 		return "member/Admi/AdminAddMember";
+	}
+	
+	@GetMapping("/admin/get/member")
+	public String toQueryMember() {
+		return "member/Admi/AdminFindMember";
+	}
+	
+	//Test
+	@GetMapping("/admin/get/member/page")
+	public String toQueryMemberPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
+		Page<MemberDetails> page = memberDetailService.getMemberByPage(pageNumber);
+		m.addAttribute("page", page);
+		return "member/Admi/AdminFindMember";
 	}
 
 	@PostMapping("/admin/post/member")
@@ -271,21 +285,45 @@ public class MemberAdmiController {
 		return new ResponseEntity<byte[]>(photoFile, header, HttpStatus.OK);
 	}
 	
+	// multiple queries
+	@GetMapping("/admin/get/memberidlike")
+	public String searchId(@RequestParam("memberId") String memberId, 
+			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
+		
+		 Page<Members> page = memberService.findMemberIdLike(memberId, pageNumber);
+		 m.addAttribute("page", page);
+		 return "member/Admi/AdminFindMember";
+		
+	}
 	
+	@GetMapping("/admin/get/memberemaillike")
+	public String searchEmail(@RequestParam("memberEmail") String memberEmail, 
+			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
+		
+		 Page<Members> page = memberService.findMemberEmailLike(memberEmail, pageNumber);
+		 m.addAttribute("page", page);
+		 return "member/Admi/AdminFindMemberDetails";
+		
+	}
 	
-
-//	@ModelAttribute("member")
-//	public void commonData(Model m){
-//		Members member = new Members();
-//		
-//		m.addAttribute("member", member);
-//	}
-//	
-//	@ModelAttribute("memberdetail")
-//	public void commonData2(Model m){
-//		MemberDetails memberDetail = new MemberDetails();
-//		
-//		m.addAttribute("memberDetail", memberDetail);
-//	}
+	@GetMapping("/admin/get/memberlastnamellike")
+	public String searchLastName(@RequestParam("memberLastName") String memberLastName, 
+			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
+		
+		 Page<MemberDetails> page = memberDetailService.findMemberLastNameLike(memberLastName, pageNumber);
+		 m.addAttribute("page", page);
+		 return "member/Admi/AdminFindMemberDetails";
+		
+	}
+	
+	@GetMapping("/admin/get/memberfirstnamellike")
+	public String searchFirstName(@RequestParam("memberFirstName") String memberFirstName, 
+			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
+		
+		 Page<MemberDetails> page = memberDetailService.findMemberLastNameLike(memberFirstName, pageNumber);
+		 m.addAttribute("page", page);
+		 return "member/Admi/AdminFindMemberDetails";
+		
+	}
 
 }
