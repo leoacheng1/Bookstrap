@@ -20,6 +20,7 @@ import javax.persistence.Table;
 
 import com.bookstrap.harry.bean.Comment;
 import com.bookstrap.harry.bean.Favorite;
+import com.bookstrap.harry.bean.SaleItems;
 import com.bookstrap.harry.bean.ShoppingCarts;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -76,10 +77,14 @@ public class Books {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<Comment> comment;
 	
+	@JsonManagedReference(value = "book-shoppingCarts")
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book", cascade = CascadeType.ALL)
 	private Set<ShoppingCarts> shoppingCarts;
 	
-	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
+	private List<SaleItems> saleItems;
+	
+	@JsonManagedReference(value = "book-shopSotcks")
 	@OneToMany(mappedBy="book", cascade = CascadeType.ALL)
 	private Set<ShopStock> shopStocks;
 	

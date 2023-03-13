@@ -83,7 +83,9 @@ public class EBookController {
 		}
 		m.addAttribute("favorite",favorite);
 		
+//		return "books/search";
 		return "member/EBooks/EBookIndex";
+//		return "member/EBooks/NewEBookIndex";
 	}
 	
 	@GetMapping("/ebook/get/epub")
@@ -187,7 +189,21 @@ public class EBookController {
 		
 	}
 	
+	//連結至eBook內容詳細頁
+	@GetMapping("/ebook/ebookpage")
+	public String toEbookDetailPage(@RequestParam("eBookId") Integer eBookId,Model m) {
+		
+		EBooks eBook = eBookService.getEBookFileById(eBookId);
+		EBookDetails eBookDetail = eBookDetailService.getDetailById(eBookId);
+		m.addAttribute("book", eBook);
+		m.addAttribute("detail", eBookDetail);
+		
+//			return "member/EBooks/EBookPage";
+			return "books/EBookPage";
+//			return "books/bookPage";
+		
 	
+	}
 	
 	
 }

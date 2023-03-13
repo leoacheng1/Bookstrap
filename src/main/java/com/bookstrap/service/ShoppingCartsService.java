@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bookstrap.harry.bean.ShoppingCarts;
-import com.bookstrap.model.Books;
-import com.bookstrap.model.BooksRepository;
 import com.bookstrap.model.ShoppingCartsRepository;
-import com.bookstrap.model.pk.ShoppingCartsPK;
 
 @Service
 @Transactional
@@ -19,8 +16,7 @@ public class ShoppingCartsService {
 
 	@Autowired
 	private ShoppingCartsRepository scDao;
-	@Autowired
-	private BooksRepository bDao;
+	
 
 //	public List<ShoppingCarts> findCartsByMemberId(Integer memberId) {
 //		return scDao.findCartsByMemberId(memberId);

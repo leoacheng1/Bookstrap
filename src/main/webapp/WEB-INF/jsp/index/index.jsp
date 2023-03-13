@@ -119,6 +119,12 @@
                 <div class="top_search_table">
                     <ul class="nav">
 
+                       
+                        <li class="nav-item">
+                            <a class="nav-link active-2 text-dark fs-5 me-5" aria-current="page" href="#"><i
+                                    class="fa-solid fa-location-dot"></i>分店位置
+                            </a>
+                        </li>
                         <li class="nav-item searchArea" id="searchArea">
                             <a class="nav-link active-2 text-dark fs-5 me-5 " aria-current="page"
                                 href="${contextRoot}/books/allpage2">
@@ -127,16 +133,10 @@
                         </li>
                         <li class="nav-item searchArea" id="searchArea">
                             <a class="nav-link active-2 text-dark fs-5 me-5 " aria-current="page"
-                                href="${contextRoot}/books/allpage2">
+                                href="${contextRoot}/ebook/get/allebook">
                                 電子書
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active-2 text-dark fs-5 me-5" aria-current="page" href="#"><i
-                                    class="fa-solid fa-location-dot"></i>分店位置
-                            </a>
-                        </li>
-                        <br />
                         <li class="nav-item">
                             <a class="nav-link b text-dark text-dark fs-5 me-5" href="#">優惠資訊</a>
                         </li>

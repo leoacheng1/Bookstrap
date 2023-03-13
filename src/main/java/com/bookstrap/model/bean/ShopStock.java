@@ -30,12 +30,12 @@ public class ShopStock {
 	@Column(name="amount")
 	private Integer Amount;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "book-shopSotcks")
 	@JoinColumn(name="book_id", insertable=false, updatable=false)
 	@ManyToOne
 	private Books book; 
 	
-	@JsonBackReference
+	@JsonBackReference(value = "shop-shopStocks")
 	@JoinColumn(name="shop_id", insertable=false, updatable=false)
 	@ManyToOne
 	private Shops shop;
