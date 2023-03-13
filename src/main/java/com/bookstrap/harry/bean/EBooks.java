@@ -83,9 +83,6 @@ public class EBooks {
 	private Set<ShoppingCarts> shoppingCarts;
 	
 	
-	
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-//	private List<Favorite> favorite;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
 	private Set<EBookFavorite> eBookfavorite;

@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Refresh" content="2; url='http://localhost:8080/Bookstrap/index'" />
 <title>Success</title>
 </head>
 <body>
