@@ -121,6 +121,14 @@ public class Members {
 	
 	
 
+	public Set<EBookPurchases> geteBookPurchase() {
+		return eBookPurchase;
+	}
+
+	public void seteBookPurchase(Set<EBookPurchases> eBookPurchase) {
+		this.eBookPurchase = eBookPurchase;
+	}
+
 	public Role getRole() {
 		return role;
 	}
