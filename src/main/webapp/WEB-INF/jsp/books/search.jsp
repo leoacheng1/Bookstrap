@@ -209,14 +209,10 @@ padding: 15px;
 
 <div style="height: 13px; margin-right:30px;">
   <nav aria-label="Page navigation example" >
-    <ul class="pagination justify-content-end">
-       
+    <ul class="pagination justify-content-end">      
 <jstl:forEach var="pageNumber" begin="1" end="${book.totalPages}">
-
-<li class="page-item"><a class="page-link likeBtn" data-likeId="${pageNumber}" data-name="${sessionScope.name}">${pageNumber}</a></li>
-
-</jstl:forEach>
-      
+  <li class="page-item"><a class="page-link likeBtn" data-likeId="${pageNumber}" data-name="${sessionScope.name}">${pageNumber}</a></li>
+</jstl:forEach>    
     </ul>
   </nav>
 </div>
@@ -344,7 +340,6 @@ likePage(likeId, namee)
 }
 
 function likePage(likeId, namee) {
-console.log()
 axios({
 method: 'get',
 url: 'http://localhost:8080/Bookstrap/books/ajax/like',

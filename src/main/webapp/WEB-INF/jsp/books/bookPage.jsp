@@ -230,16 +230,7 @@
 
 <!-- ////////////// 所有評論 ///////////// -->
   <div id="showArea" class="showArea">
-            <!-- <div class="card">
-              <div class="card-header">
-                bb
-              </div>
-              <div class="card-body">
-                <p class="card-text">評分等級：3</p>
-                <p class="card-text">內容：好書好書</p>
-
-              </div>
-            </div> -->
+            
   </div>
           </div>
 

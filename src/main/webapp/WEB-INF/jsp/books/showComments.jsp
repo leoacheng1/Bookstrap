@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -27,8 +28,8 @@
   <div style="margin-left: 200px;">
   <div class="content-header" >
     <br/>
-      <h1>所有評論</h1>
-    <br/>
+      <h1 style="margin-left: 550px;">所有評論</h1>
+    <hr>    
   </div>
   <table class="text-center" style="width: 1350px;">
     <thead>
@@ -43,13 +44,12 @@
     <tbody>
     <jstl:forEach items="${page.content}" var="comments" >
      <tr>
-      <td><jstl:out value="${comments.book.name}"/></td> 
-      <td><jstl:out value="${comments.evaluation}"/></td>   
-      <td><jstl:out value="${comments.date}"/></td>   
-      <td><jstl:out value="${comments.content}"/></td> 
-  
-      <td>
-        <button class="delete-btn btn btn-danger"  data-bkid="${book.id}">刪除</button>
+      <td style="height: 50px;"><jstl:out value="${comments.book.name}"/></td> 
+      <td style="height: 50px;"><jstl:out value="${comments.evaluation}"/></td>   
+      <td style="height: 50px;"><fmt:formatDate pattern="yyyy/MM/dd HH:mm" value="${comments.date}"/></td>   
+      <td style="height: 50px;"><jstl:out value="${comments.content}"/></td> 
+      <td style="height: 50px;">
+        <button class="delete-btn btn btn-danger"  data-cmid="${comments.commentId}">刪除</button>
       </td>
     </tr>
     </jstl:forEach>
@@ -83,6 +83,36 @@
 <!--版型需要的js-->
 <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
 <script>
+////////////// delete鍵 ///////////
+  const deleteBtn = document.getElementsByClassName('delete-btn')
+
+  for(i=0;i<=deleteBtn.length;i++){
+  deleteBtn[i].addEventListener('click',function(e){
+    // console.log("好ㄟ")
+    let cmID = this.getAttribute('data-cmid');
+    console.log(cmID)
+
+    deleteComment(cmID);
+  })
+  }
+
+  function deleteComment(cmID){
+    axios({
+      url: 'http://localhost:8080/Bookstrap/comment/admin/delete',
+      method:'delete',
+      responseType: 'text',
+      params: {
+        commentId: cmID
+      }
+    })
+    .then(res=>{
+      console.log(res.data)
+    })
+    .catch(err=>{
+      console.log(err)
+      window.location.href = 'http://localhost:8080/Bookstrap/comment/allPage';
+    })
+  }
 
 </script>
 <script src="${contextRoot}/js/bootstrap.bundle.min.js" type="text/javascript"></script>

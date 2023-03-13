@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,18 +35,17 @@ public class CommentService {
 	    return cDao.findCommentByBookId(bookId);	    	    
 	}
 	
-	// 要改成從會員id抓到發表過的評論(用page，放在會員中心)
-	public Comment findCommentByMemberId(Integer commentId) {
-		Optional<Comment> comment = cDao.findById(commentId);
-		
-		if(comment.isPresent()) {
-			return comment.get();
-		}
-		return null;
-	}
-	
 	public void deleteCommentById(Integer commentId) {
 		cDao.deleteById(commentId);
+	}
+	
+	public Comment getCommentById(Integer commentId) {
+		Optional<Comment> optional = cDao.findById(commentId);
+		
+		if(optional.isPresent()) {
+			optional.get().getBook().getName();
+		}
+		return null;
 	}
 	
 	public Comment updateCommentById(Integer commentId,String content,Integer evaluation) {
@@ -73,4 +73,19 @@ public class CommentService {
 		Page<Comment> page = cDao.findAll(pgb);
 		return page;
 	}
+	
+	public List<Comment> findCommentByMemberId(Integer memberId) {
+		return cDao.findCommentByMemberId(memberId);
+	}
+	
+	// 從會員id抓到發表過的評論(用page，放在會員中心)
+	public Page<Comment> showCommentPageByMemberId(Integer pageNumber,Integer memberId) {
+		Pageable pgb = PageRequest.of(pageNumber - 1, 5, Sort.Direction.DESC, "date");
+		List<Comment> list = cDao.findCommentByMemberId(memberId);
+		int start = (int) pgb.getOffset();
+	    int end = Math.min((start + pgb.getPageSize()), list.size());
+		Page<Comment> page = new PageImpl<Comment>(list.subList(start, end),pgb,list.size());
+		return page;
+	}
+	
 }

@@ -73,8 +73,7 @@
       <td>
         <a href="${contextRoot}/books/edit?id=${book.id}">
           <button id="edit-btn" class="edit-btn btn btn-primary" data-bkid="${book.id}">更新</button>
-        </a>
-       
+        </a>       
       </td>     
       <td>
         <button class="delete-btn btn btn-danger"  data-bkid="${book.id}">刪除</button>

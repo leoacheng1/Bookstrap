@@ -137,6 +137,7 @@ public class BooksService {
 		return null;
 	}
 
+	// 模糊搜尋
 	public List<Books> findBookLikeSelector(String name) {
 		return bDao.findBookLikeSelector(name);
 	}

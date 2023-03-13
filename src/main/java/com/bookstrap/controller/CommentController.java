@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,11 @@ public class CommentController {
 	@Autowired
 	private MemberService memberService;
 	
+	@GetMapping("/member/comments")
+	public String goToMemberCommentsPage() {
+		return "/member/Main/MyComments";
+	}
+	
 	@ResponseBody
 	@PostMapping("/comment/post")
 	public String insertComment(@RequestParam("content") String content
@@ -74,31 +81,72 @@ public class CommentController {
 		return cService.findCommentByBookId(bookId);
 	}
 	
-	// 透過評論id刪除評論
-	@DeleteMapping("/comment/delete")
-	public String deleteCommentById(Integer commentId) {
+	// 會員透過評論id刪除評論 -> 跳至我的評論頁面
+	@DeleteMapping("/comment/member/delete")
+	public String deleteCommentByIdWithMember(Integer commentId) {
 		cService.deleteCommentById(commentId);
-		return "redirect:/member/main";
+		return "redirect:/member/comments";
+	}
+	
+	// 管理員透過評論id刪除評論 -> 跳至所有評論頁面
+	@DeleteMapping("/comment/admin/delete")
+	public String deleteCommentByIdWithAdmin(Integer commentId) {
+		cService.deleteCommentById(commentId);
+		return "redirect:/comment/allPage";
+	}
+	
+	@GetMapping("/comment/editPage")
+	public Model getCommentById(@RequestParam("commentId")Integer commentId,Model model) {
+		Comment comment = cService.getCommentById(commentId);
+		model.addAttribute("comment",comment);
+		return null;
 	}
 	
 	// 更新評論
 	@ResponseBody
 	@PutMapping("/comment/update")
 	public String updateCommentById(@RequestParam("commentId") Integer commentId
-			                      ,@RequestParam("content") String content
-			                      ,@RequestParam("evaluation") Integer evaluation,Model model) {
+			                       ,@RequestParam("content") String content
+			                       ,@RequestParam("evaluation") Integer evaluation,Model model) {
 		Comment comment = cService.updateCommentById(commentId, content, evaluation);
 		model.addAttribute("comment",comment);
 		return "更新成功";
 	}
 	
-	// 要改成從會員id抓到發表過的評論(會員中心)
-	@ResponseBody
-	@GetMapping("/comment/commentId")
-	public Comment findCommentByCommentId(@RequestParam("commentId") Integer commentId) {
-		return cService.findCommentByMemberId(commentId);
+	// 會員發表過的評論(會員中心)
+//	@GetMapping("/comment/memberId")
+//	public String findCommentByMemberId(@RequestParam("memberId") Integer memberId,Model model) {
+//		List<Comment> list = cService.findCommentByMemberId(memberId);
+//		model.addAttribute("memberComment",list);
+//		return "/member/Main/MyComments";
+//	}
+	
+	// 會員發表過的評論(會員中心page)
+	@GetMapping("/comment/memberPage")
+	public String showCommentByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber
+			                       ,@RequestParam("memberId") Integer memberId
+			                       ,Model model
+			                       ,HttpSession session) {
+		session.setAttribute("memberId", memberId);
+		Integer result = (Integer) session.getAttribute("memberId");
+		Page<Comment> page = cService.showCommentPageByMemberId(pageNumber,result);
+		Model addAttribute = model.addAttribute("memberComment",page);
+		return "/member/Main/MyComments";
 	}
 	
+	// 所有評論(會員中心)的分頁
+	@ResponseBody
+	@GetMapping("/comment/ajax/page")
+	public Page<Comment> likeBook(Integer pageNumber,@RequestParam("memberId") Integer memberId,HttpSession session) {
+		session.setAttribute("memberId", memberId);
+		Integer result = (Integer) session.getAttribute("memberId");
+        
+		Page<Comment> page = cService.showCommentPageByMemberId(pageNumber, result);
+
+		return page;
+	}
+	
+	// 所有評論(管理員介面)
 	@GetMapping("/comment/all")
 	private String findAllComments(Model model) {
 		List<Comment> list = cService.findAllComments();
@@ -106,7 +154,7 @@ public class CommentController {
 		return "books/showComments";
 	}
 	
-	// 所有書籍分頁(管理員介面)
+	// 所有評論的分頁(管理員介面page)
 	@GetMapping("/comment/allPage")
 	public String showAllCommentsByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,Model model) {
 		Page<Comment> page = cService.showAllCommentsByPage(pageNumber);
