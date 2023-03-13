@@ -40,33 +40,70 @@
 										<div id="calendar"></div>
 										<div id="dialog" title="新增員工事件" style="display:none;">
 											<form id="event-form">
-												<label for="employee-name">員工名稱</label>
-												<select id="employee-name" name="employee-name"></select><br>
-												<label for="start-date">起始日期</label>
-												<input type="date" id="start-date" name="start-date"><br>
-												<label for="start-time">起始時間</label>
-												<select id="start-time" name="start-time"></select><br>
-												<label for="end-date">截止日期</label>
-												<input type="date" id="end-date" name="end-date"><br>
-												<label for="end-time">截止時間</label>
-												<select id="end-time" name="end-time"></select><br>
-												<label for="is-leave-requested">是否申請假別？</label>
-												<input type="radio" id="is-leave-requested-yes"
-													name="is-leave-requested" value="yes">是
-												<input type="radio" id="is-leave-requested-no" name="is-leave-requested"
-													value="no" checked>否
-												<br>
-												<div id="leave-type" style="display:none;">
-													<label for="leave-type-select">假別</label>
-													<select id="leave-type-select" name="leave-type-select">
-														<option selected="selected" value=""></option>
-														<option value="休假">休假</option>
-														<option value="病假">病假</option>
-														<option value="特休">特休</option>
-													</select>
+												<div class="form-row">
+													<div class="form-group col-md-4">
+														<label for="employee-name">員工名稱</label>
+														<select class="form-control" id="employee-name"
+															name="employee-name"></select>
+													</div>
+													<div class="form-group col-md-4">
+														<label for="start-date">起始日期</label>
+														<input class="form-control" type="date" id="start-date"
+															name="start-date">
+													</div>
+													<div class="form-group col-md-4">
+														<label for="start-time">起始時間</label>
+														<select class="form-control" id="start-time"
+															name="start-time"></select>
+													</div>
+
+												</div>
+												<div class="form-row">
+
+													<div class="form-group col-md-4">
+														<label for="end-date">截止日期</label>
+														<input class="form-control" type="date" id="end-date"
+															name="end-date">
+													</div>
+													<div class="form-group col-md-4">
+														<label for="end-time">截止時間</label>
+														<select class="form-control" id="end-time"
+															name="end-time"></select>
+													</div>
+													<div class="form-group col-md-4">
+														<label for="is-leave-requested">是否申請假別？</label>
+														<div class="form-check">
+															<input class="form-check-input" type="radio"
+																id="is-leave-requested-yes" name="is-leave-requested"
+																value="yes">
+															<label class="form-check-label"
+																for="is-leave-requested-yes">是</label>
+														</div>
+														<div class="form-check">
+															<input class="form-check-input" type="radio"
+																id="is-leave-requested-no" name="is-leave-requested"
+																value="no" checked>
+															<label class="form-check-label"
+																for="is-leave-requested-no">否</label>
+														</div>
+													</div>
+												</div>
+												<div class="form-row" id="leave-type" style="display:none;">
+													<div class="form-group col-md-6">
+														<label for="leave-type-select">假別</label>
+														<select class="form-control" id="leave-type-select"
+															name="leave-type-select">
+															<option selected="selected" value=""></option>
+															<option value="休假">休假</option>
+															<option value="病假">病假</option>
+															<option value="特休">特休</option>
+														</select>
+													</div>
 												</div>
 											</form>
 										</div>
+
+
 
 
 
@@ -138,7 +175,8 @@
 											center: 'title',
 											right: 'month,basicWeek,basicDay'
 										},
-										defaultDate: new Date(),
+										// defaultDate: new Date(),
+										defaultDate: "2023-04-01",
 										// 日历配置部分
 										locale: 'zh-cn', //配置语言
 										firstDay: 1,
@@ -186,39 +224,50 @@
 												'Employee Name: ' + calEvent.scheduleEmpname + '<br>' +
 												'All Day: ' + calEvent.allDay;
 
-											// 建立對話框
-											var dialog = $('<div></div>').html(popupContent).dialog({
-												autoOpen: false, // 初始不顯示
-												modal: true, // 鎖定背景
+											// 建立 modal
+											var modal = $('<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label" aria-hidden="true">' +
+												'<div class="modal-dialog" role="document">' +
+												'<div class="modal-content">' +
+												'<div class="modal-header">' +
+												'<h5 class="modal-title" id="event-modal-label">詳細資訊</h5>' +
+												'<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+												'<span aria-hidden="true">×</span>' +
+												'</button>' +
+												'</div>' +
+												'<div class="modal-body">' +
+												popupContent +
+												'</div>' +
+												'<div class="modal-footer">' +
+												'<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>' +
+												'<button type="button" class="btn btn-danger" id="delete-event-btn">刪除</button>' +
+												'</div>' +
+												'</div>' +
+												'</div>' +
+												'</div>');
 
-												buttons: {
-													'確定': function () {
-														$(this).dialog('close'); // 關閉對話框
+											// 註冊刪除按鈕的點擊事件
+											modal.find('#delete-event-btn').on('click', function () {
+												// 發送 GET 請求
+												alert('您即將刪除這筆資料');
+												var deleteurl = "http://localhost:8080/Bookstrap/sempsche/deletesemp?scheduleId=" + calEvent.scheduleId
+												$.ajax({
+													url: deleteurl,
+													type: 'GET',
+													success: function (response) {
+														// 成功刪除事件
+														alert(response)
+														$('#calendar').fullCalendar('refetchEvents'); // 重新載入日曆資料
+														modal.modal('hide'); // 關閉 modal
 													},
-													'刪除': function () {
-														// 發送 GET 請求
-														alert('您即將刪除這筆資料');
-														var deleteurl = "http://localhost:8080/Bookstrap/sempsche/deletesemp?scheduleId=" + calEvent.scheduleId
-														$.ajax({
-															url: deleteurl,
-															type: 'GET',
-															success: function (response) {
-																// 成功刪除事件
-																alert(response)
-																$('#calendar').fullCalendar('refetchEvents'); // 重新載入日曆資料
-																dialog.dialog('close'); // 關閉對話框
-															},
-															error: function (xhr, status, error) {
-																// 刪除事件失敗
-																alert('刪除失敗');
-															}
-														});
+													error: function (xhr, status, error) {
+														// 刪除事件失敗
+														alert('刪除失敗');
 													}
-												}
+												});
 											});
 
-											// 顯示對話框
-											dialog.dialog('open');
+											// 顯示 modal
+											modal.modal('show');
 										},
 
 
@@ -252,6 +301,8 @@
 													$('#dialog').dialog({
 														title: '新增員工事件',
 														modal: true,
+														width: 500,   // 設置寬度為500像素
+														height: 400,   // 設置高度為400像素
 														close: function () {
 															$('#event-form')[0].reset();
 														},
@@ -279,6 +330,7 @@
 																	+ "&scheduleStartdate=" + startDate1 + "&scheduleEnddate=" + endDate1 + "&scheduleVacation=" + scheduleVacation;
 
 																console.log(url);
+																$('#event-form')[0].reset();
 																// 發送GET請求
 																$.ajax({
 																	url: url,
