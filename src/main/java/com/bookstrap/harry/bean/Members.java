@@ -21,6 +21,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstrap.harry.security.Roles;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Members")
@@ -69,6 +70,7 @@ public class Members {
 	@OneToOne(mappedBy ="member")
 	private MemberDetails memberDetails;
 	
+	@JsonManagedReference(value = "member-shoppingCarts")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<ShoppingCarts> shoppingCarts;
 	
@@ -78,6 +80,7 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<Sales> sales;
 	
+	@JsonManagedReference(value = "member-userCoupon")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<UserCoupon> userCoupon;
 	
