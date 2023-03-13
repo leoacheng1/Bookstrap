@@ -210,11 +210,13 @@ padding: 15px;
 <div style="height: 13px; margin-right:30px;">
   <nav aria-label="Page navigation example" >
     <ul class="pagination justify-content-end">
+       
 <jstl:forEach var="pageNumber" begin="1" end="${book.totalPages}">
 
 <li class="page-item"><a class="page-link likeBtn" data-likeId="${pageNumber}" data-name="${sessionScope.name}">${pageNumber}</a></li>
 
 </jstl:forEach>
+      
     </ul>
   </nav>
 </div>
@@ -253,24 +255,34 @@ padding: 15px;
 <fieldset>
 <div id="console2" class="container" style="position: relative;">
 
-<div style="height: 13px; margin-right:30px;">
-  <nav aria-label="Page navigation example" >
-    <ul class="pagination justify-content-end">
-      <jstl:forEach var="pageNumber" begin="1" end="${allbook.totalPages}">
-        <jstl:choose>
-          <jstl:when test="${page.number != pageNumber-1}">
-            <li class="page-item"><a class="page-link" href="${contextRoot}/books/allpage2?p=${pageNumber}">${pageNumber}</a></li>
-          </jstl:when>
-    
-          <jstl:otherwise>
-            <li class="page-item active"><a class="page-link">${pageNumber}</a></li>
-          </jstl:otherwise>
-        </jstl:choose>
-      </jstl:forEach>
-    </ul>
-  </nav>
-</div>
-
+  <div style="height: 13px; margin-right:30px;">
+    <nav aria-label="Page navigation example" >
+      <ul class="pagination justify-content-end">
+        <!-- <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>   -->
+        <jstl:forEach var="pageNumber" begin="1" end="${allbook.totalPages}">
+          <jstl:choose>
+            <jstl:when test="${page.number != pageNumber-1}">
+              <li class="page-item"><a class="page-link" href="${contextRoot}/books/allpage2?p=${pageNumber}">${pageNumber}</a></li>
+            </jstl:when>
+      
+            <jstl:otherwise>
+              <li class="page-item active"><a class="page-link">${pageNumber}</a></li>
+            </jstl:otherwise>
+          </jstl:choose>
+        </jstl:forEach>
+        <!-- <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li> -->
+      </ul>
+    </nav>
+  </div>
+  
 <br>
 <br>
 <jstl:forEach var="allbook" items="${allbook.content}">
@@ -295,6 +307,7 @@ padding: 15px;
   </div>
  </div>
 </jstl:forEach>
+
 
 
 </div>

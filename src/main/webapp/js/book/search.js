@@ -150,8 +150,7 @@ function htmlmaker(data){
   con2.innerHTML=""
   con.innerHTML=""
   let daaaata=""
-    data.forEach(element => {
-console.log(element.name )
+  data.forEach(element => {
     daaaata+=`<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:57px">`
   +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
     <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" class="card-img-top" 

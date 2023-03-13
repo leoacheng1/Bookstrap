@@ -124,7 +124,7 @@ public class BooksController {
 		return mav;
 	}
 	
-	//  找詳細資料
+	// 找詳細資料
 	@ResponseBody
 	@GetMapping("/books/alldetails")
 	public BookDetails showAllDetails(Integer id) {

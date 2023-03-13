@@ -27,6 +27,8 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
             <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap" rel="stylesheet" />
 
+            <link rel="stylesheet" href="myProjects/webProject/icofont/css/icofont.min.css">
+
             <style>
                 .top_search_table {
                     padding-left: 50px;
@@ -101,12 +103,18 @@
                 .bg-custom {
                     background-color: #5ea0cc;
                 }
+                a:link {
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
             </style>
         </head>
 
         <body>
             <jsp:include page="../layout/header.jsp"></jsp:include>
-
+            
             <div class="container-fluid d-flex mt-2 mb-2 justify-content-center ">
                 <div class="top_search_table">
                     <ul class="nav">
@@ -254,74 +262,13 @@
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent" style="display: inline-block;">
-                    <ul class="photoArea" id="photoArea" style="display: block;display: inline-block;">
+                    <ul class="photoArea" id="photoArea" style="display: flex;">
 
                     </ul>
 
                         
                     </div>
                 </div>
-                    <!-- <div class="tab-pane fade" id="nav-t1i2" role="tabpanel" aria-labelledby="nav-profile-tab"
-                        tabindex="0"> -->
-                        <!-- slick slider -->
-                        <!-- <div class="container">
-                            <div class="homeslider">
-                                <div class="slider">
-                                    <img src="sildePage/i4.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i5.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i6.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i4.jpg" />
-                                </div>
-                                <div class="slider">
-                                    <img src="sildePage/i5.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i6.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i4.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i5.jpg" />
-                                </div>
-
-                                <div class="slider">
-                                    <img src="sildePage/i6.jpg" />
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="tab-pane fade" id="nav-t1i3" role="tabpanel" aria-labelledby="nav-contact-tab"
-                        tabindex="0">
-                        t1i3
-                    </div>
-
-                    <div class="tab-pane fade" id="nav-t1i4" role="tabpanel" aria-labelledby="nav-contact-tab"
-                        tabindex="0">
-                        t1i4
-                    </div>
-
-                    <div class="tab-pane fade" id="nav-t1i5" role="tabpanel" aria-labelledby="nav-disabled-tab"
-                        tabindex="0">
-                        t1i5
-                    </div>
-
-                    <div class="tab-pane fade" id="nav-t1i6" role="tabpanel" aria-labelledby="nav-contact-tab"
-                        tabindex="0">
-                        t1i6
-                    </div> -->
                 </div>
             </div>
             <!-- 即將上架 尾 -->

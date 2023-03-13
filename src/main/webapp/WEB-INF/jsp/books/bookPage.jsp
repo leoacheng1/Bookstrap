@@ -212,9 +212,6 @@
           </div>
           <br>
 
-
-
-
           <br>
           <div style="width: 1050px;margin-left: 120px;">
             <p>
@@ -226,12 +223,14 @@
                 style="display: block;margin: 0 auto;">寫評論</button>
             </div>
             <br>
+<!-- ////////////// 評論按鈕 ///////////// -->
             <div id="commentArea" class="commentArea">
 
             </div>
 
-
-            <div class="card showArea">
+<!-- ////////////// 所有評論 ///////////// -->
+  <div id="showArea" class="showArea">
+            <!-- <div class="card">
               <div class="card-header">
                 bb
               </div>
@@ -240,8 +239,8 @@
                 <p class="card-text">內容：好書好書</p>
 
               </div>
-            </div>
-
+            </div> -->
+  </div>
           </div>
 
         </div>
@@ -263,8 +262,8 @@
           </div>
         </footer>
         <script>
-          ////////// 計算原價*折扣=優惠價 /////////
-          const priId = document.getElementsByClassName('priId');//價錢
+                    ////////// 計算原價*折扣=優惠價 /////////
+                    const priId = document.getElementsByClassName('priId');//價錢
           const disId = document.getElementsByClassName('disId');//折扣
           const disPriId = document.getElementsByClassName('disPriId');//優惠價
 
@@ -355,13 +354,13 @@
           const commentBtn = document.getElementById('commentBtn')
 
           commentBtn.addEventListener('click', function (e) {
-            console.log("有反應")
             const memberId = `${memberId}`
-                console.log(`${sessionScope.memberName}`)
-                console.log(`${memberId}`)
-            // if(memberId == null){
-            //   console.log("未登入")
-            // }else{           
+            if(memberId == null){
+              console.log("未登入")
+            }else{           
+              console.log(`${sessionScope.memberName}`)
+              console.log(`${memberId}`)
+              console.log("有反應")
             let commentArea = document.getElementById('commentArea')
             let area = ''
             area += `<div class="card" style="position: relative;">
@@ -463,6 +462,10 @@ submitBtn.addEventListener('click', function (e) {
   const memberId = `${memberId}`
   console.log(`${sessionScope.memberName}`)
   console.log(`${memberId}`)
+
+  // const now = new Date();
+  // const nowString = now.toISOString();
+  // console.log("留言時間為"+nowString)
   
     console.log("有送出")
     console.log(stars)
@@ -480,7 +483,7 @@ submitBtn.addEventListener('click', function (e) {
         content: inputText,
         evaluation: stars,
         bookId: bookId,
-        memberId: memberId
+        memberId: memberId,
       }
     })
       .then(res => {
@@ -493,10 +496,53 @@ submitBtn.addEventListener('click', function (e) {
   
 })
 }
+}
 )
+
+//////////// 所有評論 //////////////
+const bookId = `${book.id}`
+console.log('id:' + bookId)
+
+
+axios({
+  url:'http://localhost:8080/Bookstrap/comment/bookId',
+  method:'get',
+  params:{
+    bookId:bookId
+  }
+})
+.then(res=>{
+  console.log(res)
+  showComments(res)
+})
+.catch(err=>{
+  console.log(err)
+})
+
+function showComments(res){
+  let showArea = document.getElementById('showArea')
+  showArea.innerHTML = ""
+  let comments = ""
+
+  res.data.forEach(element=>{
+    comments += `<div class="card">`
+               +`<div class="card-header">${sessionScope.memberName}</div>`
+               +`<div class="card-body">`
+               +`<p class="card-text">評論時間：`+element.date+`</p>`
+               +`<p class="card-text">評分等級：`+element.evaluation+`顆星</p>`
+               +`<p class="card-text">內容：`+element.content+`</p>`
+               +`</div>`
+               +`</div>`
+               +`<br>`
+    showArea.innerHTML= comments
+})
+}
+
+
         </script>
         <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
         <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
 
       </body>
 

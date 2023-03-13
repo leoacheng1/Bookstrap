@@ -62,6 +62,7 @@
         <option value="限制級">限制級</option>
       </select><br/>
   <button type="submit" id="myBtn" class="my-customer-data-btn btn btn-info">送出</button>
+  <button type="button" class="btn btn-success">預設</button>
   </form>  
 </div>
 </div>

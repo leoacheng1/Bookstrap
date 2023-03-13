@@ -119,7 +119,6 @@
 
 </script>
 <script src="${contextRoot}/js/book/mix-book.js" type="text/javascript"></script>
-<script src="${contextRoot}/js/book/search.js" type="text/javascript"></script>
 <script src="${contextRoot}/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>

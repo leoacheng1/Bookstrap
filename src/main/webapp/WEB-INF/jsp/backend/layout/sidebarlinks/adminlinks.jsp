@@ -50,6 +50,12 @@
 			<p>功能3</p>
 		  </a>
 		</li>
+				<li class="nav-item">
+		  <a href="#" class="nav-link">
+			<i class="far fa-circle nav-icon"></i>
+			<p>所有評論</p>
+		  </a>
+		</li>
 	  </ul>
 	</li>
 	<li class="nav-header">會員管理</li>
