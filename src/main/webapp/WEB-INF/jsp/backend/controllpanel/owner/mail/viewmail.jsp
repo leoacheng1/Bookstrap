@@ -282,7 +282,7 @@
                             </jstl:if>
                           </div>
                           <jstl:choose>
-                            <jstl:when test="${accountMail.mailFolder.folderName == 'bin'}">
+                            <jstl:when test="${(accountMail.mailFolder.folderName == 'bin') or (accountMail.mailFolder.folderName == 'draft')}">
                               <button type="button" class="btn btn-default" id="permanentdeleteMailBtn"><i
                                   class="far fa-trash-alt"></i>永久刪除</button>
                             </jstl:when>

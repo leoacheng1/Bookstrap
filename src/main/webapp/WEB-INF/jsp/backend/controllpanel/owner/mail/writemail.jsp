@@ -313,11 +313,12 @@
                                   ${draftMail.mailContent}
                                 </jstl:when>
                                 <jstl:when test="${not empty replyMail}">
-                                  <div class="card card-primary card-outline">
+                                  <div class="card premail">
                                     <div class="card-header">
                                       <div class="card-title">
-                                        <h5>${replyMail.mailSubject}</h5>
-                                        <h6>寄件人: ${replyMail.accountFrom.account}</h6>
+                                        <span class="align-center" style="font-size: 1.5rem;">${replyMail.mailSubject}</span>
+                                        <span class="align-center ml-1">寄件人: ${replyMail.accountFrom.account} </span>
+                                        <span class="mailbox-read-time ml-1 align-middle">${replyMail.mailTime}</span>
                                       </div>
                                       <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -330,16 +331,7 @@
                                       <div class="mailbox-read-message">${replyMail.mailContent}</div>
                                     </div>
                                     <div class="card-footer bg-white">
-                                      <ul class="mailbox-attachments align-items-stretch d-flex clearfix flex-wrap">
-                                        <li><span class="mailbox-attachment-icon" style="min-height: 114px;"><i class="far fa-file-excel"></i></span>
-                                          <div class="mailbox-attachment-info"><a
-                                              href="blob:http://localhost:8080/5e794085-7aab-4936-86c8-570ed27e68b5" class="mailbox-attachment-name"
-                                              download="新增 Microsoft Excel 工作表.xlsx"><i class="fas fa-paperclip"></i> 新增 Microsoft Excel
-                                              工作表.xlsx</a><span class="mailbox-attachment-size clearfix mt-1"><span class="filesize">6kb</span><a
-                                                download="新增 Microsoft Excel 工作表.xlsx"
-                                                href="blob:http://localhost:8080/5e794085-7aab-4936-86c8-570ed27e68b5"
-                                                class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a></span></div>
-                                        </li>
+                                      <ul class="mailbox-attachments align-items-stretch d-flex clearfix flex-wrap premail-attachment">
                                       </ul>
                                     </div>
                                   </div>
@@ -556,36 +548,4 @@
         <script src="${contextRoot}/eddie/js/mail/composemail.js"></script>
         <script src="${contextRoot}/eddie/js/mail/mailside.js"></script>
     </body>
-    <div class="card card-primary card-outline">
-      <div class="card-header">
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="card-body p-0">
-        <div class="mailbox-read-info">
-          <h5>${replyMail.mailSubject}</h5>
-          <h6>寄件人: ${replyMail.accountFrom.account}<span class="mailbox-read-time float-right">${replyMail.mailTime}</span></h6>
-        </div>
-        <div class="mailbox-read-message">${replyMail.mailContent}</div>
-      </div>
-      <div class="card-footer bg-white">
-        <ul class="mailbox-attachments align-items-stretch d-flex clearfix flex-wrap">
-          <li><span class="mailbox-attachment-icon" style="min-height: 114px;"><i class="far fa-file-excel"></i></span>
-            <div class="mailbox-attachment-info"><a
-                href="blob:http://localhost:8080/5e794085-7aab-4936-86c8-570ed27e68b5" class="mailbox-attachment-name"
-                download="新增 Microsoft Excel 工作表.xlsx"><i class="fas fa-paperclip"></i> 新增 Microsoft Excel
-                工作表.xlsx</a><span class="mailbox-attachment-size clearfix mt-1"><span class="filesize">6kb</span><a
-                  download="新增 Microsoft Excel 工作表.xlsx"
-                  href="blob:http://localhost:8080/5e794085-7aab-4936-86c8-570ed27e68b5"
-                  class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a></span></div>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-
     </html>

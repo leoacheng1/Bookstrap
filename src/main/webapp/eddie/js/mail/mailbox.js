@@ -44,6 +44,10 @@ async function addTooltip() { $('[data-toggle="tooltip"]').tooltip() };
  * prepare an interactive mail table after submitting a request to get all mail data, and place them in the table.
  */
 async function initMails(conditions, advanceFilters = false) {
+    if($("body").attr("data-modalOn") == 1) advanceFilters = true;
+    if (advanceFilters) {
+        conditions = getFilterConditions();
+    }
     let pageNum = $("body").attr("data-pagenum");
     $("#mailboxbody").html("");
     let currUrl = window.location.href.split("/");
@@ -52,9 +56,9 @@ async function initMails(conditions, advanceFilters = false) {
     let activeLi = $(`#${type}-ul a[data-typename=${tname}]`);
     if (!activeLi.hasClass("active_")) {
         activeLi.addClass("font-weight-bold").addClass("bg-info").addClass("active_");
-    }else {
-        if (advanceFilters) activeLi.removeClass("font-weight-bold").removeClass("bg-info").removeClass("active_");
     }
+        if (advanceFilters) activeLi.removeClass("font-weight-bold").removeClass("bg-info").removeClass("active_");
+    
     // new request with conditions
     if (!advanceFilters) {
         // let conditions = getConditions();
@@ -451,6 +455,7 @@ function addEvents() {
     //refresh
     $('#refreshBtn').unbind('click');
     $("#refreshBtn").click(function () {
+        $("body").attr("data-modalOn",0);
         initialize();
         $(this).tooltip('hide');
     })
@@ -993,6 +998,7 @@ async function prepareConditions() {
                         event.preventDefault();
                         $("#condition-sendBy").html("寄件人 ");
                         let conditions = getConditions();
+                        $("body").attr("data-modalOn",0);
                         initMails(conditions);
                         addPagination();
                     }
@@ -1006,6 +1012,7 @@ async function prepareConditions() {
                             event.preventDefault();
                             $("#condition-sendBy").html("寄件人 " + $(this).html());
                             let conditions = getConditions();
+                            $("body").attr("data-modalOn",0);
                             initMails(conditions);
                             addPagination();
                         }
@@ -1014,20 +1021,25 @@ async function prepareConditions() {
                 };
             }
         )
+    $('#condition-daterange').unbind('apply.daterangepicker');
     $('#condition-daterange').on('apply.daterangepicker', function (ev, picker) {
         $('#condition-daterange span').html(picker.chosenLabel);
         let conditions = getConditions();
+        $("body").attr("data-modalOn",0);
         initMails(conditions);
         addPagination();
     });
 
+    $("#condition-unread, #condition-hasAttachment").unbind("click");
     $("#condition-unread, #condition-hasAttachment").click(function () {
         $(this).toggleClass("active").trigger("blur");
         let conditions = getConditions();
+        $("body").attr("data-modalOn",0);
         initMails(conditions);
         addPagination();
     })
 
+    $("#searchMailBtn").unbind("click");
     $("#searchMailBtn").click(function () {
         let conditions = getConditions();
         let text = $("#searchText").val();
@@ -1035,6 +1047,7 @@ async function prepareConditions() {
         conditions.subject = text;
         conditions.content = text;
         // console.log(text);
+        $("body").attr("data-modalOn",0);
         initMails(conditions);
         addPagination(conditions);
     })
@@ -1078,8 +1091,10 @@ $("#searchFilterBtn").click(initFilterModal);
 $("#filterModalSend").click(
     function () {
         let conditions = getFilterConditions();
+        $("body").attr("data-modalOn","1");
         initMails(conditions,true);
         addPagination(conditions,true);
+        $('#filterModal').modal('hide');
     }
 );
 
@@ -1088,7 +1103,7 @@ $("#filterModalSend").click(
  */
 function initFilterModal() {
     //init mailTo
-    axios.get(contextRoot + "mail/from/" + $("body").attr("data-ref")).
+    axios.get(contextRoot + "mail/sent/" + $("body").attr("data-ref")).
         then(
             res => {
                 $("#mailFromC").html("");
@@ -1104,7 +1119,7 @@ function initFilterModal() {
             }
         );
     //init mailFrom
-    axios.get(contextRoot + "mail/sent/" + $("body").attr("data-ref")).
+    axios.get(contextRoot + "mail/from/" + $("body").attr("data-ref")).
         then(
             res => {
                 $("#mailToC").html("");

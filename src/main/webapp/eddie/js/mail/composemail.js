@@ -14,7 +14,7 @@ function addEvents() {
   document.getElementById("draftBtn").addEventListener("click", draftEmail);
   document.getElementById("dropMailBtn").addEventListener("click", dropEmail);
   $("#attachments").change(inputEffect);
-  $("#attachments").focus (inputEffect);
+  $("#attachments").focus(inputEffect);
   window.onbeforeunload = draftOnLeave; //draft unsaved mail on leave
   chooseCategory();
 }
@@ -341,7 +341,7 @@ function draftOnLeave() {
       break;
   }
   let files = document.getElementById('attachments').files;
-  if (mailTo.length == 0 && subject.length == 0 && content.length == 26 && files.length == 0) return;
+  if (subject.length == 0 && content.length == 26 && files.length == 0) return;
   let formData = new FormData();
   formData.append("mailTo", mailTo);
   formData.append("mailSubject", subject);
@@ -403,18 +403,18 @@ function initSelect2() {
   }
   let options = {
     language: optLanguage,
-    templateResult: function(markup) {
+    templateResult: function (markup) {
       let arr = markup.text.split(','),
-          name = arr[0],
-          account = arr[1],
-          template = $(`<span>${name}</span><span style="visibility:hidden">${account}</span>`);      
+        name = arr[0],
+        account = arr[1],
+        template = $(`<span>${name}</span><span style="visibility:hidden">${account}</span>`);
       return template;
     },
-    templateSelection: function(markup) {
+    templateSelection: function (markup) {
       let arr = markup.text.split(','),
-          name = arr[0],
-          account = arr[1],
-          template = $(`<span>${name}</span><span style="visibility:hidden">${account}</span>`);      
+        name = arr[0],
+        account = arr[1],
+        template = $(`<span>${name}</span><span style="visibility:hidden">${account}</span>`);
       return template;
     }
   }
@@ -428,48 +428,148 @@ function initSelect2() {
  */
 function setAttachment(attachmentIds, attachmentDataArray = []) {
   if (attachmentIds.length != 0) {
+    axios({
+      url: contextRoot + 'mail/attachment/' + attachmentIds[0],
+      method: 'GET',
+      responseType: 'blob'
+    }).then(response => {
+      console.log(response);
+      let disposition = response.headers['content-disposition'];
+      let file = new File([response.data], decodeURIComponent(disposition.split("'").pop()));
+      attachmentDataArray.push(file);
+      attachmentIds.shift();
+      if (attachmentIds.length == 0) {
+        let temp = new DataTransfer();
+        for (data of attachmentDataArray) {
+          temp.items.add(data);
+        }
+        document.getElementById("attachments").files = temp.files;
+        $("#attachments").trigger("change");
+      };
+      setAttachment(attachmentIds, attachmentDataArray);
+    }).catch(err => console.log(err))
+  }
+}
+
+
+
+/**
+ * a recursive function that fetch multiple attachment and set URIs for download.(confidence boost ><)
+ * @param {Array<Number>} attachmentIds -id of the attachment
+ * @returns 
+ */
+function setAttachment2(attachmentIds, attachmentDataArray = []) {
+  if (attachmentIds.length != 0) {
       axios({
           url: contextRoot + 'mail/attachment/' + attachmentIds[0],
           method: 'GET',
           responseType: 'blob'
       }).then(response => {
-        console.log(response);
+          console.log(response);
           let disposition = response.headers['content-disposition'];
-          let file = new File([response.data],decodeURIComponent(disposition.split("'").pop()));
-          attachmentDataArray.push(file);
+          let uri = window.URL.createObjectURL(new Blob([response.data]));
+          let fileSize = response.data.size.toString();
+
+          attachmentDataArray.push({
+              'id': attachmentIds[0],
+              'uri': uri,
+              'name': decodeURIComponent(disposition.split("'").pop()),
+              'extension': decodeURIComponent(disposition.split(".").pop()),
+              'size': fileSize.length < 7 ? `${Math.round(+fileSize / 1024)}kb` : `${(Math.round(+fileSize / 1024) / 1000).toFixed(1)}MB`
+          });
           attachmentIds.shift();
           if (attachmentIds.length == 0) {
-              let temp = new DataTransfer();
               for (data of attachmentDataArray) {
-                  temp.items.add(data);
+                  makeAttachment(data);
               }
-              document.getElementById("attachments").files = temp.files;
-              $("#attachments").trigger("change");
           };
-          setAttachment(attachmentIds, attachmentDataArray);
+          setAttachment2(attachmentIds, attachmentDataArray);
       }).catch(err => console.log(err))
   }
+}
+
+/**
+ * generate attachment block based on attachment data
+ * @param {Object} attachmentData - attachmentData used to generate attachment blocks
+ * {
+                'id': ,
+                'uri': ,
+                'name': ,
+                'extension': ,
+                'size': 
+            }
+ */
+function makeAttachment(attachmentData) {
+  let extension = attachmentData.extension;
+  console.log(extension)
+  let typeIcon;
+  if (['zip', 'rar', 'tar', 'gz', '7z'].includes(extension)) {
+    typeIcon = "far fa-file-archive";
+  } else if (["pdf"].includes(extension)) {
+    typeIcon = "far fa-file-pdf";
+  } else if (['doc', 'docx'].includes(extension)) {
+    typeIcon = "far fa-file-word";
+  } else if (['xls', 'xlsx'].includes(extension)) {
+    typeIcon = "far fa-file-excel";
+  } else if (["txt"].includes(extension)) {
+    typeIcon = "fas fa-book";
+  } else {
+    typeIcon = "fas fa-file";
+  }
+  let isImg = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'tif', 'tiff', 'ico'].includes(attachmentData.extension);
+  let filesize = $('<span/>', { class: 'filesize', append: attachmentData.size });
+  let downloadLink = $('<a/>', {
+    download: attachmentData.name,
+    href: attachmentData.uri,
+    class: "btn btn-default btn-sm float-right",
+    append: $("<i/>", { class: "fas fa-cloud-download-alt" }),
+  });
+  let attachmentSize = $('<span/>', { class: "mailbox-attachment-size clearfix mt-1", append: [filesize, downloadLink] });
+  let attachmentName = $('<a/>', {
+    href: attachmentData.uri,
+    class: "mailbox-attachment-name",
+    append: [$('<i/>', { class: (isImg ? "fas fa-camera" : "fas fa-paperclip") }), " " + attachmentData.name],
+    download: attachmentData.name
+  })
+  let attachmentIcon = $("<span/>", {
+    class: isImg ? "mailbox-attachment-icon has-img" : "mailbox-attachment-icon",
+    style: "min-height: 114px;",
+    append: isImg ? $("<img/>", { src: attachmentData.uri, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
+  });
+  let attachmentInfo = $("<div/>", { class: "mailbox-attachment-info", append: [attachmentName, attachmentSize] });
+  let li = $('<li/>', { append: [attachmentIcon, attachmentInfo] });
+  $('.premail-attachment').append(li);
 }
 
 /**
  * initialize attachments for different usage
  */
 function initializeAttachment() {
-  let dmailId = $("body").attr("data-draftMail"),
-      rmailId = $("body").attr("data-replyMail"),
-      fmailId = $("body").attr("data-forwardMail"),
-      mailId;
-  if (dmailId != null){
+  let dmailId = $("body").attr("data-draftmail"),
+    rmailId = $("body").attr("data-replymail"),
+    fmailId = $("body").attr("data-forwardmail"),
+    type,
+    mailId;
+  if (dmailId.length != 0) {
     mailId = dmailId;
-  }else if(rmailId != null) {
+    type = "draft";
+  } else if (rmailId.length != 0) {
     mailId = rmailId;
-  }else if(fmailId != null) {
+    type = "reply";
+  } else if (fmailId.length != 0) {
     mailId = fmailId;
+    type = "forward"
   }
+  console.log("mailId: " + mailId);
   axios({
     url: contextRoot + 'mail/' + mailId,
     method: 'GET'
-}).then(response => {
-    setAttachment(response.data.attachmentIds);
-}).catch(err => console.log(err))
+  }).then(response => {
+    if (type == "draft") setAttachment(response.data.attachmentIds);
+    if (type == "reply") setAttachment2(response.data.attachmentIds);
+    if ($('.premail').length) $('.premail').CardWidget('collapse');
+    $('.note-editable').find('.premail').attr('contenteditable',false);
+    let time = $('.mailbox-read-time.ml-1.align-middle').html();
+    $('.mailbox-read-time.ml-1.align-middle').html(time.split(".")[0]);
+  }).catch(err => console.log(err))
 }

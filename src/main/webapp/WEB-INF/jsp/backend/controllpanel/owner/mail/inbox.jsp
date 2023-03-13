@@ -55,7 +55,7 @@
     </head>
 
     <body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse"
-      data-ref="${mailAccount.accountId}" data-pagenum="1">
+      data-ref="${mailAccount.accountId}" data-pagenum="1" data-modalOn="0">
       <div class="wrapper">
         <!--上面導覽列 -->
         <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
@@ -317,6 +317,7 @@
                           </div>
                         </div>
                         <div class="table-responsive mailbox-messages">
+                          
                           <table class="table table-hover table-striped" id="mailbox-table">
                             <tbody id="mailboxbody">
 
@@ -375,15 +376,15 @@
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
-                      <label for="mailToC" class="col-form-label">收件人</label>
-                      <select class="form-control" id="mailToC">
+                      <label for="mailFromC" class="col-form-label">寄件人</label>
+                      <select class="form-control" id="mailFromC">
                       </select>
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
-                      <label for="mailFromC" class="col-form-label">寄件人</label>
-                      <select class="form-control" id="mailFromC">
+                      <label for="mailToC" class="col-form-label">收件人</label>
+                      <select class="form-control" id="mailToC">
                       </select>
                     </div>
                   </div>

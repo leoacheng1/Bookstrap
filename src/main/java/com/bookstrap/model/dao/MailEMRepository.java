@@ -121,10 +121,10 @@ public class MailEMRepository {
 		if (conditions.getContent().length() != 0 && conditions.getSubject().length() != 0) {
 			query.setParameter("content", "%"+conditions.getContent()+"%");
 			query.setParameter("subject", "%"+conditions.getSubject()+"%");
-			query.setParameter("contentTag", "%<%"+conditions.getContent()+"%>%");
+			query.setParameter("contentTag", "<"+conditions.getContent()+">");
 		}else if (conditions.getContent().length() != 0) {
 			query.setParameter("content", "%"+conditions.getContent()+"%");
-			query.setParameter("contentTag", "%<%"+conditions.getContent()+"%>%");
+			query.setParameter("contentTag", "<"+conditions.getContent()+">");
 		}else if (conditions.getSubject().length() != 0) {
 			query.setParameter("subject", "%"+conditions.getSubject()+"%");
 		}
@@ -188,10 +188,10 @@ public class MailEMRepository {
 		if (conditions.getContent().length() != 0 && conditions.getSubject().length() != 0) {
 			query.setParameter("content", "%"+conditions.getContent()+"%");
 			query.setParameter("subject", "%"+conditions.getSubject()+"%");
-			query.setParameter("contentTag", "%<%"+conditions.getContent()+"%>%");
+			query.setParameter("contentTag", "<"+conditions.getContent()+">");
 		}else if (conditions.getContent().length() != 0) {
 			query.setParameter("content", "%"+conditions.getContent()+"%");
-			query.setParameter("contentTag", "%<%"+conditions.getContent()+"%>%");
+			query.setParameter("contentTag", "<"+conditions.getContent()+">");
 		}else if (conditions.getSubject().length() != 0) {
 			query.setParameter("subject", "%"+conditions.getSubject()+"%");
 		}

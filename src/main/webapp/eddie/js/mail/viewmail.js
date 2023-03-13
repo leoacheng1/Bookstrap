@@ -53,9 +53,20 @@ function setMailContent(mailId) {
         $('.mailbox-read-info h5').html(data.mailSubject).siblings('h6').html(`寄件人: ${data.mailFrom}` + `<span class="mailbox-read-time float-right">${data.mailTime}</span>`);
         $('.mailbox-read-message').html(data.mailContent);
         setAttachment(response.data.attachmentIds);
+        if ($('.premail').length) $('.premail').CardWidget('collapse');
     }).catch(err => console.log(err))
 }
-
+/**
+ * generate attachment block based on attachment data
+ * @param {Object} attachmentData - attachmentData used to generate attachment blocks
+ * {
+                'id': ,
+                'uri': ,
+                'name': ,
+                'extension': ,
+                'size': 
+            }
+ */
 function makeAttachment(attachmentData) {
     let extension = attachmentData.extension;
     console.log(extension)
@@ -95,7 +106,7 @@ function makeAttachment(attachmentData) {
     });
     let attachmentInfo = $("<div/>", { class: "mailbox-attachment-info", append: [attachmentName, attachmentSize] });
     let li = $('<li/>', { append: [attachmentIcon, attachmentInfo] });
-    $('.mailbox-attachments').append(li);
+    $('.mailbox-attachments:not(.premail-attachment)').append(li);
     console.log("isImg: " + isImg);
 }
 
@@ -122,7 +133,7 @@ function updateSideBar() {
 
 
 /**
- * a call back function permanently delete mail, bind to #deleteMailBtn
+ * a call back function permanently delete mail, bind to #permanentdeleteMailBtn
  * @returns 
  */
 function permanentDelete() {
@@ -150,14 +161,32 @@ function permanentDelete() {
             })
         }
     }).then((result) => {
-        
+
     }
     )
 }
+/**
+ * a call back function move mail to bin, bind to #deleteMailBtn
+ * @returns 
+ */
+function deleteEvent() {
+    let accountId = $("body").attr("data-ref");
+    let mailIds = [window.location.href.split("/").pop()];
+    let formData = new FormData();
+    formData.append("mailIds", mailIds);
+    formData.append("accountId", accountId);
+    axios.put(contextRoot + "mail/folder/4", formData)
+        .then(response => window.history.back())
+        .catch(error => Swal.showValidationMessage(
+            `刪除失敗: ${error}`
+        ));
+}
 
 function addEvents() {
-    $("#printMailBtn").click(()=>{window.print()});
-    if ($("#permanentdeleteMailBtn") != null) {
-        $("#permanentdeleteMailBtn").click(permanentDelete);        
+    $("#printMailBtn").click(() => { window.print() });
+    if ($("#permanentdeleteMailBtn").length) {
+        $("#permanentdeleteMailBtn").click(permanentDelete);
+    }else if($("#deleteMailBtn").length) {
+        $("#deleteMailBtn").click(deleteEvent);
     }
 }
