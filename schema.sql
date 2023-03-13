@@ -246,3 +246,12 @@ CREATE TABLE MemberRoles (
     FOREIGN KEY (FK_member_id) REFERENCES Members(member_id),
     FOREIGN KEY (FK_role_id) REFERENCES Roles(roles_id)
 );
+
+
+------- eBook purchase---------
+CREATE TABLE EBookPurchases(
+ebook_purchase_id int NOT NULL PRIMARY KEY IDENTITY(1,1),
+FK_ebook_id int NOT NULL FOREIGN KEY REFERENCES Members(member_id),
+FK_member_id int NOT NULL FOREIGN KEY REFERENCES EBooks(ebook_id),
+purchase_status bit NOT NULL   -----0 not exist, 1 exist
+);

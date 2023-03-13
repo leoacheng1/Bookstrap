@@ -91,6 +91,9 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private Set<EBookFavorite> eBookFavorite;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private Set<EBookPurchases> eBookPurchase;
+	
 	public Members() {
 	}
 	

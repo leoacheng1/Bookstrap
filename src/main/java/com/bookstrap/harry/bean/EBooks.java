@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.repository.query.parser.Part.IgnoreCaseType;
+
 import com.bookstrap.model.BookDetails;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -82,23 +84,36 @@ public class EBooks {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "eBook", cascade = CascadeType.ALL)
 	private Set<ShoppingCarts> shoppingCarts;
 	
-	
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
 	private Set<EBookFavorite> eBookfavorite;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
+	private Set<EBookPurchases> eBookPurchase;
+	
 	
 	public EBooks() {
 	}
 
+
 	
-	public Integer geteBookNumber() {
-		return eBookNumber;
+	
+	public Set<EBookPurchases> geteBookPurchase() {
+		return eBookPurchase;
 	}
 
 
 
 
+	public void seteBookPurchase(Set<EBookPurchases> eBookPurchase) {
+		this.eBookPurchase = eBookPurchase;
+	}
 
+
+
+
+	public Integer geteBookNumber() {
+		return eBookNumber;
+	}
 
 
 	public void seteBookNumber(Integer eBookNumber) {
