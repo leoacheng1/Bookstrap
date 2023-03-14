@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,10 @@ public class ShoppingCartsService {
 
 	@Autowired
 	private ShoppingCartsRepository scDao;
-	
+
+	public void insert(Integer memberId, Integer bookId, Integer amount) {
+		scDao.insertCartItem(memberId, bookId, amount);
+	}
 
 //	public List<ShoppingCarts> findCartsByMemberId(Integer memberId) {
 //		return scDao.findCartsByMemberId(memberId);
@@ -31,7 +35,7 @@ public class ShoppingCartsService {
 		return scDao.findByMemberId(memberId);
 	}
 
-	// 根據會員id拿取書本id的相關資料
+	// 根據 bookId 更新 amount
 	public ShoppingCarts updateAmountByBookId(Integer amount, Integer bookId) {
 //		Optional<Books> books = bDao.findById(bookId);
 //		ShoppingCarts sc = new ShoppingCarts();
@@ -51,7 +55,7 @@ public class ShoppingCartsService {
 	public void deleteBookByBookId(Integer bookId) {
 		scDao.deleteBookByBookId(bookId);
 	}
-	
+
 	// 根據會員id刪除所有購物車內項目
 	public void deleteAllByMemberId(Integer memberId) {
 		scDao.deleteAllByMemberId(memberId);
@@ -60,8 +64,7 @@ public class ShoppingCartsService {
 	// 根據書籍id更新購物車內書籍數量
 	public void updateCartItemAmount(Integer amount, Integer bookId) {
 		scDao.updateCartItemAmount(amount, bookId);
-    }
-
+	}
 
 //	public void saveOrUpdate(Integer bookId) {
 //        List<Books> book = scDao.find

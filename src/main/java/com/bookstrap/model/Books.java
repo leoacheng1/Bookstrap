@@ -22,11 +22,10 @@ import com.bookstrap.harry.bean.Comment;
 import com.bookstrap.harry.bean.Favorite;
 import com.bookstrap.harry.bean.SaleItems;
 import com.bookstrap.harry.bean.ShoppingCarts;
+import com.bookstrap.model.bean.NewShoppingCarts;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
@@ -75,13 +74,17 @@ public class Books {
 	@JoinColumn(name = "bookDetail_id")
 	private BookDetails bookDetails;
 	
-	@JsonManagedReference	
+	@JsonManagedReference(value = "book-comment")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<Comment> comment;
 	
 	@JsonManagedReference(value = "book-shoppingCarts")
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book", cascade = CascadeType.ALL)
 	private Set<ShoppingCarts> shoppingCarts;
+	
+	@JsonManagedReference(value = "book-newShoppingCarts")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book", cascade = CascadeType.ALL)
+	private Set<NewShoppingCarts> newShoppingCarts;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<SaleItems> saleItems;

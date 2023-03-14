@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bookstrap.harry.bean.SaleItems;
 import com.bookstrap.harry.bean.Sales;
+import com.bookstrap.model.SaleItemsRepository;
 import com.bookstrap.model.SalesRepository;
 
 @Service
@@ -16,6 +18,21 @@ public class SalesService {
 
 	@Autowired
 	private SalesRepository sDao;
+
+	@Autowired
+	private SaleItemsRepository siDao;
+
+	public void checkout(Sales sales, List<SaleItems> saleItems) {
+
+		// save the Sales to the database
+		sDao.save(sales);
+
+		// create SaleItems objects and save them to the database
+		for (SaleItems item : saleItems) {
+			item.setSale(sales);
+			siDao.save(item);
+		}
+	}
 
 	public void insert(Sales sales) {
 		sDao.save(sales);

@@ -20,13 +20,19 @@ public interface ShoppingCartsRepository extends JpaRepository<ShoppingCarts, Sh
 //	@Query(value = "delete from ShoppingCarts where bookId = :bookId")
 //	public void deleteBookById(@Param("bookId") Integer bookId);
 
+	@Transactional
+	@Modifying
+	@Query(value = "INSERT INTO ShoppingCarts(member_Id, book_Id, amount) VALUES (:memberId, :bookId, :amount)", nativeQuery = true)
+	public void insertCartItem(@Param("memberId") Integer memberId, @Param("bookId") Integer bookId,
+			@Param("amount") Integer amount);
+
 	// 根據memberId查詢購車清單
 	@Query(value = "from ShoppingCarts where memberId = :memberId")
 	public List<ShoppingCarts> findByMemberId(Integer memberId);
 
 	@Query(value = "from Books where bookId = :bookId")
 	public List<Books> findBooksByBookId(Integer bookId);
-	
+
 	@Query(value = "from ShoppingCarts where bookId = :bookId")
 	public Optional<ShoppingCarts> findBookByBookId(Integer bookId);
 
@@ -45,4 +51,3 @@ public interface ShoppingCartsRepository extends JpaRepository<ShoppingCarts, Sh
 	@Query("UPDATE ShoppingCarts SET amount = :amount WHERE bookId = :bookId")
 	public void updateCartItemAmount(@Param("amount") Integer amount, @Param("bookId") Integer bookId);
 }
-

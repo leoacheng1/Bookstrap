@@ -1,39 +1,3 @@
-////////////////////////// 更新商品數量 //////////////////////////
-function updateCartItemAmount(bookId, amount, action) {
-  if (action === "add") {
-    amount++;
-  } else if (action === "sub") {
-    amount--;
-  }
-  if (amount < 1) {
-    alert("購買商品數量不可少於1");
-  } else {
-    axios({
-      url: "http://localhost:8080/Bookstrap/shopping/cart/api/update",
-      method: "put",
-      // headers: {
-      //   "Content-Type": "application/x-www-form-urlencoded",
-      // },
-      // responseType: "text",
-      params: {
-        bookId: bookId,
-        amount: amount,
-      },
-    })
-      .then((res) => {
-        // console.log(res.data);
-        // const bookAmountInput = document.getElementById("book-amount");
-        // const bookTotalInput = document.getElementsByClassName("total-price");
-
-        // bookAmountInput.value = res.data;
-
-        window.location.href = "http://localhost:8080/Bookstrap/shopping/cart";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-}
 const deleteBtn = document.getElementsByClassName("delete-btn");
 const deleteAllBtn = document.getElementsByClassName("delete-all-btn");
 for (i = 0; i < deleteBtn.length; i++) {
@@ -44,10 +8,11 @@ for (i = 0; i < deleteBtn.length; i++) {
     deleteCartItemAjax(bkID);
   });
 }
+
 ////////////////////////// 刪除單項 //////////////////////////
-function deleteCartItemAjax(bkID) {
+function deleteCartItemAjax(cId) {
   axios({
-    url: "http://localhost:8080/Bookstrap/shopping/cart/delete",
+    url: "http://localhost:8080/Bookstrap/newshopping/newcart/delete",
     method: "delete",
     // get
     headers: {
@@ -55,15 +20,18 @@ function deleteCartItemAjax(bkID) {
     },
     responseType: "text",
     params: {
-      bookId: bkID,
+      cartId: cId,
     },
   })
     .then((res) => {
       console.log(res.data);
+      window.location.href =
+        "http://localhost:8080/Bookstrap/newshopping/newcart";
     })
     .catch((err) => {
       console.log(err);
-      window.location.href = "http://localhost:8080/Bookstrap/shopping/cart";
+      window.location.href =
+        "http://localhost:8080/Bookstrap/newshopping/newcart";
     });
 }
 
@@ -72,7 +40,7 @@ function clearCart(mId) {
   if (confirm("確定要刪除所有商品?")) {
     console.log(mId);
     axios({
-      url: "http://localhost:8080/Bookstrap/shopping/cart/clear",
+      url: "http://localhost:8080/Bookstrap/newshopping/newcart/clear",
       method: "delete",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -87,7 +55,8 @@ function clearCart(mId) {
       })
       .catch((err) => {
         console.log(err);
-        window.location.href = "http://localhost:8080/Bookstrap/shopping/cart";
+        window.location.href =
+          "http://localhost:8080/Bookstrap/newshopping/newcart";
       });
   } else {
     // Do nothing!
@@ -95,34 +64,76 @@ function clearCart(mId) {
   }
 }
 
-// // 更新購物車
-// function updateCartItem(itemId, quantity) {
-//   $.ajax({
-//     url: "/cart/update",
-//     method: "POST",
-//     data: { itemId: itemId, quantity: quantity },
-//     success: function (response) {
-//       $("#cart_items").html(response);
-//     },
-//   });
-// }
+////////////////////////// 更新商品數量 //////////////////////////
+function updateCartItemAmount(cartId, action) {
+  let amount = document.getElementById(`book-amount-${cartId}`).value;
+  console.log(amount);
+  if (action === "add") {
+    amount++;
+  } else if (action === "sub") {
+    amount--;
+  }
+  if (amount < 1) {
+    alert("購買商品數量不可少於1");
+  } else {
+    axios({
+      url: "http://localhost:8080/Bookstrap/newshopping/newcart/api/update",
+      method: "put",
+      // headers: {
+      //   "Content-Type": "application/x-www-form-urlencoded",
+      // },
+      // responseType: "text",
+      params: {
+        cartId: cartId,
+        amount: amount,
+      },
+    })
+      .then((res) => {
+        let amount = document.getElementById(`book-amount-${cartId}`);
+        let price = document.getElementById(`total-price-single-${cartId}`);
+        let disPrice = document.getElementById(
+          `discount-price-${cartId}`
+        ).textContent;
+        console.log(price);
+        console.log(amount);
+        console.log("disPrice" + disPrice);
+        amount.value = res.data;
+        console.log(price.textContent);
+        price.textContent = amount.value * disPrice;
+        // window.location.href =
+        //   "http://localhost:8080/Bookstrap/newshopping/newcart";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+}
 
-// function updateTotal() {
-//   const checkboxes = document.querySelectorAll("#bookCheckbox:checked");
-//   const bookIds = Array.from(checkboxes).map((checkbox) => checkbox.value);
-//   console.log(checkboxes);
-//   console.log(bookIds);
-//   axios
-//     .put("/cart/updateTotal", { bookIds })
-//     .then((res) => {
-//       const total = res.data.total;
-//       // 更新總金額顯示
-//       document.querySelector("#total-price").innerHTML = `${total}元`;
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// }
+////////// 計算原價*折扣=優惠價 /////////
+const priId = document.getElementsByClassName("priId"); //價錢
+const disId = document.getElementsByClassName("disId"); //折扣
+const disPriId = document.getElementsByClassName("disPriId"); //優惠價
+const amount = document.getElementsByClassName("quantity");
+const disPriAmo = document.getElementsByClassName("disPriAmo");
+const checkbox = document.getElementsByClassName("book-checkbox");
+
+for (let i = 0; i < priId.length; i++) {
+  console.log(i);
+  let price = priId[i].textContent;
+  console.log("price:" + price);
+
+  let discount = disId[i].textContent;
+  console.log("discount:" + discount);
+
+  let disPrice = Math.round(price * (discount / 100));
+  console.log("優惠價:" + disPrice);
+
+  let amounta = amount[i].value;
+  console.log("數量:" + amounta);
+
+  disPriId[i].textContent = disPrice; // 將計算結果寫回元素
+  disPriAmo[i].textContent = disPrice * amounta;
+}
 
 ////////////////////////// 總金額計算 //////////////////////////
 
@@ -231,10 +242,15 @@ function checkout() {
   // 取得已勾選的商品
   var checkedItems = $('input[name="checkbook"]:checked');
   var coupon = $('input[name="coupon"]:checked');
+  var totalPrice = document.getElementById("total-price").innerText;
+  console.log(totalPrice);
+  sessionStorage.setItem("totalPrice", totalPrice);
+  console.log(coupon);
 
   // 將勾選的商品資料存成 JavaScript 物件
   var cartItems = [];
   checkedItems.each(function () {
+    console.log(checkedItems);
     var bookId = $(this).val();
     var amount = $(this).closest("tr").find(".quantity").val();
     console.log("itemId" + bookId);
@@ -245,14 +261,13 @@ function checkout() {
   // 發送 AJAX 請求
   $.ajax({
     type: "POST",
-    url: "http://localhost:8080/Bookstrap/shopping/cart/checkout",
+    url: "http://localhost:8080/Bookstrap/newshopping/newcart/checkout",
     contentType: "application/json; charset=utf-8",
     data: JSON.stringify(cartItems),
     success: function () {
       // 成功處理後端儲存購物車商品的 Session
-      alert("結帳成功！");
       window.location.href =
-        "http://localhost:8080/Bookstrap/shopping/shipping";
+        "http://localhost:8080/Bookstrap/newshopping/newcart/shipping";
     },
     error: function () {
       // 處理錯誤
@@ -260,22 +275,3 @@ function checkout() {
     },
   });
 }
-
-// // 獲取所選折價券的折扣金額
-// var couponDiscount = 0;
-// var selectedCoupon = document.querySelector('input[name="coupon"]:checked');
-// console.log(selectedCoupon);
-// if (selectedCoupon) {
-//   couponDiscount = parseInt(selectedCoupon.value);
-//   console.log(couponDiscount);
-// }
-
-// // 獲取消費總金額
-// var totalAmount = parseInt(document.querySelector("#total-price").textContent);
-
-// // 計算應付金額
-// var payableAmount = totalAmount - couponDiscount;
-
-// // 更新顯示的應付金額
-// document.querySelector("#payable-amount").textContent =
-//   payableAmount.toFixed(2);

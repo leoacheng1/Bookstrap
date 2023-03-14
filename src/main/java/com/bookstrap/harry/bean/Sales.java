@@ -1,6 +1,7 @@
 
 package com.bookstrap.harry.bean;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -42,6 +46,10 @@ public class Sales {
 
 	@Column(name = "state")
 	private String status;
+	
+	@Column(name = "order_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date orderTime;
 			
 	@Transient
 	@Column(name = "member_id")
@@ -53,6 +61,11 @@ public class Sales {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sale", cascade = CascadeType.ALL)
 	private List<SaleItems> saleItems;
+	
+	@PrePersist
+	protected void onCreate() {
+		this.orderTime = new Date();
+	}
 	
 	public Sales() {
 	}
