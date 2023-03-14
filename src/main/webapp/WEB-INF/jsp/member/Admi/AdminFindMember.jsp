@@ -47,7 +47,7 @@
 				<div class="container mt-2 mb-2">
 						<div class="d-flex">
 			<select class="form-select form-select-lg" aria-label=".form-select-lg example" id="category">
-			  <option selected>查詢選項</option>
+			  <option selected disable>查詢選項</option>
 			  <option value="id">ID</option>
 			  <option value="Lastname">姓</option>
 			  <option value="Firstname">名</option>
@@ -107,13 +107,13 @@
 				<!-- 寫東西的地方 bottom-->
 
 				<br>
-
+				
+				
 				<jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
-
 					<jstl:choose>
 
 						<jstl:when test="${page.number != pageNumber-1}">
-							<a href="${contextRoot}/admin/get/allmember?p=${pageNumber}">${pageNumber}</a>
+							<a href="${contextRoot}/admin/get/memberidlike?p=${pageNumber}&memberId=${memberId}">${pageNumber}</a>
 						</jstl:when>
 
 						<jstl:otherwise>
@@ -124,7 +124,6 @@
 					<jstl:if test="${pageNumber != page.totalPages}">
 						|
 				</jstl:if>
-
 
 				</jstl:forEach>
 
@@ -163,9 +162,9 @@ $('form').on('submit', function(e) {
 	  } else if (category === 'email') {
 	    url = '${contextRoot}/admin/get/memberemaillike?memberEmail=' + encodeURIComponent(search);
 	  } else if (category === 'gender') {
-	    url = '/music/search?q=' + encodeURIComponent(search);
+	    url = '${contextRoot}/admin/get/membergenderlike?memberGender=' + encodeURIComponent(search);
 	  } else if (category === 'address') {
-	    url = '/music/search?q=' + encodeURIComponent(search);
+	    url = '${contextRoot}/admin/get/memberaddresslike?memberAddress=' + encodeURIComponent(search);
 	  }
 	  window.location.href = url;
 	});

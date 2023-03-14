@@ -113,7 +113,7 @@
 					<jstl:choose>
 
 						<jstl:when test="${page.number != pageNumber-1}">
-							<a href="${contextRoot}/admin/get/allmember?p=${pageNumber}">${pageNumber}</a>
+							<a href="${contextRoot}/admin/get/memberlastnamellike?p=${pageNumber}&memberLastName=${memberLastName}">${pageNumber}</a>
 						</jstl:when>
 
 						<jstl:otherwise>

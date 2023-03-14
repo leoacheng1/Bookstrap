@@ -113,7 +113,7 @@
 					<jstl:choose>
 
 						<jstl:when test="${page.number != pageNumber-1}">
-							<a href="${contextRoot}/admin/get/allmember?p=${pageNumber}">${pageNumber}</a>
+							<a href="${contextRoot}/admin/get/memberlastnamellike?p=${pageNumber}&memberLastName=${memberLastName}">${pageNumber}</a>
 						</jstl:when>
 
 						<jstl:otherwise>
@@ -163,9 +163,9 @@ $('form').on('submit', function(e) {
 	  } else if (category === 'email') {
 	    url = '${contextRoot}/admin/get/memberemaillike?memberEmail=' + encodeURIComponent(search);
 	  } else if (category === 'gender') {
-	    url = '${contextRoot}/admin/get/membergenderlike?memberGender=' + encodeURIComponent(search);
+	    url = '/music/search?q=' + encodeURIComponent(search);
 	  } else if (category === 'address') {
-	    url = '${contextRoot}/admin/get/memberaddresslike?memberAddress=' + encodeURIComponent(search);
+	    url = '/music/search?q=' + encodeURIComponent(search);
 	  }
 	  window.location.href = url;
 	});
