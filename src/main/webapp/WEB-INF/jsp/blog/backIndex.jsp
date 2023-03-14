@@ -90,7 +90,9 @@
 
 									let string = item.paragraphContent
 									let index = string.indexOf("，"); // 查找逗號的位置
-									let substring = string.substring(0, index); // 提取從開頭到逗號的子串
+									let substring = index == -1 ? string.substring(0) : string.substring(0, index);
+									// 提取從開頭到逗號的子串
+									let showOrNot = item.isThisParaShow;
 									console.log(substring);
 
 
@@ -102,7 +104,7 @@
 										// + '<td><img  src=" " '+  +'</td>'
 										+ '<td><button name=delebtn  data-id=' + item.paragraphId + '>刪除</button></td>'
 										+ '<td><a href= "http://localhost:8080/Bookstrap/blog/getParaById?id=' + item.paragraphId + '"><button name="updatebtn" type="button" data-id=' + item.paragraphId + '> 修改</button></a></td>'
-										+ '<td><input type="checkbox" name="showOrNot"  data-id=' + item.paragraphId + '></td>'
+										+ '<td><input type="checkbox" name="showOrNot"  data-id=' + item.paragraphId + ' ' + (showOrNot == 1 ? "checked" : "") + '></td>'
 										+ '</tbody>'
 
 								}

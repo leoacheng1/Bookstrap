@@ -13,4 +13,7 @@ public interface BlogParagraphRepository extends JpaRepository<BlogParagraph, In
 @Query(value="SELECT TOP(1)*  FROM BlogParagraph ORDER BY paragraph_id DESC", nativeQuery = true)
 public BlogParagraph findLatestParaByIdNativeQuery();
 
+
+@Query(value="select * from BlogParagraph where paragraphCatagory = '新書推薦' and isThisParaShow = '1' ORDER BY paragraph_id DESC", nativeQuery = true)
+public BlogParagraph findByCatagory1();
 }

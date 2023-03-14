@@ -25,4 +25,8 @@ public class BlogController {
 	public String goToTestPage() {
 		return "/blog/testPage";
 	}
+	@GetMapping("/blog/showPage")
+	public String goToShowPage() {
+		return "/blog/showPage";
+	}
 }

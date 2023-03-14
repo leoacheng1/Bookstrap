@@ -9,6 +9,8 @@
 			<meta charset="UTF-8">
 			<title>更新頁面</title>
 			<link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet">
+			<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+			<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 		</head>
 
 		<body>
@@ -29,8 +31,14 @@
 				<label for="pAuther">文章作者:</label>
 				<input type="text" id="pAuther" name="pAuther" value="${updateBlog.paragraphAuther}"><br>
 
-				<label for="pContent">文章內文:</label>
-				<input type="text" id="pContent" name="pContent" value="${updateBlog.paragraphContent}"><br>
+
+				<div>
+					文章內文：<fieldset>
+						<textarea name="pContent" rows="6" id="summernote">${updateBlog.paragraphContent}</textarea>
+					</fieldset>
+				</div>
+				<!-- <label for="pContent">文章內文:</label>
+				<input type="text" id="pContent" name="pContent" value="${updateBlog.paragraphContent}"><br> -->
 
 				<label for="pPhoto">文章圖片:</label>
 				<input type="file" id="pPhoto" multiple name="pPhoto" value=""><br>
@@ -49,7 +57,7 @@
 						const Title = document.getElementById('pTitle').value
 						const Catagory = document.getElementById('pCatagory').value
 						const Auther = document.getElementById('pAuther').value
-						const Content = document.getElementById('pContent').value
+						const Content = document.getElementsByClassName('note-editable')[0].innerHTML;
 						const Photo = document.getElementById('pPhoto').files
 						console.log(id, Title, Catagory, Auther, Content, Photo)
 						let form = new FormData()
@@ -84,6 +92,16 @@
 
 
 			</script>
+
+			<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+			<script>$(document).ready(function () {
+					$('#summernote').summernote({
+						height: 300,
+						width: 800,
+					});
+				});</script>
 		</body>
 
 
