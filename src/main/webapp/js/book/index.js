@@ -97,7 +97,7 @@ window.addEventListener('load', function(e){
         photoF += `<li style="list-style: none;float: left;text-align: center;flex: 2;margin-left:35px;margin-right:35px">
                    <a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
                    <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" style="width:157px;height:240px;" /></a>
-                   <div style="text-align: center;margin-left:7px">`+element.name+`</div>
+                   <div style="text-align: center;margin-left:7px"><a href="http://localhost:8080/Bookstrap/books/oneBook?id=` + element.id + `">`+element.name+`</a></div>
                    </li>`
     });
     photoArea.innerHTML = photoF

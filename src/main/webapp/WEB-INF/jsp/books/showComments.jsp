@@ -32,8 +32,9 @@
     <hr>    
   </div>
   <table class="text-center" style="width: 1350px;">
-    <thead>
+    <thead  style="background-color: silver;">
       <tr>
+        <th style="width: 75px;">會員id</th>
         <th style="width: 75px;">書名</th>
         <th style="width: 75px">評分</th>
         <th style="width: 75px;">評論時間</th>
@@ -44,6 +45,7 @@
     <tbody>
     <jstl:forEach items="${page.content}" var="comments" >
      <tr>
+      <td style="height: 50px;"><jstl:out value="${comments.member.memberId}"/></td> 
       <td style="height: 50px;"><jstl:out value="${comments.book.name}"/></td> 
       <td style="height: 50px;"><jstl:out value="${comments.evaluation}"/></td>   
       <td style="height: 50px;"><fmt:formatDate pattern="yyyy/MM/dd HH:mm" value="${comments.date}"/></td>   
@@ -91,8 +93,10 @@
     // console.log("好ㄟ")
     let cmID = this.getAttribute('data-cmid');
     console.log(cmID)
-
+    var result = confirm("您確定要刪除掉這份資料嗎？");
+    if (result == true) {
     deleteComment(cmID);
+    }
   })
   }
 

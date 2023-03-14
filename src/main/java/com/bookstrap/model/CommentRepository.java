@@ -14,4 +14,7 @@ public interface CommentRepository extends JpaRepository<Comment,Integer> {
 	
 	@Query(value = "select * from Comment where member_id = :memberId order by comment_id DESC", nativeQuery=true)
 	public List<Comment> findCommentByMemberId(Integer memberId);
+	
+	@Query(value = "select * from Comment where comment_id = :commentId", nativeQuery=true)
+	public List<Comment> findOneCommentByCommentId(Integer commentId);
 }

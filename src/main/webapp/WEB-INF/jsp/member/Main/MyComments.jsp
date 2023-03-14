@@ -48,10 +48,10 @@
         <tbody>
           <jstl:forEach items="${memberComment.content}" var="memberComment" >
             <tr>
-              <td><jstl:out value="${memberComment.book.name}"/></td> 
-              <td><jstl:out value="${memberComment.evaluation}"/></td>   
-              <td><fmt:formatDate pattern="yyyy/MM/dd HH:mm" value="${memberComment.date}"/></td>   
-              <td><jstl:out value="${memberComment.content}"/></td> 
+              <td class="comment-book-name"><jstl:out value="${memberComment.book.name}"/></td> 
+              <td class="comment-evaluation"><jstl:out value="${memberComment.evaluation}"/></td>   
+              <td class="comment-date"><fmt:formatDate pattern="yyyy/MM/dd HH:mm" value="${memberComment.date}"/></td>   
+              <td class="comment-content"><jstl:out value="${memberComment.content}"/></td> 
               <td>
                 <button type="button" id="edit-btn" class="edit-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-cmid="${memberComment.commentId}">
                   編輯
@@ -100,19 +100,20 @@
         </div>
         <div class="modal-body">
           <form action="${contextRoot}/comment/editPage" method="put" id="updateArea" modelAttribute="comment" var="comment">
-              <input type="hidden" name="commentId" id="idInput" class="idInput" value="${comment.commentId}">
+              <input type="hidden" name="commentId" id="idInput" class="idInput form-control" value="${comment.commentId}">
             <label  class="form-label">書名</label>
               <input type="text" name="name" id="nameInput" class="nameInput form-control" value="${comment.book.name}" readonly="readonly" disabled><br>
             <label  class="form-label">評分</label>
-              <input type="text" name="evaluation" id="evaluationtInput" class="evaluationInput form-control" value="${comment.evaluation}"><br>
+              <input type="text" name="evaluation" id="evaluationInput" class="evaluationInput form-control" value="${comment.evaluation}"><br>
             <label  class="form-label">評論時間</label>
               <input type="text" name="date" id="dateInput" class="dateInput  form-control" value="${comment.date}" readonly="readonly" disabled><br>
             <label  class="form-label">評論內容</label>
-              <textarea name="content" id="contentInput" class="contentInput  form-control" value="${comment.content}"></textarea>
+              <textarea name="content" id="contentInput" class="contentInput  form-control">${comment.content}</textarea>
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-          <button type="button" class="btn btn-primary">送出</button>
+          <button type="button" class="myBtn btn btn-primary" id="myBtn">送出</button>
         </div>
       </div>
     </div>
@@ -120,8 +121,14 @@
 
 
       </div>
-    <script>
-//////////  會員所有評論的分頁按鈕  /////////
+<script src="${contextRoot}/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<jsp:include page="../layout/MainJs.jsp"/>
+
+<script>
+
+  //////////  會員所有評論的分頁按鈕  /////////
 const pageBtn = document.getElementsByClassName('pageBtn')
 
 for(i=0;i<pageBtn.length;i++){
@@ -131,7 +138,7 @@ for(i=0;i<pageBtn.length;i++){
     let memID = this.getAttribute('data-mbID')
     console.log(page)
     console.log(memID)
-    commentPage(page,memID)
+    window.location.href = 'http://localhost:8080/Bookstrap/comment/memberPage?p='+page+'&memberId='+memID;
   })
 }
 
@@ -203,12 +210,14 @@ function pageMaker(res){
   commentArea.innerHTML += front+text+down+before+pageNum+after
 
   const pageBtn2 = document.getElementsByClassName('pageBtn2')
-
+  
   for(i=0;i<pageBtn2.length;i++){
     pageBtn2[i].addEventListener('click',function(e){
       let page = this.getAttribute('data-pgNB')
       let memID = this.getAttribute('data-mbID')
-      newPage(page,memID)
+      // newPage(page,memID)
+      window.location.href = 'http://localhost:8080/Bookstrap/comment/memberPage?p='+page+'&memberId='+memID;
+
     })
   }
 
@@ -236,11 +245,13 @@ const deleteBtn = document.getElementsByClassName('delete-btn')
 
 for(i=0;i<deleteBtn.length;i++){
 deleteBtn[i].addEventListener('click',function(e){
-  // console.log("好ㄟ")
+  console.log("好ㄟ")
   let cmID = this.getAttribute('data-cmid');
   console.log(cmID)
-
-  deleteComment(cmID);
+  var result = confirm("您確定要刪除掉這份資料嗎？");
+    if (result == true) {
+      deleteComment(cmID);
+    }
 })
 }
 
@@ -263,28 +274,56 @@ function deleteComment(cmID){
 }
 
 /////////////// update鍵 ///////////////
-const editBtn = document.getElementsByClassName('edit-btn')
-
-for(i=0;i<deleteBtn.length;i++){
-  editBtn[i].addEventListener('click',function(e){
-    event.preventDefault();
-    // console.log('有喔')
-    // let cmID = this.getAttribute('data-cmid');
-    // console.log(cmID)
-    // updateHtml(cmID);
-
-    let evaluationtInput = document.getElementById('evaluationtInput').value
-    let contentInput = document.getElementById('contentInput').value
-
-    console.log('評論內容:'+contentInput)
+for (btn of $(".edit-btn")){
+  $(btn).click(function() {
+    let bookName = $(this).parent().siblings(".comment-book-name").html();
+    let rate = $(this).parent().siblings(".comment-evaluation").html();
+    let date = $(this).parent().siblings(".comment-date").html();
+    let content = $(this).parent().siblings(".comment-content").html();
+    $("#nameInput").val(bookName);
+    $("#evaluationInput").val(rate);
+    $("#dateInput").val(date);
+    $("#contentInput").html(content);
+    $("#myBtn").attr("data-cmid", $(this).attr("data-cmid"));
   })
 }
 
+function updateHtml(cmID){
+  let commentId = document.getElementById('idInput').value
+  let evaluationt = document.getElementById('evaluationtInput').value
+  let content = document.getElementById('contentInput').value
+  
+  let formdata = new FormData();
+  formdata.append("commentId",commentId)
+  formdata.append("evaluationt",evaluationt)
+  formdata.append("content",content)
+  
+}
 
-    </script>
-      <script src="${contextRoot}/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-      <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
-      <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+const myBtn = document.getElementById('myBtn')
+myBtn.addEventListener('click',function(e){
+  e.preventDefault();
+  let cmId = this.getAttribute('data-cmid');
+  let eva = $("#evaluationInput").val();
+  let content = $("#contentInput").val();
+  console.log('評論內容:'+content)
+  let formdata = new FormData();
+  formdata.append("commentId",cmId)
+  formdata.append("evaluation",eva)
+  formdata.append("content",content)
+  axios({
+    method:'put',
+    url:'http://localhost:8080/Bookstrap/comment/update',
+    data: formdata
+  })
+  .then(res=>{
+    console.log(res)
+    window.location.href = '${contextRoot}/comment/memberPage?p=1&memberId=${memberId}';
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+})
 
-     <jsp:include page="../layout/MainJs.jsp"/>
-    </html>
+</script>
+</html>

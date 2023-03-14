@@ -28,10 +28,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bookstrap.harry.bean.Comment;
 import com.bookstrap.model.BookDetails;
 import com.bookstrap.model.Books;
 import com.bookstrap.service.BookDetailsService;
 import com.bookstrap.service.BooksService;
+import com.bookstrap.service.CommentService;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @SessionAttributes("name")
@@ -43,6 +45,9 @@ public class BooksController {
 
 	@Autowired
 	private BookDetailsService dService;
+	
+	@Autowired
+	private CommentService cService;
 
 	// 跳轉至首頁
 	@GetMapping("/")
@@ -275,8 +280,10 @@ public class BooksController {
 	public String goToBookPage(@RequestParam("id") Integer id,Model model) {
 		Books book = bService.getBookById(id);
 		BookDetails detail = dService.getDetailsByID(id);
+		List<Comment> comments = cService.findCommentByBookId(id);
 		model.addAttribute("book",book);
 		model.addAttribute("detail",detail);
+		model.addAttribute("comments",comments);
 		return "/books/bookPage";
 	}
 	
@@ -313,10 +320,18 @@ public class BooksController {
 	}
 	
 	// 推薦同類別的書籍
+//	@ResponseBody
+//	@GetMapping("/books/category")
+//	public List<Books> findBookByCategory(@RequestParam("category") String category) {
+//		return bService.findBookByCategory(category);
+//	}
+	
+	// 推薦同類別並且不重複的書籍
 	@ResponseBody
 	@GetMapping("/books/category")
-	public List<Books> findBookByCategory(@RequestParam("category") String category) {
-		return bService.findBookByCategory(category);
+	public List<Books> findBookByCategory(@RequestParam("category") String category
+			                             ,@RequestParam("id") Integer id) {
+		return bService.findBookByCategory(category,id);
 	}
 	
 	@ResponseBody

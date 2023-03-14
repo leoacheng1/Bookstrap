@@ -21,8 +21,10 @@ public interface BooksRepository extends JpaRepository<Books, Integer> {
 	@Query(value = "select * from Books where category in (:category)", nativeQuery=true)
 	public List<Books> getBookByCategory(@Param("category") List<String> category);
 	
-	@Query(value = "select top 5 * from Books where category in (:category)", nativeQuery=true)
-	public List<Books> findBookByCategory(String category);
+//	@Query(value = "select top 5 * from Books where category in (:category) <> book_id =:book_id", nativeQuery=true)
+//	public List<Books> findBookByCategory(String category);
+	
+	public List<Books> findTop5ByCategoryAndIdNot(String category, Integer id);
 	
 	@Query(value = "select * from Books where author in (:author)", nativeQuery=true)
 	public List<Books> findBookByAuthor(String author);

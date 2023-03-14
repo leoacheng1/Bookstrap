@@ -208,11 +208,21 @@ padding: 15px;
 <!-- 您現在搜尋的關鍵字是:${sessionScope.name} -->
 
 <div style="height: 13px; margin-right:30px;">
-  <nav aria-label="Page navigation example" >
-    <ul class="pagination justify-content-end">      
+  <nav aria-label="Page navigation example"  >
+    <ul class="pagination justify-content-end">   
+      <!-- <li class="page-item" >
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>    -->
 <jstl:forEach var="pageNumber" begin="1" end="${book.totalPages}">
   <li class="page-item"><a class="page-link likeBtn" data-likeId="${pageNumber}" data-name="${sessionScope.name}">${pageNumber}</a></li>
-</jstl:forEach>    
+</jstl:forEach>  
+ <!-- <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>   -->
     </ul>
   </nav>
 </div>

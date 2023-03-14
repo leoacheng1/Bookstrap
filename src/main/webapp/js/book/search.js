@@ -213,11 +213,11 @@ function htmlLike(res) {
   function likePage(likeId) {
     axios({
       method: 'get',
-      url: 'http://localhost:8080/Bookstrap/books/allpage',
-      params: {
-        pageNumber: likeId,
-        // name: namee,
-      }
+      url: 'http://localhost:8080/Bookstrap/books/allpage?p='+likeId,
+      // params: {
+      //   pageNumber: likeId,
+      //   // name: namee,
+      // }
     })
       .then(res => {
         // console.log(res.data)

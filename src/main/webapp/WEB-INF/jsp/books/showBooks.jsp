@@ -35,7 +35,7 @@
 <div id="output"></div>
   
 <table class="text-center" style="width: 1350px;">
-    <thead>
+    <thead style="background-color: silver;">
       <tr>
         <th colspan="2">書名</th>     
         <th style="width: 50px;"></th>     

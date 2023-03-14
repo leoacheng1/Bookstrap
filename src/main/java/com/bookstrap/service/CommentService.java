@@ -39,12 +39,13 @@ public class CommentService {
 		cDao.deleteById(commentId);
 	}
 	
-	public Comment getCommentById(Integer commentId) {
+	public Comment findCommentByCommentId(Integer commentId) {
 		Optional<Comment> optional = cDao.findById(commentId);
 		
-		if(optional.isPresent()) {
-			optional.get().getBook().getName();
+		if (optional.isPresent()) {
+			return optional.get();
 		}
+
 		return null;
 	}
 	
@@ -53,7 +54,6 @@ public class CommentService {
 		
 		if(optional.isPresent()) {
 			Comment comment = optional.get();
-			comment.setCommentId(commentId);
 			comment.setContent(content);
 			comment.setEvaluation(evaluation);
 			System.out.println("有這筆資料");
@@ -74,9 +74,6 @@ public class CommentService {
 		return page;
 	}
 	
-	public List<Comment> findCommentByMemberId(Integer memberId) {
-		return cDao.findCommentByMemberId(memberId);
-	}
 	
 	// 從會員id抓到發表過的評論(用page，放在會員中心)
 	public Page<Comment> showCommentPageByMemberId(Integer pageNumber,Integer memberId) {

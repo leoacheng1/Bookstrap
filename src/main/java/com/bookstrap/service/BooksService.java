@@ -171,8 +171,12 @@ public class BooksService {
 		}
 	}
 	
-	public List<Books> findBookByCategory(String category) {
-		return bDao.findBookByCategory(category);
+//	public List<Books> findBookByCategory(String category) {
+//		return bDao.findBookByCategory(category);
+//	}
+	
+	public List<Books> findBookByCategory(String category, Integer id) {
+		return bDao.findTop5ByCategoryAndIdNot(category,id);
 	}
 	
 	public List<Books> findBookByAuthor(String author) {

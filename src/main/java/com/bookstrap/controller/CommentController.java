@@ -3,9 +3,7 @@ package com.bookstrap.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,13 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
-import org.w3c.dom.CDATASection;
 
 import com.bookstrap.harry.bean.Comment;
 import com.bookstrap.harry.bean.Members;
@@ -95,11 +91,19 @@ public class CommentController {
 		return "redirect:/comment/allPage";
 	}
 	
+	// 從會員的所有評論中找到其中一條評論
 	@GetMapping("/comment/editPage")
-	public Model getCommentById(@RequestParam("commentId")Integer commentId,Model model) {
-		Comment comment = cService.getCommentById(commentId);
+	public String getCommentById(@RequestParam("commentId")Integer commentId,Model model) {
+		Comment comment = cService.findCommentByCommentId(commentId);
 		model.addAttribute("comment",comment);
-		return null;
+		return "/member/Main/MyComments";
+	}
+	
+	// 
+	@ResponseBody
+	@GetMapping("/comment/{commentId}")
+	public Comment getCommentById(@PathVariable("commentId")Integer commentId) {
+		return cService.findCommentByCommentId(commentId);	
 	}
 	
 	// 更新評論
@@ -107,10 +111,9 @@ public class CommentController {
 	@PutMapping("/comment/update")
 	public String updateCommentById(@RequestParam("commentId") Integer commentId
 			                       ,@RequestParam("content") String content
-			                       ,@RequestParam("evaluation") Integer evaluation,Model model) {
+			                       ,@RequestParam("evaluation") Integer evaluation) {
 		Comment comment = cService.updateCommentById(commentId, content, evaluation);
-		model.addAttribute("comment",comment);
-		return "更新成功";
+		return "更新成功";		
 	}
 	
 	// 會員發表過的評論(會員中心)
