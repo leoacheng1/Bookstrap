@@ -550,7 +550,7 @@ function permanentDelete() {
                 timer: 1500
             });
             (async function () {
-                await delay(1500);
+                await delay(1000);
                 initialize();
             })();
         }

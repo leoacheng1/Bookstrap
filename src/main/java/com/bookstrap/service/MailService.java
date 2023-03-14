@@ -436,10 +436,14 @@ public class MailService {
 			if (optional.isEmpty()) continue;
 			AccountMail mail = optional.get();
 			Mail rootMail = mail.getMail();
-			if (rootMail.getAccountMails().size() == 1) {
+			Set<AccountMail> accountMails = rootMail.getAccountMails();
+			if (accountMails.size() == 1) {
 				mailDao.delete(rootMail);
 				deleted.add(mailId);
 			}else {
+				accountMails.remove(mail);
+				rootMail.setAccountMails(accountMails);
+				mailDao.save(rootMail);
 				accountMailDao.delete(mail);
 				deleted.add(mailId);							
 			}

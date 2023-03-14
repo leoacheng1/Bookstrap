@@ -6,7 +6,7 @@
 
     <head>
       <meta charset="UTF-8">
-      <title>Welcome</title>
+      <title>閱讀郵件</title>
       <!--版型需要的css -->
       <link rel="stylesheet" href="${contextRoot}/eddie/css/sweetalert2.min.css">
       <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>

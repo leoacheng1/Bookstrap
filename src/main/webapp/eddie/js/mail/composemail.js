@@ -341,7 +341,7 @@ function draftOnLeave() {
       break;
   }
   let files = document.getElementById('attachments').files;
-  if (subject.length == 0 && content.length == 26 && files.length == 0) return;
+  if (subject.length == 0 && $('.note-editable.card-block').text().replace("\n","").trim().length == 0 && files.length == 0) return;
   let formData = new FormData();
   formData.append("mailTo", mailTo);
   formData.append("mailSubject", subject);
@@ -537,7 +537,7 @@ function makeAttachment(attachmentData) {
     append: isImg ? $("<img/>", { src: attachmentData.uri, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
   });
   let attachmentInfo = $("<div/>", { class: "mailbox-attachment-info", append: [attachmentName, attachmentSize] });
-  let li = $('<li/>', { append: [attachmentIcon, attachmentInfo] });
+  let li = $('<li/>', { append: [attachmentIcon, attachmentInfo], id: "a" + attachmentData.id });
   $('.premail-attachment').append(li);
 }
 

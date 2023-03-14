@@ -510,12 +510,12 @@
               endDate: end,
               ranges: {
                 '不限日期': [moment().subtract(100, 'years'), moment().add(100, 'years')],
-                '今天': [moment().subtract(1, 'days').endOf('day'), moment().add(1, 'days').startOf('day')],
-                '昨天': [moment().subtract(2, 'days').endOf('day'), moment().subtract(1, 'days').endOf('day')],
-                '過去七天': [moment().subtract(7, 'days').endOf('day'), moment().add(1, 'days').startOf('day')],
-                '過去三十天': [moment().subtract(30, 'days').endOf('day'), moment().add(1, 'days').startOf('day')],
-                '這個月': [moment().startOf('month').startOf('day'), moment().endOf('month').endOf('day')],
-                '上個月': [moment().subtract(1, 'month').startOf('month').startOf('day'), moment().subtract(1, 'month').endOf('month').endOf('day')]
+                '今天': [moment().startOf('day'), moment().add(1, 'days').startOf('day')],
+                '昨天': [moment().subtract(1, 'days').endOf('day'), moment()],
+                '過去七天': [moment().subtract(7, 'days').endOf('day'), moment()],
+                '過去三十天': [moment().subtract(30, 'days').endOf('day'), moment()],
+                '這個月': [moment().startOf('month').startOf('day'), moment().add(1, 'month').startOf('month')],
+                '上個月': [moment().subtract(1, 'month').startOf('month'), moment().startOf('month')]
               },
               locale: {
                 format: "YYYY-MM-DD",

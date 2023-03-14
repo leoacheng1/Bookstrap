@@ -275,11 +275,7 @@
                                     <option value="${entry.value}" selected="selected">${entry.key},${entry.value}
                                     </option>
                                   </jstl:when>
-                                  <jstl:when test="${entry.value eq replyMail.accountTo.account}">
-                                    <option value="${entry.value}" selected="selected">${entry.key},${entry.value}
-                                    </option>
-                                  </jstl:when>
-                                  <jstl:when test="${entry.value eq forwardMail.accountTo.account}">
+                                  <jstl:when test="${entry.value eq replyMail.accountFrom.account}">
                                     <option value="${entry.value}" selected="selected">${entry.key},${entry.value}
                                     </option>
                                   </jstl:when>
@@ -338,7 +334,28 @@
                                   <div class="bt-1 w-100"><span>&nbsp</span></div>
                                 </jstl:when>
                                 <jstl:when test="${not empty forwardMail}">
-                                  ${forwardMail.mailContent}
+                                  <div class="card premail">
+                                    <div class="card-header">
+                                      <div class="card-title">
+                                        <span class="align-center" style="font-size: 1.5rem;">${forwardMail.mailSubject}</span>
+                                        <span class="align-center ml-1">寄件人: ${forwardMail.accountFrom.account} </span>
+                                        <span class="mailbox-read-time ml-1 align-middle">${forwardMail.mailTime}</span>
+                                      </div>
+                                      <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                          <i class="fas fa-minus"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                              
+                                    <div class="card-body p-0">
+                                      <div class="mailbox-read-message">${forwardMail.mailContent}</div>
+                                    </div>
+                                    <div class="card-footer bg-white">
+                                      <ul class="mailbox-attachments align-items-stretch d-flex clearfix flex-wrap premail-attachment">
+                                      </ul>
+                                    </div>
+                                  </div>
                                 </jstl:when>
                                 <jstl:otherwise>
                                 </jstl:otherwise>

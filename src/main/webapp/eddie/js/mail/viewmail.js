@@ -54,6 +54,7 @@ function setMailContent(mailId) {
         $('.mailbox-read-message').html(data.mailContent);
         setAttachment(response.data.attachmentIds);
         if ($('.premail').length) $('.premail').CardWidget('collapse');
+        reLinkAttachment();
     }).catch(err => console.log(err))
 }
 /**
@@ -190,3 +191,14 @@ function addEvents() {
         $("#deleteMailBtn").click(deleteEvent);
     }
 }
+
+function reLinkAttachment() {
+    // console.log("relinked");
+    console.log($(".premail-attachment").length);
+    if ($(".premail-attachment").length == 0) return;
+    for (li of $(".premail-attachment li")) {
+        console.log("executed");
+      $(li).find("a").attr("href",contextRoot + 'mail/attachment/' + $(li).attr("id").slice(1));
+    }
+  }
+  

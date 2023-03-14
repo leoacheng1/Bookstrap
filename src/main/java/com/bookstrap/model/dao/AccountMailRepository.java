@@ -1,5 +1,6 @@
 package com.bookstrap.model.dao;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -59,6 +60,5 @@ public interface AccountMailRepository extends JpaRepository<AccountMail, Accoun
 	
 	@Query("SELECT mail FROM AccountMail mail WHERE mail.starred=1 AND mailAccount.id=:aid")
 	public List<AccountMail> getstarredMail(@Param("aid") Integer accountId);
-	
 	
 }
