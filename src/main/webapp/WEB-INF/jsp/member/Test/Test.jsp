@@ -9,7 +9,7 @@
 <title>Test</title>
 </head>
 <body>
-<h1>Success checkout ${memberName}</h1>
-<a type="button" href="${contextRoot}/ebook/add/purchase/before/pay?nTcId=${nTc.tcId}">checkoutDone</a>
+<h1>Success  ${memberName}</h1>
+
 </body>
 </html>

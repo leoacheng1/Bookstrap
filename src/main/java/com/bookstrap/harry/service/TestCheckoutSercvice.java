@@ -19,4 +19,9 @@ public class TestCheckoutSercvice {
 		return tcDao.save(tc);
 	}
 	
+	public TestCheckout findTscById(Integer tcId) {
+		
+		return tcDao.findnTscById(tcId);
+	}
+	
 }

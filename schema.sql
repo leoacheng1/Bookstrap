@@ -251,7 +251,7 @@ CREATE TABLE MemberRoles (
 ------- eBook purchase---------
 CREATE TABLE EBookPurchases(
 ebook_purchase_id int NOT NULL PRIMARY KEY IDENTITY(1,1),
-FK_ebook_id int NOT NULL FOREIGN KEY REFERENCES Members(member_id),
-FK_member_id int NOT NULL FOREIGN KEY REFERENCES EBooks(ebook_id),
+FK_ebook_id int NOT NULL FOREIGN KEY REFERENCES EBooks(ebook_id),
+FK_member_id int NOT NULL FOREIGN KEY REFERENCES Members(member_id),
 purchase_status bit NOT NULL   -----0 not exist, 1 exist
 );
