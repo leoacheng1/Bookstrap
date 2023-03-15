@@ -94,6 +94,11 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private Set<EBookPurchases> eBookPurchase;
 	
+	
+	//test
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private Set<TestShoppingCatrs> testShoppingCarts;
+	
 	public Members() {
 	}
 	
@@ -106,6 +111,14 @@ public class Members {
 	
 	
 	
+	public Set<TestShoppingCatrs> getTestShoppingCarts() {
+		return testShoppingCarts;
+	}
+
+	public void setTestShoppingCarts(Set<TestShoppingCatrs> testShoppingCarts) {
+		this.testShoppingCarts = testShoppingCarts;
+	}
+
 	public Members(String memberAccount, String memberPassword, Role role) {
 		super();
 		this.memberAccount = memberAccount;

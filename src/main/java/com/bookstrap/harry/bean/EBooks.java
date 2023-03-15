@@ -91,12 +91,36 @@ public class EBooks {
 	private Set<EBookPurchases> eBookPurchase;
 	
 	
+	//Test
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
+	private Set<TestShoppingCatrs> testShoppingCart; 
+	
 	public EBooks() {
 	}
 
+	
+	
 
 	
 	
+	public Set<TestShoppingCatrs> getTestShoppingCart() {
+		return testShoppingCart;
+	}
+
+
+
+
+
+
+	public void setTestShoppingCart(Set<TestShoppingCatrs> testShoppingCart) {
+		this.testShoppingCart = testShoppingCart;
+	}
+
+
+
+
+
+
 	public Set<EBookPurchases> geteBookPurchase() {
 		return eBookPurchase;
 	}

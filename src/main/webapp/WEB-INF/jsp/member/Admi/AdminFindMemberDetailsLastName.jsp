@@ -51,7 +51,7 @@
 			  <option value="id">ID</option>
 			  <option value="Lastname">姓</option>
 			  <option value="Firstname">名</option>
-			  <option value="email">電子信箱地址</option>
+			  <option value="email">E-mail</option>
 			  <option value="gender">性別</option>
 			  <option value="address">地址</option>
 			</select>
@@ -88,7 +88,7 @@
 								<td><img src="${contextRoot}/admin/get/getphoto?memberId=${member.memberId}" width="100px"> </td>
 								<td>${memberDetails.memberLastName}</td>
 								<td>${memberDetails.memberFirstName}</td>
-								<td><a href="#" type="button" class="btn btn-primary">詳細資料</a></td>
+								<td>${memberDetails.memberEmail}</td>
 								<td><a href="${contextRoot}/admin/edit/member?memberId=${memberDetails.memberId}" type="button" class="btn btn-light">修改</a></td>
 								
 								<form id="deleteForm" action="${contextRoot}/admin/delete/member?memberId=${memberDetails.memberId}" method="post">

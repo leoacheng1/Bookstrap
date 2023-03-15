@@ -74,7 +74,7 @@
 							<th scope="col">照片</th>
 							<th scope="col">姓</th>
 							<th scope="col">名</th>
-							<th scope="col">檢視</th>
+							<th scope="col">E-mail</th>
 							<th scope="col">修改</th>
 							<th scope="col">刪除</th>
 						</tr>
@@ -88,7 +88,7 @@
 								<td><img src="${contextRoot}/admin/get/getphoto?memberId=${member.memberId}" width="100px"> </td>
 								<td>${memberDetails.memberLastName}</td>
 								<td>${memberDetails.memberFirstName}</td>
-								<td><a href="#" type="button" class="btn btn-primary">詳細資料</a></td>
+								<td>${memberDetails.memberEmail}</td>
 								<td><a href="${contextRoot}/admin/edit/member?memberId=${memberDetails.memberId}" type="button" class="btn btn-light">修改</a></td>
 								
 								<form id="deleteForm" action="${contextRoot}/admin/delete/member?memberId=${memberDetails.memberId}" method="post">
