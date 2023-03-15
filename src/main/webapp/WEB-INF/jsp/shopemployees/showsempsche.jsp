@@ -216,13 +216,10 @@
 
 										eventClick: function (calEvent, jsEvent, view) {
 											// 將事件物件中的詳細資料顯示在彈出視窗或側邊欄中
-											var popupContent = 'Title: ' + calEvent.title + '<br>' +
-												'Start: ' + moment(calEvent.start).format('YYYY-MM-DD hh:mm:ss') + '<br>' +
-												'End: ' + moment(calEvent.end).format('YYYY-MM-DD hh:mm:ss') + '<br>' +
-												'Schedule ID: ' + calEvent.scheduleId + '<br>' +
-												'Employee ID: ' + calEvent.scheduleEmpid + '<br>' +
-												'Employee Name: ' + calEvent.scheduleEmpname + '<br>' +
-												'All Day: ' + calEvent.allDay;
+											var popupContent = '員工姓名: ' + calEvent.scheduleEmpname + '<br>' +
+												'員工編號: ' + calEvent.scheduleEmpid + '<br>' +
+												'起始時間: ' + moment(calEvent.start).format('YYYY-MM-DD hh:mm:ss') + '<br>' +
+												'截止時間: ' + moment(calEvent.end).format('YYYY-MM-DD hh:mm:ss') + '<br>';
 
 											// 建立 modal
 											var modal = $('<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label" aria-hidden="true">' +
@@ -299,7 +296,7 @@
 
 													// 彈出對話框
 													$('#dialog').dialog({
-														title: '新增員工事件',
+														title: '新增員工班表',
 														modal: true,
 														width: 500,   // 設置寬度為500像素
 														height: 400,   // 設置高度為400像素
