@@ -124,7 +124,7 @@
                         </li>
                         <br />
                         <li class="nav-item">
-                            <a class="nav-link b text-dark text-dark fs-5 me-5" href="#">優惠資訊</a>
+                            <a class="nav-link b text-dark text-dark fs-5 me-5" href="${contextRoot}/chatbox">優惠資訊</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark text-dark fs-5 me-5" href="#">當月熱銷</a>

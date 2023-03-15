@@ -99,21 +99,30 @@
                     right: 0;
                     text-align: right;
                     padding: 5px;
-                    margin-top: 92px;
-                    max-width: 350px;
-                    max-height: 650px;
+                    margin-top: 6%;
+                    width: 17%;
+                    height: 85%;
+                    border: 2px solid;
+
                     overflow: scroll;
                 }
+
+
 
                 .left-align {
                     position: absolute;
                     top: 0;
                     left: 0;
-                    text-align: left;
+                    text-align: center;
                     padding: 5px;
-                    margin-top: 92px;
-                    max-width: 500px;
-                    max-height: 900px;
+                    margin-top: 6%;
+                    width: 16%;
+                    height: 22%;
+                    border: 3px solid rgb(0, 0, 0);
+                    
+                    background-color: rgb(153, 155, 160);
+                  
+
                 }
 
                 .googleMap {
@@ -123,10 +132,18 @@
                     margin-right: auto;
                 }
 
+                .card {
+                    width: 16rem;
+                    height: 18rem;
+
+                    background-size: 16rem 18rem;
+                }
+
                 .card-text {
-                    font-size: 12px;
+                    font-size: 16px;
                     color: white;
                 }
+
 
                 .roaddetail {
                     position: absolute;
@@ -134,16 +151,27 @@
                     left: 0;
                     text-align: left;
                     padding: 5px;
-                    margin-top: 300px;
-                    width: 350px;
-                    max-height: 500px;
+                    margin-top: 18%;
+                    width: 16%;
+                    max-height: 60%;
+
+                    border: 3px solid rgb(0, 0, 0);
                     overflow: scroll;
+                    background-color: white
                 }
 
                 .instructions {
                     padding: 5px;
-                    width: 300px;
+                   
                     white-space: normal;
+                    font-family: Arial, sans-serif;
+                    font-weight: bold;
+                    
+                }
+
+                .fancy-border {
+                    border: 25px solid #3c79db;
+                    border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='75' height='75'%3E%3Cg fill='none' stroke='%23B88846' stroke-width='2'%3E%3Cpath d='M1 1h73v73H1z'/%3E%3Cpath d='M8 8h59v59H8z'/%3E%3Cpath d='M8 8h16v16H8zM51 8h16v16H51zM51 51h16v16H51zM8 51h16v16H8z'/%3E%3C/g%3E%3Cg fill='%23B88846'%3E%3Ccircle cx='16' cy='16' r='2'/%3E%3Ccircle cx='59' cy='16' r='2'/%3E%3Ccircle cx='59' cy='59' r='2'/%3E%3Ccircle cx='16' cy='59' r='2'/%3E%3C/g%3E%3C/svg%3E") 25;
                 }
             </style>
         </head>
@@ -154,7 +182,7 @@
 
             <jsp:include page="../layout/header.jsp"></jsp:include>
 
-            <div id="googleMap" class="googleMap"></div>
+            <div id="googleMap" class="fancy-border googleMap"></div>
             <div id="viewright" class="right-align"> </div>
             <div id="viewleft" class="left-align">
                 <div class="form-check">
@@ -196,7 +224,7 @@
 
             </div>
 
-            <div class="roaddetail" id="roaddetail">
+            <div class=" roaddetail" id="roaddetail">
 
             </div>
             <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
@@ -336,13 +364,14 @@
                                     travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
                                     unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
                                     avoidHighways: false, // 是否避開高速公路
-                                    avoidTolls: false // 是否避開收費路線
+                                    avoidTolls: false, // 是否避開收費路線
+                                    language: 'zh-TW'
                                 }, callback);
 
                                 function callback(response, status) {
                                     if (status === "OK") {
 
-                                        console.log(response);
+                                        console.log("response  : " + response);
                                         let len = locations.length
                                         let displaces = [];
 
@@ -375,7 +404,7 @@
 
                                             const result = locationdetails.find(obj => obj.shopAddress === displaces[i].shopAddress);
 
-                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + ')"> '
                                                 + '<div class="card-body row justify-content-center">'
                                                 + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                 + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
@@ -430,15 +459,21 @@
                                             var request = {
                                                 origin: { lat: lat, lng: lon },
                                                 destination: address,
-                                                travelMode: 'DRIVING'
+                                                travelMode: 'DRIVING',
+                                                language: 'zh_TW'
                                             };
 
                                             directionsService.route(request, function (result, status) {
                                                 if (status == 'OK') {
-
                                                     // 回傳路線上每個步驟的細節
-                                                    console.log(result.routes[0].legs[0].steps);
-                                                    directionsDisplay.setDirections(result);
+                                                    directionsDisplay.setDirections(result);  // 顯示路線
+                                                    directionsDisplay.setMap(map);
+                                                    var steps = result.routes[0].legs[0].steps;
+                                                    var html = '<div>路徑:</div><br>';
+                                                    for (var i = 0; i < steps.length; i++) {
+                                                        html += '<p class ="instructions">' + steps[i].instructions + ' ⇒ <p>';
+                                                    }
+                                                    document.getElementById('roaddetail').innerHTML = html;
                                                 } else {
                                                     console.log(status);
                                                 }
@@ -512,7 +547,8 @@
                                     travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
                                     unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
                                     avoidHighways: false, // 是否避開高速公路
-                                    avoidTolls: false // 是否避開收費路線
+                                    avoidTolls: false, // 是否避開收費路線
+                                    language: 'zh-TW'
                                 }, callback);
 
                                 function callback(response, status) {
@@ -551,7 +587,7 @@
 
                                             const result = locationdetails.find(obj => obj.shopAddress === displaces[i].shopAddress);
 
-                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + '); background-size:width: 14rem; height: 14rem;"> '
                                                 + '<div class="card-body row justify-content-center">'
                                                 + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                 + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
@@ -604,15 +640,21 @@
                                             var request = {
                                                 origin: { lat: lat, lng: lon },
                                                 destination: address,
-                                                travelMode: 'DRIVING'
+                                                travelMode: 'DRIVING',
+                                                language: 'zh_TW'
                                             };
 
                                             directionsService.route(request, function (result, status) {
                                                 if (status == 'OK') {
-
                                                     // 回傳路線上每個步驟的細節
-                                                    console.log(result.routes[0].legs[0].steps);
-                                                    directionsDisplay.setDirections(result);
+                                                    directionsDisplay.setDirections(result);  // 顯示路線
+                                                    directionsDisplay.setMap(map);
+                                                    var steps = result.routes[0].legs[0].steps;
+                                                    var html = '<div>路徑:</div>';
+                                                    for (var i = 0; i < steps.length; i++) {
+                                                        html += '<p class ="instructions">' + steps[i].instructions + ' ⇒ <p>';
+                                                    }
+                                                    document.getElementById('roaddetail').innerHTML = html;
                                                 } else {
                                                     console.log(status);
                                                 }
@@ -654,7 +696,7 @@
                             const resultsPromise = res.map(e => {
                                 const address = e.shopAddress;
                                 return new Promise((resolve, reject) => {
-                                    geocoder.geocode({ 'address': address }, (results, status) => {
+                                    geocoder.geocode({ 'address': address, language: 'zh-CN' }, (results, status) => {
                                         if (status === google.maps.GeocoderStatus.OK) {
                                             const county1 = results[0].address_components.find(component =>
                                                 component.types.includes('administrative_area_level_1')
@@ -684,12 +726,15 @@
                                             county
                                         };
                                     });
+
+                                    console.log(counties)
+                                    console.log(LocationDetails)
                                     const northBtn = document.getElementById("north");
                                     const southBtn = document.getElementById("south");
                                     const westBtn = document.getElementById("west");
                                     const eastBtn = document.getElementById("east");
                                     const defaultCheck1 = document.getElementById("defaultCheck1");
-                                    const defaultCheck2 = document.getElementById("defaultCheck2");
+                                    // const defaultCheck2 = document.getElementById("defaultCheck2");
                                     var ans = []
                                     northBtn.addEventListener('change', function () {
                                         console.log("okok")
@@ -791,7 +836,7 @@
                                             showfar(ans)
                                         }
                                     })
-                                   
+
                                     function showfar(ans) {
                                         console.log(ans);
                                         var result = LocationDetails.filter(item => ans.includes(item.county));
@@ -821,7 +866,7 @@
                                                     console.log(response);
                                                     let len = shopAddresses.length
                                                     let places = [];
-                              
+
                                                     for (let i = 0; i < len; i++) {
                                                         let placedetail = {
                                                             shopAddress: shopAddresses[i],
@@ -839,7 +884,7 @@
                                                         let viewright = document.getElementById('viewright')
                                                         viewright.innerHTML = ""
                                                         const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
-                                                        shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                                        shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + ');"> '
                                                             + '<div class="card-body row justify-content-center">'
                                                             + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                             + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
@@ -891,7 +936,7 @@
                                                                 var steps = result.routes[0].legs[0].steps;
                                                                 var html = '<div>路徑:</div>';
                                                                 for (var i = 0; i < steps.length; i++) {
-                                                                    html += '<p class ="instructions">' + steps[i].instructions + '<p>';
+                                                                    html += '<p class ="instructions">' + steps[i].instructions + ' ⇒ <p>';
                                                                 }
                                                                 document.getElementById('roaddetail').innerHTML = html;
                                                             } else {
@@ -927,7 +972,8 @@
                                                 travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
                                                 unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
                                                 avoidHighways: false, // 是否避開高速公路
-                                                avoidTolls: false // 是否避開收費路線
+                                                avoidTolls: false,// 是否避開收費路線
+                                                language: 'zh-TW'
                                             }, callback);
                                             function callback(response, status) {
                                                 if (status === "OK") {
@@ -951,7 +997,7 @@
                                                         let viewright = document.getElementById('viewright')
                                                         viewright.innerHTML = ""
                                                         const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
-                                                        shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=3); background-size:width: 14rem; height: 14rem;"> '
+                                                        shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=' + result.shopAddress + '); background-size:width: 14rem; height: 14rem;"> '
                                                             + '<div class="card-body row justify-content-center">'
                                                             + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                             + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
@@ -1003,7 +1049,7 @@
                                                                 var steps = result.routes[0].legs[0].steps;
                                                                 var html = '<div>路徑:</div>';
                                                                 for (var i = 0; i < steps.length; i++) {
-                                                                    html += '<p class ="instructions">' + steps[i].instructions + '<p>';
+                                                                    html += '<p class ="instructions">' + steps[i].instructions + ' ⇒ <p>';
                                                                 }
                                                                 document.getElementById('roaddetail').innerHTML = html;
                                                             } else {

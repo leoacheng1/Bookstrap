@@ -6,123 +6,59 @@
         <html>
 
         <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-
             <link rel="stylesheet" href="${contextRoot}/css/chatbox.css" />
-            <link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet" />
-
-
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-            <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet" />
-
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-            <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&display=swap" rel="stylesheet" />
-            <style>
-                .top_search_table {
-                    padding-left: 50px;
-                }
-
-                .searchBar {
-                    padding-left: 500px;
-                }
-
-                .w-10 {
-                    width: 10%;
-                }
-
-                .ms-45 {
-                    margin-left: 30px;
-                }
-
-                .logoFont {
-                    font-family: 'Roboto', sans-serif;
-                }
-
-                .nav-link {
-                    position: relative;
-                }
-
-                .nav-link::after {
-                    content: '';
-                    opacity: 0;
-                    transition: all 0.3s;
-                    height: 3px;
-                    width: 100%;
-                    background-color: black;
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                }
-
-                .nav-link:hover::after {
-                    content: '';
-                    opacity: 1;
-                }
-
-                .slick-prev:before {
-                    color: black;
-                }
-
-                .slick-next::before {
-                    color: black;
-                }
-
-                body {
-                    font-family: 'Noto Sans TC', sans-serif;
-                }
-
-                .icon-text {
-                    text-decoration: none;
-                    color: black;
-                }
-
-                .icon-text:hover {
-                    color: black;
-                }
-
-                .slider-title-en {
-                    font-family: 'Roboto Slab', serif;
-                }
-
-                .bg-custom {
-                    background-color: #5ea0cc;
-                }
-            </style>
-        </head>
-        <body >
-        <noscript>
-            <h2>Sorry! Your browser doesn't support Javascript</h2>
-        </noscript>
-    <jsp:include page="../layout/header.jsp"></jsp:include>
-  
-    
-    <div id="chat-page" >
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2>JavaTechie Global Chat Box</h2>
-            </div>
-            <div class="connecting">Connecting...</div>
-            <ul id="messageArea">
-
-            </ul>
-            <form id="messageForm" name="messageForm" nameForm="messageForm">
-                <div class="form-group">
-                    <div class="input-group clearfix">
-                        <input type="text" id="message" placeholder="Type a message..."
-                            autocomplete="off" class="form-control" />
-                        <button type="submit" class="primary">Send</button>
-                    </div>
+           <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
+        </head> 
+       
+        <body
+        class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
+        <div class="wrapper">
+            <!--上面導覽列 -->
+            <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %> 
+            <!-- 左邊導覽列 -->
+            <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
+            <div class="content-wrapper">
+                <div class="content-header">
+                    <!-- 標題位置 -->
+                    <h1>Hello World</h1>
                 </div>
-            </form>
+                <section class="content">
+              
+                
+                    <div id="chat-page" >
+                        <div class="chat-container">
+                            <div class="chat-header">
+                                <h2>JavaTechie Global Chat Box</h2>
+                            </div>
+                            <div class="connecting">Connecting...</div>
+                            <ul id="messageArea">
+                
+                            </ul>
+                            <form id="messageForm" name="messageForm" nameForm="messageForm">
+                                <div class="form-group">
+                                    <div class="input-group clearfix">
+                                        <input type="text" id="message" placeholder="Type a message..."
+                                            autocomplete="off" class="form-control" />
+                                        <button type="submit" class="primary">Send</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
+        <!--右側彈跳式功能列 -->
+        <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+  		<!--版型需要的js-->
+        <%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+    </body>
+
+
+
+
+
+       
     
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
@@ -139,9 +75,9 @@
             <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
             <script>'use strict';
 
-                var usernamePage = document.querySelector('#username-page');
+                // var usernamePage = document.querySelector('#username-page');
                 var chatPage = document.querySelector('#chat-page');
-                var usernameForm = document.querySelector('#usernameForm');
+                // var usernameForm = document.querySelector('#usernamePage');
                 var messageForm = document.querySelector('#messageForm');
                 var messageInput = document.querySelector('#message');
                 var messageArea = document.querySelector('#messageArea');
@@ -156,19 +92,18 @@
                 ];
                 
 
-            
                 messageForm.addEventListener('submit', send, true)
 
-             
-                    username = `${member.memberAccount}`;
+         
+                    username = "admin";
                 
-           
-                
+               
+        
                         var socket = new SockJS('${contextRoot}/javatechie');
                         stompClient = Stomp.over(socket);
                 
                         stompClient.connect({}, onConnected, onError);
-            
+             
                 
                 
                 function onConnected() {
