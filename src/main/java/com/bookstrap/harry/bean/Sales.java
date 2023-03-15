@@ -32,11 +32,14 @@ public class Sales {
 	@Column(name = "address")
 	private String address;
 	
-	@Column(name = "delievery")
-	private String delievery;
+	@Column(name = "delivery")
+	private String delivery;
 	
 	@Column(name = "payment")
 	private String payment;
+	
+	@Column(name = "total_price")
+	private Integer totalPrice;
 	
 	@Column(name = "pay")
 	private String pay;
@@ -44,14 +47,13 @@ public class Sales {
 	@Column(name = "weight")
 	private Integer weight;
 
-	@Column(name = "state")
+	@Column(name = "status")
 	private String status;
 	
 	@Column(name = "order_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date orderTime;
 			
-	@Transient
 	@Column(name = "member_id")
 	private Integer memberId;
 	
@@ -68,6 +70,38 @@ public class Sales {
 	}
 	
 	public Sales() {
+	}
+
+	public String getDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(String delivery) {
+		this.delivery = delivery;
+	}
+
+	public Integer getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Date getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
+
+	public List<SaleItems> getSaleItems() {
+		return saleItems;
+	}
+
+	public void setSaleItems(List<SaleItems> saleItems) {
+		this.saleItems = saleItems;
 	}
 
 	public Integer getSaleId() {
@@ -87,11 +121,11 @@ public class Sales {
 	}
 
 	public String getDelievery() {
-		return delievery;
+		return delivery;
 	}
 
 	public void setDelievery(String delievery) {
-		this.delievery = delievery;
+		this.delivery = delievery;
 	}
 
 	public String getPayment() {

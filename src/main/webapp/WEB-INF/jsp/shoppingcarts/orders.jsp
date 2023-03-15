@@ -8,7 +8,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>填寫資訊 - Bookstrap</title>
+    <title>結帳頁面 - Bookstrap</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
@@ -23,7 +23,15 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-2"
           ></div>
           <div class="container">
-            <form:form modelAttribute="cartForm">
+            <form action="${contextRoot}/shipping/checkout" method="post">
+              <input
+                type="text"
+                value="${sessionScope.memberId} "
+                name="memberId"
+              />
+              <input type="text" value="undone" name="pay" />
+              <input type="text" value="1000" name="totalPrice" />
+              <input type="text" value="1" name="status" />
               <div class="card">
                 <div class="card-header bg-custom">
                   <h2 style="color: white; margin: 0">購買物品</h2>
@@ -90,10 +98,10 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   <h2 style="color: white; margin: 0">取貨方式</h2>
                 </div>
                 <div class="card-body">
-                  <select>
-                    <option>宅配</option>
-                    <option>分店取貨</option>
-                    <option>超商取貨</option>
+                  <select name="delivery">
+                    <option value="home-delivery">宅配</option>
+                    <option value="store-pickup">分店取貨</option>
+                    <option value="convenience-store-pickup">超商取貨</option>
                   </select>
                   <div>${sessionScope.totalPrice}</div>
                 </div>
@@ -103,9 +111,9 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   <h2 style="color: white; margin: 0">付款方式</h2>
                 </div>
                 <div class="card-body">
-                  <select>
-                    <option>到貨付款</option>
-                    <option>Line pay</option>
+                  <select name="payment">
+                    <option value="cash-on-delivery">到貨付款</option>
+                    <option value="line-pay">Line pay</option>
                   </select>
                 </div>
               </div>
@@ -132,13 +140,14 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   <input
                     type="text"
                     value="${sessionScope.memberDetails.memberAddress}"
+                    name="address"
                   />
                 </div>
               </div>
               <button type="submit" class="btn btn-info" id="checkout">
                 確認結帳
               </button>
-            </form:form>
+            </form>
           </div>
         </main>
       </div>
@@ -151,15 +160,15 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     type="text/javascript"
   ></script>
   <script>
-    const checkoutbtn = document.getElementById("checkout");
-    checkoutbtn.addEventListener("click", () => {
-      var result = confirm("確定送出嗎?");
-      if (result == true) {
-        window.location.href =
-          "http://localhost:8080/Bookstrap/shipping/checkout";
-      } else {
-      }
-    });
+    // const checkoutbtn = document.getElementById("checkout");
+    // checkoutbtn.addEventListener("click", () => {
+    //   var result = confirm("確定送出嗎?");
+    //   if (result == true) {
+    //     window.location.href =
+    //       "http://localhost:8080/Bookstrap/shipping/checkout";
+    //   } else {
+    //   }
+    // });
 
     var totalPrice = 0;
     var quantities = document.getElementsByClassName("quantity");
