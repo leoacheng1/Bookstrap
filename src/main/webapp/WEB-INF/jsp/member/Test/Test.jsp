@@ -11,5 +11,7 @@
 <body>
 <h1>Success  ${memberName}</h1>
 
+<a type="button" href="${contextRoot}/ebook/add/purchase/after/pay?purchase=${purchase.eBookPurchaseId}">transaction completed</a>
+
 </body>
 </html>
