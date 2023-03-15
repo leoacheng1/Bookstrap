@@ -27,7 +27,7 @@ public class TestShoppingCartController {
 		TestShoppingCatrs t = tscService.insertTestShoppingCart(tsc);
 		
 		m.addAttribute("tsc", t);
-		return "member/TestSuccess";
+		return "member/Test/TestSuccess";
 	}
 	
 }
