@@ -285,12 +285,22 @@ public class MemberAdmiController {
 		return new ResponseEntity<byte[]>(photoFile, header, HttpStatus.OK);
 	}
 	
+	// multiple queries page
+//	@GetMapping("/admin/get/membermultiple")
+//	public String multiplePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
+//		
+//		
+//	}
+	
+	
+	
 	// multiple queries
 	@GetMapping("/admin/get/memberidlike")
 	public String searchId(@RequestParam("memberId") String memberId, 
 			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
 		
 		 Page<Members> page = memberService.findMemberIdLike(memberId, pageNumber);
+		 m.addAttribute("memberId", memberId);
 		 m.addAttribute("page", page);
 		 return "member/Admi/AdminFindMember";
 		
@@ -301,8 +311,9 @@ public class MemberAdmiController {
 			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
 		
 		 Page<Members> page = memberService.findMemberEmailLike(memberEmail, pageNumber);
+		 m.addAttribute("memberEmail", memberEmail);
 		 m.addAttribute("page", page);
-		 return "member/Admi/AdminFindMemberDetails";
+		 return "member/Admi/AdminFindMemberDetailsEmail";
 		
 	}
 	
@@ -311,8 +322,9 @@ public class MemberAdmiController {
 			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
 		
 		 Page<MemberDetails> page = memberDetailService.findMemberLastNameLike(memberLastName, pageNumber);
+		 m.addAttribute("memberLastName", memberLastName);
 		 m.addAttribute("page", page);
-		 return "member/Admi/AdminFindMemberDetails";
+		 return "member/Admi/AdminFindMemberDetailsLastName";
 		
 	}
 	
@@ -320,10 +332,33 @@ public class MemberAdmiController {
 	public String searchFirstName(@RequestParam("memberFirstName") String memberFirstName, 
 			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
 		
-		 Page<MemberDetails> page = memberDetailService.findMemberLastNameLike(memberFirstName, pageNumber);
+		 Page<MemberDetails> page = memberDetailService.findMemberFirstNameLike(memberFirstName, pageNumber);
+		 m.addAttribute("memberFirstName", memberFirstName);
 		 m.addAttribute("page", page);
-		 return "member/Admi/AdminFindMemberDetails";
+		 return "member/Admi/AdminFindMemberDetailsFirstName";
 		
 	}
 
+	@GetMapping("/admin/get/membergenderlike")
+	public String searchGender(@RequestParam("memberGender") String memberGender, 
+			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
+		
+		Page<MemberDetails> page = memberDetailService.findMemberGenderLike(memberGender, pageNumber);
+		m.addAttribute("memberGender", memberGender);
+		m.addAttribute("page", page);
+		return "member/Admi/AdminFindMemberDetailsGender";
+		
+	}
+	
+	@GetMapping("/admin/get/memberaddresslike")
+	public String searchAddress(@RequestParam("memberAddress") String memberAddress, 
+			@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model m) {
+		
+		Page<MemberDetails> page = memberDetailService.findMemberAddressLike(memberAddress, pageNumber);
+		m.addAttribute("memberAddress", memberAddress);
+		m.addAttribute("page", page);
+		return "member/Admi/AdminFindMemberDetailsGender";
+		
+	}
+	
 }

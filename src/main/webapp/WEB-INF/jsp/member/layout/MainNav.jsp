@@ -82,7 +82,7 @@
 <!--               </a> -->
 <!--             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="${contextRoot}/member/myebook?memberId=${memberId}">
                 <span data-feather="book-open" class="align-text-bottom"></span>
                 電子書
               </a>

@@ -47,7 +47,7 @@
 				<div class="container mt-2 mb-2">
 						<div class="d-flex">
 			<select class="form-select form-select-lg" aria-label=".form-select-lg example" id="category">
-			  <option selected disable>查詢選項</option>
+			  <option selected>查詢選項</option>
 			  <option value="id">ID</option>
 			  <option value="Lastname">姓</option>
 			  <option value="Firstname">名</option>
@@ -82,18 +82,18 @@
 					<tbody>
 
 
-						<jstl:forEach var="member" items="${page.content}">
+						<jstl:forEach var="memberDetails" items="${page.content}">
 							<tr>  
-								<th scope="row">${member.memberId}</th>
-								<td><img src="${contextRoot}/admin/get/getphoto?memberId=${member.memberId}" width="100px"> </td>
-								<td>${member.memberDetails.memberLastName}</td>
-								<td>${member.memberDetails.memberFirstName}</td>
-								<td>${member.memberDetails.memberEmail}</td>
-								<td><a href="${contextRoot}/admin/edit/member?memberId=${member.memberId}" type="button" class="btn btn-light">修改</a></td>
+								<th scope="row">${memberDetails.memberId}</th>
+								<td><img src="${contextRoot}/admin/get/getphoto?memberId=${memberDetails.memberId}" width="100px"> </td>
+								<td>${memberDetails.memberLastName}</td>
+								<td>${memberDetails.memberFirstName}</td>
+								<td>${memberDetails.memberEmail}</td>
+								<td><a href="${contextRoot}/admin/edit/member?memberId=${memberDetails.memberId}" type="button" class="btn btn-light">修改</a></td>
 								
-								<form id="deleteForm" action="${contextRoot}/admin/delete/member?memberId=${member.memberId}" method="post">
+								<form id="deleteForm" action="${contextRoot}/admin/delete/member?memberId=${memberDetails.memberId}" method="post">
 								<input name="_method" type="hidden" value="delete"/>
-								<input name="memberId" type="hidden" value="${member.memberId}"/>
+								<input name="memberId" type="hidden" value="${memberDetails.memberId}"/>
 								<td><input onclick="confirmDelete()" type="" value="刪除" class="btn btn-danger"></td>
 								</form>
 								
@@ -107,13 +107,13 @@
 				<!-- 寫東西的地方 bottom-->
 
 				<br>
-				
-				
+
 				<jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+
 					<jstl:choose>
 
 						<jstl:when test="${page.number != pageNumber-1}">
-							<a href="${contextRoot}/admin/get/memberidlike?p=${pageNumber}&memberId=${memberId}">${pageNumber}</a>
+							<a href="${contextRoot}/admin/get/memberemaillike?p=${pageNumber}&memberEmail=${memberEmail}">${pageNumber}</a>
 						</jstl:when>
 
 						<jstl:otherwise>
@@ -124,6 +124,7 @@
 					<jstl:if test="${pageNumber != page.totalPages}">
 						|
 				</jstl:if>
+
 
 				</jstl:forEach>
 
@@ -158,7 +159,7 @@ $('form').on('submit', function(e) {
 	  } else if (category === 'Lastname') {
 	    url = '${contextRoot}/admin/get/memberlastnamellike?memberLastName=' + encodeURIComponent(search);
 	  } else if (category === 'Firstname') {
-		   url = '${contextRoot}/admin/get/memberfirstnamellike?memberFirstName=' + encodeURIComponent(search);
+		    url = '${contextRoot}/admin/get/memberfirstnamellike?memberFirstName=' + encodeURIComponent(search);
 	  } else if (category === 'email') {
 	    url = '${contextRoot}/admin/get/memberemaillike?memberEmail=' + encodeURIComponent(search);
 	  } else if (category === 'gender') {
