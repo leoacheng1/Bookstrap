@@ -408,7 +408,7 @@
                     <div class="row g-0">
                         <div class="col-md-4">
                             <a href=""><img src="ad1/9782072940897-xs.webp" class="img-fluid rounded-start"
-                                    alt="..."></a>
+                                    alt="..." style="text-align: center;"></a>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body ">

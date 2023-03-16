@@ -81,6 +81,7 @@ public class Books {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book", cascade = CascadeType.ALL)
 	private Set<ShoppingCarts> shoppingCarts;
 	
+	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
 	private List<SaleItems> saleItems;
 	

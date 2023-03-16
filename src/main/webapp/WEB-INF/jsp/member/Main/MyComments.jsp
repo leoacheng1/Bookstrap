@@ -20,9 +20,6 @@
 
       <div class="container-fluid">
         <div class="row">
-
-
-
           <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div
               class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-2">
@@ -31,18 +28,17 @@
               </div>
             </div>
 
-            <!-- /////// -->
-            <div class="container"  id="commentArea" class="commentArea">
-              <!-- 您的會員id是:${sessionScope.memberId} -->
-      <table class="table table-bordered">
+      <div class="container"  id="commentArea" class="commentArea">
+    
+      <table class="table table-bordered text-center " style="vertical-align: middle;text-align: center;">
         <thead>
           <tr>
             <th>書名</th>
             <th>評分</th>
             <th>評論時間</th>
-            <th>評論內容</th>
-            <th>修改</th>
-            <th>刪除</th>
+            <th style="width: 500px;">評論內容</th>
+            <th style="width: 75px;">修改</th>
+            <th style="width: 75px;">刪除</th>
           </tr>
         </thead>
         <tbody>
@@ -51,7 +47,7 @@
               <td class="comment-book-name"><jstl:out value="${memberComment.book.name}"/></td> 
               <td class="comment-evaluation"><jstl:out value="${memberComment.evaluation}"/></td>   
               <td class="comment-date"><fmt:formatDate pattern="yyyy/MM/dd HH:mm" value="${memberComment.date}"/></td>   
-              <td class="comment-content"><jstl:out value="${memberComment.content}"/></td> 
+              <td class="comment-content text-center" style="text-align: center;height:100px;"><jstl:out value="${memberComment.content}"/></td> 
               <td>
                 <button type="button" id="edit-btn" class="edit-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" data-cmid="${memberComment.commentId}">
                   編輯
@@ -124,6 +120,7 @@
 <script src="${contextRoot}/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <jsp:include page="../layout/MainJs.jsp"/>
 
 <script>
@@ -248,10 +245,25 @@ deleteBtn[i].addEventListener('click',function(e){
   console.log("好ㄟ")
   let cmID = this.getAttribute('data-cmid');
   console.log(cmID)
-  var result = confirm("您確定要刪除掉這份資料嗎？");
-    if (result == true) {
-      deleteComment(cmID);
-    }
+  swal({
+      title: "確定要刪除此筆評論?",
+      icon: "warning",
+      buttons: {
+        Btn: false,
+        cancel: {
+          text: "取消",
+          visible: true
+        },
+        danger: {
+          text: "確認",
+          visible: true
+        }
+      }
+    }).then((willDelete) => {
+      if (willDelete) {      
+        deleteComment(cmID);       
+      }
+    })
 })
 }
 

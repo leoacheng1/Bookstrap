@@ -54,7 +54,7 @@ public class CommentController {
 		
 		if(memberId != null) {
 			Books onebook = bService.getBookById(bookId);//綁定書籍id
-			Members onemember = memberService.findById(memberId);
+			Members onemember = memberService.findById(memberId);//綁定會員id
 			Comment bComment = new Comment();
 			bComment.setContent(content);
 			bComment.setEvaluation(evaluation);
@@ -99,7 +99,7 @@ public class CommentController {
 		return "/member/Main/MyComments";
 	}
 	
-	// 
+	// 從會員的所有評論中找到其中一條評論
 	@ResponseBody
 	@GetMapping("/comment/{commentId}")
 	public Comment getCommentById(@PathVariable("commentId")Integer commentId) {

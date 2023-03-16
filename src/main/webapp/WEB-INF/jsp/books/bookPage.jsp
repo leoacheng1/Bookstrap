@@ -101,7 +101,7 @@
             float: right;
             margin: 10px;
           }
-
+          /* li之間的中隔線 */
           li {
             border-right: 1px solid silver;
             padding-right: 10px;
@@ -157,9 +157,11 @@
                     id="cataSelector">${book.category}</span>
                   <p style="margin-bottom: 5px;font-size: large;margin-top: 5px;">定價：<span class="priId" id="priId"
                       class="book"><s>${book.price}</span>元</s><br></p>
-                  <p style="margin-bottom: 5px;font-size: large;">優惠價：<strong class="disId" id="disId"
-                      style="color: red;font-size: larger;">${book.discount}</strong>折,
-                    <strong class="disPriId" id="disPriId" style="color: red;font-size: larger;"></strong>元</p>
+                  <p style="margin-bottom: 5px;font-size: large;">優惠價：
+                    <strong class="disId" id="disId"
+                            style="color: red;font-size: larger;">${book.discount}</strong>折,
+                    <strong class="disPriId" id="disPriId" style="color: red;font-size: larger;"></strong>元
+                  </p>
                   <p style="margin-bottom: 5px;font-size: large;">運送方式：</p>
                 </div>
               </div>
@@ -221,21 +223,22 @@
             <h4>會員評論</h4>
             </p>
             <hr>
+<!-- ////////////// 評論按鈕 ///////////// -->
             <div>
               <button type="button" id="commentBtn" class="btn btn-outline-dark"
-                style="display: block;margin: 0 auto;">寫評論</button>
+                      style="display: block;margin: 0 auto;">寫評論</button>
             </div>
             <br>
-<!-- ////////////// 評論按鈕 ///////////// -->
-            <div id="commentArea" class="commentArea">
 
-            </div>
+  <div id="commentArea" class="commentArea">
+
+   </div>
 
 <!-- ////////////// 所有評論 ///////////// -->
   <div id="showArea" class="showArea">
      <jstl:forEach var="comment" items="${comments}">
       <div class="card">
-        <div class="card-header">${comment.member.memberDetails.memberFirstName} ${comment.member.memberDetails.memberLastName}</div>
+        <div class="card-header">${comment.member.memberDetails.memberLastName}${comment.member.memberDetails.memberFirstName} </div>
         <div class="card-body">
         <p class="card-text">評論時間：<fmt:formatDate pattern="yyyy/MM/dd HH:mm" value="${comment.date}"/></p>
         <p class="card-text">評分等級：<jstl:out value="${comment.evaluation}"/>顆星</p>
@@ -321,14 +324,14 @@
     let text = "";
     res.data.forEach(element => {
       // console.log(element.id)
-      text += `<li style="display:list-item;display:inline-block;width:200px;height:250px;margin-top: 5px;vertical-align: middle;">
+      text += `<li style="display:list-item;display:inline-block;width:200px;height:260px;margin-top: 5px;vertical-align: middle;position: relative;">
                  <a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+ element.id + `">
                    <img src="http://localhost:8080/Bookstrap/books/id?id=`+ element.id + `" style="width: 150px;height: 175px;margin-right:auto;margin-left:auto;display:block;margin-top:5px;vertical-align: middle;" alt="">
                  </a>
                <div style="text-align: center;margin-left:7px">
                  <a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+ element.id + `">` + element.name + `</a>
                </div>
-               <div style=" list-style: none;text-align: center;">
+               <div style=" list-style: none;;position: absolute;bottom: 5px;left:27px">
                <div style="display: none;">原價：<span class="priId" id="priId">`+ element.price + `</span>元</div>
                <div>優惠價：<strong class="disId" id="disId" style="color: red;">`+ element.discount + `</strong>折
                             <strong class="disPriId" id="disPriId" style="color: red;"></strong>元</div>
@@ -364,8 +367,9 @@
 
           commentBtn.addEventListener('click', function (e) {
             const memberId = `${memberId}`
-            if(memberId == null){
+            if(memberId == ""){
               console.log("未登入")
+              window.location=`http://localhost:8080/Bookstrap/guest/signin`
             }else{           
               console.log(`${sessionScope.memberName}`)
               console.log(`${memberId}`)
@@ -384,8 +388,9 @@
            <img src="../book/stars1.jpg" style="width:30px;height:30px" class="iImg" id="iImg5">
            <hr>
            <div>
-             <textarea id="inputText" style="border: none;outline: none;width:1010px;height:200px" placeholder="請輸入評論"></textarea>  
+             <textarea id="inputText" style="border: none;outline: none;width:1010px;height:200px" placeholder="請輸入評論" maxlength="120"></textarea>  
            </div>
+           <div style="float: right;color:silver;"><span id="count"></span>/120</div>
            <button type="button" id="submitBtn" class="btn btn-outline-secondary submitBtn" style="display: block;margin: 0 auto;">送出</button>
           </div>
           </div><br>`
@@ -463,6 +468,17 @@
               // console.log(x + 1)
               stars = x + 1   
             }
+
+///////////////// 評論區字數顯示 ///////////////////////////
+const textarea = document.querySelector('textarea');
+const countDisplay = document.querySelector('#count');
+
+textarea.addEventListener('input', function() {
+  const text = textarea.value;
+  const count = text.length;
+  countDisplay.textContent = count;
+});
+
 ////////////////////// 送出按鈕 //////////////////////
 const submitBtn = document.getElementById('submitBtn')
 

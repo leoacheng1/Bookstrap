@@ -147,7 +147,7 @@ padding: 15px;
     </label>
    </td>
   </tr>
-  <tr style="border: 1px solid  silver;">
+  <tr style="border: 1px solid silver;">
    <th style="text-align: center;width: 100px;background-color:#F0F0F0;border: 1px solid  silver;">
     <label>類別：</label>
    </th>
@@ -208,34 +208,25 @@ padding: 15px;
 <!-- 您現在搜尋的關鍵字是:${sessionScope.name} -->
 
 <div style="height: 13px; margin-right:30px;">
-  <nav aria-label="Page navigation example"  >
-    <ul class="pagination justify-content-end">   
-      <!-- <li class="page-item" >
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>    -->
+  <nav aria-label="Page navigation example" >
+    <ul class="pagination justify-content-end">
 <jstl:forEach var="pageNumber" begin="1" end="${book.totalPages}">
   <li class="page-item"><a class="page-link likeBtn" data-likeId="${pageNumber}" data-name="${sessionScope.name}">${pageNumber}</a></li>
 </jstl:forEach>  
- <!-- <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>   -->
     </ul>
   </nav>
 </div>
 
 <jstl:forEach var="book" items="${book.content}">
-  <div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:57px">
+  <div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:57px;position: relative;">
     <a href='http://localhost:8080/Bookstrap/books/oneBook?id=${book.id}'>
       <img src="http://localhost:8080/Bookstrap/books/id?id=${book.id}" class="card-img-top"
       style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>
   <div class="card-body">
     <a href="http://localhost:8080/Bookstrap/books/oneBook?id=${book.id}" style="text-decoration: none;">
-      <h5 class="card-title">${book.name}</h5>
+      <h5 class="card-title" style="text-align: center;">${book.name}</h5>
     </a>
+  <div style="position: absolute;bottom: 25px;">
     <p class="card-text" style="margin-bottom: 3px;">${book.languages}書</p>
     <a id="selectAuthor" class="selectAuthor" data-auName="${book.author}" style="text-decoration: none;">
       <p class="card-text" style="margin-bottom: 3px;">${book.author}</p>
@@ -249,7 +240,9 @@ padding: 15px;
     </p>
     <a href="#" class="btn btn-primary">加入購物車</a>
   </div>
+
   </div>
+</div>
 </jstl:forEach>
 
 
@@ -264,11 +257,6 @@ padding: 15px;
   <div style="height: 13px; margin-right:30px;">
     <nav aria-label="Page navigation example" >
       <ul class="pagination justify-content-end">
-        <!-- <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>   -->
         <jstl:forEach var="pageNumber" begin="1" end="${allbook.totalPages}">
           <jstl:choose>
             <jstl:when test="${page.number != pageNumber-1}">
@@ -280,11 +268,6 @@ padding: 15px;
             </jstl:otherwise>
           </jstl:choose>
         </jstl:forEach>
-        <!-- <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li> -->
       </ul>
     </nav>
   </div>
@@ -292,14 +275,16 @@ padding: 15px;
 <br>
 <br>
 <jstl:forEach var="allbook" items="${allbook.content}">
- <div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px;">
+ <div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px;position: relative;">
   <a href='http://localhost:8080/Bookstrap/books/oneBook?id=${allbook.id}'>
     <img src="http://localhost:8080/Bookstrap/books/id?id=${allbook.id}" class="card-img-top"
          style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>
-  <div class="card-body">
+  <div class="card-body" style="margin: 0;">
    <a href="http://localhost:8080/Bookstrap/books/oneBook?id=${allbook.id}">
-    <h5 class="card-title">${allbook.name}</h5>
+    <h5 class="card-title" style="text-align: center;">${allbook.name}</h5>
    </a>
+  
+  <div style="position: absolute;bottom: 25px;">
    <p class="card-text" style="margin-bottom: 3px;">${allbook.languages}書</p>
    <a id="selectAuthor" class="selectAuthor" data-auName="${allbook.author}"
      style="text-decoration: none;">
@@ -309,7 +294,9 @@ padding: 15px;
    <p class="card-text" style="margin-bottom: 3px;">優惠價：<strong class="disId" id="disId" style="color: red;font-size: large;">${allbook.discount}</strong>折,
    <strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p>
    </p>
-   <a href="#" class="btn btn-primary">加入購物車</a>
+   <a href="#" class="btn btn-primary" >加入購物車</a>
+  </div>
+
   </div>
  </div>
 </jstl:forEach>
@@ -377,18 +364,24 @@ let daaaata2 = ""
 
 res.data.content.forEach(element => {
 console.log(element.name)
-daaaata += `<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px">`
+daaaata += `<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px;position: relative;">`
 + `<a href="http://localhost:8080/Bookstrap/books/oneBook?id=` + element.id + `">
 <img src="http://localhost:8080/Bookstrap/books/id?id=`+ element.id + `" class="card-img-top" 
 style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>`
 + `<div class="card-body">`
-+ `<a href="http://localhost:8080/Bookstrap/books/oneBook?id=` + element.id + `"><h5 class="card-title">` + element.name + `</h5></a>`
++ `<a href="http://localhost:8080/Bookstrap/books/oneBook?id=` + element.id + `">
+   <h5 class="card-title" style="text-align: center;">` + element.name + `</h5></a>`
++ `<div style="position: absolute;bottom: 25px;">`
 + `<p class="card-text" style="margin-bottom: 3px;">` + element.languages + `書</p>`
-+ `<a id="selectAuthor" class="selectAuthor" data-auName="` + element.author + `" style="text-decoration: none;"><p class="card-text" style="margin-bottom: 3px;">` + element.author + `</p></a>`
-+ `<p class="card-text" style="margin-bottom: 3px; display: none;">定價：<span class="priId" id="priId" class="book"><s>` + element.price + `</span>元</s></p>`
-+ `<p class="card-text" style="margin-bottom: 3px;">優惠價：<strong class="disId" id="disId" style="color: red;font-size: large;">` + element.discount + `</strong>折,`
++ `<a id="selectAuthor" class="selectAuthor" data-auName="` + element.author + `" style="text-decoration: none;">
+   <p class="card-text" style="margin-bottom: 3px;">` + element.author + `</p></a>`
++ `<p class="card-text" style="margin-bottom: 3px; display: none;">定價：
+   <span class="priId" id="priId" class="book"><s>` + element.price + `</span>元</s></p>`
++ `<p class="card-text" style="margin-bottom: 3px;">優惠價：
+    <strong class="disId" id="disId" style="color: red;font-size: large;">` + element.discount + `</strong>折,`
 + `<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p></p>`
 + `<a href="#" class="btn btn-primary">加入購物車</a>`
++ `</div>`
 + `</div>`
 + `</div>`
 });

@@ -25,24 +25,27 @@
         <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
   
   <div class="content-wrapper">
-  <div style="margin-left: 200px;">
+  <div>
   <div class="content-header" >
     <br/>
+    <div style="position: absolute;top: 40px;left: 250px;">
       <h1 style="margin-left: 550px;">所有評論</h1>
     <hr>    
-  </div>
+  
+  <div style="font-size:large;">
   <table class="text-center" style="width: 1350px;">
-    <thead  style="background-color: silver;">
+    <thead  style="background-color:#DCDCDC;">
       <tr>
-        <th style="width: 75px;">會員id</th>
-        <th style="width: 75px;">書名</th>
-        <th style="width: 75px">評分</th>
+        <th style="width: 50px;">會員id</th>
+        <th style="width: 150px;">書名</th>
+        <th style="width: 50px">評分</th>
         <th style="width: 75px;">評論時間</th>
-        <th style="width: 100px;">評論</th>
-	    <th style="width: 75px;">刪除</th>
+        <th style="width: 150px;">評論</th>
+	      <th style="width: 75px;">刪除</th>
       </tr>
     </thead>
     <tbody>
+
     <jstl:forEach items="${page.content}" var="comments" >
      <tr>
       <td style="height: 50px;"><jstl:out value="${comments.member.memberId}"/></td> 
@@ -58,6 +61,8 @@
 
     </tbody>  
 </table>
+</div>
+
 <br>
 <div style="font-size:larger;">
   <nav aria-label="Page navigation example">
@@ -80,6 +85,7 @@
 </div>
 </div>
 </div>
+</div>
 <!--右側彈跳式功能列 -->
 <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
 <!--版型需要的js-->
@@ -93,10 +99,25 @@
     // console.log("好ㄟ")
     let cmID = this.getAttribute('data-cmid');
     console.log(cmID)
-    var result = confirm("您確定要刪除掉這份資料嗎？");
-    if (result == true) {
-    deleteComment(cmID);
-    }
+    swal({
+      title: "確定要刪除此筆評論?",
+      icon: "warning",
+      buttons: {
+        Btn: false,
+        cancel: {
+          text: "取消",
+          visible: true
+        },
+        danger: {
+          text: "確認",
+          visible: true
+        }
+      }
+    }).then((willDelete) => {
+      if (willDelete) {      
+        deleteComment(cmID);       
+      }
+    })
   })
   }
 
@@ -122,5 +143,6 @@
 <script src="${contextRoot}/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>
