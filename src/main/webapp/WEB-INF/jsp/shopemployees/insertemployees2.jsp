@@ -33,14 +33,14 @@
                           <form action="${contextRoot}/semps/insertemployee" method="post"
                             enctype="multipart/form-data">
                             <div class="form-group">
-                              <label>員工分店:
-                                <select name="empShopid" class="form-control">
-                                  <option selected value="1">麥當勞</option>
-                                  <option value="2">肯德基</option>
-                                  <option value="3">漢堡王</option>
-                                  <option value="4">摩斯漢堡</option>
-                                </select>
-                              </label>
+                              <label for="shop-id">員工分店</label>
+                              <select id="shop-id" class="form-control" name="empShopid">
+
+                                <jstl:forEach items="${shopid}" var="shopid">
+                                  <option value="${shopid.id}">${shopid.shopName}
+                                  </option>
+                                </jstl:forEach>
+                              </select>
                             </div>
                             <div class="form-group">
                               <label>員工姓名:</label>

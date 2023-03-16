@@ -39,7 +39,9 @@ public class ShopEmployeesController {
 	}
 
 	@GetMapping("/semps/insertpage")
-	public String insertPage() {
+	public String insertPage(Model model) {
+		List<Shops> s0 = sService.findAllShop();
+		model.addAttribute("shopid",s0);
 		return "shopemployees/insertemployees2";
 	}
 
