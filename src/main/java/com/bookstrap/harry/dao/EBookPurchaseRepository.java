@@ -14,7 +14,7 @@ public interface EBookPurchaseRepository extends JpaRepository<EBookPurchases, I
 	public EBookPurchases findPurchaseByMemberAndEBook(@Param("member") Integer memberId, @Param("eBook") Integer ebookId);
 
 
-	@Query(value = "FROM EBookPurchases eb WHERE eb.member.memberId = :mId")
+	@Query(value = "FROM EBookPurchases eb WHERE eb.member.memberId = :mId AND eb.purchaseStatus = true")
 	public Page<EBookPurchases> getAllEBookPurchaseByMember(Pageable page, @Param("mId") Integer memberId);
 }
 

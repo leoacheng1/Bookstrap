@@ -32,9 +32,9 @@
 	
             <!-- /////// -->
             
-          <jstl:choose>
-          <jstl:when test="${eBook.purchaseStatus ne true}">
+        
             <jstl:forEach var="eBook" items="${page.content}">
+         
             
  <table class="table">
   <thead>
@@ -59,23 +59,11 @@
   </tbody>
 </table>
 		
-</jstl:forEach>
-</jstl:when>
 
-<jstl:otherwise>
- <table class="table">
- <thead>
-    <tr>
-      <th scope="col">電子書ID</th>
-      <th scope="col">封面</th>
-      <th scope="col">書名</th>
-      <th scope="col">詳細內容</th>
-      <th scope="col">觀看電子書</th>
-    </tr>
-  </thead>
-  </table>
-</jstl:otherwise>
-</jstl:choose>  
+</jstl:forEach>
+
+
+
             <!-- ///// -->
 
           </main>
