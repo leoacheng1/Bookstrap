@@ -58,7 +58,7 @@ public class EBookPurchaseController {
 		
 		eBookPurchase.setPurchaseStatus(true);
 		ebpService.insertEBookPurchase(eBookPurchase);
-		return "";
+		return "redirect:/ebook/get/allebook";
 	}
 	
 }

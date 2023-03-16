@@ -154,7 +154,7 @@ public class EBookController {
 	
 	
 	@GetMapping("/ebook/get/photo")
-	public ResponseEntity<byte[]> getEBookPhoto(@RequestParam Integer eBookId){
+	public ResponseEntity<byte[]> getEBookPhoto(@RequestParam("eBookId") Integer eBookId){
 		EBooks photoId = eBookService.getPhotoById(eBookId);
 		byte[] photoFile = photoId.geteBookPhoto();
 		HttpHeaders header = new HttpHeaders();
