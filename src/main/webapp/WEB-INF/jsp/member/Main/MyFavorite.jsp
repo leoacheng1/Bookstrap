@@ -33,7 +33,6 @@
             <!-- /////// -->
             
             
-            <jstl:forEach var="eBook" items="${page.content}">
             
  <table class="table">
   <thead>
@@ -41,22 +40,25 @@
       <th scope="col">追蹤清單ID</th>
       <th scope="col">商品名稱</th>
       <th scope="col">商品價格</th>
-      <th scope="col">商品數量</th>
+      <th scope="col">商品頁面</th>
     </tr>
   </thead>
+  
+            <jstl:forEach var="eBook" items="${page.content}">
   <tbody>
   
     <tr>
       <th scope="row">${eBook.eBook.eBookId}</th>
       <td>${eBook.eBook.eBookName}</td>
       <td>${eBook.eBook.eBookPrice}</td>
-      <td>${eBook.eBook.eBookDiscount}</td>
+     <td><a href="${contextRoot}/ebook/ebookpage?eBookId=${eBook.eBook.eBookId}" type = "button"  class="btn btn-secondary">內容頁面</a></td>
     </tr>
     
   </tbody>
+</jstl:forEach>
+
 </table>
 		
-</jstl:forEach>
 
             <!-- ///// -->
 

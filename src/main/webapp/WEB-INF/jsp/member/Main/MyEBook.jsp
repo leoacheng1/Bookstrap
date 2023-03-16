@@ -42,7 +42,7 @@
       <th scope="col">電子書ID</th>
       <th scope="col">封面</th>
       <th scope="col">書名</th>
-      <th scope="col">詳細內容</th>
+      <th scope="col">電子書頁面</th>
       <th scope="col">觀看電子書</th>
     </tr>
   </thead>
@@ -52,8 +52,8 @@
       <th scope="row">${eBook.eBook.eBookId}</th>
       <td><img src="${contextRoot}/ebook/get/photo?eBookId=${eBook.eBook.eBookId}" width = "100px"></td>
       <td>${eBook.eBook.eBookName}</td>
-      <td><a href="${contextRoot}/ebook/ebookpage?eBookId=${eBook.eBook.eBookId}" type = "button">內容</a></td>
-      <td><a href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBook.eBookNumber}" type = "button">觀看</a></td>
+      <td><a href="${contextRoot}/ebook/ebookpage?eBookId=${eBook.eBook.eBookId}" type = "button"  class="btn btn-secondary">內容頁面</a></td>
+      <td><a href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBook.eBookNumber}" type = "button" class="btn btn-primary">觀看</a></td>
     </tr>
     
   </tbody>

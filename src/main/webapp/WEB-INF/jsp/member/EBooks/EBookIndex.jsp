@@ -227,7 +227,7 @@
                     	                   	
                     	                   	
 		    <a href="#" class="btn btn-primary ms-2">加入購物車</a>
-<%-- 		    <a href="${contextRoot}/test/ebook/add/shoppingcart?memberId=${memberId}&eBookId=${eBook.eBookId}" class="btn btn-primary ms-2">Test購物車</a> --%>
+		    <a href="${contextRoot}/test/ebook/add/shoppingcart?memberId=${memberId}&eBookId=${eBook.eBookId}" class="btn btn-primary ms-2">Test購物車</a>
                   </div>
   
 <%--     <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBookNumber}" >View eBook</a> --%>
