@@ -20,6 +20,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Sales")
 public class Sales {
@@ -50,6 +54,8 @@ public class Sales {
 	@Column(name = "status")
 	private String status;
 	
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@Column(name = "order_time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date orderTime;
@@ -120,13 +126,6 @@ public class Sales {
 		this.address = address;
 	}
 
-	public String getDelievery() {
-		return delivery;
-	}
-
-	public void setDelievery(String delievery) {
-		this.delivery = delievery;
-	}
 
 	public String getPayment() {
 		return payment;

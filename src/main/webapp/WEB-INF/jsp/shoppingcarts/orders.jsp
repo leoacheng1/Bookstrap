@@ -24,14 +24,25 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           ></div>
           <div class="container">
             <form action="${contextRoot}/shipping/checkout" method="post">
-              <input
-                type="text"
-                value="${sessionScope.memberId} "
-                name="memberId"
-              />
-              <input type="text" value="undone" name="pay" />
-              <input type="text" value="1000" name="totalPrice" />
-              <input type="text" value="1" name="status" />
+              <input type="hidden" value="undone" name="pay" />
+              <input type="hidden" value="" name="totalPrice" id="inputPrice" />
+              <input type="hidden" value="undone" name="status" />
+              <c:forEach
+                var="cartItem"
+                items="${cartItemList}"
+                varStatus="status"
+              >
+                <input
+                  type="hidden"
+                  name="saleItems[${status.index}].bookId"
+                  value="${cartItem.bookId}"
+                />
+                <input
+                  type="hidden"
+                  name="saleItems[${status.index}].amount"
+                  value="${cartItem.amount}"
+                />
+              </c:forEach>
               <div class="card">
                 <div class="card-header bg-custom">
                   <h2 style="color: white; margin: 0">購買物品</h2>
@@ -186,6 +197,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
     console.log("Total price: " + totalPrice);
     document.getElementById("totalPrice").textContent = totalPrice + "元";
+    document.getElementById("inputPrice").value = totalPrice;
   </script>
   <jsp:include page="../member/layout/MainJs.jsp" />
 </html>

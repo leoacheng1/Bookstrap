@@ -45,9 +45,9 @@
 		  </a>
 		</li>
 		<li class="nav-item">
-		  <a href="pages/tables/jsgrid.html" class="nav-link">
+		  <a href="${contextRoot}/shipping/checkorder" class="nav-link">
 			<i class="far fa-circle nav-icon"></i>
-			<p>功能3</p>
+			<p>管理訂單</p>
 		  </a>
 		</li>
 	  </ul>

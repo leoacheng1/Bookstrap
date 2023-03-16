@@ -17,8 +17,8 @@ public interface NewShoppingCartsRepository extends JpaRepository<NewShoppingCar
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM NewShoppingCarts where memberId = :memberId")
-	public void deleteAllByMemberId(Integer memberId);
+	@Query(value = "DELETE FROM NewShoppingCarts where member_Id = :memberId", nativeQuery = true)
+	public void deleteAllByMemberId(@Param("memberId")Integer memberId);
 
 	@Transactional
 	@Modifying

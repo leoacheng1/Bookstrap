@@ -22,27 +22,45 @@ public class SaleItems {
 	@Column(name = "item_id")
 	private Integer id;
 
+	@Column(name = "sale_id")
+	private Integer saleId;
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sale_id")
+	@JoinColumn(name = "sale_id", insertable=false, updatable=false)
 	private Sales sale;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "book_id")
-	private Books book;
+	@Column(name = "book_id")
+	private Integer bookId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ebook_id")
+	@JoinColumn(name = "book_id", insertable=false, updatable=false)
+	private Books book;
+
+	@Column(name = "ebook_id")
+	private Integer ebookId;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ebook_id", insertable=false, updatable=false)
 	private EBooks ebook;
 
 	@Column(name = "amount")
 	private Integer amount;
 
-	public Integer getId() {
-		return id;
+	public SaleItems() {
+
+	}
+	public SaleItems(Integer bookId, Integer amount) {
+	    this.bookId = bookId;
+	    this.ebook = null;
+	    this.amount = amount;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public Integer getSaleId() {
+		return saleId;
+	}
+
+	public void setSaleId(Integer saleId) {
+		this.saleId = saleId;
 	}
 
 	public Sales getSale() {
@@ -53,12 +71,28 @@ public class SaleItems {
 		this.sale = sale;
 	}
 
+	public Integer getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(Integer bookId) {
+		this.bookId = bookId;
+	}
+
 	public Books getBook() {
 		return book;
 	}
 
 	public void setBook(Books book) {
 		this.book = book;
+	}
+
+	public Integer getEbookId() {
+		return ebookId;
+	}
+
+	public void setEbookId(Integer ebookId) {
+		this.ebookId = ebookId;
 	}
 
 	public EBooks getEbook() {
