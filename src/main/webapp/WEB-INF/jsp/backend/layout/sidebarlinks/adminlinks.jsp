@@ -45,11 +45,17 @@
 		  </a>
 		</li>
 		<li class="nav-item">
-		  <a href="pages/tables/jsgrid.html" class="nav-link">
+		  <a href="${contextRoot}/comment/allPage" class="nav-link">
 			<i class="far fa-circle nav-icon"></i>
-			<p>功能3</p>
+			<p>所有評論</p>
 		  </a>
 		</li>
+		<li class="nav-item">
+		  <a href="pages/tables/jsgrid.html" class="nav-link">
+			<i class="far fa-circle nav-icon"></i>
+			<p>功能4</p>
+		  </a>
+		</li>		
 	  </ul>
 	</li>
 
@@ -69,7 +75,7 @@
 		<a href="${contextRoot}/admin/get/allmember" class="nav-link">
 		  <i class="nav-icon far fa-circle nav-icon"></i>
 		  <p>
-			查尋所有會員  
+			查詢所有會員  
 			<span class="badge badge-info right"></span>
 		  </p>
 		</a>
@@ -79,7 +85,7 @@
 		<a href="${contextRoot}/admin/get/member" class="nav-link">
 		  <i class="nav-icon far fa-circle nav-icon"></i>
 		  <p>
-			查尋會員
+			查詢會員
 			<span class="badge badge-info right"></span>
 		  </p>
   

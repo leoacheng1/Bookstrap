@@ -6,11 +6,26 @@ for (let i = 0; i < deleteBtn.length; i++) {
     let bkID = this.getAttribute('data-bkid');
     console.log(bkID)
 
-    var result = confirm("您確定要刪除掉這份資料嗎？");
-    if (result == true) {
-    //delete ajax
-    sendDeleteAjax(bkID)
-    }
+    swal({
+      title: "確定要刪除此筆資料?",
+      icon: "warning",
+      buttons: {
+        Btn: false,
+        cancel: {
+          text: "取消",
+          visible: true
+        },
+        danger: {
+          text: "確認",
+          visible: true
+        }
+      }
+    }).then((willDelete) => {
+      if (willDelete) {
+        //delete ajax
+        sendDeleteAjax(bkID);
+      }
+    });
   })
 }
 
@@ -64,12 +79,14 @@ function getDetails(bkID){
 function htmlMaker(data){
   let bookmsg=""
   bookmsg='<tr>'
- +' <td colspan="2" id="sizeInput" style="font-weight:bold">尺寸</td>'
- +' <td colspan="2" id="pagesInput" style="font-weight:bold">頁數</td>'
- +' <td colspan="7" id="introInput" style="font-weight:bold">簡介</td>'
- +' <td colspan="2" id="gradeInput" style="font-weight:bold">分級</td>'
- +' <td colspan="1" id="crossInput"><button data-btnId="'+data.data.id+'" class="clearBtn'+data.data.id+'"><img style="width:10px;height:10px" src="../book/cross.png"></button></td>'
-//  +' <td colspan="1" id="crossInput"><button type="button" data-btnId="'+data.data.id+'" class="btn-close clearBtn'+data.data.id+'" aria-label="Close"></button></td>'
+ +' <td colspan="2" id="sizeInput" style="font-weight:bold;background-color:#DCDCDC;height: 50px;"">尺寸</td>'
+ +' <td colspan="2" id="pagesInput" style="font-weight:bold;background-color:#DCDCDC;height: 50px;"">頁數</td>'
+ +' <td colspan="7" id="introInput" style="font-weight:bold;background-color:#DCDCDC;height: 50px;"">簡介</td>'
+ +' <td colspan="2" id="gradeInput" style="font-weight:bold;background-color:#DCDCDC;height: 50px;"">分級</td>'
+//  +' <td colspan="2" id="crossInput" style="font-weight:bold;background-color:#DCDCDC;"><button data-btnId="'+data.data.id+'" class="clearBtn'+data.data.id+'"><img style="width:10px;height:10px" src="../book/cross.png"></button></td>'
+ +' <td colspan="2" id="crossInput" style="font-weight:bold;background-color:#DCDCDC;height: 50px;"">'
+ +' <button type="button" data-btnId="'+data.data.id+'" class="btn-close clearBtn'+data.data.id+'" aria-label="Close" ></button>'
+ +' </td>'
  +' </tr>'
  +' <tr>'
  +' <td colspan="2" id="size">'+data.data.size+'</td>'

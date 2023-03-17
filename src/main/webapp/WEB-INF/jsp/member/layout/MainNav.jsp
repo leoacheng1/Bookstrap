@@ -47,7 +47,7 @@
               </a>
             </li>
              <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="${contextRoot}/comment/memberPage?p=1&memberId=${memberId}">
                 <span data-feather="list" class="align-text-bottom"></span>
                 我的評論
               </a>

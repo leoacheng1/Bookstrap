@@ -1,79 +1,3 @@
-
-
-// axios({
-//   method:'get',
-//   url:'http://localhost:8080/Bookstrap/books/allpage'
-// })
-// .then(res=>{
-//   console.log(res.data)
-//   allHtmlMaker(res)
-// })
-// .catch(err=>{
-// console.log(err)
-// })
-
-// function allHtmlMaker(res){
-//   const con = document.getElementById('console')
-//   let daaata=""
-//   con.innerHTML=""
-//   res.data.content.forEach(element=>{
-//     console.log(element.name )
-//     daaata+=`<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px">`
-//   +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
-//     <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" class="card-img-top" 
-//     style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>`
-//   +`<div class="card-body">`
-//   +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`"><h6 class="card-title">`+element.name+`</h6></a>`
-//   +`<p class="card-text" style="margin-bottom: 3px;">語言：`+element.languages+`書</p>`
-//   +`<p class="card-text" style="margin-bottom: 3px;">作者：`+element.author+`</p>`
-//   +`<p class="card-text" style="margin-bottom: 3px;">售價：`+element.price+`元</p>`
-//   +`<p class="card-text" style="margin-bottom: 3px;">優惠價：`+element.discount+`折</p>`
-//   +`<a href="#" class="btn btn-primary">加入購物車</a>`
-//   +`</div>`
-//   +`</div>`
-
-//   }); 
-
-//   let totalPages = res.data.totalPages;
-//   console.log(totalPages)
-//   for (let i = 1; i <= totalPages; i++) {
-//     daaata += '<button class="pageBtn btn btn-outline-info" style="position: absolute;bottom: 0;" id="pageButton" data-page="' + i + '">' + i + '</button>'
-//   }
-//   con.innerHTML=daaata    
-
-
-//   let buttonsArray = document.getElementsByClassName('pageBtn');
-//   for (i = 0; i <= buttonsArray.length; i++) {
-//     buttonsArray[i].addEventListener('click', function (e) {
-
-//       let pageNumber = this.getAttribute('data-page');
-
-//       console.log('pageNumber:' + pageNumber)
-//       loadThatPage(pageNumber)
-//     })
-   
-//   }
-//   function loadThatPage(pageNumber) {
-
-//     axios({
-//       url: 'http://localhost:8080/Bookstrap/books/allpage',
-//       method: 'get',
-//       params: {
-//         p: pageNumber
-//       }
-//     })
-//       .then(res => {
-//         console.log(res)
-//         allHtmlMaker(res)
-//       })
-//       .catch(err => {
-//         console.log(err)
-//       })
-//   }
-
-
-// }
-  
 ////////  多條件搜尋  ////////
 var submitBtn = document.getElementById('submitBtnnnn')
 submitBtn.addEventListener('click',function(e){
@@ -150,24 +74,28 @@ function htmlmaker(data){
   con2.innerHTML=""
   con.innerHTML=""
   let daaaata=""
-    data.forEach(element => {
-console.log(element.name )
-    daaaata+=`<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:57px">`
-  +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
-    <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" class="card-img-top" 
-    style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>`
-  +`<div class="card-body">`
-  +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`"><h5 class="card-title">`+element.name+`</h5></a>`
-  +`<p class="card-text" style="margin-bottom: 3px;">`+element.languages+`書</p>`
-  +`<a id="selectAuthor" class="selectAuthor" data-auName="`+element.author+`" style="text-decoration: none;"><p class="card-text" style="margin-bottom: 3px;">`+element.author+`</p></a>`
-  // +`<button id="selectAuthor" class="selectAuthor" data-auName="`+element.author+`"><p id="selectAuthor" class="card-text selectAuthor" data-auName="`+element.author+`" style="margin-bottom: 3px;">`+element.author+`</p></button>`
-  +`<p class="card-text" style="margin-bottom: 3px; display: none;">定價：<span class="priId" id="priId" class="book"><s>`+element.price+`</span>元</s></p>`
-  +`<p class="card-text" style="margin-bottom: 3px;">優惠價：<strong class="disId" id="disId" style="color: red;font-size: large;">`+element.discount+`</strong>折,`
-  +`<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p></p>`
-  +`<a href="#" class="btn btn-primary">加入購物車</a>`
-  +`</div>`
-  +`</div>`
-  }); 
+  data.forEach(element => {
+    daaaata+=`<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:57px;position: relative;">`
+            +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
+              <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" class="card-img-top" 
+              style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>`
+            +`<div class="card-body">`
+            +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`">
+              <h5 class="card-title" style="text-align: center;">`+element.name+`</h5></a>`
+            + `<div style="position: absolute;bottom: 25px;">`
+            +`<p class="card-text" style="margin-bottom: 3px;">`+element.languages+`書</p>`
+            +`<a id="selectAuthor" class="selectAuthor" data-auName="`+element.author+`" style="text-decoration: none;">
+              <p class="card-text" style="margin-bottom: 3px;">`+element.author+`</p></a>`
+            +`<p class="card-text" style="margin-bottom: 3px; display: none;">定價：
+              <span class="priId" id="priId" class="book"><s>`+element.price+`</span>元</s></p>`
+            +`<p class="card-text" style="margin-bottom: 3px;">優惠價：
+              <strong class="disId" id="disId" style="color: red;font-size: large;">`+element.discount+`</strong>折,`
+            +`<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p></p>`
+            +`<a href="#" class="btn btn-primary">加入購物車</a>`
+            +`</div>`
+            +`</div>`
+            +`</div>`
+            }); 
   let pageBtn = `<div style="height: 13px; margin-right:30px;">
                  <nav aria-label="Page navigation example"><ul class="pagination justify-content-end">
                  <li class="page-item"><a class="page-link" href="#">1</a></li></ul></nav></div>`
@@ -251,18 +179,24 @@ function htmlLike(res) {
  
   res.data.content.forEach(element => {
     console.log(element.name)
-    daaaata += `<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px">`
+    daaaata += `<div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:10px;position: relative;">`
       + `<a href="http://localhost:8080/Bookstrap/books/oneBook?id=` + element.id + `">
       <img src="http://localhost:8080/Bookstrap/books/id?id=`+ element.id + `" class="card-img-top" 
       style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>`
       + `<div class="card-body">`
-      + `<a href="http://localhost:8080/Bookstrap/books/oneBook?id=` + element.id + `"><h5 class="card-title">` + element.name + `</h5></a>`
+      + `<a href="http://localhost:8080/Bookstrap/books/oneBook?id=` + element.id + `">
+         <h5 class="card-title" style="text-align: center;">` + element.name + `</h5></a>`
+      + `<div style="position: absolute;bottom: 25px;">`
       + `<p class="card-text" style="margin-bottom: 3px;">` + element.languages + `書</p>`
-      + `<a id="selectAuthor" class="selectAuthor" data-auName="` + element.author + `" style="text-decoration: none;"><p class="card-text" style="margin-bottom: 3px;">` + element.author + `</p></a>`
-      + `<p class="card-text" style="margin-bottom: 3px; display: none;">定價：<span class="priId" id="priId" class="book"><s>` + element.price + `</span>元</s></p>`
-      + `<p class="card-text" style="margin-bottom: 3px;">優惠價：<strong class="disId" id="disId" style="color: red;font-size: large;">` + element.discount + `</strong>折,`
+      + `<a id="selectAuthor" class="selectAuthor" data-auName="` + element.author + `" style="text-decoration: none;">
+         <p class="card-text" style="margin-bottom: 3px;">` + element.author + `</p></a>`
+      + `<p class="card-text" style="margin-bottom: 3px; display: none;">定價：
+         <span class="priId" id="priId" class="book"><s>` + element.price + `</span>元</s></p>`
+      + `<p class="card-text" style="margin-bottom: 3px;">優惠價：
+         <strong class="disId" id="disId" style="color: red;font-size: large;">` + element.discount + `</strong>折,`
       + `<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p></p>`
       + `<a href="#" class="btn btn-primary">加入購物車</a>`
+      + `</div>`
       + `</div>`
       + `</div>`
   });
@@ -290,11 +224,11 @@ function htmlLike(res) {
   function likePage(likeId) {
     axios({
       method: 'get',
-      url: 'http://localhost:8080/Bookstrap/books/allpage',
-      params: {
-        pageNumber: likeId,
-        // name: namee,
-      }
+      url: 'http://localhost:8080/Bookstrap/books/allpage?p='+likeId,
+      // params: {
+      //   pageNumber: likeId,
+      //   // name: namee,
+      // }
     })
       .then(res => {
         // console.log(res.data)
@@ -379,12 +313,16 @@ console.log(element.name )
     <img src="http://localhost:8080/Bookstrap/books/id?id=`+element.id+`" class="card-img-top" 
     style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;margin-left:auto"></a>`
   +`<div class="card-body">`
-  +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`" style="text-decoration: none;"><h5 class="card-title">`+element.name+`</h5></a>`
+  +`<a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+element.id+`" style="text-decoration: none;">
+    <h5 class="card-title" style="text-align: center;">`+element.name+`</h5></a>`
   +`<p class="card-text" style="margin-bottom: 3px;">`+element.languages+`書</p>`
   +`<a id="selectAuthor" class="selectAuthor" data-auName="`+element.author+`" style="text-decoration: none;"><p class="card-text" style="margin-bottom: 3px;">`+element.author+`</p></a>`
-  +`<p class="card-text" style="margin-bottom: 3px; display: none;">定價：<span class="priId" id="priId" class="book"><s>`+element.price+`</span>元</s></p>`
-  +`<p class="card-text" style="margin-bottom: 3px;">優惠價：<strong class="disId" id="disId" style="color: red;font-size: large;">`+element.discount+`</strong>折,`
+  +`<p class="card-text" style="margin-bottom: 3px; display: none;">定價：
+    <span class="priId" id="priId" class="book"><s>`+element.price+`</span>元</s></p>`
+  +`<p class="card-text" style="margin-bottom: 3px;">優惠價：
+    <strong class="disId" id="disId" style="color: red;font-size: large;">`+element.discount+`</strong>折,`
   +`<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p>`
+  +`</p>`
   +`<a href="#" class="btn btn-primary">加入購物車</a>`
   +`</div>`
   +`</div>`
@@ -422,38 +360,5 @@ disPriId[i].textContent = disPrice;// 將計算結果寫回元素
 }
 }
 
-//////////  模糊搜尋  ///////////
-// var sendOutBtn = document.querySelector(`[data-btnid="sendOutBtn"]`)
-// sendOutBtn.addEventListener('click',function(e){
-//   console.log("有抓到")
-//   let searchField = ""
-//   let searchArea = document.querySelector(`[data-search="searchArea"]`).value
-//   if(searchArea != null){
-//     searchField += searchArea
-//   }
-//   console.log("searchField:"+searchField)
-//   likebook(searchField)
-// })
 
-
-// function likebook(searchField){
-//   axios({
-//     url:"http://localhost:8080/Bookstrap/books/like",
-//     method:'get',
-//     params:{
-//       name:searchField
-//     }
-//   })
-//   .then(res=>{
-//     console.log("好耶")
-//     console.log("res:"+res.data)
-//     // window.location.href = 'http://localhost:8080/Bookstrap/books/search';
-    
-//   }).then(res=>{
-//     htmlmaker(res.data)
-//   })
-//   .catch(err=>{
-//     console.log("哭阿")
-//   })
-// }
 
