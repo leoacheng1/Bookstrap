@@ -17,7 +17,7 @@ public interface NewShoppingCartsRepository extends JpaRepository<NewShoppingCar
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM NewShoppingCarts where member_Id = :memberId", nativeQuery = true)
+	@Query(value = "DELETE FROM NewShoppingCarts where memberId = :memberId")
 	public void deleteAllByMemberId(@Param("memberId")Integer memberId);
 
 	@Transactional
@@ -27,6 +27,6 @@ public interface NewShoppingCartsRepository extends JpaRepository<NewShoppingCar
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE NewShoppingCarts SET amount = :amount WHERE cartId = :cartId")
+	@Query(value = "UPDATE NewShoppingCarts SET amount = :amount WHERE cartId = :cartId")
 	public void updateAmountByCartId(@Param("amount") Integer amount,@Param("cartId") Integer cartId);
 }
