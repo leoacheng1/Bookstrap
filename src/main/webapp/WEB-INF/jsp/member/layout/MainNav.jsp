@@ -65,8 +65,8 @@
               </a>
             </li>
              <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="percent" class="align-text-bottom"></span>
+              <a class="nav-link" href="${contextRoot}/chatbox">
+                <span data-feather="list" class="align-text-bottom"></span>
                 客服中心
               </a>
             </li>
