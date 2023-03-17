@@ -98,4 +98,16 @@ public class BlogParaService {
 		blogParaDao.save(paragraph);
 		return "ok";
 	}
+	public BlogParagraph findLatestParaByIdNativeQuery() {
+	return blogParaDao.findLatestParaByIdNativeQuery();
 	}
+	public List<BlogParagraph> findCatagory1NativeQuery() {
+		return blogParaDao.findCatagory1NativeQuery();
+		}
+	public List<BlogParagraph> findCatagory2NativeQuery() {
+		return blogParaDao.findCatagory2NativeQuery();
+		}
+	public List<BlogParagraph> findAllNativeQuery() {
+		return blogParaDao.findAllNativeQuery();
+		}
+}

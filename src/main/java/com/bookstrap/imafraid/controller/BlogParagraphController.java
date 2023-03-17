@@ -27,9 +27,9 @@ public class BlogParagraphController {
 	@Autowired
 	private BlogParaService blogParaService;
 	
-	@Autowired
-	private BlogParagraphRepository blogParaDao;
-
+//	@Autowired
+//	private BlogParagraphRepository blogParaDao;
+		
 	@PostMapping("/blog/createParagraph")
 	public String createPara(@RequestParam String pTitle, @RequestParam String pContent, @RequestParam String pAuther,
 			@RequestParam String pCatagory, @RequestParam MultipartFile[] pPhoto) throws IOException {
@@ -65,14 +65,14 @@ public class BlogParagraphController {
 		return allBlogParagraph;
 	}
 
-	@GetMapping("/blog/getAllBlogParagraphMVC")
-	public String getAllBlogParagraphMVC(Model m) {
-		List<BlogParagraph> allBlogParagraph = blogParaService.getAllBlogParagraph();
-
-		m.addAttribute("paraList", allBlogParagraph);
-
-		return "/blog/fakeIndex_mvc";
-	}
+//	@GetMapping("/blog/getAllBlogParagraphMVC")
+//	public String getAllBlogParagraphMVC(Model m) {
+//		List<BlogParagraph> allBlogParagraph = blogParaService.getAllBlogParagraph();
+//
+//		m.addAttribute("paraList", allBlogParagraph);
+//
+//		return "/blog/fakeIndex_mvc";
+//	}
 	@DeleteMapping("/blog/deleteParaById")
 	@ResponseBody
 	public String deleteParaById(@RequestParam Integer id) {
@@ -105,12 +105,26 @@ public class BlogParagraphController {
 	@ResponseBody
 	@GetMapping("/blog/showLatestPara")
 	public BlogParagraph findLatestParaByIdNativeQuery() {
-		System.out.println(blogParaDao.findLatestParaByIdNativeQuery());
-		return blogParaDao.findLatestParaByIdNativeQuery();
+		
+		return blogParaService.findLatestParaByIdNativeQuery();
 	}
 	
-	
-	
+	@ResponseBody
+	@GetMapping("/blog/catagory1")
+	public List<BlogParagraph> findCatagory1NativeQuery(Model m) {
+		List<BlogParagraph> catagory1 = blogParaService.findCatagory1NativeQuery();
+		
+		m.addAttribute("cat1ParaList", catagory1);
+		return blogParaService.findCatagory1NativeQuery();
+		}
+//	@GetMapping("/blog/getAllBlogParagraphMVC")
+//	public String getAllBlogParagraphMVC(Model m) {
+//		List<BlogParagraph> allBlogParagraph = blogParaService.getAllBlogParagraph();
+//
+//		m.addAttribute("paraList", allBlogParagraph);
+//
+//		return "/blog/fakeIndex_mvc";
+//	}
 	
 	
 	}
