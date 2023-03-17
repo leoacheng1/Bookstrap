@@ -113,7 +113,7 @@
 
                        
                         <li class="nav-item">
-                            <a class="nav-link active-2 text-dark fs-5 me-5" aria-current="page" href="#"><i
+                            <a class="nav-link active-2 text-dark fs-5 me-5" aria-current="page" href="http://localhost:8080/Bookstrap/shops/shopmap"><i
                                     class="fa-solid fa-location-dot"></i>分店位置
                             </a>
                         </li>
@@ -130,7 +130,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link b text-dark text-dark fs-5 me-5" href="#">優惠資訊</a>
+                            <a class="nav-link b text-dark text-dark fs-5 me-5 " href="#" >優惠資訊</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark text-dark fs-5 me-5" href="#">當月熱銷</a>

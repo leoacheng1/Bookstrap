@@ -105,6 +105,18 @@ public class MemberDdetailService {
 			return page;
 		}
 		
+		public Page<MemberDetails> findMemberGenderLike(String memberGender,  Integer pageNumber){
+			Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "memberLastName");
+			Page<MemberDetails> page = memberDetailDao.findMemberGenderLike(memberGender, pgb);
+			return page;
+		}
+		
+		public Page<MemberDetails> findMemberAddressLike(String memberAddress,  Integer pageNumber){
+			Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "memberLastName");
+			Page<MemberDetails> page = memberDetailDao.findMemberAddressLike(memberAddress, pgb);
+			return page;
+		}
+		
 	}
 	
 	

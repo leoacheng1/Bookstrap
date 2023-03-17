@@ -18,4 +18,10 @@ public interface MemberDetailRepository extends JpaRepository<MemberDetails, Int
 
 	@Query(value = "FROM MemberDetails md WHERE md.memberFirstName LIKE %:mFName%")
 	public Page<MemberDetails> findMemberFirstNameLike(@Param("mFName") String memberLastName, Pageable pageNumber);
+
+	@Query(value = "FROM MemberDetails md WHERE md.memberSex LIKE %:mG%")
+	public Page<MemberDetails> findMemberGenderLike(@Param("mG") String memberGender, Pageable pageNumber);
+
+	@Query(value = "FROM MemberDetails md WHERE md.memberAddress LIKE %:mG%")
+	public Page<MemberDetails> findMemberAddressLike(@Param("mG") String memberAddress, Pageable pageNumber);
 }

@@ -196,11 +196,11 @@
     <a id="selectAuthor" class="selectAuthor" data-auName="${eBook.eBookAuthor}" style="text-decoration: none;">
       <p class="card-text" style="margin-bottom: 3px;">${eBook.eBookAuthor}</p>
     </a>
-    <p class="card-text" style="margin-bottom: 3px;display: none;">定價：<span class="priId" id="priId"
+    <p class="card-text" style="margin-bottom: 3px;display: ;">定價：<span class="priId" id="priId"
       class="book"><s>${eBook.eBookPrice}</span>元</s></p>
       <p class="card-text" style="margin-bottom: 3px;">優惠價：<strong class="disId" id="disId"
         style="color: red;font-size: large;">${eBook.eBookDiscount}</strong>折,
-        <strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元
+        <strong class="disPriId" id="disPriId" style="color: red;font-size: large;">${eBook.eBookPrice} </strong>元
       </p>
     </p>
     
@@ -227,9 +227,10 @@
                     	                   	
                     	                   	
 		    <a href="#" class="btn btn-primary ms-2">加入購物車</a>
+		    <a href="${contextRoot}/test/ebook/add/shoppingcart?memberId=${memberId}&eBookId=${eBook.eBookId}" class="btn btn-primary ms-2">Test購物車</a>
                   </div>
   
-    <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBookNumber}" >View eBook</a>
+<%--     <a type="button" class="btn btn-primary mx-2" href="${contextRoot}/ebook/get/epub?eBookId=${eBook.eBookNumber}" >View eBook</a> --%>
                   <br>
     
   </div>

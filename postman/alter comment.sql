@@ -76,7 +76,7 @@ ALTER TABLE EBooks ADD member_id int null foreign key REFERENCES Members(member_
 
 
 -------3/5-------
-
+password
 
 CREATE TABLE Roles (
     roles_id INT IDENTITY(1,1) PRIMARY KEY,
@@ -91,14 +91,28 @@ CREATE TABLE MemberRoles (
     FOREIGN KEY (FK_role_id) REFERENCES Roles(roles_id)
 );
 
-ALTER TABLE Members ADD Role nvarchar(50) null;
+------
+DROP TABLE IF EXISTS Gender;
+CREATE TABLE Gender(
+gender_id tinyint primary key not null identity(1,1),
+gender nvarchar(6)
+);
 
-------3/9--------
+INSERT INTO Gender(gender) VALUES ('男'), ('女'), ('其他');
 
-ALTER TABLE EBooks ADD ebook_number int NOT NULL;
+INSERT INTO Employees(account, password, emp_position) VALUES ('admin', '123456', 'admin'), ('owner', '12345', 'owner'), ('employee', '1234', 'employee');
 
-DROP TABLE IF EXISTS EBookDetails;
+--------
 
-DROP TABLE IF EXISTS EBooks;
+CREATE TABLE TestShoppingCarts (        --待結帳
+t_s_id int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+FK_member_id int NOT NULL FOREIGN KEY REFERENCES Members(member_id),
+FK_eBook_id int NOT NULL FOREIGN KEY REFERENCES EBooks(ebook_id)
+);
 
-ALTER TABLE EBooks DROP CONSTRAINT [ebookDetail_id];
+
+
+CREATE TABLE TestCheckout(                    --結帳完成
+t_c_id int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+FK_ts_id int NOT NULL FOREIGN KEY REFERENCES TestShoppingCarts(t_s_id)
+);
