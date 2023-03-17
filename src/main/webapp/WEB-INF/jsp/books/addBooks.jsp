@@ -107,7 +107,7 @@
     let intro = document.getElementById('introInput')
     let grade = document.getElementById('gradeInput')
 
-    name.value = '和菓子絕美圖鑑：歲時物語‧生活節慶‧文化解謎，350+日本尋味事典'
+    name.value = '和菓子絕美圖鑑'
     author.value = '青木直己'
     translator.value = '楊家昌'
     languages.value = '中文'
@@ -122,7 +122,7 @@
                    <p style="font-size: large;">在3月女兒節品嚐草餅或雛霰、在5月端午節品味柏餅或粽子、在櫻花季有象徵櫻花或櫻葉的櫻餅、到了秋天則輪到紅葉造型的菓子登場…，跟隨著歲時行事而有不同風貌的和菓子，反映出與生活濃厚的季節感。</p>
                    <p style="font-size: large;">和菓子也具有療癒人心的效果，御手洗糰子象徵人的五體，是消災解厄的化身；在青森縣可見當地人扛著南部煎餅驅邪的特殊祭典；撒滿芝麻的牡丹餅竟奇蹟似地救了一位老婆婆；賞花時必吃的三色糰子竟是豐臣秀吉發明的？滿載各種和菓子的解說與由來，一探更多不為人知的故事！</p>
                    <p style="font-size: large;">本書細數與12個月節日、神社或寺廟的庇佑、古典文學、歷史人物或文豪相關的350種和菓子，揭開其神祕面紗與背後蘊含的意義，同時了解日本的歷史、自然、文化！</p>`
-    grade.value = '普遍級'
+    grade.value = '普通級'
   })
 
   /////////////  預覽圖片  ///////////////
