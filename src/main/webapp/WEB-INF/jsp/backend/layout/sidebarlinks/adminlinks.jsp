@@ -112,7 +112,7 @@ prefix="jstl"%>
 <!-- 		  </li> -->
 <!-- 		</ul> -->
 <!-- 	</li> -->
-<li class="nav-header">個人功能</li>
+<li class="nav-header">員工管理</li>
 <li class="nav-item">
   <a href="pages/calendar.html" class="nav-link">
     <i class="nav-icon fas fa-calendar-alt"></i>
@@ -126,27 +126,33 @@ prefix="jstl"%>
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-table"></i>
     <p>
-      個人功能
+      員工管理
       <i class="fas fa-angle-left right"></i>
     </p>
   </a>
   <ul class="nav nav-treeview" style="display: none">
     <li class="nav-item">
-      <a href="pages/tables/simple.html" class="nav-link">
+      <a href="${contextRoot}/semps/insertpage" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
-        <p>功能1</p>
+        <p>新增員工</p>
       </a>
     </li>
     <li class="nav-item">
-      <a href="pages/tables/data.html" class="nav-link">
+      <a href="${contextRoot}/semps/all" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
-        <p>功能2</p>
+        <p>員工管理</p>
       </a>
     </li>
     <li class="nav-item">
-      <a href="pages/tables/jsgrid.html" class="nav-link">
+      <a href="${contextRoot}/sempsatt/all" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
-        <p>功能3</p>
+        <p>請假簽核</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="${contextRoot}/sempsche/showpage" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>排班</p>
       </a>
     </li>
   </ul>
