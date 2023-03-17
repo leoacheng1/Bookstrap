@@ -134,7 +134,7 @@ prefix="fn" %>
                       </c:choose>
                     </td>
                     <td>
-                      <button>編輯</button>
+                      <button class="btn btn-info">編輯</button>
                     </td>
                   </tr>
                 </c:forEach>
