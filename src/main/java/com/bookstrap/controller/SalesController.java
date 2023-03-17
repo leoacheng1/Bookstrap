@@ -1,5 +1,8 @@
 package com.bookstrap.controller;
 
+import java.io.UnsupportedEncodingException;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bookstrap.harry.bean.MemberDetails;
+import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.bean.SaleItems;
 import com.bookstrap.harry.bean.Sales;
 import com.bookstrap.service.NewShoppingCartsService;
@@ -30,17 +35,18 @@ public class SalesController {
 	@Autowired
 	private SaleItemsService siService;
 
+	
+
 	// 結帳後送出訂單
 	@PostMapping("/checkout")
 	public String checkout(@RequestParam("totalPrice") Integer totalPrice, @RequestParam("address") String address,
 			@RequestParam("delivery") String delivery, @RequestParam("payment") String payment,
-			@RequestParam("pay") String pay, @RequestParam("status") String status, HttpSession session,
-			@RequestParam("saleItems[0].bookId") Integer bookId0, @RequestParam("saleItems[0].amount") Integer amount0,
-			@RequestParam("saleItems[1].bookId") Integer bookId1,
-			@RequestParam("saleItems[1].bookId") Integer amount1) {
+			@RequestParam("pay") String pay, @RequestParam("email") String email, @RequestParam("status") String status,
+			HttpSession session, @RequestParam("saleItems[0].bookId") Integer bookId0,
+			@RequestParam("saleItems[0].amount") Integer amount0, @RequestParam("saleItems[1].bookId") Integer bookId1,
+			@RequestParam("saleItems[1].bookId") Integer amount1) throws UnsupportedEncodingException, MessagingException {
 
 		Integer memberId = (Integer) session.getAttribute("memberId");
-
 		// create a Sales object
 		Sales sales = new Sales();
 		sales.setMemberId(memberId);
@@ -70,30 +76,22 @@ public class SalesController {
 			siService.insert(saleItems1);
 		}
 
-		// 清空購物車
-		System.out.println(memberId);
-		nscService.deleteAllByMemberId(memberId);
-		session.removeAttribute("cartItemList");
+//		// 清空購物車
+//		nscService.deleteAllByMemberId(memberId);
+//		session.removeAttribute("cartItemList");
+
+		// 寄Email
+		sService.sendVertificationEnail(email);
 
 		// return a success response
 		return "shoppingcarts/checkout";
 	}
-	
-//	@GetMapping("/checkorder")
-//	public String findAllOrders() {
-//		sService.findAllSales();
-//		return "backend/controllpanel/admin/shop/showorders";
-//	}
-	
-	
 
 	@GetMapping("/checkorder")
-	  public String search(
-	                       @RequestParam(name = "page", defaultValue = "1") int pageNumber,
-	                       Model model) {
-	    Page<Sales> salesPage = sService.searchBySaleId(pageNumber);
-	    model.addAttribute("salesPage", salesPage);
-	    System.out.println(salesPage);
-	    return "backend/controllpanel/admin/shop/showorders";
-	  }
+	public String search(@RequestParam(name = "page", defaultValue = "1") int pageNumber, Model model) {
+		Page<Sales> salesPage = sService.searchBySaleId(pageNumber);
+		model.addAttribute("salesPage", salesPage);
+		System.out.println(salesPage);
+		return "backend/controllpanel/admin/shop/showorders";
+	}
 }

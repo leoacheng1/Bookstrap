@@ -26,7 +26,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             <form action="${contextRoot}/shipping/checkout" method="post">
               <input type="hidden" value="undone" name="pay" />
               <input type="hidden" value="" name="totalPrice" id="inputPrice" />
-              <input type="hidden" value="undone" name="status" />
+              <input type="hidden" value="Pending" name="status" />
               <c:forEach
                 var="cartItem"
                 items="${cartItemList}"
@@ -145,6 +145,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   <input
                     type="text"
                     value="${sessionScope.memberDetails.memberEmail}"
+                    name="email"
                   />
 
                   <h3>地址</h3>
