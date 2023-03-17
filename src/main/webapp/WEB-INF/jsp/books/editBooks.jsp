@@ -53,6 +53,7 @@
       <option value="地理">地理</option>
       <option value="語言文學">語言文學</option>
       <option value="藝術">藝術</option>
+      <option value="其他">其他</option>
     </select><br />
     出版社：<input  class="input" type="text" name="publisher" id="publisherInput" value="${book.publisher}" /><br />
     出版日期：<input  class="input" type="date" name="date" id="dateInput" value="${book.date}" /><br />
@@ -73,7 +74,7 @@
     </div><br />
     分級：<select name="grade" id="gradeInput" value="${detail.grade}" style="margin-top: 0px;margin-bottom: 15px;">
       <option selected value="${detail.grade}">${detail.grade}</option>
-      <option value="普遍級">普遍級</option>
+      <option value="普通級">普通級</option>
       <option value="限制級">限制級</option>
     </select><br />
   </form>

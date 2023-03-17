@@ -68,7 +68,7 @@
   <div style="display: flex;margin-top: 10px;">簡介：
     <textarea cols="max" rows="max" name="intro" id="introInput" placeholder="請輸入簡介" style="width:350px;height:150px;"></textarea></div><br/>
   分級：<select name="grade" id="gradeInput" style="margin-top: 0px;margin-bottom: 15px;">
-         <option selected value="普遍級">普遍級</option>
+         <option selected value="普通級">普通級</option>
          <option value="限制級">限制級</option>
         </select><br/>
   <button type="submit" id="myBtn" class="my-customer-data-btn btn btn-info">送出</button>

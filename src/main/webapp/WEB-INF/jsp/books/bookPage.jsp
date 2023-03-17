@@ -162,7 +162,7 @@
                             style="color: red;font-size: larger;">${book.discount}</strong>折,
                     <strong class="disPriId" id="disPriId" style="color: red;font-size: larger;"></strong>元
                   </p>
-                  <p style="margin-bottom: 5px;font-size: large;">運送方式：</p>
+                  <p style="margin-bottom: 5px;font-size: large;">運送方式：宅配、門市取貨、超商取貨</p>
                 </div>
               </div>
             </form>
