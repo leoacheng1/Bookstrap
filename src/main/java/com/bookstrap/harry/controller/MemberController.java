@@ -54,6 +54,8 @@ public class MemberController {
 	
 	@Autowired
 	private EBookPurchaseService ebpService;
+	
+	@Autowired
 	private SalesService sService;
 
 //	@GetMapping("/member/registrationpage")

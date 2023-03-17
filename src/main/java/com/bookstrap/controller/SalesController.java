@@ -76,9 +76,9 @@ public class SalesController {
 			siService.insert(saleItems1);
 		}
 
-//		// 清空購物車
-//		nscService.deleteAllByMemberId(memberId);
-//		session.removeAttribute("cartItemList");
+		// 清空購物車
+		nscService.deleteAllByMemberId(memberId);
+		session.removeAttribute("cartItemList");
 
 		// 寄Email
 		sService.sendVertificationEnail(email);
