@@ -99,15 +99,12 @@
                     right: 0;
                     text-align: right;
                     padding: 5px;
-                    margin-top: 6%;
-                    width: 17%;
-                    height: 85%;
-                    border: 2px solid;
-
+                    margin-top: 92px;
+                    width: 350px;
+                    max-height: 900px;
                     overflow: scroll;
+
                 }
-
-
 
                 .left-align {
                     position: absolute;
@@ -115,35 +112,32 @@
                     left: 0;
                     text-align: center;
                     padding: 5px;
-                    margin-top: 6%;
-                    width: 16%;
-                    height: 22%;
-                    border: 3px solid rgb(0, 0, 0);
-                    
-                    background-color: rgb(153, 155, 160);
-                  
+                    margin-top: 92px;
+                    width: 360px;
+                    max-height: 900px;
 
+
+                    font-size: 20px;
                 }
 
                 .googleMap {
-                    width: 1000px;
-                    height: 600px;
+                    width: 1300px;
+                    height: 910px;
                     margin-left: auto;
                     margin-right: auto;
                 }
 
                 .card {
-                    width: 16rem;
-                    height: 18rem;
 
                     background-size: 16rem 18rem;
+
                 }
 
                 .card-text {
                     font-size: 16px;
-                    color: white;
-                }
+                    color: black;
 
+                }
 
                 .roaddetail {
                     position: absolute;
@@ -151,22 +145,20 @@
                     left: 0;
                     text-align: left;
                     padding: 5px;
-                    margin-top: 18%;
-                    width: 16%;
-                    max-height: 60%;
-
-                    border: 3px solid rgb(0, 0, 0);
+                    margin-top: 299px;
+                    width: 360px;
+                    height: 700px;
                     overflow: scroll;
                     background-color: white
                 }
 
                 .instructions {
                     padding: 5px;
-                   
                     white-space: normal;
                     font-family: Arial, sans-serif;
                     font-weight: bold;
-                    
+                    font-size: 20px;
+
                 }
 
                 .fancy-border {
@@ -235,7 +227,6 @@
 
 
             <script>
-
                 function initMap() {
                     axios({
                         url: 'http://localhost:8080/Bookstrap/shops/allshopslist',
@@ -250,7 +241,6 @@
                         })
                 }
                 var originPosition;
-
                 function showMap(data) {
                     var map;
                     var location = [];
@@ -260,37 +250,27 @@
                         const myLatLng = { lat: latitude, lng: longitude };
                         location.push(myLatLng);
                     })
-
                     var lat, lon;
                     var promise1 = new Promise(function (resolve, reject) {
                         navigator.geolocation.getCurrentPosition(function (pos) {
                             lat = pos.coords.latitude
                             lon = pos.coords.longitude
-
                             resolve({ lat, lon })
                         })
                     })
-
                     promise1.then(function (value) {
                         console.log("promise:" + value.lat, value.lon)
-
-
-
                         var originPosition = new google.maps.LatLng(value.lat, value.lon);
                         var mapProp2 = {
                             center: originPosition,
                             zoom: 14
                         };
-
                         map = new google.maps.Map(document.getElementById("googleMap"), mapProp2);
                         var icon = "../shoppic/libicon.png";
-
                         marker = new google.maps.Marker({
                             position: { lat: lat, lng: lon },
                             map: map,
-
                         })
-
                         for (i = 0; i < location.length; i++) {
                             marker = new google.maps.Marker({
                                 position: location[i],
@@ -298,15 +278,9 @@
                                 icon: icon
                             })
                         }
-
-
-
                     })
-
-
                     const defaultCheck1 = document.getElementById('defaultCheck1')
                     defaultCheck1.addEventListener('click', function () {
-
                         if (defaultCheck1.checked) {
                             defaultCheck2.checked = false;
                         }
@@ -322,12 +296,10 @@
                                 console.log(err)
                             })
                         function showcloseshop(data) {
-
                             var locations = [];
                             data.forEach(element => {
                                 locations.push(element.shopAddress)
                             })
-
                             var locationdetails = [];
                             data.forEach(element => {
                                 let shopid = element.id
@@ -335,28 +307,22 @@
                                 let shopAddress = element.shopAddress
                                 let shopPhone = element.shopPhone
                                 let shoptime = element.shopOpenHour + "~" + element.shopcloseHour
-
                                 locationdetails.push({
                                     shopid: shopid, shopName: shopName, shopAddress: shopAddress
                                     , shopPhone: shopPhone, shoptime: shoptime
                                 })
-
                             })
-
                             var lat, lon;
                             var promise1 = new Promise(function (resolve, reject) {
                                 navigator.geolocation.getCurrentPosition(function (pos) {
                                     lat = pos.coords.latitude
                                     lon = pos.coords.longitude
-
                                     resolve({ lat, lon })
                                 })
                             })
-
                             ////////////////// 抓距離 和 時間  /////////////////////////
                             promise1.then(function (value) {
                                 let originPosition = new google.maps.LatLng(value.lat, value.lon);
-
                                 const service = new google.maps.DistanceMatrixService();
                                 service.getDistanceMatrix({
                                     origins: [originPosition],
@@ -367,63 +333,48 @@
                                     avoidTolls: false, // 是否避開收費路線
                                     language: 'zh-TW'
                                 }, callback);
-
                                 function callback(response, status) {
                                     if (status === "OK") {
-
                                         console.log("response  : " + response);
                                         let len = locations.length
                                         let displaces = [];
-
                                         console.log("location" + locations[0]);
                                         console.log("distancevalue" + response.rows[0].elements[1].distance.value);
                                         console.log("distance" + response.rows[0].elements[1].distance.text);
                                         console.log("duration" + response.rows[0].elements[1].duration.text);
-
                                         for (let i = 0; i < len; i++) {
                                             let placedetail = {
                                                 shopAddress: locations[i],
-
                                                 durationvalue: response.rows[0].elements[i].duration.value,
                                                 distance: response.rows[0].elements[i].distance.text,
                                                 duration: response.rows[0].elements[i].duration.text
                                             };
                                             displaces.push(placedetail)
-
                                         }
-
                                         displaces.sort((a, b) => {
                                             return a.durationvalue - b.durationvalue;
                                         });
-
                                         console.log(displaces)
-
                                         var shopshow = ""
                                         for (let i = 0; i < displaces.length; i++) {
-
-
                                             const result = locationdetails.find(obj => obj.shopAddress === displaces[i].shopAddress);
-
-                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + ')"> '
-                                                + '<div class="card-body row justify-content-center">'
+                                            shopshow += '<div   class="card" > '
+                                                + '<div class="card-body row justify-content-center ">'
+                                                + '<img alt="" src="http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + '"/>'
                                                 + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                 + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
                                                 + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
                                                 + ' <p class="card-text text-center">距離:' + displaces[i].distance + '</p>'
                                                 + ' <p class="card-text text-center">預估花費時間:' + displaces[i].duration + '</p>'
-                                                + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
-                                                + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
+                                                + '<button id="road"    class="road btn btn-info   " style="width: 100px;margin: 5px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
+                                                + '<button id="deleteroad"  class="deleteroad btn btn-warning   " style="width: 100px; margin: 5px;">路線刪除</button>'
                                                 + '</div>'
                                                 + '</div>'
                                                 + '</div>'
                                                 + '</br>'
-
                                         };
-
                                         let view = document.getElementById('viewright')
                                         view.innerHTML = shopshow
-
-
                                         var directionsService = new google.maps.DirectionsService();
                                         var directionsDisplay = new google.maps.DirectionsRenderer();
                                         const deleteroad1 = document.getElementsByClassName("deleteroad");
@@ -433,26 +384,19 @@
                                                 document.getElementById('roaddetail').innerHTML = ""
                                             })
                                         }
-
-
-
                                         ////////////////// 顯示路線  /////////////////////////
                                         const roadguideBtn = document.getElementsByClassName("road");
-
                                         for (i = 0; i < roadguideBtn.length; i++) {
                                             roadguideBtn[i].addEventListener('click', function (e) {
                                                 let msgID = this.getAttribute('data-msgid');
                                                 let address = this.getAttribute('address')
                                                 console.log("msgID:" + msgID)
-
                                                 console.log(address)
                                                 showroad(address)
-
                                             })
                                         }
                                         var directionsService = new google.maps.DirectionsService();
                                         var directionsDisplay = new google.maps.DirectionsRenderer();
-
                                         function showroad(address) {
                                             console.log(address)
                                             directionsDisplay.setMap(map);
@@ -462,7 +406,6 @@
                                                 travelMode: 'DRIVING',
                                                 language: 'zh_TW'
                                             };
-
                                             directionsService.route(request, function (result, status) {
                                                 if (status == 'OK') {
                                                     // 回傳路線上每個步驟的細節
@@ -486,10 +429,8 @@
                             })
                         }
                     })
-
                     const defaultCheck2 = document.getElementById('defaultCheck2')
                     defaultCheck2.addEventListener('click', function () {
-
                         if (defaultCheck2.checked) {
                             defaultCheck1.checked = false;
                         }
@@ -505,12 +446,10 @@
                                 console.log(err)
                             })
                         function showcloseshop(data) {
-
                             var locations = [];
                             data.forEach(element => {
                                 locations.push(element.shopAddress)
                             })
-
                             var locationdetails = [];
                             data.forEach(element => {
                                 let shopid = element.id
@@ -518,28 +457,22 @@
                                 let shopAddress = element.shopAddress
                                 let shopPhone = element.shopPhone
                                 let shoptime = element.shopOpenHour + "~" + element.shopcloseHour
-
                                 locationdetails.push({
                                     shopid: shopid, shopName: shopName, shopAddress: shopAddress
                                     , shopPhone: shopPhone, shoptime: shoptime
                                 })
-
                             })
-
                             var lat, lon;
                             var promise1 = new Promise(function (resolve, reject) {
                                 navigator.geolocation.getCurrentPosition(function (pos) {
                                     lat = pos.coords.latitude
                                     lon = pos.coords.longitude
-
                                     resolve({ lat, lon })
                                 })
                             })
-
                             ////////////////// 抓距離 和 時間  /////////////////////////
                             promise1.then(function (value) {
                                 let originPosition = new google.maps.LatLng(value.lat, value.lon);
-
                                 const service = new google.maps.DistanceMatrixService();
                                 service.getDistanceMatrix({
                                     origins: [originPosition],
@@ -550,63 +483,59 @@
                                     avoidTolls: false, // 是否避開收費路線
                                     language: 'zh-TW'
                                 }, callback);
-
                                 function callback(response, status) {
                                     if (status === "OK") {
-
                                         console.log(response);
                                         let len = locations.length
                                         let displaces = [];
-
                                         console.log("location" + locations[0]);
                                         console.log("distancevalue" + response.rows[0].elements[1].distance.value);
                                         console.log("distance" + response.rows[0].elements[1].distance.text);
                                         console.log("duration" + response.rows[0].elements[1].duration.text);
-
                                         for (let i = 0; i < len; i++) {
                                             let placedetail = {
                                                 shopAddress: locations[i],
-
                                                 distancevalue: response.rows[0].elements[i].distance.value,
                                                 distance: response.rows[0].elements[i].distance.text,
                                                 duration: response.rows[0].elements[i].duration.text
                                             };
                                             displaces.push(placedetail)
-
                                         }
-
                                         displaces.sort((a, b) => {
                                             return a.distancevalue - b.distancevalue;
                                         });
-
                                         console.log(displaces)
-
                                         var shopshow = ""
                                         for (let i = 0; i < displaces.length; i++) {
-
-
                                             const result = locationdetails.find(obj => obj.shopAddress === displaces[i].shopAddress);
-
-                                            shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + '); background-size:width: 14rem; height: 14rem;"> '
+                                            shopshow += '<div   class="card" > '
                                                 + '<div class="card-body row justify-content-center">'
+                                                + '<img alt="" src="http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + '"/>'
                                                 + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                 + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
                                                 + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
                                                 + ' <p class="card-text text-center">距離:' + displaces[i].distance + '</p>'
                                                 + ' <p class="card-text text-center">預估花費時間:' + displaces[i].duration + '</p>'
-                                                + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
-                                                + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
+                                                + '<button id="road"    class="road btn btn-info   " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
+                                                + '<button id="deleteroad"  class="deleteroad btn btn-warning  " style="width: 100px;">路線刪除</button>'
                                                 + '</div>'
                                                 + '</div>'
                                                 + '</div>'
                                                 + '</br>'
-
                                         };
+
+
+
+
+
+
+
+
+
+
 
                                         let view = document.getElementById('viewright')
                                         view.innerHTML = shopshow
-
-
                                         var directionsService = new google.maps.DirectionsService();
                                         var directionsDisplay = new google.maps.DirectionsRenderer();
                                         const deleteroad1 = document.getElementsByClassName("deleteroad");
@@ -616,24 +545,19 @@
                                                 document.getElementById('roaddetail').innerHTML = ""
                                             })
                                         }
-
                                         ////////////////// 顯示路線  /////////////////////////
                                         const roadguideBtn = document.getElementsByClassName("road");
-
                                         for (i = 0; i < roadguideBtn.length; i++) {
                                             roadguideBtn[i].addEventListener('click', function (e) {
                                                 let msgID = this.getAttribute('data-msgid');
                                                 let address = this.getAttribute('address')
                                                 console.log("msgID:" + msgID)
-
                                                 console.log(address)
                                                 showroad(address)
-
                                             })
                                         }
                                         var directionsService = new google.maps.DirectionsService();
                                         var directionsDisplay = new google.maps.DirectionsRenderer();
-
                                         function showroad(address) {
                                             console.log(address)
                                             directionsDisplay.setMap(map);
@@ -643,7 +567,6 @@
                                                 travelMode: 'DRIVING',
                                                 language: 'zh_TW'
                                             };
-
                                             directionsService.route(request, function (result, status) {
                                                 if (status == 'OK') {
                                                     // 回傳路線上每個步驟的細節
@@ -667,8 +590,6 @@
                             })
                         }
                     })
-
-
                     axios({
                         url: 'http://localhost:8080/Bookstrap/shops/allshopslist',
                         method: 'get',
@@ -726,7 +647,6 @@
                                             county
                                         };
                                     });
-
                                     console.log(counties)
                                     console.log(LocationDetails)
                                     const northBtn = document.getElementById("north");
@@ -836,7 +756,6 @@
                                             showfar(ans)
                                         }
                                     })
-
                                     function showfar(ans) {
                                         console.log(ans);
                                         var result = LocationDetails.filter(item => ans.includes(item.county));
@@ -866,7 +785,6 @@
                                                     console.log(response);
                                                     let len = shopAddresses.length
                                                     let places = [];
-
                                                     for (let i = 0; i < len; i++) {
                                                         let placedetail = {
                                                             shopAddress: shopAddresses[i],
@@ -884,15 +802,16 @@
                                                         let viewright = document.getElementById('viewright')
                                                         viewright.innerHTML = ""
                                                         const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
-                                                        shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + ');"> '
-                                                            + '<div class="card-body row justify-content-center">'
+                                                        shopshow += '<div   class="card" > '
+                                                            + '<div class="card-body row justify-content-center ">'
+                                                            + '<img alt="" src="http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + '"/>'
                                                             + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                             + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
                                                             + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
                                                             + ' <p class="card-text text-center">距離:' + places[i].distance + '</p>'
                                                             + ' <p class="card-text text-center">預估花費時間:' + places[i].duration + '</p>'
-                                                            + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
-                                                            + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
+                                                            + '<button id="road"    class="road btn btn-info   " style="width: 100px;margin: 5px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
+                                                            + '<button id="deleteroad"  class="deleteroad btn btn-warning   " style="width: 100px; margin: 5px;">路線刪除</button>'
                                                             + '</div>'
                                                             + '</div>'
                                                             + '</div>'
@@ -997,15 +916,16 @@
                                                         let viewright = document.getElementById('viewright')
                                                         viewright.innerHTML = ""
                                                         const result = locationdetails.find(obj => obj.shopAddress === places[i].shopAddress);
-                                                        shopshow += '<div   class="card" style="width: 16rem; height: 18rem; background-image: url(http://localhost:8080/Bookstrap/shops/id?id=' + result.shopAddress + '); background-size:width: 14rem; height: 14rem;"> '
-                                                            + '<div class="card-body row justify-content-center">'
+                                                        shopshow += '<div   class="card" > '
+                                                            + '<div class="card-body row justify-content-center ">'
+                                                            + '<img alt="" src="http://localhost:8080/Bookstrap/shops/id?id=' + result.shopid + '"/>'
                                                             + ' <p class="card-text  text-center">店名:' + result.shopName + '</p>'
                                                             + ' <p class="card-text text-center">地址:' + result.shopAddress + '</p>'
                                                             + ' <p class="card-text text-center">電話:' + result.shopPhone + '</p>'
                                                             + ' <p class="card-text text-center">距離:' + places[i].distance + '</p>'
                                                             + ' <p class="card-text text-center">預估花費時間:' + places[i].duration + '</p>'
-                                                            + '<button id="road"    class="road btn btn-info  btn-sm " style="width: 100px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
-                                                            + '<button id="deleteroad"  class="deleteroad btn btn-warning  btn-sm " style="width: 100px;">路線刪除</button>'
+                                                            + '<button id="road"    class="road btn btn-info   " style="width: 100px;margin: 5px;" data-msgid=' + result.shopid + '  address="' + result.shopAddress + '">路線規劃</button>'
+                                                            + '<button id="deleteroad"  class="deleteroad btn btn-warning   " style="width: 100px; margin: 5px;">路線刪除</button>'
                                                             + '</div>'
                                                             + '</div>'
                                                             + '</div>'
@@ -1063,8 +983,6 @@
                                             }
                                         })
                                     }
-
-
                                     resolve(addresses);
                                 })
                                 .catch(error => {
@@ -1073,23 +991,10 @@
                                 });
                         });
                     }
-
-
-
                 }
-
-
-
-
-
-
-
             </script>
-
             <script
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWOhPArftGhCpcIgRvWgN67IN4dJRDSsY&callback=initMap"></script>
-
-
         </body>
 
         </html>
