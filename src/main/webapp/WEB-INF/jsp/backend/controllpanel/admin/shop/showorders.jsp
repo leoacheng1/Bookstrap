@@ -34,7 +34,7 @@ prefix="fn" %>
       <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp"%>
 
       <div class="content-wrapper">
-        <div style="margin-left: 200px">
+        <div style="margin-left: 50px">
           <div class="content-header">
             <br />
             <h1>所有訂單</h1>
@@ -45,11 +45,13 @@ prefix="fn" %>
               <colgroup>
                 <col width="8%" />
                 <col width="9%" />
-                <col width="12%" />
+                <col width="9%" />
                 <col width="8%" />
-                <col width="20%" />
-                <col width="5%" />
-                <col width="18%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
               </colgroup>
               <thead>
                 <tr>
@@ -61,6 +63,7 @@ prefix="fn" %>
                   <th>付款方式</th>
                   <th>訂單總金額</th>
                   <th>訂單狀態</th>
+                  <th>修改狀態</th>
                 </tr>
               </thead>
               <tbody>
@@ -129,6 +132,9 @@ prefix="fn" %>
                         >
                         <c:otherwise>未知</c:otherwise>
                       </c:choose>
+                    </td>
+                    <td>
+                      <button>編輯</button>
                     </td>
                   </tr>
                 </c:forEach>

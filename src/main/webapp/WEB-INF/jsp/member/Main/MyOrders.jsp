@@ -53,15 +53,15 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
               </div>
             </div>
             <div class="container">
-              <table class="text-center table-01" style="width: 1350px">
+              <table class="text-center table-01" style="width: 1200px">
                 <colgroup>
                   <col width="13%" />
                   <col width="9%" />
                   <col width="12%" />
                   <col width="8%" />
-                  <col width="31%" />
-                  <col width="5%" />
-                  <col width="18%" />
+                  <col width="27%" />
+                  <col width="3%" />
+                  <col width="16%" />
                 </colgroup>
                 <thead>
                   <tr>
