@@ -58,6 +58,18 @@
 		</li>		
 	  </ul>
 	</li>
+
+<li class="nav-header">分店管理</li>
+	<li class="nav-item">
+		<a href="http://localhost:8080/Bookstrap/shops/shophome" class="nav-link">
+		  <i class="nav-icon fas fa-calendar-alt"></i>
+		  <p>
+			分店管理
+			<span class="badge badge-info right"></span>
+		  </p>
+  
+		</a>
+	  </li>	
 	<li class="nav-header">會員管理</li>
 	<li class="nav-item">
 		<a href="${contextRoot}/admin/get/allmember" class="nav-link">
@@ -149,3 +161,14 @@
 		  </li>
 		</ul>
 	  </li>
+	  	<li class="nav-header">客服</li>
+	<li class="nav-item">
+		<a href="${contextRoot}/chatboxback" class="nav-link">
+		  <i class="nav-icon fas fa-calendar-alt"></i>
+		  <p>
+			客服
+			<span class="badge badge-info right"></span>
+		  </p>
+  
+		</a>
+	  </li>	

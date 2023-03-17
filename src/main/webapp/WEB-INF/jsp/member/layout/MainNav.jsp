@@ -64,6 +64,12 @@
                 優惠券
               </a>
             </li>
+             <li class="nav-item">
+              <a class="nav-link" href="${contextRoot}/chatbox">
+                <span data-feather="list" class="align-text-bottom"></span>
+                客服中心
+              </a>
+            </li>
            
           </ul>
 
@@ -82,7 +88,7 @@
 <!--               </a> -->
 <!--             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="${contextRoot}/member/myebook?memberId=${memberId}">
                 <span data-feather="book-open" class="align-text-bottom"></span>
                 電子書
               </a>

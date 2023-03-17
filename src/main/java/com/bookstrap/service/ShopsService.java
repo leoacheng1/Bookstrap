@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.model.Shops;
 import com.bookstrap.model.ShopsRepository;
@@ -42,11 +43,52 @@ public class ShopsService {
 	public void deleteshopsbById(Integer id) {
 		sDao.deleteById(id);
 	}
-	public Page<Shops> getshopByPage(Integer pageNumber){
-		Pageable pgb = PageRequest.of(pageNumber-1, 3,Sort.Direction.DESC, "id");
-		
+
+	public Page<Shops> getshopByPage(Integer pageNumber) {
+		Pageable pgb = PageRequest.of(pageNumber - 1, 4, Sort.Direction.ASC, "id");
+
 		Page<Shops> page = sDao.findAll(pgb);
-		
+
 		return page;
+	}
+
+	public Shops updateShopById(Integer id, String shopName, String shopAddress,String shopPhone,
+			String shopOpenHour,String shopcloseHour,byte[] shopphoto,String longitude,String latitude)
+	{
+		Optional<Shops> optional = sDao.findById(id);
+
+		if (optional.isPresent()) {
+			Shops sh = optional.get();
+			sh.setId(id);
+			sh.setShopName(shopName);
+			sh.setShopAddress(shopAddress);
+			sh.setShopOpenHour(shopOpenHour);
+			sh.setShopcloseHour(shopcloseHour);
+			sh.setShopphoto(shopphoto);
+			sh.setLongitude(longitude);
+			sh.setLatitude(latitude);
+			System.out.println("有跑到這裡");
+//			sDao.save(sh);
+			return null ;
+			
+		}
+		System.out.println("沒有這筆資料");
+		
+		return null;
+	}
+	public List<Shops> findShopByAddress(String address) {
+		return sDao.findShopsLike(address);
+	}
+	
+	public Shops findShopByid(Integer id) {
+		
+		Optional<Shops> optional = sDao.findById(id);
+		
+		return optional.get();
+	}
+	public List<Shops> findShopsAddressLike(String place) {
+		System.out.println("service place"+place);
+		System.out.println(sDao.findShopsAddressLike(place).size());
+		return sDao.findShopsAddressLike(place);
 	}
 }

@@ -65,13 +65,17 @@ public class EBookController {
 //		return "";
 //	}
 	
+	//這裡的favority是初始化的概念，既一載入本頁便進去找favority有沒有東西
 	@GetMapping("/ebook/get/allebook")
 	public String findAllEbooks(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
 			Model m, HttpSession session){
 		Page<EBooks> page = eBookService.getEBooksByPage(pageNumber);
 		m.addAttribute("page", page);
+		
 		LinkedHashMap<Integer, Boolean> favorite = new LinkedHashMap<Integer,Boolean>();
+		
 		Integer memberId = (Integer)session.getAttribute("memberId");
+		
 		if (memberId == null) return "member/EBooks/EBookIndex";
 		
 		Members member = mService.findById(memberId);
@@ -150,7 +154,7 @@ public class EBookController {
 	
 	
 	@GetMapping("/ebook/get/photo")
-	public ResponseEntity<byte[]> getEBookPhoto(@RequestParam Integer eBookId){
+	public ResponseEntity<byte[]> getEBookPhoto(@RequestParam("eBookId") Integer eBookId){
 		EBooks photoId = eBookService.getPhotoById(eBookId);
 		byte[] photoFile = photoId.geteBookPhoto();
 		HttpHeaders header = new HttpHeaders();

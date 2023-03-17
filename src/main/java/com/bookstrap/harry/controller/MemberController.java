@@ -33,11 +33,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.harry.bean.EBookFavorite;
+import com.bookstrap.harry.bean.EBookPurchases;
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.security.CipherUtils;
 import com.bookstrap.harry.security.MemberUserDetailService;
 import com.bookstrap.harry.service.EBookFavorityService;
+import com.bookstrap.harry.service.EBookPurchaseService;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
 import com.bookstrap.harry.service.SendEmailService;
@@ -56,6 +58,9 @@ public class MemberController {
 	
 	@Autowired
 	private EBookFavorityService ebfService;
+	
+	@Autowired
+	private EBookPurchaseService ebpService;
 
 //	@GetMapping("/member/registrationpage")
 //	public String registrationpage() {
@@ -506,6 +511,19 @@ public class MemberController {
 		m.addAttribute("page", page);
 		
 		return "member/Main/MyFavorite";
+	}
+	
+	@GetMapping("/member/myebook")
+	public String toMyEBookPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, 
+			@RequestParam("memberId") Integer memberId, Model m) {
+		
+		Page<EBookPurchases> page = ebpService.getAllEBookPurchaseByMember(pageNumber, memberId);
+		if(page == null) {
+			return "member/Main/MyEBook";
+		}
+		m.addAttribute("page", page);
+		
+		return "member/Main/MyEBook";
 	}
 	
 
