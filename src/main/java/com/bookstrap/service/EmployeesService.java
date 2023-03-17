@@ -1,5 +1,6 @@
 package com.bookstrap.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,16 @@ public class EmployeesService {
 	public Employees insertEmployee(Employees emp) {
 		return empDao.save(emp);
 	}
-
+	
+	public Employees findById(Integer empId) {
+		Optional<Employees> emp = empDao.findById(empId);
+		if (emp.isEmpty()) {
+			return null;
+		}
+		return emp.get();
+	}
+	
+	public List<Employees> findAllEmployee() {
+		return empDao.findAll();
+	}
 }

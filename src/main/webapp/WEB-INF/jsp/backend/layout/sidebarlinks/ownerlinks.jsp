@@ -131,3 +131,26 @@
 		  </li>
 		</ul>
 	  </li>
+	  <li class="nav-item">
+		<a href="#" class="nav-link active">
+		  <i class="nav-icon far fa-envelope"></i>
+		  <p>
+			個人信箱
+			<i class="fas fa-angle-left right"></i>
+		  </p>
+		</a>
+		<ul class="nav nav-treeview">
+		  <li class="nav-item">
+			<a href="/Bookstrap/backend/mailpage/mailbox/folder/inbox" class="nav-link">
+			  <i class="far fa-circle nav-icon"></i>
+			  <p>收件夾</p>
+			</a>
+		  </li>
+		  <li class="nav-item">
+			<a href="/Bookstrap/backend/mailpage/composemail" class="nav-link">
+			  <i class="far fa-circle nav-icon"></i>
+			  <p>撰寫郵件</p>
+			</a>
+		  </li>
+		</ul>
+	  </li>
