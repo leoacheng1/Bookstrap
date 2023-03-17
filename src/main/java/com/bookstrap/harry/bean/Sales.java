@@ -1,6 +1,9 @@
 
 package com.bookstrap.harry.bean;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -44,8 +48,11 @@ public class Sales {
 	private Integer memberId;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "member_id")
+	@JoinColumn(name = "member_id", insertable=false, updatable=false)
 	private Members member;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sale", cascade = CascadeType.ALL)
+	private List<SaleItems> saleItems;
 	
 	public Sales() {
 	}

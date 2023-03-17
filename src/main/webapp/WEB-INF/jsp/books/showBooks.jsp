@@ -31,9 +31,10 @@
 	<h1>所有書籍</h1>
   <br/>
 </div>
+
 <div id="output"></div>
   
-<table class="text-center">
+<table class="text-center" style="width: 1350px;">
     <thead>
       <tr>
         <th colspan="2">書名</th>     
@@ -89,23 +90,24 @@
 </table>
 <br>
 <div style="font-size:larger;">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
 <jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
   <jstl:choose>
     <jstl:when test="${page.number != pageNumber-1}">
-      <a href="${contextRoot}/books/page?p=${pageNumber}">${pageNumber}</a>
+      <li class="page-item"><a class="page-link" href="${contextRoot}/books/page?p=${pageNumber}">${pageNumber}</a></li>
     </jstl:when>
     
     <jstl:otherwise>
-      ${pageNumber}
+      <li class="page-item active"><a class="page-link">${pageNumber}</a></li>
     </jstl:otherwise>
   </jstl:choose>
   
-  <jstl:if test="${pageNumber != page.totalPages}">
-     | 
-  </jstl:if>
 </jstl:forEach>
-
+    </ul>
+  </nav>
 </div>
+
 </div>
 </div>
 </div>

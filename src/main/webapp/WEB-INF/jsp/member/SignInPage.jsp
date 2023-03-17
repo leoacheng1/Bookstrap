@@ -11,8 +11,10 @@
 <meta charset="UTF-8">
 <title>會員登入</title>
 </head>
-<body>
+<body> 
 	<section class="gradient-custom">
+		
+	<div class="container align-middle">
 		<div class="container py-5 h-100 ">
 			<div
 				class=" d-flex justify-content-center align-items-center h-100 ">
@@ -28,7 +30,7 @@
 									<p class="text-white-50 mb-5">請輸入帳號以及密碼!</p>
 
 									<div class="form-outline form-white mb-4">
-										<input type="email" id="typeEmailX"
+										<input type="email" id="email"
 											class="form-control form-control-lg" placeholder="註冊信箱"
 											name="memberEmail" />
 									</div>
@@ -36,7 +38,7 @@
 
 
 									<div class="form-outline form-white mb-4">
-										<input type="password" id="typePasswordX"
+										<input type="password" id="password"
 											class="form-control form-control-lg" placeholder="密碼"
 											name="memberPassword" />
 
@@ -73,9 +75,21 @@
 
 							</div>
 
+									<div class="row mt-3 " id="quickLogin">
+								            <div class="col-4">
+								              <button type="submit" class="btn btn-dark btn-block" id="member1">一般會員登入</button>
+								            </div>
+								            <div class="col-4">
+								              <button type="submit" class="btn btn-dark btn-block" id="member2">新註冊會員登入</button>
+								            </div>
+								            <div class="col-4">
+								              <button type="submit" class="btn btn-dark btn-block" id="member3">更改密碼後會員</button>
+								            </div>
+								      </div>
+										<br>
 							<div>
 								<p class="mb-0">
-									還未註冊? <a href="#!" class="text-white-50 fw-bold">註冊會員</a>
+									還未註冊? <a href="${contextRoot}/guest/signup" class="text-white-50 fw-bold">註冊會員</a>
 								</p>
 							</div>
 
@@ -84,9 +98,36 @@
 				</div>
 			</div>
 		</div>
+	</div>
+		
 	</section>
 
+<script>
+      const accountInfo = {
+        'member1': {
+          username: "12345@gmail.com",
+          password: "12345"
+        },
+        'member2': {
+          username: "1234@gmail.com",
+          password: "1234"
+        },
+        'member3': {
+          username: "employee",
+          password: "1234"
+        }
+      }
+      function quickLogin(jobLevel) {
+        document.getElementById("email").value = accountInfo[jobLevel].username;
+        document.getElementById("password").value = accountInfo[jobLevel].password;
+        
+      }
 
+      for (let btn of document.querySelectorAll("#quickLogin > div > button")) {
+        btn.addEventListener("click", () => {quickLogin(btn.getAttribute("id"))})
+      }
+
+    </script>
 
 
 </body>

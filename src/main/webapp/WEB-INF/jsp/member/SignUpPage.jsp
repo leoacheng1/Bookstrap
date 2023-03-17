@@ -18,10 +18,12 @@
     
 
     <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100 ">
         <!-- col-lg-10可改註冊框大小 -->
         <div class="col-lg-10 col-xl-6">
-          <div class="card rounded-3">
+        
+<!--         body -->
+          <div class="card rounded-3 ">
             <img src="${contextRoot}/signupbackground/bg.png" class="w-100 "
               style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
             <div class="card-body p-4 p-md-5">
@@ -52,12 +54,12 @@
                         
                         <br>
                     <div class="  mb-3">
-                      <input type="password" class="form-control"  name="memberPassword" required/>
+                      <input type="password" class="form-control" id="memberPassword"  name="memberPassword" required/>
                       <label for="exampleDatepicker1" class="form-label" >密碼</label>
                     </div>
                         <br>
                     <div class="  mb-3">
-                      <input type="password" class="form-control"  name="re_memberPassword" required/>
+                      <input type="password" class="form-control" id="memberRePassword" name="re_memberPassword" required/>
                       <label for="exampleDatepicker1" class="form-label">密碼確認</label>
                     </div>
                     <div style="color: red;">
@@ -83,6 +85,15 @@
 
 
               </form>
+              
+              <div class="row mt-3" id="quickLogin">
+								            <div class="col-5">
+<!-- 								              <button type="submit" class="btn btn-dark btn-block" id="member1">一般會員註冊</button> -->
+								            </div>
+								              <div class="col-4">
+								              <button type="submit" class="btn btn-dark btn-block" id="member1">一般會員註冊</button>
+								            </div>
+								            
 
             </div>
           </div>
@@ -91,10 +102,38 @@
     </div>
   </section>
 
-  
+  <script>
+      const accountInfo = {
+        'member1': {
+          email: "12345@gmail.com",
+          password: "12345",
+          rePassword:"12345"
+        },
+        'member2': {
+        	email: "1234@gmail.com",
+          password: "1234",
+          rePassword:"1234"
+        },
+        'member3': {
+        	email: "employee",
+          password: "1234",
+          rePassword:"1234"
+        }
+      }
+      function quickLogin(jobLevel) {
+        document.getElementById("memberEmail").value = accountInfo[jobLevel].email;
+        document.getElementById("memberPassword").value = accountInfo[jobLevel].password;
+        document.getElementById("memberRePassword").value = accountInfo[jobLevel].rePassword;
+      }
+
+      for (let btn of document.querySelectorAll("#quickLogin > div > button")) {
+        btn.addEventListener("click", () => {quickLogin(btn.getAttribute("id"))})
+      }
+
+    </script>
                  
   <script  src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
-  <script  src="${contextRoot}/js/form-validation.js"></script>
+<%--   <script  src="${contextRoot}/js/form-validation.js"></script> --%>
   <script  src="${contextRoot}/js/member/CheckAccount.js"></script>
   <script  src="${contextRoot}/js/member/axios.min.js"></script>
 

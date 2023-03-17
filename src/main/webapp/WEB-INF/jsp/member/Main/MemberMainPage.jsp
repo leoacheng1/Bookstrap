@@ -38,9 +38,8 @@
                   <div class="card">
 
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
+                      <h5 class="card-title">訂單查詢</h5>
+                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
                     </div>
                   </div>
                 </div>
@@ -48,9 +47,8 @@
                   <div class="card">
 
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
+                      <h5 class="card-title">購物車</h5>
+                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
                     </div>
                   </div>
                 </div>
@@ -58,9 +56,8 @@
                   <div class="card">
 
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content.</p>
+                      <h5 class="card-title">個人資訊</h5>
+                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
                     </div>
                   </div>
                 </div>
@@ -68,12 +65,54 @@
                   <div class="card">
 
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
+                      <h5 class="card-title">追蹤商品</h5>
+                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                    </div>
+                                                   
+                                  
+                  </div>
+                </div>
+                
+                 <div class="col">
+                  <div class="card">
+
+                    <div class="card-body">
+                      <h5 class="card-title">我的評論</h5>
+                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
                     </div>
                   </div>
                 </div>
+                
+                 <div class="col">
+                  <div class="card">
+
+                    <div class="card-body">
+                      <h5 class="card-title">付款資訊</h5>
+                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                    </div>
+                  </div>
+                </div>
+                
+                 <div class="col">
+                  <div class="card">
+
+                    <div class="card-body">
+                      <h5 class="card-title">優惠券</h5>
+                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                    </div>
+                  </div>
+                </div>
+                
+                 <div class="col">
+                  <div class="card">
+
+                    <div class="card-body">
+                      <h5 class="card-title">電子書</h5>
+                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                    </div>
+                  </div>
+                </div>
+                
               </div>
 
             </div>

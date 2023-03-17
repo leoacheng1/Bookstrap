@@ -21,6 +21,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstrap.harry.security.Roles;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Members")
@@ -69,6 +70,7 @@ public class Members {
 	@OneToOne(mappedBy ="member")
 	private MemberDetails memberDetails;
 	
+	@JsonManagedReference(value = "member-shoppingCarts")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<ShoppingCarts> shoppingCarts;
 	
@@ -78,18 +80,24 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<Sales> sales;
 	
+	@JsonManagedReference(value = "member-userCoupon")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<UserCoupon> userCoupon;
 	
-	//For test
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
-	private List<EBooks> eBooks;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private Set<Favorite> favorite;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private Set<EBookFavorite> eBookFavorite;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private Set<EBookPurchases> eBookPurchase;
+	
+	
+	//test
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+	private Set<TestShoppingCatrs> testShoppingCarts;
 	
 	public Members() {
 	}
@@ -103,6 +111,14 @@ public class Members {
 	
 	
 	
+	public Set<TestShoppingCatrs> getTestShoppingCarts() {
+		return testShoppingCarts;
+	}
+
+	public void setTestShoppingCarts(Set<TestShoppingCatrs> testShoppingCarts) {
+		this.testShoppingCarts = testShoppingCarts;
+	}
+
 	public Members(String memberAccount, String memberPassword, Role role) {
 		super();
 		this.memberAccount = memberAccount;
@@ -117,6 +133,14 @@ public class Members {
 	
 	
 	
+
+	public Set<EBookPurchases> geteBookPurchase() {
+		return eBookPurchase;
+	}
+
+	public void seteBookPurchase(Set<EBookPurchases> eBookPurchase) {
+		this.eBookPurchase = eBookPurchase;
+	}
 
 	public Role getRole() {
 		return role;
@@ -150,13 +174,7 @@ public class Members {
 		this.roles = roles;
 	}
 
-	public List<EBooks> geteBooks() {
-		return eBooks;
-	}
-
-	public void seteBooks(List<EBooks> eBooks) {
-		this.eBooks = eBooks;
-	}
+	
 
 	public String getResetPasswordToken() {
 		return resetPasswordToken;

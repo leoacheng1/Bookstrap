@@ -54,7 +54,7 @@ public class Shops {
 	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
 	private Set<ShopEmployees> shopEmployees;
 
-	@JsonManagedReference
+	@JsonManagedReference(value = "shop-shopStocks")
 	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
 	private Set<ShopStock> shopStocks;
 	

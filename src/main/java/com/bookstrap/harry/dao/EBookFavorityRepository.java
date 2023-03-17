@@ -3,6 +3,11 @@ package com.bookstrap.harry.dao;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +27,13 @@ public interface EBookFavorityRepository extends JpaRepository<EBookFavorite, In
 	@Modifying
 	@Query("DELETE FROM EBookFavorite e WHERE e.member.memberId = :memberId AND e.eBook.eBookId = :eBookId")
 	public void deleteByMemberAndEBook(@Param("memberId") Integer memberId, @Param("eBookId") Integer eBookId);
+
+	@Query("FROM EBookFavorite e WHERE e.member.memberId = :mId")
+	public Page<EBookFavorite> findAlleBookFavorityById(Pageable page, @Param("mId") Integer memberId);
+	
+
+
+	
+		
+	
 }

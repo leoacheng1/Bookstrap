@@ -29,7 +29,7 @@
               //${contextRoot}/epub/ebook/1
             document.onreadystatechange = function () {
               if (document.readyState == "complete") {
-                window.reader = ePubReader("${contextRoot}/epub/1010490076.epub", {
+                window.reader = ePubReader("${contextRoot}/epub/ebook/${eBookId}.epub", {
                    restore: true
                  });
               }
@@ -57,6 +57,8 @@
 <%--         <script src="${contextRoot}/js/hooks/extensions/highlight.js"></script> --%>
 </head>
 <body>
+<div data-eBookId="${eBookId}" class="findeBookId">
+</div>
    <div id="sidebar">
         <div id="panels">
           <!-- <input id="searchBox" placeholder="search" type="search"> -->
@@ -119,5 +121,6 @@
           </div>
       </div>
       <div class="overlay"></div>
-</body>
+
+    </body>
 </html>

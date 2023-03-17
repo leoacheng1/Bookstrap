@@ -41,9 +41,15 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="${contextRoot}/member/myfavorite?memberId=${memberId}">
                 <span data-feather="heart" class="align-text-bottom"></span>
                 追蹤商品
+              </a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="#">
+                <span data-feather="list" class="align-text-bottom"></span>
+                我的評論
               </a>
             </li>
             <li class="nav-item">
@@ -58,30 +64,31 @@
                 優惠券
               </a>
             </li>
-            <li class="nav-item">
+             <li class="nav-item">
               <a class="nav-link" href="#">
-                <span data-feather="gift" class="align-text-bottom"></span>
-                禮物卡
+                <span data-feather="percent" class="align-text-bottom"></span>
+                客服中心
               </a>
             </li>
+           
           </ul>
 
           <h6
             class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-            <span>會員專區</span>
+            <span>商品專區</span>
             <a class="link-secondary" href="#" aria-label="Add a new report">
               <span data-feather="menu" class="align-text-bottom"></span>
             </a>
           </h6>
           <ul class="nav flex-column mb-2">
+<!--             <li class="nav-item"> -->
+<!--               <a class="nav-link" href="#"> -->
+<!--                 <span data-feather="headphones" class="align-text-bottom"></span> -->
+<!--                 有聲書 -->
+<!--               </a> -->
+<!--             </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="headphones" class="align-text-bottom"></span>
-                有聲書
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="${contextRoot}/member/myebook?memberId=${memberId}">
                 <span data-feather="book-open" class="align-text-bottom"></span>
                 電子書
               </a>

@@ -5,8 +5,12 @@ for (let i = 0; i < deleteBtn.length; i++) {
   deleteBtn[i].addEventListener('click', function (e) {
     let bkID = this.getAttribute('data-bkid');
     console.log(bkID)
+
+    var result = confirm("您確定要刪除掉這份資料嗎？");
+    if (result == true) {
     //delete ajax
     sendDeleteAjax(bkID)
+    }
   })
 }
 
@@ -65,6 +69,7 @@ function htmlMaker(data){
  +' <td colspan="7" id="introInput" style="font-weight:bold">簡介</td>'
  +' <td colspan="2" id="gradeInput" style="font-weight:bold">分級</td>'
  +' <td colspan="1" id="crossInput"><button data-btnId="'+data.data.id+'" class="clearBtn'+data.data.id+'"><img style="width:10px;height:10px" src="../book/cross.png"></button></td>'
+//  +' <td colspan="1" id="crossInput"><button type="button" data-btnId="'+data.data.id+'" class="btn-close clearBtn'+data.data.id+'" aria-label="Close"></button></td>'
  +' </tr>'
  +' <tr>'
  +' <td colspan="2" id="size">'+data.data.size+'</td>'

@@ -1,5 +1,9 @@
 package com.bookstrap.harry.dao;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -34,7 +38,10 @@ public interface MemberRepository extends JpaRepository<Members, Integer> {
 	@Query("SELECT m FROM Members m WHERE m.memberAccount = :mAccount")
 	public Members findAccountByEmail(@Param("mAccount") String memberEmail);
 	
-//	@Query(value = "SELECT*FROM Members WHERE memberAccount = :mEmail", nativeQuery = true)
-//	public boolean findEmailByid(@Param("mEmail") String memberEmail);
+//	concat('%',:mId,'%')
+	@Query(value = "FROM Members m WHERE m.memberId LIKE concat('%',:mId,'%')")
+	public Page<Members> findMemberIdLike(@Param("mId") String memberId, Pageable pageNumber);
 	
+	@Query(value = "FROM MemberDetails m WHERE m.memberEmail LIKE %:mEmail%")
+	public Page<Members> findMemberEmailLike(@Param("mEmail") String memberEmail, Pageable pageNumber);
 }

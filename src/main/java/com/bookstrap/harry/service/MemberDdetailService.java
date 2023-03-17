@@ -93,6 +93,29 @@ public class MemberDdetailService {
 				return page;
 		}
 		
+		public Page<MemberDetails> findMemberLastNameLike(String memberLastName,  Integer pageNumber){
+			Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "memberLastName");
+			Page<MemberDetails> page = memberDetailDao.findMemberLastNameLike(memberLastName, pgb);
+			return page;
+		}
+		
+		public Page<MemberDetails> findMemberFirstNameLike(String memberFirstName,  Integer pageNumber){
+			Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "memberLastName");
+			Page<MemberDetails> page = memberDetailDao.findMemberFirstNameLike(memberFirstName, pgb);
+			return page;
+		}
+		
+		public Page<MemberDetails> findMemberGenderLike(String memberGender,  Integer pageNumber){
+			Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "memberLastName");
+			Page<MemberDetails> page = memberDetailDao.findMemberGenderLike(memberGender, pgb);
+			return page;
+		}
+		
+		public Page<MemberDetails> findMemberAddressLike(String memberAddress,  Integer pageNumber){
+			Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "memberLastName");
+			Page<MemberDetails> page = memberDetailDao.findMemberAddressLike(memberAddress, pgb);
+			return page;
+		}
 		
 	}
 	

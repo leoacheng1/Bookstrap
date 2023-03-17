@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.repository.query.parser.Part.IgnoreCaseType;
+
 import com.bookstrap.model.BookDetails;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -68,6 +70,9 @@ public class EBooks {
 	@Column(name = "ebook_file")
 	private byte[] eBookFile; 
 	
+	@Column(name ="ebook_number")
+	private Integer eBookNumber;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ebookDetail_id")
 	private EBookDetails eBookDetails;
@@ -79,34 +84,71 @@ public class EBooks {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "eBook", cascade = CascadeType.ALL)
 	private Set<ShoppingCarts> shoppingCarts;
 	
-	//For test
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "member_id")
-	private Members member;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-	private List<Favorite> favorite;
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
 	private Set<EBookFavorite> eBookfavorite;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
+	private Set<EBookPurchases> eBookPurchase;
+	
+	
+	//Test
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "eBook", cascade = CascadeType.ALL)
+	private Set<TestShoppingCatrs> testShoppingCart; 
 	
 	public EBooks() {
 	}
 
 	
 	
-	public List<Favorite> getFavorite() {
-		return favorite;
-	}
-
-
-
-	public void setFavorite(List<Favorite> favorite) {
-		this.favorite = favorite;
-	}
-
 
 	
+	
+	public Set<TestShoppingCatrs> getTestShoppingCart() {
+		return testShoppingCart;
+	}
+
+
+
+
+
+
+	public void setTestShoppingCart(Set<TestShoppingCatrs> testShoppingCart) {
+		this.testShoppingCart = testShoppingCart;
+	}
+
+
+
+
+
+
+	public Set<EBookPurchases> geteBookPurchase() {
+		return eBookPurchase;
+	}
+
+
+
+
+	public void seteBookPurchase(Set<EBookPurchases> eBookPurchase) {
+		this.eBookPurchase = eBookPurchase;
+	}
+
+
+
+
+	public Integer geteBookNumber() {
+		return eBookNumber;
+	}
+
+
+	public void seteBookNumber(Integer eBookNumber) {
+		this.eBookNumber = eBookNumber;
+	}
+
+
+
+
+
+
 
 	public Set<EBookFavorite> geteBookfavorite() {
 		return eBookfavorite;
@@ -240,13 +282,6 @@ public class EBooks {
 		this.shoppingCarts = shoppingCarts;
 	}
 
-	public Members getMember() {
-		return member;
-	}
-
-	public void setMember(Members member) {
-		this.member = member;
-	}
 
 	
 	

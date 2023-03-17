@@ -6,8 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="../layout/AdminCss.jsp" />
 <title>Insert title here</title>
+<%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
 <script>
 		
 		function confirmDelete(){
@@ -30,10 +30,8 @@
 </head>
 <body
 	class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
-<jsp:include page="../layout/AdminNavBar.jsp" />
-
-<jsp:include page="../layout/AdminSideBar.jsp" />
-
+<%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %> 
+<%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 	<div class="wrapper">
 
 		<div class="content-wrapper">
@@ -49,14 +47,14 @@
 			</div>
 			<section class="content">
 				<!-- 寫東西的地方 top-->
-				<table class="table table-dark table-striped">
+				<table class="table table-light table-striped">
 					<thead>
 						<tr>
 							<th scope="col">ID</th>
 							<th scope="col">照片</th>
 							<th scope="col">姓</th>
 							<th scope="col">名</th>
-							<th scope="col">檢視</th>
+							<th scope="col">E-mail</th>
 							<th scope="col">修改</th>
 							<th scope="col">刪除</th>
 						</tr>
@@ -70,7 +68,7 @@
 								<td><img src="${contextRoot}/admin/get/getphoto?memberId=${member.memberId}" width="100px"> </td>
 								<td>${member.memberLastName}</td>
 								<td>${member.memberFirstName}</td>
-								<td><a href="#" type="button" class="btn btn-primary">詳細資料</a></td>
+								<td>${member.memberEmail}</td>
 								<td><a href="${contextRoot}/admin/edit/member?memberId=${member.memberId}" type="button" class="btn btn-light">修改</a></td>
 								
 								<form id="deleteForm" action="${contextRoot}/admin/delete/member?memberId=${member.memberId}" method="post">
@@ -120,6 +118,12 @@
 	
 
 
-	<jsp:include page="../layout/AdminJs.jsp" />
+	<!--右側彈跳式功能列 -->
+<%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+<!--版型需要的js-->
+<%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+<script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 </body>
 </html>

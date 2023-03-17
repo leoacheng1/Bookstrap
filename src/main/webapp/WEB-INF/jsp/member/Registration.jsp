@@ -81,8 +81,8 @@
             <br>
             
             
-            <form class="needs-validation" novalidate action="${contextRoot}/member/post" method="post">
-            <input type="text" value="${memberId}" readonly  name="memberId">
+            <form class="needs-validation" novalidate action="${contextRoot}/member/post" method="post" enctype="multipart/form-data">
+            <input type="text" value="${memberId}" readonly  name="memberId" hidden>
               <div class="row g-3">
                 <div class="col-sm-6">
                   <label for="lastName" class="form-label">姓<span class="text-muted">*</span></label>
@@ -128,6 +128,11 @@
                     請選擇出生年月日
                   </div>
                 </div>
+                <div class="col-12">
+                  <label for="photo" class="form-label">大頭照 <span class="text-muted"></span></label>
+                  <input type="file" class="form-control" id="photo"  name="memberPhoto">
+                  
+                </div>
     
                 <div class="col-md-5">
                   <label for="gender" class="form-label" >性別<span class="text-muted">*</span></label>
@@ -142,6 +147,7 @@
                     Please select a valid country.
                   </div>
                 </div>
+                
     
                
               <hr class="my-4">
@@ -150,17 +156,32 @@
                 <input type="checkbox" class="form-check-input" id="same-address">
                 <label class="form-check-label" for="same-address">我已同意會員條款</label>
               </div>
-    
-                     
+    			
+    			 
               
     
               <hr class="my-4">
     
-              <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+              <button class="w-100 btn btn-primary btn-lg" type="submit">送出</button>
             </form>
           </div>
         </div>
+        <div class="row mt-3" id="quickLogin">
+								            <div class="col-5">
+<!-- 								              <button type="submit" class="btn btn-dark btn-block" id="member1">一般會員註冊</button> -->
+								            </div>
+								              <div class="col-4">
+								              <button type="submit" class="btn btn-dark btn-block" id="member1">會員1</button>
+								            </div>
+								            
+
+            </div>
+                     
+				 
+
+
       </main>
+    
     
       <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; 2017–2022 Bookstrap</p>
@@ -177,7 +198,27 @@
     
           <script src="${contextRoot}/js/form-validation.js"></script>
 
+<script>
+      const accountInfo = {
+        'member1': {
+          lastName:"張",
+          firstName:"君雅",
+          phone:"0988987123",
+          address:" 106台北市大安區復興南路一段390號2樓",
+        }
+      }
+      function quickLogin(jobLevel) {
+        document.getElementById("lastName").value = accountInfo[jobLevel].lastName;
+        document.getElementById("firstName").value = accountInfo[jobLevel].firstName;
+        document.getElementById("phone").value = accountInfo[jobLevel].phone;
+        document.getElementById("address").value = accountInfo[jobLevel].address;
+      }
 
+      for (let btn of document.querySelectorAll("#quickLogin > div > button")) {
+        btn.addEventListener("click", () => {quickLogin(btn.getAttribute("id"))})
+      }
+
+    </script>
 
 
 </body>
