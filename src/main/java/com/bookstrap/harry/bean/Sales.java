@@ -1,6 +1,7 @@
 
 package com.bookstrap.harry.bean;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +14,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "Sales")
@@ -28,11 +36,14 @@ public class Sales {
 	@Column(name = "address")
 	private String address;
 	
-	@Column(name = "delievery")
-	private String delievery;
+	@Column(name = "delivery")
+	private String delivery;
 	
 	@Column(name = "payment")
 	private String payment;
+	
+	@Column(name = "total_price")
+	private Integer totalPrice;
 	
 	@Column(name = "pay")
 	private String pay;
@@ -40,10 +51,15 @@ public class Sales {
 	@Column(name = "weight")
 	private Integer weight;
 
-	@Column(name = "state")
+	@Column(name = "status")
 	private String status;
+	
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	@Column(name = "order_time")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date orderTime;
 			
-	@Transient
 	@Column(name = "member_id")
 	private Integer memberId;
 	
@@ -54,7 +70,44 @@ public class Sales {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sale", cascade = CascadeType.ALL)
 	private List<SaleItems> saleItems;
 	
+	@PrePersist
+	protected void onCreate() {
+		this.orderTime = new Date();
+	}
+	
 	public Sales() {
+	}
+
+	public String getDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(String delivery) {
+		this.delivery = delivery;
+	}
+
+	public Integer getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Date getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
+
+	public List<SaleItems> getSaleItems() {
+		return saleItems;
+	}
+
+	public void setSaleItems(List<SaleItems> saleItems) {
+		this.saleItems = saleItems;
 	}
 
 	public Integer getSaleId() {
@@ -73,13 +126,6 @@ public class Sales {
 		this.address = address;
 	}
 
-	public String getDelievery() {
-		return delievery;
-	}
-
-	public void setDelievery(String delievery) {
-		this.delievery = delievery;
-	}
 
 	public String getPayment() {
 		return payment;

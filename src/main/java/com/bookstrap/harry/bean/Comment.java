@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
@@ -61,8 +62,8 @@ public class Comment {
 	@JoinColumn(name = "member_id")
 	private	Members member;
 	
-//	@JsonBackReference
-	@JsonIgnore
+
+	@JsonBackReference(value = "book-comment")
 	@ManyToOne(fetch = FetchType.EAGER)  //??
 	@JoinColumn(name = "book_id")
 	private Books book;

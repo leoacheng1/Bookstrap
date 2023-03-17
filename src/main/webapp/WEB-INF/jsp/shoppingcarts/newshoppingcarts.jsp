@@ -60,8 +60,8 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                           class="form-check-input form-check checkbox-lg book-checkbox"
                           type="checkbox"
                           name="checkbook"
-                          data-price="${cartItem.amount * bookList[status.index].price}"
-                          value="${cartItem.bookId}"
+                          data-price="${cartItem.amount * cartItem.book.price * cartItem.book.discount * 0.01}"
+                          value="1"
                         />
                       </td>
                       <td>
@@ -70,14 +70,14 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                           src="${contextRoot}/books/id?id=${cartItem.bookId}"
                         />
                       </td>
-                      <td>${bookList[status.index].name}</td>
+                      <td>${cartItem.book.name}</td>
                       <td>
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <button
                               class="btn btn-outline-secondary"
                               type="button"
-                              onclick="updateCartItemAmount(${cartItem.bookId}, ${cartItem.amount}, 'sub')"
+                              onclick="updateCartItemAmount(${cartItem.cartId},'sub')"
                             >
                               -
                             </button>
@@ -85,7 +85,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                           <input
                             style="width: 16px"
                             type="text"
-                            id="book-amount"
+                            id="book-amount-${cartItem.cartId}"
                             class="form-control quantity"
                             data-cart-item-id="${cartItem.bookId}"
                             value="${cartItem.amount}"
@@ -95,23 +95,23 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                             <button
                               class="btn btn-outline-secondary"
                               type="button"
-                              onclick="updateCartItemAmount(${cartItem.bookId}, ${cartItem.amount}, 'add')"
+                              onclick="updateCartItemAmount(${cartItem.cartId},'add')"
                             >
                               +
                             </button>
                           </div>
                         </div>
                       </td>
-                      <td><del>${bookList[status.index].price}元</del><span style="color: red
-                      ;">${bookList[status.index].price * bookList[status.index].discount * 0.01}</span></td>
-                      <td class="total-price">
-                        ${cartItem.amount * bookList[status.index].price * bookList[status.index].discount * 0.01}元
+                      <td><del class="priId">${cartItem.book.price}</del>元<span class = "disPriId" id="discount-price-${cartItem.cartId}" style="color: red
+                      ;"></span>元</td>
+                      <td class="total-price " ><span class="disPriAmo" id="total-price-single-${cartItem.cartId}"></span>
+                        元<span class="disId" hidden>${cartItem.book.discount}</span>
                       </td>
                       <td>
                         <button
                           type="button"
                           class="delete-btn btn btn-danger"
-                          data-bkid="${cartItem.bookId}"
+                          data-bkid="${cartItem.cartId}"
                         >
                           刪除
                         </button>
@@ -157,7 +157,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                           type="checkbox"
                           name="coupon"
                           class="form-check-input form-check checkbox-lg"
-                          value="${coupons[status.index].discount}"
+                          value="${cartItem.book.discount}"
                         />
                       </td>
                       <td>${coupons[status.index].name}</td>
@@ -171,20 +171,22 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             </div>
           </div>
           <div class="text-right">
-            <h4>折價後金額: <span id="discounted-price">0</span>元</h4>
+            <h4>折價後金額: <span id="discounted-price" >0</span>元</h4>
             <button type="button" class="btn btn-info" onclick="checkout()">
-              結帳
+              下一步，填寫資訊
             </button>
           </div>
         </div>
       </div>
         </main>
+        
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script
-      src="${contextRoot}/js/shoppingcarts.js"
+      src="${contextRoot}/js/shoppingcart/newshoppingcarts.js"
       type="text/javascript"
     ></script>
+    
     <jsp:include page="../member/layout/MainJs.jsp" />
   </body>
 </html>

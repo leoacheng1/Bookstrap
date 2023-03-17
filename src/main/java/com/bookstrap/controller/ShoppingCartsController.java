@@ -36,12 +36,26 @@ public class ShoppingCartsController {
 
 	@Autowired
 	private UserCouponService ucService;
-	
+
 	@Autowired
 	private MemberDdetailService mdService;
-	
+
 	@Autowired
 	private SendEmailService emailService;
+
+	@ResponseBody
+	@PostMapping("/buy")
+	public String insertCartItemsByMemberId(HttpSession session, @RequestParam("bookId")Integer bookId, @RequestParam("amount")Integer amount) {
+		// 從 session 中取得 memberId
+		Integer memberId = (Integer) session.getAttribute("memberId");
+		ShoppingCarts shoppingCarts = new ShoppingCarts();
+		shoppingCarts.setMemberId(memberId);
+		shoppingCarts.setBookId(bookId);
+		shoppingCarts.setAmount(amount);
+		
+		scService.insert(memberId, bookId, amount);
+		return "success";
+	}
 
 	// 透過session 中的 memberId 取得所有購買的商品
 	@GetMapping("/cart")
@@ -106,7 +120,7 @@ public class ShoppingCartsController {
 	@ResponseBody
 	public String checkout(HttpSession session, @RequestBody List<ShoppingCarts> cartItems) {
 		session.setAttribute("cartItems", cartItems);
-	
+
 		System.out.println("已存入session");
 		return "redirect:/shipping";
 	}
@@ -114,8 +128,6 @@ public class ShoppingCartsController {
 	@GetMapping("/shipping")
 	public String getCartItems(ModelMap model, HttpSession session) {
 		Integer memberId = (Integer) session.getAttribute("memberId");
-		
-		
 
 		if (memberId != null) {
 			MemberDetails memberDetails = mdService.findMemberDetailsById(memberId);
@@ -126,7 +138,6 @@ public class ShoppingCartsController {
 			session.getAttribute("cartItems");
 			System.out.println(session.getAttribute("coupon"));
 
-			
 			return "shoppingcarts/orders";
 		}
 		return "member/SignInPage";

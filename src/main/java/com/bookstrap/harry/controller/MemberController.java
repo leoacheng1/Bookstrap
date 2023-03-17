@@ -3,29 +3,21 @@ package com.bookstrap.harry.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -36,13 +28,14 @@ import com.bookstrap.harry.bean.EBookFavorite;
 import com.bookstrap.harry.bean.EBookPurchases;
 import com.bookstrap.harry.bean.MemberDetails;
 import com.bookstrap.harry.bean.Members;
+import com.bookstrap.harry.bean.Sales;
 import com.bookstrap.harry.security.CipherUtils;
 import com.bookstrap.harry.security.MemberUserDetailService;
 import com.bookstrap.harry.service.EBookFavorityService;
 import com.bookstrap.harry.service.EBookPurchaseService;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
-import com.bookstrap.harry.service.SendEmailService;
+import com.bookstrap.service.SalesService;
 
 @Controller
 @SessionAttributes({"member", "memberId", "memberName"})
@@ -61,6 +54,7 @@ public class MemberController {
 	
 	@Autowired
 	private EBookPurchaseService ebpService;
+	private SalesService sService;
 
 //	@GetMapping("/member/registrationpage")
 //	public String registrationpage() {
@@ -524,6 +518,20 @@ public class MemberController {
 		m.addAttribute("page", page);
 		
 		return "member/Main/MyEBook";
+	}
+	// 會員訂單查詢
+	@GetMapping("/member/myorder")
+	public String findSalesByMemberId(HttpSession session, Model model) {
+		
+		Integer memberId = (Integer) session.getAttribute("memberId");
+		List<Sales> myorder = sService.findSalesByMemberId(memberId);
+		
+		Collections.reverse(myorder);
+		
+		model.addAttribute("myorder", myorder); 
+		
+		
+		return "member/Main/MyOrders";
 	}
 	
 

@@ -43,10 +43,10 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="pages/tables/jsgrid.html" class="nav-link">
+					<a href="${contextRoot}/shipping/checkorder" class="nav-link">
 						<i class="far fa-circle nav-icon"></i>
-						<p>功能3</p>
-					</a>
+						<p>管理訂單</p>
+					  </a>
 				</li>
 			</ul>
 		</li>
@@ -252,4 +252,3 @@
 
 			</a>
 		</li>
-		>>>>>>> a7b2e9a688ba2fd6b30d110eed3aa38c8c648a54
