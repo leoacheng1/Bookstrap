@@ -1,13 +1,10 @@
 package com.bookstrap.model;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 
 public interface BooksRepository extends JpaRepository<Books, Integer> {
@@ -24,8 +21,10 @@ public interface BooksRepository extends JpaRepository<Books, Integer> {
 	@Query(value = "select * from Books where category in (:category)", nativeQuery=true)
 	public List<Books> getBookByCategory(@Param("category") List<String> category);
 	
-	@Query(value = "select top 5 * from Books where category in (:category)", nativeQuery=true)
-	public List<Books> findBookByCategory(String category);
+//	@Query(value = "select top 5 * from Books where category in (:category) <> book_id =:book_id", nativeQuery=true)
+//	public List<Books> findBookByCategory(String category);
+	
+	public List<Books> findTop5ByCategoryAndIdNot(String category, Integer id);
 	
 	@Query(value = "select * from Books where author in (:author)", nativeQuery=true)
 	public List<Books> findBookByAuthor(String author);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
     <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
       <jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
       <!DOCTYPE html>
@@ -100,7 +101,7 @@
             float: right;
             margin: 10px;
           }
-
+          /* li之間的中隔線 */
           li {
             border-right: 1px solid silver;
             padding-right: 10px;
@@ -118,6 +119,7 @@
           a:hover {
             text-decoration: underline;
           }
+
         </style>
       </head>
 
@@ -125,14 +127,15 @@
         <jsp:include page="../layout/header.jsp"></jsp:include>
         <div style="margin-left: 13%;">
           <br>
-          <div style="margin-top: 20px;">
+          <div style="margin-top: 20px;" id="magnifier">
             <form action="http://localhost:8080/Bookstrap/books/oneBook" enctype="multipart/form-data"
-              modelAttribute="book">
+                  modelAttribute="book">
               <fieldset
                 style="width: 500px;height: 520px;margin: 20px 40px 25px 120px;float: left;border: 1px solid silver">
                 <figure>
+                  
                   <img src="http://localhost:8080/Bookstrap/books/id?id=${book.id}" width="425px" height="500px"
-                    style="margin: 7px 30px 7px 10px;">
+                    style="margin: 7px 30px 7px 10px;" id="image">
                 </figure>
               </fieldset>
               <div>
@@ -141,7 +144,7 @@
                 <h4>${book.name}</h4>
                 </p>
                 <br>
-                <br>
+                
                 <br>
                 <div>
                   <p style="margin-bottom: 5px;font-size: large;" class="book">作者：${book.author}</p>
@@ -154,10 +157,12 @@
                     id="cataSelector">${book.category}</span>
                   <p style="margin-bottom: 5px;font-size: large;margin-top: 5px;">定價：<span class="priId" id="priId"
                       class="book"><s>${book.price}</span>元</s><br></p>
-                  <p style="margin-bottom: 5px;font-size: large;">優惠價：<strong class="disId" id="disId"
-                      style="color: red;font-size: larger;">${book.discount}</strong>折,
+                  <p style="margin-bottom: 5px;font-size: large;">優惠價：
+                    <strong class="disId" id="disId"
+                            style="color: red;font-size: larger;">${book.discount}</strong>折,
                     <strong class="disPriId" id="disPriId" style="color: red;font-size: larger;"></strong>元
                   </p>
+                  <p style="margin-bottom: 5px;font-size: large;">運送方式：宅配、門市取貨、超商取貨</p>
                 </div>
               </div>
             </form>
@@ -212,36 +217,37 @@
           </div>
           <br>
 
-
-
-
           <br>
           <div style="width: 1050px;margin-left: 120px;">
             <p>
             <h4>會員評論</h4>
             </p>
             <hr>
+<!-- ////////////// 評論按鈕 ///////////// -->
             <div>
               <button type="button" id="commentBtn" class="btn btn-outline-dark"
-                style="display: block;margin: 0 auto;">寫評論</button>
+                      style="display: block;margin: 0 auto;">寫評論</button>
             </div>
             <br>
-            <div id="commentArea" class="commentArea">
 
-            </div>
+  <div id="commentArea" class="commentArea">
 
+   </div>
 
-            <div class="card showArea">
-              <div class="card-header">
-                bb
-              </div>
-              <div class="card-body">
-                <p class="card-text">評分等級：3</p>
-                <p class="card-text">內容：好書好書</p>
-
-              </div>
-            </div>
-
+<!-- ////////////// 所有評論 ///////////// -->
+  <div id="showArea" class="showArea">
+     <jstl:forEach var="comment" items="${comments}">
+      <div class="card">
+        <div class="card-header">${comment.member.memberDetails.memberLastName}${comment.member.memberDetails.memberFirstName} </div>
+        <div class="card-body">
+        <p class="card-text">評論時間：<fmt:formatDate pattern="yyyy/MM/dd HH:mm" value="${comment.date}"/></p>
+        <p class="card-text">評分等級：<jstl:out value="${comment.evaluation}"/>顆星</p>
+        <p class="card-text">內容：<jstl:out value="${comment.content}"/></p>
+        </div>
+        </div>
+        <br>
+     </jstl:forEach>         
+  </div>
           </div>
 
         </div>
@@ -263,7 +269,7 @@
           </div>
         </footer>
         <script>
-          ////////// 計算原價*折扣=優惠價 /////////
+ //////////////////// 計算原價*折扣=優惠價 ///////////////////////////////
           const priId = document.getElementsByClassName('priId');//價錢
           const disId = document.getElementsByClassName('disId');//折扣
           const disPriId = document.getElementsByClassName('disPriId');//優惠價
@@ -281,87 +287,94 @@
             disPriId[i].textContent = disPrice;// 將計算結果寫回元素
           }
 
-          ////////  推薦(相同類別)商品  ////////
-          const cataSelector = document.getElementsByClassName('cataSelector')
-          console.log(cataSelector)
-          for (let i = 0; i < cataSelector.length; i++) {
-            var cata = cataSelector[i].textContent;
-            console.log("類別為" + cata)
-            likeCategory(cata)
-          }
+////////////////////  推薦(相同類別)商品  /////////////////////////////
+  const cataSelector = document.getElementsByClassName('cataSelector')
+  console.log(cataSelector)
+  for (let i = 0; i < cataSelector.length; i++) {
+    var cata = cataSelector[i].textContent;
+    var bookId = `${book.id}`
+    console.log("類別為" + cata)
+    console.log("書籍id為"+bookId)
+    likeCategory(cata,bookId)
+  }
           
-          function likeCategory(cata) {
-            console.log("類別為2" + cata)
-            axios({
-              method: 'get',
-              url: 'http://localhost:8080/Bookstrap/books/category',
-              params: {
-                category: cata
-              }
-            })
-              .then(res => {
-                console.log("cata: "+res.data)
-                htmlCategory(res)
-              })
-              .catch(err => {
-                console.log(err)
-                console.log("ererre")
-              })
-          }
+  function likeCategory(cata,bookId) {
+    console.log("類別為2" + cata)
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/Bookstrap/books/category',
+      params: {
+        category: cata,
+        id:bookId
+      }
+    })
+      .then(res => {
+        console.log("cata: "+res.data)
+        htmlCategory(res)
+      })
+      .catch(err => {
+        console.log(err)
+        console.log("ererre")
+      })
+  }
 
 
-          function htmlCategory(res) {
-            console.log("cata: "+  res.data.length)
-            let text = "";
-            res.data.forEach(element => {
-              // console.log(element.id)
-              text += `<li style="display:list-item;display:inline-block;width:200px;margin-top: 0px;vertical-align: middle;">
-             <a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+ element.id + `">
-             <img src="http://localhost:8080/Bookstrap/books/id?id=`+ element.id + `" style="width: 150px;height: 175px;margin-right:auto;margin-left:auto;display:block;margin-top:5px;vertical-align: middle;" alt=""></a>
-             <div style="text-align: center;margin-left:7px"><a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+ element.id + `">` + element.name + `</a></div>
-             <dl style=" list-style: none;text-align: center;">
-             <dd style="display: none;">原價：<span class="priId" id="priId">`+ element.price + `</span>元</dd>
-             <dd>優惠價：<strong class="disId" id="disId" style="color: red;">`+ element.discount + `</strong>折
-                         <strong class="disPriId" id="disPriId" style="color: red;"></strong>元</dd>
-             </dl>
-             </li>`
+  function htmlCategory(res) {
+    console.log("cata: "+  res.data.length)
+    let text = "";
+    res.data.forEach(element => {
+      // console.log(element.id)
+      text += `<li style="display:list-item;display:inline-block;width:200px;height:260px;margin-top: 5px;vertical-align: middle;position: relative;">
+                 <a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+ element.id + `">
+                   <img src="http://localhost:8080/Bookstrap/books/id?id=`+ element.id + `" style="width: 150px;height: 175px;margin-right:auto;margin-left:auto;display:block;margin-top:5px;vertical-align: middle;" alt="">
+                 </a>
+               <div style="text-align: center;margin-left:7px">
+                 <a href="http://localhost:8080/Bookstrap/books/oneBook?id=`+ element.id + `">` + element.name + `</a>
+               </div>
+               <div style=" list-style: none;;position: absolute;bottom: 5px;left:27px">
+               <div style="display: none;">原價：<span class="priId" id="priId">`+ element.price + `</span>元</div>
+               <div>優惠價：<strong class="disId" id="disId" style="color: red;">`+ element.discount + `</strong>折
+                            <strong class="disPriId" id="disPriId" style="color: red;"></strong>元</div>
+               </div>
+               </li>`
+    });
+    // console.log(text)
 
-            });
-            // console.log(text)
+    let suggest = document.getElementById('suggestArea')
 
-            let suggest = document.getElementById('suggestArea')
+      suggest.innerHTML = text;
 
-            suggest.innerHTML = text;
+      const priId = document.getElementsByClassName('priId');//價錢
+      const disId = document.getElementsByClassName('disId');//折扣
+      const disPriId = document.getElementsByClassName('disPriId');//優惠價
 
-            const priId = document.getElementsByClassName('priId');//價錢
-            const disId = document.getElementsByClassName('disId');//折扣
-            const disPriId = document.getElementsByClassName('disPriId');//優惠價
+      for (let i = 0; i < priId.length; i++) {
+        let price = priId[i].textContent;
+        // console.log("price:"+price);
 
-            for (let i = 0; i < priId.length; i++) {
-              let price = priId[i].textContent;
-              // console.log("price:"+price);
+        let discount = disId[i].textContent;
+        // console.log("discount:"+discount);
 
-              let discount = disId[i].textContent;
-              // console.log("discount:"+discount);
+        let disPrice = Math.round(price * (discount / 100))
+        // console.log("優惠價:"+disPrice)
 
-              let disPrice = Math.round(price * (discount / 100))
-              // console.log("優惠價:"+disPrice)
+        disPriId[i].textContent = disPrice;// 將計算結果寫回元素
+      }
+    }
 
-              disPriId[i].textContent = disPrice;// 將計算結果寫回元素
-            }
-          }
-
-          ////////// 評論區展開按鈕 ////////////
+///////////////////// 評論區展開按鈕 ////////////////////////
           const commentBtn = document.getElementById('commentBtn')
 
           commentBtn.addEventListener('click', function (e) {
-            console.log("有反應")
             const memberId = `${memberId}`
-                console.log(`${sessionScope.memberName}`)
-                console.log(`${memberId}`)
-            // if(memberId == null){
-            //   console.log("未登入")
-            // }else{           
+            if(memberId == ""){
+              console.log("未登入")
+              window.location=`http://localhost:8080/Bookstrap/guest/signin`
+            }else{           
+              console.log(`${sessionScope.memberName}`)
+              console.log(`${memberId}`)
+              console.log("有反應")
+
             let commentArea = document.getElementById('commentArea')
             let area = ''
             area += `<div class="card" style="position: relative;">
@@ -373,18 +386,17 @@
            <img src="../book/stars1.jpg" style="width:30px;height:30px" class="iImg" id="iImg3">
            <img src="../book/stars1.jpg" style="width:30px;height:30px" class="iImg" id="iImg4">
            <img src="../book/stars1.jpg" style="width:30px;height:30px" class="iImg" id="iImg5">
-
-
            <hr>
            <div>
-             <textarea id="inputText" style="border: none;outline: none;width:1000px;height:200px" placeholder="請輸入評論"></textarea>  
+             <textarea id="inputText" style="border: none;outline: none;width:1010px;height:200px" placeholder="請輸入評論" maxlength="120"></textarea>  
            </div>
+           <div style="float: right;color:silver;"><span id="count"></span>/120</div>
            <button type="button" id="submitBtn" class="btn btn-outline-secondary submitBtn" style="display: block;margin: 0 auto;">送出</button>
           </div>
           </div><br>`
             commentArea.innerHTML = area;
 
-            ///////// 關閉評論區按鈕 ///////////
+////////////////// 關閉評論區按鈕 ////////////////////
             const closeBtn = document.getElementById('closeBtn')
 
             closeBtn.addEventListener('click', function (e) {
@@ -394,7 +406,7 @@
               commentArea.innerHTML = area;
             })
             
-            /////////// 打星 ////////////
+//////////////////// 打星 /////////////////////
             const arrays = document.getElementsByClassName("iImg");
             var stars =''
             let YN = 0;
@@ -456,7 +468,18 @@
               // console.log(x + 1)
               stars = x + 1   
             }
-///////////// 送出按鈕 /////////////
+
+///////////////// 評論區字數顯示 ///////////////////////////
+const textarea = document.querySelector('textarea');
+const countDisplay = document.querySelector('#count');
+
+textarea.addEventListener('input', function() {
+  const text = textarea.value;
+  const count = text.length;
+  countDisplay.textContent = count;
+});
+
+////////////////////// 送出按鈕 //////////////////////
 const submitBtn = document.getElementById('submitBtn')
 
 submitBtn.addEventListener('click', function (e) {
@@ -464,13 +487,13 @@ submitBtn.addEventListener('click', function (e) {
   console.log(`${sessionScope.memberName}`)
   console.log(`${memberId}`)
   
-    console.log("有送出")
-    console.log(stars)
+    // console.log("有送出")
+   
     const inputText = document.getElementById('inputText').value
-    console.log('評論為' + inputText)
+    // console.log('評論為' + inputText)
 
     const bookId = `${book.id}`
-    console.log('id為' + bookId)
+    // console.log('id為' + bookId)
 
 
     axios({
@@ -480,7 +503,7 @@ submitBtn.addEventListener('click', function (e) {
         content: inputText,
         evaluation: stars,
         bookId: bookId,
-        memberId: memberId
+        memberId: memberId,
       }
     })
       .then(res => {
@@ -493,10 +516,52 @@ submitBtn.addEventListener('click', function (e) {
   
 })
 }
+}
 )
+
+///////////////////// 所有評論 ///////////////////////
+// console.log('id:' + bookId)
+// const memberId = `${memberId}`
+// console.log('memberId:'+memberId)
+// axios({
+//   url:'http://localhost:8080/Bookstrap/comment/bookId',
+//   method:'get',
+//   params:{
+//     bookId:bookId
+//   }
+// })
+// .then(res=>{
+//   console.log(res)
+//   showComments(res)
+// })
+// .catch(err=>{
+//   console.log(err)
+// })
+// 
+// function showComments(res){
+//   console.log(res);
+//   let showArea = document.getElementById('showArea')
+//   showArea.innerHTML = ""
+//   let comments = ""
+//   res.data.forEach(element=>{
+//     comments += `<div class="card">`
+//                +`<div class="card-header">${sessionScope.memberName}</div>`
+//                +`<div class="card-body">`
+//                +`<p class="card-text">評論時間：<jstl:out value="`+element.date+`"/></p>`
+//                +`<p class="card-text">評分等級：<jstl:out value="`+element.evaluation+`"/>顆星</p>`
+//                +`<p class="card-text">內容：<jstl:out value="`+element.content+`"/></p>`
+//                +`</div>`
+//                +`</div>`
+//                +`<br>`
+//     showArea.innerHTML= comments
+// })
+// }
+
+
         </script>
         <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
         <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
 
       </body>
 

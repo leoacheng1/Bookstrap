@@ -137,6 +137,7 @@ public class BooksService {
 		return null;
 	}
 
+	// 模糊搜尋
 	public List<Books> findBookLikeSelector(String name) {
 		return bDao.findBookLikeSelector(name);
 	}
@@ -170,8 +171,12 @@ public class BooksService {
 		}
 	}
 	
-	public List<Books> findBookByCategory(String category) {
-		return bDao.findBookByCategory(category);
+//	public List<Books> findBookByCategory(String category) {
+//		return bDao.findBookByCategory(category);
+//	}
+	
+	public List<Books> findBookByCategory(String category, Integer id) {
+		return bDao.findTop5ByCategoryAndIdNot(category,id);
 	}
 	
 	public List<Books> findBookByAuthor(String author) {

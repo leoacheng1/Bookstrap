@@ -1,5 +1,7 @@
 package com.bookstrap.harry.bean;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,10 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.bookstrap.model.Books;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -42,6 +49,12 @@ public class Comment {
 	// 打分:1~5顆星
 	@Column(name = "rating")
 	private Integer evaluation;
+	
+    @Temporal(TemporalType.TIMESTAMP)//如果用sql.Date,這行不用寫
+	@Column(name = "date")
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm",timezone = "GMT+8")
+	private Date date;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -103,6 +116,14 @@ public class Comment {
 		this.evaluation = evaluation;
 	}
 
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public Members getMember() {
 		return member;
