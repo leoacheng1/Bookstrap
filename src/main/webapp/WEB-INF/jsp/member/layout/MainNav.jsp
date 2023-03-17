@@ -23,13 +23,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="${contextRoot}/member/myorder">
                 <span data-feather="file" class="align-text-bottom"></span>
                 訂單查詢
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="${contextRoot}/member/test/shopptingcart">
+              <a class="nav-link" href="${contextRoot}/newshopping/newcart">
                 <span data-feather="shopping-cart" class="align-text-bottom"></span>
                 購物車
               </a>

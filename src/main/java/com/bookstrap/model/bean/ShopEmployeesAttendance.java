@@ -1,5 +1,6 @@
 package com.bookstrap.model.bean;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -35,89 +36,125 @@ public class ShopEmployeesAttendance {
 	@JoinColumn(name = "attend_empid")
 	private ShopEmployees attSemps;
 
-	@Column(name = "attend_date")
-//	@DateTimeFormat(pattern = "yyyy/MM/dd")
-//	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
-	private Date attDate;
+	@Column(name = "attend_startdate")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	private LocalDate attStartDate;
+	
+	@Column(name = "attend_enddate")
+	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "GMT+8")
+	private LocalDate attEndDate;
 
 	@Column(name = "attend_vacation")
 	private String attVacation;
 
+	@Column(name = "attend_reason")
+	private String attReason;
+	
 	@Column(name = "attend_time")
-	private Double attTime;
+	private Integer attTime;
 
 	@Column(name = "attend_agree")
 	private String attAgree;
 
-	@Column(name = "attend_salary")
-	private Integer attSalary;
 
 	public ShopEmployeesAttendance() {
 	}
+
 
 	public Integer getAttId() {
 		return attId;
 	}
 
+
 	public void setAttId(Integer attId) {
 		this.attId = attId;
 	}
+
 
 	public Integer getAttSempid() {
 		return attSempid;
 	}
 
+
 	public void setAttSempid(Integer attSempid) {
 		this.attSempid = attSempid;
 	}
+
 
 	public ShopEmployees getAttSemps() {
 		return attSemps;
 	}
 
+
 	public void setAttSemps(ShopEmployees attSemps) {
 		this.attSemps = attSemps;
 	}
 
-	public Date getAttDate() {
-		return attDate;
+
+	public LocalDate getAttStartDate() {
+		return attStartDate;
 	}
 
-	public void setAttDate(Date attDate) {
-		this.attDate = attDate;
+
+	public void setAttStartDate(LocalDate attStartDate) {
+		this.attStartDate = attStartDate;
 	}
+
+
+	public LocalDate getAttEndDate() {
+		return attEndDate;
+	}
+
+
+	public void setAttEndDate(LocalDate attEndDate) {
+		this.attEndDate = attEndDate;
+	}
+
 
 	public String getAttVacation() {
 		return attVacation;
 	}
 
+
 	public void setAttVacation(String attVacation) {
 		this.attVacation = attVacation;
 	}
 
-	public Double getAttTime() {
+
+	public String getAttReason() {
+		return attReason;
+	}
+
+
+	public void setAttReason(String attReason) {
+		this.attReason = attReason;
+	}
+
+
+	public Integer getAttTime() {
 		return attTime;
 	}
 
-	public void setAttTime(Double attTime) {
+
+	public void setAttTime(Integer attTime) {
 		this.attTime = attTime;
 	}
+
 
 	public String getAttAgree() {
 		return attAgree;
 	}
 
+
 	public void setAttAgree(String attAgree) {
 		this.attAgree = attAgree;
 	}
 
-	public Integer getAttSalary() {
-		return attSalary;
-	}
+	
 
-	public void setAttSalary(Integer attSalary) {
-		this.attSalary = attSalary;
-	}
+	
 
 
 	

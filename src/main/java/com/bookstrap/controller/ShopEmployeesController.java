@@ -39,13 +39,12 @@ public class ShopEmployeesController {
 	}
 
 	@GetMapping("/semps/insertpage")
-	public String insertPage() {
+	public String insertPage(Model model) {
+		List<Shops> s0 = sService.findAllShop();
+		model.addAttribute("shopid",s0);
 		return "shopemployees/insertemployees2";
 	}
-//	  @GetMapping("/semps/showpage")
-//	  public String showPage() {
-//		  return "shopemployees/showemployees";
-//	  }
+
 
 	@PostMapping("/semps/insertemployee")
 	public String addShopEmployee(@RequestParam("empShopid") Integer empShopid, @RequestParam("empName") String empName,
@@ -59,11 +58,11 @@ public class ShopEmployeesController {
 			se.setEmpSalary(empSalary);
 			se.setEmpTitle(empTitle);
 			sempService.addShopEmployee(se);
-			return "shopemployees/home";
+//			return "shopemployees/home";
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "shopemployees/insertemployee"; // 到原本那頁
 		}
+		return "redirect:/semps/all"; // 到原本那頁
 	}
 
 	@GetMapping("/semps/all")
@@ -110,11 +109,11 @@ public class ShopEmployeesController {
 			se.setEmpSalary(empSalary);
 			se.setEmpTitle(empTitle);
 			sempService.updateShopEmployee(se);
-			return "redirect:/semps/all";
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "redirect:/semps/home";
+//			return "redirect:/semps/home";
 		}
+		return "redirect:/semps/all";
 
 	}
 

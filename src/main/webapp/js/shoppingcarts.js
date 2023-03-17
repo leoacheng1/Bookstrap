@@ -231,7 +231,6 @@ function checkout() {
   // 取得已勾選的商品
   var checkedItems = $('input[name="checkbook"]:checked');
   var coupon = $('input[name="coupon"]:checked');
-  console.log(coupon);
 
   // 將勾選的商品資料存成 JavaScript 物件
   var cartItems = [];
