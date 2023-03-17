@@ -100,7 +100,7 @@ gender nvarchar(6)
 
 INSERT INTO Gender(gender) VALUES ('男'), ('女'), ('其他');
 
-INSERT INTO Employees(account, password, emp_position, acccount) VALUES ('admin', '123456', 'admin', 'admin'), ('owner', '12345', 'owner', 'owner'), ('employee', '1234', 'employee', 'employee');
+INSERT INTO Employees(account, password, emp_position) VALUES ('admin', '123456', 'admin'), ('owner', '12345', 'owner'), ('employee', '1234', 'employee');
 
 --------
 
