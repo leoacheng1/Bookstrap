@@ -5,6 +5,7 @@ package com.bookstrap.model.bean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,9 @@ import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Employees")
@@ -36,14 +40,15 @@ public class Employees {
 	private String empName;
 	
 	@Column(name="sex")
-	private Byte sex;
+	private Short sex;
 	
 	@Column(name="emp_position")
 	private String empPosition;
 	
-	@OneToOne(mappedBy="employee", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private ShopEmployees shopEmployee;
+
 
 	public Employees() {
 		
@@ -81,11 +86,11 @@ public class Employees {
 		this.empName = empName;
 	}
 
-	public Byte getSex() {
+	public Short getSex() {
 		return sex;
 	}
 
-	public void setSex(Byte sex) {
+	public void setSex(Short sex) {
 		this.sex = sex;
 	}
 
