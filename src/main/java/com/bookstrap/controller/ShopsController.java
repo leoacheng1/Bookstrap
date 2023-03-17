@@ -30,22 +30,6 @@ public class ShopsController {
 	@Autowired
 	private ShopsService shService;
 
-	@ResponseBody
-	@PostMapping("/shops/add")
-	public String insert(@RequestBody Shops sh) {
-		shService.insertShop(sh);
-		return "http://localhost:8080/Bookstrap/shops/shophome";
-	}
-
-	@GetMapping("/shops/shophome")
-	public String listHouse(Model model) {
-		
-		List<Shops> shopList = shService.findAllShop();
-		model.addAttribute("shopList", shopList);
-		
-        return "shop/shophome";
-	}
-	
 
 	@GetMapping("/shops/shopmap")
 	public String gomapshop() {
