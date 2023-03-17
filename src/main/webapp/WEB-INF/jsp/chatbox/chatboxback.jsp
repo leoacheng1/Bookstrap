@@ -6,32 +6,22 @@
         <html>
 
         <head>
+            <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
             <link rel="stylesheet" href="${contextRoot}/css/chatbox.css" />
 
             <style>
-                .msggroup {
-                    position: absolute;
-
-                    text-align: left;
-                    padding-left: 20px;
-                    margin-top: 25px;
-                    width: 16%;
-                    max-height: 60%;
-                    overflow: scroll;
-
-                }
-
-                #chat-page {
-                    position: relative;
-                    height: 100%;
-                }
+                    #chat-page ul {
+                    /* height: calc(100% - 120px);
+                     */
+                    height: 400px;
+                    }
             </style>
         </head>
 
         <body
             class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
             <div class="wrapper">
-                <%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
+                
                     <!--上面導覽列 -->
                     <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
                         <!-- 左邊導覽列 -->
@@ -45,7 +35,7 @@
                                     <br>
                                     <br>
                                     <h2>客戶訊息</h2>
-                                    <div id="msggroup" class="msggroup">
+                                    <div id="msggroup" class="" style="width: 300px">
 
 
                                     </div>
@@ -85,8 +75,7 @@
 
             var connectingElement = document.querySelector('.connecting');
 
-            var stompClient = null;
-
+            var stompClient = null;  var username = 'dsfg';
 
             var sender = "admin";
             var colors = [
@@ -130,7 +119,7 @@
                     msggroup.appendChild(linkElement);
 
                     document.querySelector("#" + username).addEventListener('click', function (e) {
-
+                        e.preventDefault();
                         console.log(username)
                         linkElement.style.backgroundColor = "";
 

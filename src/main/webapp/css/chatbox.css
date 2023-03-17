@@ -154,6 +154,7 @@ button.accent {
     margin-top: 30px;
     height: calc(100% - 60px);
     max-height: 600px;
+    /* min-height: 500px; */
     position: relative;
 }
 
