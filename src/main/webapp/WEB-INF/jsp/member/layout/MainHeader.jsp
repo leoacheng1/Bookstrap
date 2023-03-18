@@ -125,7 +125,7 @@ prefix="jstl"%>
         <!-- 蒐尋器 頭-->
         <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
 
-        <div class="input-group d-flex mx-auto my-auto">
+        <div class="input-group d-flex me-5 my-auto">
 <!--           <select class="form-select w-20 d" id="inputGroupSelect01"> -->
 <!--             <option selected>全部</option> -->
 <!--             <option value="1">書籍</option> -->
