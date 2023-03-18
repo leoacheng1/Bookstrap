@@ -61,7 +61,7 @@ prefix="jstl"%>
           <jstl:when test="${member == null}">
           
           
-          <a href="${contextRoot}/shopping/cart" class="text-light me-5"
+          <a href="${contextRoot}/newshopping/newcart" class="text-light me-5"
             ><img src="${contextRoot}/img/shopping-cart (1).png" width="40px">
           </a>
           
@@ -83,7 +83,7 @@ prefix="jstl"%>
           
           <jstl:otherwise>
           
-          <a href="${contextRoot}/shopping/cart" class="text-light me-5"
+          <a href="${contextRoot}/newshopping/newcart" class="text-light me-5"
             ><img src="${contextRoot}/img/shopping-cart (1).png" width="40px">
           </a>
           

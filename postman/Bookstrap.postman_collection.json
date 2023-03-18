@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "910ff366-8ecb-4a90-92fe-34b3f995f71d",
+		"_postman_id": "1cc8ec54-c784-4558-9c31-b4ba920466f7",
 		"name": "Bookstrap",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -259,12 +259,12 @@
 						},
 						{
 							"key": "eBookLanguages",
-							"value": "Chinese",
+							"value": "中文",
 							"type": "default"
 						},
 						{
 							"key": "eBookAuthor",
-							"value": " 奥罕．帕慕克",
+							"value": "羅賓德拉納德．泰戈爾",
 							"type": "default"
 						},
 						{
@@ -280,7 +280,7 @@
 						{
 							"key": "eBookPhoto",
 							"type": "file",
-							"src": []
+							"src": "/C:/Bookstrap/epub/1010490077.jpg"
 						},
 						{
 							"key": "eBookDiscount",
@@ -325,6 +325,648 @@
 						{
 							"key": "eBookNumber",
 							"value": "1010490077",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Bookstrap/ebook/post/addebook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"ebook",
+						"post",
+						"addebook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addepub2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "eBookName",
+							"value": "伊斯坦堡：一座城市的記憶",
+							"type": "default"
+						},
+						{
+							"key": "eBookCategory",
+							"value": "stories",
+							"type": "default"
+						},
+						{
+							"key": "eBookLanguages",
+							"value": "中文",
+							"type": "default"
+						},
+						{
+							"key": "eBookAuthor",
+							"value": " 奥罕．帕慕克",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublisher",
+							"value": "unknow",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublishDate",
+							"value": "2015-05-25",
+							"type": "default"
+						},
+						{
+							"key": "eBookPhoto",
+							"type": "file",
+							"src": "/C:/Bookstrap/epub/1010490082.jpg"
+						},
+						{
+							"key": "eBookDiscount",
+							"value": "85",
+							"type": "default"
+						},
+						{
+							"key": "eBookPrice",
+							"value": "150",
+							"type": "default"
+						},
+						{
+							"key": "eBookTranslator",
+							"value": "何佩樺\n",
+							"type": "default"
+						},
+						{
+							"key": "eBookFile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookSize",
+							"value": "A4",
+							"type": "default"
+						},
+						{
+							"key": "eBookPage",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "eBookIntro",
+							"value": "在鄂圖曼土耳其帝國瓦解之後，世界幾乎忘了曾經叱吒風雲的伊斯坦堡存在過的事實。這座帕慕克所生長的城市如今窮困潦倒，在它長達兩千年的歷史以來從未像現在這般遺世獨立。對帕慕克而言，伊斯坦堡一直是一座充滿帝國遺跡與銷聲黯然的城市。他自己的內心也一直與這段銷聲黯然的過往爭戰不休，終於體悟出能超越這段記憶的唯一方式，就是與這段輝煌過如今卻澹然的歷史和平共存下去。",
+							"type": "default"
+						},
+						{
+							"key": "eBookGrade",
+							"value": "normal",
+							"type": "default"
+						},
+						{
+							"key": "eBookNumber",
+							"value": "1010490082",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Bookstrap/ebook/post/addebook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"ebook",
+						"post",
+						"addebook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addepub2 Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "eBookName",
+							"value": "特別的貓",
+							"type": "default"
+						},
+						{
+							"key": "eBookCategory",
+							"value": "stories",
+							"type": "default"
+						},
+						{
+							"key": "eBookLanguages",
+							"value": "中文",
+							"type": "default"
+						},
+						{
+							"key": "eBookAuthor",
+							"value": " 奥罕．帕慕克",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublisher",
+							"value": "unknow",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublishDate",
+							"value": "2015-05-25",
+							"type": "default"
+						},
+						{
+							"key": "eBookPhoto",
+							"type": "file",
+							"src": "/C:/Bookstrap/epub/1010490082.jpg"
+						},
+						{
+							"key": "eBookDiscount",
+							"value": "85",
+							"type": "default"
+						},
+						{
+							"key": "eBookPrice",
+							"value": "150",
+							"type": "default"
+						},
+						{
+							"key": "eBookTranslator",
+							"value": "何佩樺\n",
+							"type": "default"
+						},
+						{
+							"key": "eBookFile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookSize",
+							"value": "A4",
+							"type": "default"
+						},
+						{
+							"key": "eBookPage",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "eBookIntro",
+							"value": "在鄂圖曼土耳其帝國瓦解之後，世界幾乎忘了曾經叱吒風雲的伊斯坦堡存在過的事實。這座帕慕克所生長的城市如今窮困潦倒，在它長達兩千年的歷史以來從未像現在這般遺世獨立。對帕慕克而言，伊斯坦堡一直是一座充滿帝國遺跡與銷聲黯然的城市。他自己的內心也一直與這段銷聲黯然的過往爭戰不休，終於體悟出能超越這段記憶的唯一方式，就是與這段輝煌過如今卻澹然的歷史和平共存下去。",
+							"type": "default"
+						},
+						{
+							"key": "eBookGrade",
+							"value": "normal",
+							"type": "default"
+						},
+						{
+							"key": "eBookNumber",
+							"value": "1010490082",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Bookstrap/ebook/post/addebook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"ebook",
+						"post",
+						"addebook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addepub3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "eBookName",
+							"value": "特別的貓",
+							"type": "default"
+						},
+						{
+							"key": "eBookCategory",
+							"value": "stories",
+							"type": "default"
+						},
+						{
+							"key": "eBookLanguages",
+							"value": "中文",
+							"type": "default"
+						},
+						{
+							"key": "eBookAuthor",
+							"value": "多麗斯．萊辛",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublisher",
+							"value": "unknow",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublishDate",
+							"value": "2005-06-25",
+							"type": "default"
+						},
+						{
+							"key": "eBookPhoto",
+							"type": "file",
+							"src": "/C:/Bookstrap/epub/1010490091.jpg"
+						},
+						{
+							"key": "eBookDiscount",
+							"value": "85",
+							"type": "default"
+						},
+						{
+							"key": "eBookPrice",
+							"value": "150",
+							"type": "default"
+						},
+						{
+							"key": "eBookTranslator",
+							"value": "彭倩文",
+							"type": "default"
+						},
+						{
+							"key": "eBookFile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookSize",
+							"value": "A4",
+							"type": "default"
+						},
+						{
+							"key": "eBookPage",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "eBookIntro",
+							"value": "英國文學大師多麗斯．萊辛有極度具象、栩栩如生的想像以及冷靜精確的觀察，她筆下的貓，是個生命感十足的世界。農場中的貓和城市中的貓有何不同？萊辛非洲農場的童年，有猛禽鷹隼、雞群和毒蛇，貓群介於其間扮演什麼角色？大自然的法則如何運作？萊辛三歲時的小貓，為何會讓她整整過了25年之後，生活中才再度有貓容身的空間？在城市中貓的生存又是怎麼一回事？城市不適合養貓？",
+							"type": "default"
+						},
+						{
+							"key": "eBookGrade",
+							"value": "normal",
+							"type": "default"
+						},
+						{
+							"key": "eBookNumber",
+							"value": "1010490091",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Bookstrap/ebook/post/addebook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"ebook",
+						"post",
+						"addebook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addepub4",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "eBookName",
+							"value": "聖彼得堡的文豪",
+							"type": "default"
+						},
+						{
+							"key": "eBookCategory",
+							"value": "stories",
+							"type": "default"
+						},
+						{
+							"key": "eBookLanguages",
+							"value": "中文",
+							"type": "default"
+						},
+						{
+							"key": "eBookAuthor",
+							"value": "柯慈",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublisher",
+							"value": "unknow",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublishDate",
+							"value": "2013-03-10",
+							"type": "default"
+						},
+						{
+							"key": "eBookPhoto",
+							"type": "file",
+							"src": "/C:/Bookstrap/epub/1010490088.jpg"
+						},
+						{
+							"key": "eBookDiscount",
+							"value": "85",
+							"type": "default"
+						},
+						{
+							"key": "eBookPrice",
+							"value": "150",
+							"type": "default"
+						},
+						{
+							"key": "eBookTranslator",
+							"value": "謝佩妏",
+							"type": "default"
+						},
+						{
+							"key": "eBookFile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookSize",
+							"value": "A4",
+							"type": "default"
+						},
+						{
+							"key": "eBookPage",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "eBookIntro",
+							"value": "在鄂圖曼土耳其帝國瓦解之後，世界幾乎忘了曾經叱吒風雲的伊斯坦堡存在過的事實。這座帕慕克所生長的城市如今窮困潦倒，在它長達兩千年的歷史以來從未像現在這般遺世獨立。對帕慕克而言，伊斯坦堡一直是一座充滿帝國遺跡與銷聲黯然的城市。他自己的內心也一直與這段銷聲黯然的過往爭戰不休，終於體悟出能超越這段記憶的唯一方式，就是與這段輝煌過如今卻澹然的歷史和平共存下去。",
+							"type": "default"
+						},
+						{
+							"key": "eBookGrade",
+							"value": "normal",
+							"type": "default"
+						},
+						{
+							"key": "eBookNumber",
+							"value": "1010490088",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Bookstrap/ebook/post/addebook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"ebook",
+						"post",
+						"addebook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addepub5",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "eBookName",
+							"value": "緩慢的人",
+							"type": "default"
+						},
+						{
+							"key": "eBookCategory",
+							"value": "stories",
+							"type": "default"
+						},
+						{
+							"key": "eBookLanguages",
+							"value": "中文",
+							"type": "default"
+						},
+						{
+							"key": "eBookAuthor",
+							"value": "柯慈",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublisher",
+							"value": "unknow",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublishDate",
+							"value": "2018-08-15",
+							"type": "default"
+						},
+						{
+							"key": "eBookPhoto",
+							"type": "file",
+							"src": "/C:/Bookstrap/epub/1010490086.jpg"
+						},
+						{
+							"key": "eBookDiscount",
+							"value": "85",
+							"type": "default"
+						},
+						{
+							"key": "eBookPrice",
+							"value": "150",
+							"type": "default"
+						},
+						{
+							"key": "eBookTranslator",
+							"value": "梁永安",
+							"type": "default"
+						},
+						{
+							"key": "eBookFile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookSize",
+							"value": "A4",
+							"type": "default"
+						},
+						{
+							"key": "eBookPage",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "eBookIntro",
+							"value": "透過失去一隻腿的六十歲老翁，柯慈試圖探究如：家的定義為何？愛人與被愛孰重孰輕？生命中最重要的元素又是什麼？這一連串無解的生命課題。",
+							"type": "default"
+						},
+						{
+							"key": "eBookGrade",
+							"value": "normal",
+							"type": "default"
+						},
+						{
+							"key": "eBookNumber",
+							"value": "1010490086",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/Bookstrap/ebook/post/addebook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Bookstrap",
+						"ebook",
+						"post",
+						"addebook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Addepub6",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "eBookName",
+							"value": "查令十字路84號",
+							"type": "default"
+						},
+						{
+							"key": "eBookCategory",
+							"value": "stories",
+							"type": "default"
+						},
+						{
+							"key": "eBookLanguages",
+							"value": "中文",
+							"type": "default"
+						},
+						{
+							"key": "eBookAuthor",
+							"value": "海蓮．漢芙",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublisher",
+							"value": "unknow",
+							"type": "default"
+						},
+						{
+							"key": "eBookPublishDate",
+							"value": "2010-05-25",
+							"type": "default"
+						},
+						{
+							"key": "eBookPhoto",
+							"type": "file",
+							"src": "/C:/Bookstrap/epub/1010490099.jpg"
+						},
+						{
+							"key": "eBookDiscount",
+							"value": "85",
+							"type": "default"
+						},
+						{
+							"key": "eBookPrice",
+							"value": "150",
+							"type": "default"
+						},
+						{
+							"key": "eBookTranslator",
+							"value": "何佩樺\n",
+							"type": "default"
+						},
+						{
+							"key": "eBookFile",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "eBookSize",
+							"value": "A4",
+							"type": "default"
+						},
+						{
+							"key": "eBookPage",
+							"value": "30",
+							"type": "default"
+						},
+						{
+							"key": "eBookIntro",
+							"value": "店外陳列了幾架書，開門進去前，我先站在外頭假裝隨意翻閱幾本書，好讓自己看起來像是若無其事地逛書店。一走進店內，暄囂全被關在門外。一陣古書的陳舊氣味撲鼻而來。我實在不知該怎麼形容：那是一種混雜著黴味兒、長年積塵的氣息，加上牆壁、地板散發的木頭香……店內左手邊有張書桌，坐著一位年約五十、長著一只霍加斯式鼻子的男士。他站起身來，操著北方口音對我說：「日安。」我回答說我只是隨意逛逛，而他則有禮地說：「請。」\n",
+							"type": "default"
+						},
+						{
+							"key": "eBookGrade",
+							"value": "normal",
+							"type": "default"
+						},
+						{
+							"key": "eBookNumber",
+							"value": "1010490099",
 							"type": "default"
 						}
 					]
