@@ -31,7 +31,6 @@ public class ShopsController {
 	private ShopsService shService;
 
 
-
 	@GetMapping("/shops/shopmap")
 	public String gomapshop() {
 

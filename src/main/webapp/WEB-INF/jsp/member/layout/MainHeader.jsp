@@ -122,17 +122,17 @@ prefix="jstl"%>
           </a>
         </div>
 
-        <!-- 蒐尋器 -->
+        <!-- 蒐尋器 頭-->
         <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
 
         <div class="input-group d-flex mx-auto my-auto">
-          <select class="form-select w-20 d" id="inputGroupSelect01">
-            <option selected>全部</option>
-            <option value="1">書籍</option>
-            <option value="2">電子書</option>
-            <option value="3">語言</option>
-            <option value="4">somethingElse</option>
-          </select>
+<!--           <select class="form-select w-20 d" id="inputGroupSelect01"> -->
+<!--             <option selected>全部</option> -->
+<!--             <option value="1">書籍</option> -->
+<!--             <option value="2">電子書</option> -->
+<!--             <option value="3">語言</option> -->
+<!--             <option value="4">somethingElse</option> -->
+<!--           </select> -->
 
           <input
             type="text"
@@ -143,21 +143,81 @@ prefix="jstl"%>
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
+        <!-- 蒐尋器 尾-->
 
-        <div class="container d-flex mx-auto my-auto justify-content-end">
+<!-- /////// -->
+<!--         <div class="container d-flex mx-auto my-auto justify-content-end"> -->
+<%--           <a href="${contextRoot}/newshopping/newcart" class="text-light me-5" --%>
+<!--             ><i class="fa-solid fa-cart-shopping"></i>購物車 -->
+<!--           </a> -->
+
+<%--           <i class="fa-regular fa-user me-1"></i><p>Hello ${memberName}</p> --%>
+
+<!--           <div class="nav-item text-nowrap"> -->
+<%--             <a class="nav-link px-3" href="${contextRoot}/member/logout" --%>
+<!--               >登出</a -->
+<!--             > -->
+<!--           </div> -->
+<!--           //////// -->
+          
+           <jstl:choose>
+          
+          <jstl:when test="${member == null}">
+          
           <a href="${contextRoot}/newshopping/newcart" class="text-light me-5"
-            ><i class="fa-solid fa-cart-shopping"></i>購物車
+            ><img src="${contextRoot}/img/shopping-cart (1).png" width="40px">
+          </a>
+          
+             <div class="container d-flex mx-auto my-auto justify-content-center">
+<%--           <a href="${contextRoot}/shopping/cart" class="text-light me-5" --%>
+<!--             ><i class="fa-solid fa-cart-shopping"></i>購物車 -->
+<!--           </a> -->
+          
+          
+          <a
+            href="${contextRoot}/guest/signin"
+            class="text-light me-2 pe-2 border-light border-end"
+          >
+            <i class="fa-regular fa-user me-1"></i>會員登入
           </a>
 
-          <p>Hello ${memberName}</p>
-
-          <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="${contextRoot}/member/logout"
-              >登出</a
-            >
+          <a href="${contextRoot}/guest/signup" class="text-light me-5"
+            >註冊會員
+          </a>
           </div>
-        </div>
+          </jstl:when>
+          
+          <jstl:otherwise>
+          
+          <div class = "ms-5">
+          <div class = "ms-5">
+          <a href="${contextRoot}/newshopping/newcart" class="text-light me-5"
+            ><img src="${contextRoot}/img/shopping-cart (1).png" width="40px">
+          </a>
+          </div>
+          </div>
+          
+          <div class="container d-flex mx-auto my-auto justify-content-end">
+<%--           <a href="${contextRoot}/newshopping/newcart" class="text-light me-5" --%>
+<!--             ><i class="fa-solid fa-cart-shopping"></i>購物車 -->
+<!--           </a> -->
+          
+          
+          <div class="nav-item text-nowrap ms-5"><a
+            href="${contextRoot}/guest/signin"
+            class="text-light me-2 pe-2" style="text-decoration: none"
+          >
+          <i class="fa-regular fa-user me-1"></i>Hello ${memberName}</a>
+          </div>
+          <div class="nav-item text-nowrap ms-5">
+      		<a class=" px-3" href="${contextRoot}/member/logout" style="text-decoration: none; color: white;">登出</a>
+    		</div>
       </div>
+          </jstl:otherwise>
+                              </jstl:choose>
+                              
+          
+        </div>
     </header>
   </body>
 </html>
