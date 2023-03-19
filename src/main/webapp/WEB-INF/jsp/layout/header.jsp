@@ -8,6 +8,7 @@ prefix="jstl"%>
   <head>
     <meta charset="UTF-8" />
     <link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet" />
+    
     <link rel="stylesheet" href="${contextRoot}/css/index.css" />
   </head>
   <body>
@@ -52,15 +53,21 @@ prefix="jstl"%>
         </div>
 
 
-        <div class="container d-flex mx-auto my-auto justify-content-center">
-          <a href="${contextRoot}/shopping/cart" class="text-light ms-2 me-5"
-            ><i class="fa-solid fa-cart-shopping"></i>購物車
-          </a>
+     
           
           <jstl:set var="status" scope="session" value="${member}"/>
           <jstl:choose>
           
           <jstl:when test="${member == null}">
+          
+          
+          <a href="${contextRoot}/newshopping/newcart" class="text-light me-5"
+            ><img src="${contextRoot}/img/shopping-cart (1).png" width="40px">
+          </a>
+          
+             <div class="container d-flex mx-auto my-auto justify-content-center">
+          
+          
           <a
             href="${contextRoot}/guest/signin"
             class="text-light me-2 pe-2 border-light border-end"
@@ -68,12 +75,24 @@ prefix="jstl"%>
             <i class="fa-regular fa-user me-1"></i>會員登入
           </a>
 
-          <a href="${contextRoot}/guest/signup" class="text-light me-5"
+          <a href="${contextRoot}/guest/signup" class="text-light ms-1"
             >註冊會員
           </a>
+          </div>
           </jstl:when>
           
           <jstl:otherwise>
+          
+          <a href="${contextRoot}/newshopping/newcart" class="text-light me-5"
+            ><img src="${contextRoot}/img/shopping-cart (1).png" width="40px">
+          </a>
+          
+          <div class="container d-flex mx-auto my-auto justify-content-end">
+<%--           <a href="${contextRoot}/newshopping/newcart" class="text-light me-5" --%>
+<!--             ><i class="fa-solid fa-cart-shopping"></i> -->
+<!--           </a> -->
+          
+          
           <div class="nav-item text-nowrap ms-5"><a
             href="${contextRoot}/guest/signin"
             class="text-light me-2 pe-2" style="text-decoration: none"
@@ -83,13 +102,14 @@ prefix="jstl"%>
           <div class="nav-item text-nowrap ms-5">
       		<a class=" px-3" href="${contextRoot}/member/logout" style="text-decoration: none; color: white;">登出</a>
     		</div>
+    		   </div>
           </jstl:otherwise>
           
           
           </jstl:choose>
           
         </div>
-      </div>
+   
     </header>
 <script>
  
@@ -98,5 +118,7 @@ prefix="jstl"%>
 
     <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    
+  
   </body>
 </html>

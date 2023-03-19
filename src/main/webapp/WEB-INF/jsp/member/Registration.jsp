@@ -172,7 +172,9 @@
 								            </div>
 								              <div class="col-4">
 								              <button type="submit" class="btn btn-dark btn-block" id="member1">會員1</button>
+								              <button type="submit" class="btn btn-dark btn-block" id="member2">會員google</button>
 								            </div>
+								             
 								            
 
             </div>
@@ -204,7 +206,13 @@
           lastName:"張",
           firstName:"君雅",
           phone:"0988987123",
-          address:" 106台北市大安區復興南路一段390號2樓",
+          address:" 106台北市大安區復興南路一段390號2樓"
+        },
+        'member2':{
+        	lastName:"陳",
+            firstName:"駱雯",
+            phone:"0988123569",
+            address:" 106台北市大安區復興南路一段200號3樓"
         }
       }
       function quickLogin(jobLevel) {

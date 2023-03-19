@@ -8,24 +8,22 @@
 		<head>
 			<meta charset="UTF-8">
 			<title>更新頁面</title>
-			<link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet">
-			<link rel="stylesheet" href="${contextRoot}/css/blog.css" />
-			<%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
-				<link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet">
-				<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-				<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
+
+			<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+			<%@ include file="/WEB-INF/jsp/backend/layout/css.jsp" %>
+				<link rel="stylesheet" href="${contextRoot}/css/blog.css" />
 		</head>
 
 		<body
 			class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
-			<div class="wrapper">
 
-				<!--上面導覽列 -->
-				<%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
-					<!-- 左邊導覽列 -->
-					<%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
 
+			<!--上面導覽列 -->
+			<%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
+				<!-- 左邊導覽列 -->
+				<%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp" %>
+					<div class="wrapper">
 						<div class="content-wrapper">
 							<div class="content-header">
 								<!-- 標題位置 -->
@@ -69,67 +67,68 @@
 								</form>
 							</section>
 						</div>
-			</div>
-			<!--右側彈跳式功能列 -->
-			<%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
-				<!--版型需要的js-->
-				<%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
-					<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-					<%-- <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script> --%>
-						<script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
+					</div>
 
 
 
 
-
-
-						<script>
-							const updatecon = document.getElementsByClassName("updatebtn")
-							for (i = 0; i < updatecon.length; i++) {
-								updatecon[i].addEventListener('click', function (e) {
-									e.preventDefault()
-									const id = document.getElementById('pId').value
-									const Title = document.getElementById('pTitle').value
-									const Catagory = document.getElementById('pCatagory').value
-									const Auther = document.getElementById('pAuther').value
-									const Content = document.getElementsByClassName('note-editable')[0].innerHTML;
-									const Photo = document.getElementById('pPhoto').files
-									console.log(id, Title, Catagory, Auther, Content, Photo)
-									let form = new FormData()
-									form.append("id", id)
-									form.append("pTitle", Title)
-									form.append("pCatagory", Catagory)
-									form.append("pAuther", Auther)
-									form.append("pContent", Content)
-									for (let i = 0; i < Photo.length; i++) {
-										form.append("pPhoto", Photo[i])
-									}
-									axios({
-										url: "http://localhost:8080/Bookstrap/blog/updatePara",
-										method: "put",
-										data: form,
-										headers: { "Content-Type": "multipart/form-data" }
-									})
-										.then(res => {
-											console.log('更新成功')
-											window.location.href = 'http://localhost:8080/Bookstrap/blog/backIndex'
-										})
-										.catch(err => {
-											console.log(err)
-										})
+					<script>
+						const updatecon = document.getElementsByClassName("updatebtn")
+						for (i = 0; i < updatecon.length; i++) {
+							updatecon[i].addEventListener('click', function (e) {
+								e.preventDefault()
+								const id = document.getElementById('pId').value
+								const Title = document.getElementById('pTitle').value
+								const Catagory = document.getElementById('pCatagory').value
+								const Auther = document.getElementById('pAuther').value
+								const Content = document.getElementsByClassName('note-editable')[0].innerHTML;
+								const Photo = document.getElementById('pPhoto').files
+								console.log(id, Title, Catagory, Auther, Content, Photo)
+								let form = new FormData()
+								form.append("id", id)
+								form.append("pTitle", Title)
+								form.append("pCatagory", Catagory)
+								form.append("pAuther", Auther)
+								form.append("pContent", Content)
+								for (let i = 0; i < Photo.length; i++) {
+									form.append("pPhoto", Photo[i])
+								}
+								axios({
+									url: "http://localhost:8080/Bookstrap/blog/updatePara",
+									method: "put",
+									data: form,
+									headers: { "Content-Type": "multipart/form-data" }
 								})
-							}
-						</script>
+									.then(res => {
+										console.log('更新成功')
+										window.location.href = 'http://localhost:8080/Bookstrap/blog/backIndex'
+									})
+									.catch(err => {
+										console.log(err)
+									})
+							})
+						}
+					</script>
+					<!--右側彈跳式功能列 -->
+					<%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/admincontroll.jsp" %>
+						<!--版型需要的js-->
+						<%@ include file="/WEB-INF/jsp/backend/layout/js.jsp" %>
+							<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 
-						<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-						<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-						<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-						<script>$(document).ready(function () {
-								$('#summernote').summernote({
-									height: 300,
-									width: 800,
-								});
-							});</script>
+
+
+							<script
+								src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+							<script>$(document).ready(function () {
+									$('#summernote').summernote({
+										height: 300,
+										width: 800,
+									});
+								});</script>
+
+
+
+
 		</body>
 
 

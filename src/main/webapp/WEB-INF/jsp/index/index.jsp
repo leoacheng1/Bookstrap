@@ -278,19 +278,26 @@
             <!-- 即將上架 尾 -->
 
 
-            <!-- 本月熱銷 頭 (寫死 僅供參考)-->
+           <!-- 本月熱銷 頭 (寫死 僅供參考)-->
 
-            <!-- <div class="container mt-5 mb-5">
+            <div class="container mt-5 mb-5">
                 <nav>
 
                     <div class="d-flex align-items-center">
 
                         <p class="ms-2 fs-4 my-auto">本月熱銷</p>
                     </div>
+<<<<<<< HEAD
                     <div class="nav nav-tabs" id="nav-tab" role="tablist"> -->
             <!-- 要改改這裡的data-bs-target="#..." -->
             <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
             <!-- <button class="btn btn-light rounded-0 active" id="nav-t3i1-tab" data-bs-toggle="tab"
+=======
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <!-- 要改改這裡的data-bs-target="#..." -->
+                        <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
+                        <button class="btn btn-light rounded-0 active" id="nav-t3i1-tab" data-bs-toggle="tab"
+>>>>>>> master
                             data-bs-target="#nav-t3i1" type="button" role="button" aria-controls="nav-t3i1"
                             aria-selected="true">
                             中文
@@ -322,9 +329,15 @@
                         </button>
                     </div>
                 </nav>
+<<<<<<< HEAD
                 <div class="tab-content" id="nav-tabContent"> -->
             <!-- nav-home 改此id -->
             <!-- <div class="tab-pane fade show active" id="nav-t3i1" role="tabpanel" aria-labelledby="nav-home-tab"
+=======
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- nav-home 改此id -->
+                    <div class="tab-pane fade show active" id="nav-t3i1" role="tabpanel" aria-labelledby="nav-home-tab"
+>>>>>>> master
                         tabindex="0">
                         <div class="container">
                             <div class="homeslider">
@@ -400,7 +413,7 @@
                         t3i6
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <!-- 本月熱銷 尾 -->
 

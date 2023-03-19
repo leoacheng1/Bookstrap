@@ -100,8 +100,8 @@
                     text-align: right;
                     padding: 5px;
                     margin-top: 92px;
-                    width: 350px;
-                    max-height: 900px;
+                    width: 300px;
+                    max-height: 650px;
                     overflow: scroll;
 
                 }
@@ -112,25 +112,22 @@
                     left: 0;
                     text-align: center;
                     padding: 5px;
-                    margin-top: 92px;
-                    width: 360px;
-                    max-height: 900px;
-
-
-                    font-size: 20px;
+                    margin-top: 100px;
+                    width: 300px;
+                    max-height: 850px;
+                    font-size: 16px;
+                    border: 3px sandybrown;
                 }
 
                 .googleMap {
-                    width: 1300px;
-                    height: 910px;
+                    width: 900px;
+                    height: 600px;
                     margin-left: auto;
                     margin-right: auto;
                 }
 
                 .card {
-
-                    background-size: 16rem 18rem;
-
+                    background-size: 14rem 16rem;
                 }
 
                 .card-text {
@@ -145,9 +142,9 @@
                     left: 0;
                     text-align: left;
                     padding: 5px;
-                    margin-top: 299px;
-                    width: 360px;
-                    height: 700px;
+                    margin-top: 270px;
+                    width: 300px;
+                    height: 480px;
                     overflow: scroll;
                     background-color: white
                 }
@@ -157,7 +154,7 @@
                     white-space: normal;
                     font-family: Arial, sans-serif;
                     font-weight: bold;
-                    font-size: 20px;
+                    font-size: 16px;
 
                 }
 
