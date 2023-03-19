@@ -105,7 +105,7 @@
   <script>
       const accountInfo = {
         'member1': {
-          email: "12345@gmail.com",
+          email: "bookeeit157@gmail.com",
           password: "12345",
           rePassword:"12345"
         },
