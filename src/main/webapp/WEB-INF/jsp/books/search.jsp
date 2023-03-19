@@ -238,7 +238,7 @@ padding: 15px;
         <strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元
       </p>
     </p>
-    <a href="#" class="btn btn-primary">加入購物車</a>
+    <a href="#" class="btn btn-primary add-to-cart" value="${book.id}">加入購物車</a>
   </div>
 
   </div>
@@ -294,7 +294,7 @@ padding: 15px;
    <p class="card-text" style="margin-bottom: 3px;">優惠價：<strong class="disId" id="disId" style="color: red;font-size: large;">${allbook.discount}</strong>折,
    <strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p>
    </p>
-   <a href="#" class="btn btn-primary" >加入購物車</a>
+   <a href="#" class="btn btn-primary add-to-cart" data-book-id="${allbook.id}">加入購物車</a>
   </div>
 
   </div>
@@ -380,7 +380,7 @@ style="width:120px;height:170px;display:block;margin-top:10px;margin-right:auto;
 + `<p class="card-text" style="margin-bottom: 3px;">優惠價：
     <strong class="disId" id="disId" style="color: red;font-size: large;">` + element.discount + `</strong>折,`
 + `<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p></p>`
-+ `<a href="#" class="btn btn-primary">加入購物車</a>`
++ `<a href="#" class="btn btn-primary add-to-cart" value="`+ element.id + `">加入購物車</a>`
 + `</div>`
 + `</div>`
 + `</div>`
@@ -473,6 +473,44 @@ let disPrice = Math.round(price * (discount / 100))
 
 disPriId[i].textContent = disPrice;// 將計算結果寫回元素
 }
+
+//////// 加入購物車 ////////
+const addToCartButtons = document.querySelectorAll('.add-to-cart');
+addToCartButtons.forEach(button => {
+  button.addEventListener('click', e => {
+    const memberId = `${memberId}`
+    const bookId = e.target.dataset.bookId;
+    const amount = 1;
+    const disprice =  Math.round(`${book.price * book.discount * 0.01}`);
+    console.log("disprice" + disprice);
+    console.log("memberId"+memberId);
+    console.log(bookId);
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/Bookstrap/newshopping/buy',
+      params: {
+        memberId: memberId,
+        bookId: bookId,
+        amount: amount,
+        disPrice: disprice
+      }
+    })
+    .then(res =>{
+      console.log(res);
+      if(res.data ==="success"){
+        alert('已加入購物車!');
+      }else{
+        alert("請先登入會員！");
+        window.location.href = "http://localhost:8080/Bookstrap/member/main";
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      alert('此書籍已在購物車中!');
+    })
+  });
+});
 
 </script>
 <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>

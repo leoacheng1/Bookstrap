@@ -14,9 +14,17 @@ prefix="jstl"%>
   <body>
     <header id="top">
       <!-- 回到最上面的按鈕 -->
-      <a href="#top" class="back-to-top" style="position: fixed;
-            bottom: 20px;
-            right: 20px;"><button type="button" class="btn btn-secondary" style="width: 55px;height: 55px;font-size: larger;">△</button>
+      <a
+        href="#top"
+        class="back-to-top"
+        style="position: fixed; bottom: 20px; right: 20px"
+        ><button
+          type="button"
+          class="btn btn-secondary"
+          style="width: 55px; height: 55px; font-size: larger"
+        >
+          △
+        </button>
       </a>
       <div class="sticky-top bg-custom d-flex pt-3 pb-3">
         <div class="container d-flex justify-content-center">
@@ -39,17 +47,32 @@ prefix="jstl"%>
         <!-- https://getbootstrap.com/docs/5.2/utilities/spacing/#margin-and-padding -->
 
         <div class="input-group d-flex mx-auto my-auto">
-<!-- 模糊搜尋 -->
-<form action="${contextRoot}/books/page3" method="get" modelAttribute="book" style="width: 800px;text-align: center;">
-  <input style="display: inline;vertical-align: middle;"
-         type="text" name="name" 
-         class="form-control w-50 searchArea" id="searchArea" data-search="searchArea"
-         aria-label="Text input with dropdown button"/>
-    <button class="btn btn-dark sendOutBtn" type="submit" id="button-addon2 sendOutBtn" data-btnid="sendOutBtn" 
-            style="display: inline;vertical-align: middle;">
-            <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
-</form>
+          <!-- 模糊搜尋 -->
+          <form
+            action="${contextRoot}/books/page3"
+            method="get"
+            modelAttribute="book"
+            style="width: 800px; text-align: center"
+          >
+            <input
+              style="display: inline; vertical-align: middle"
+              type="text"
+              name="name"
+              class="form-control w-50 searchArea"
+              id="searchArea"
+              data-search="searchArea"
+              aria-label="Text input with dropdown button"
+            />
+            <button
+              class="btn btn-dark sendOutBtn"
+              type="submit"
+              id="button-addon2 sendOutBtn"
+              data-btnid="sendOutBtn"
+              style="display: inline; vertical-align: middle"
+            >
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
         </div>
 
 
@@ -107,16 +130,16 @@ prefix="jstl"%>
           
           
           </jstl:choose>
-          
         </div>
    
     </header>
-<script>
- 
-</script>
+    <script></script>
     <script src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
 
-    <script src="${contextRoot}/js/jquery-3.6.3.min.js" type="text/javascript"></script>
+    <script
+      src="${contextRoot}/js/jquery-3.6.3.min.js"
+      type="text/javascript"
+    ></script>
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     
   

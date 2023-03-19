@@ -10,7 +10,15 @@ Create Table Members(
 	reset_password_token nvarchar(45),
 	Role nvarchar(50) null
 );
+CREATE TABLE Gender(
+gender_id tinyint primary key not null identity(1,1),
+gender nvarchar(6)
+);
 
+INSERT INTO Gender (gender) VALUES
+('男'),
+('女'),
+('其他');
 Create Table MemberDetails(
 	member_id int FOREIGN KEY REFERENCES Members(member_id) primary key,
 	member_lastname nvarchar(50) not null,
@@ -24,15 +32,7 @@ Create Table MemberDetails(
 	birthday Date
 ) ;
 
-CREATE TABLE Gender(
-gender_id tinyint primary key not null identity(1,1),
-gender nvarchar(6)
-);
 
-INSERT INTO Gender (gender) VALUES
-('男'),
-('女'),
-('其他');
 
 Create Table BookDetails(
 	book_id int identity(1,1) primary key,
@@ -107,11 +107,11 @@ Create Table ShopStock(
 Create Table Sales(
 	sale_id int not null identity(1,1) primary key,
 	address nvarchar(max),
-	delievery nvarchar(max),
+	delivery nvarchar(max),
 	payment nvarchar(max), --貨到付款, 線上付款
 	pay nvarchar(max), --linepay ... etc
-	weight int not null,
-	state nvarchar(50), --處理中、取消、已出貨
+	weight int ,
+	status nvarchar(50), --處理中、取消、已出貨
 	member_id int foreign key references Members(member_id)
 );
 

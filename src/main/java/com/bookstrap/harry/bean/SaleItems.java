@@ -9,9 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.bookstrap.model.Books;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "SaleItems")
@@ -25,6 +25,7 @@ public class SaleItems {
 	@Column(name = "sale_id")
 	private Integer saleId;
 
+	@JsonBackReference(value = "sales-saleItems")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "sale_id", insertable=false, updatable=false)
 	private Sales sale;
