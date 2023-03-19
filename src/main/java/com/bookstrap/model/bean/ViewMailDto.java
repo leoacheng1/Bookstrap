@@ -21,6 +21,9 @@ public class ViewMailDto {
 	private String mailFrom;
 	
 	@JsonProperty
+	private String mailTo;
+	
+	@JsonProperty
 	@Temporal(TemporalType.TIMESTAMP) 
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "GMT+8")
@@ -70,6 +73,14 @@ public class ViewMailDto {
 
 	public void setMailContent(String mailContent) {
 		this.mailContent = mailContent;
+	}
+
+	public String getMailTo() {
+		return mailTo;
+	}
+
+	public void setMailTo(String mailTo) {
+		this.mailTo = mailTo;
 	}
 	
 }

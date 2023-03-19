@@ -128,7 +128,11 @@
 			<version>1.18.20</version>
 			<scope>provided</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.owasp.antisamy</groupId>
+			<artifactId>antisamy</artifactId>
+			<version>1.5.5</version>
+		</dependency>
 	</dependencies>
 
 

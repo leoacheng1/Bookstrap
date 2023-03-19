@@ -26,6 +26,7 @@ const contextRoot = "http://localhost:8080/Bookstrap/";
  * 3. fix tool tip
  */
 async function initialize() {
+    await updateNav();
     await addPagination();
     await prepareConditions();
     await initMails();
@@ -44,7 +45,7 @@ async function addTooltip() { $('[data-toggle="tooltip"]').tooltip() };
  * prepare an interactive mail table after submitting a request to get all mail data, and place them in the table.
  */
 async function initMails(conditions, advanceFilters = false) {
-    if($("body").attr("data-modalOn") == 1) advanceFilters = true;
+    if ($("body").attr("data-modalOn") == 1) advanceFilters = true;
     if (advanceFilters) {
         conditions = getFilterConditions();
     }
@@ -57,8 +58,8 @@ async function initMails(conditions, advanceFilters = false) {
     if (!activeLi.hasClass("active_")) {
         activeLi.addClass("font-weight-bold").addClass("bg-info").addClass("active_");
     }
-        if (advanceFilters) activeLi.removeClass("font-weight-bold").removeClass("bg-info").removeClass("active_");
-    
+    if (advanceFilters) activeLi.removeClass("font-weight-bold").removeClass("bg-info").removeClass("active_");
+
     // new request with conditions
     if (!advanceFilters) {
         // let conditions = getConditions();
@@ -455,7 +456,7 @@ function addEvents() {
     //refresh
     $('#refreshBtn').unbind('click');
     $("#refreshBtn").click(function () {
-        $("body").attr("data-modalOn",0);
+        $("body").attr("data-modalOn", 0);
         initialize();
         $(this).tooltip('hide');
     })
@@ -821,7 +822,10 @@ function setHasreads(hasread) {
     let formData = getSelectedFormdata();
     axios.put(contextRoot + "mail/hasreads/" + hasread, formData)
         .then(
-            response => initMails()
+            response => {
+                initMails();
+                updateNav();
+            }
         )
         .catch(
             error => console.log(error)
@@ -998,7 +1002,7 @@ async function prepareConditions() {
                         event.preventDefault();
                         $("#condition-sendBy").html("寄件人 ");
                         let conditions = getConditions();
-                        $("body").attr("data-modalOn",0);
+                        $("body").attr("data-modalOn", 0);
                         initMails(conditions);
                         addPagination();
                     }
@@ -1012,7 +1016,7 @@ async function prepareConditions() {
                             event.preventDefault();
                             $("#condition-sendBy").html("寄件人 " + $(this).html());
                             let conditions = getConditions();
-                            $("body").attr("data-modalOn",0);
+                            $("body").attr("data-modalOn", 0);
                             initMails(conditions);
                             addPagination();
                         }
@@ -1025,7 +1029,7 @@ async function prepareConditions() {
     $('#condition-daterange').on('apply.daterangepicker', function (ev, picker) {
         $('#condition-daterange span').html(picker.chosenLabel);
         let conditions = getConditions();
-        $("body").attr("data-modalOn",0);
+        $("body").attr("data-modalOn", 0);
         initMails(conditions);
         addPagination();
     });
@@ -1034,7 +1038,7 @@ async function prepareConditions() {
     $("#condition-unread, #condition-hasAttachment").click(function () {
         $(this).toggleClass("active").trigger("blur");
         let conditions = getConditions();
-        $("body").attr("data-modalOn",0);
+        $("body").attr("data-modalOn", 0);
         initMails(conditions);
         addPagination();
     })
@@ -1047,7 +1051,7 @@ async function prepareConditions() {
         conditions.subject = text;
         conditions.content = text;
         // console.log(text);
-        $("body").attr("data-modalOn",0);
+        $("body").attr("data-modalOn", 0);
         initMails(conditions);
         addPagination(conditions);
     })
@@ -1091,9 +1095,9 @@ $("#searchFilterBtn").click(initFilterModal);
 $("#filterModalSend").click(
     function () {
         let conditions = getFilterConditions();
-        $("body").attr("data-modalOn","1");
-        initMails(conditions,true);
-        addPagination(conditions,true);
+        $("body").attr("data-modalOn", "1");
+        initMails(conditions, true);
+        addPagination(conditions, true);
         $('#filterModal').modal('hide');
     }
 );
@@ -1194,4 +1198,44 @@ function checkFilterConditions(conditions) {
         let error = "結束日期不能大於開始日期";
     }
     return;
+}
+
+async function updateNav() {
+    $("#nav-mail-dropdown").html("");
+    const accountId = $("body").attr("data-ref");
+    let viewAll = `<a href="/Bookstrap/backend/mailpage/mailbox/folder/inbox" class="dropdown-item dropdown-footer">瀏覽所有郵件</a>`
+    axios.get(contextRoot + "mail/unread/" + accountId)
+        .then(
+            response => {
+                console.log(response);
+                let data = response.data;
+                $(".nav-mail-count").html(data.totalMails);
+                if (data.totalMails == 0) {
+                    $("#nav-mail-dropdown").append(viewAll);
+                    return;
+                };
+                for (mailData of data.topThreeMails){
+                    let newLink = makeNavMailLink(mailData.mailId, mailData.empAccount, mailData.empName, mailData.mailSubject, mailData.mailTime)
+                    $("#nav-mail-dropdown").append(newLink,$("<div>",{class:"dropdown-divider"}));
+                }
+                $("#nav-mail-dropdown").append(viewAll); 
+            }
+        )
+        .catch(
+            error => console.log(error)
+        )
+}
+//chatgpt....... little ugly
+function makeNavMailLink(mailId, account, empName, subject, mailTime) {
+    let newLink = $("<a>", { href: "/Bookstrap/backend/mailpage/readmail/" + mailId, class: "dropdown-item nav-mail-link" });
+    let newMedia = $("<div>", { class: "media" });
+    let newImg = $("<img>", { src: "/Bookstrap/employee/photo/" + account, alt: "User Avatar", class: "img-size-50 mr-3 img-circle nav-mail-empPhoto" });
+    let newMediaBody = $("<div>", { class: "media-body" });
+    let newHeading = $("<h3>", { class: "dropdown-item-title nav-mail-empName" }).append(empName, $("<span>", { class: "float-right text-sm text-danger" }));
+    let newSubject = $("<p>", { class: "text-sm nav-mail-subject", html: subject });
+    let newTime = $("<p>", { class: "text-sm text-muted nav-mail-time" }).append($("<i>", { class: "far fa-clock mr-1" }), mailTime);
+    newMediaBody.append(newHeading, newSubject, newTime);
+    newMedia.append(newImg, newMediaBody);
+    newLink.append(newMedia);
+    return newLink
 }
