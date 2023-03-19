@@ -66,6 +66,10 @@ public class SalesService {
 		return sDao.findAll();
 
 	}
+	
+	public List<Sales> findSalesByMemberId(Integer memberId){
+		return sDao.findSalesByMemberId(memberId);
+	}
 
 	
 

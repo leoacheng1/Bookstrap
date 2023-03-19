@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,6 +22,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.bookstrap.model.Shops;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -40,8 +42,7 @@ public class Sales {
 	@Column(name = "delivery")
 	private String delivery;
 	
-	@Column(name = "shop")
-	private Integer shop;
+	
 	
 	@Column(name = "payment")
 	private String payment;
@@ -74,6 +75,14 @@ public class Sales {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id", insertable=false, updatable=false)
 	private Members member;
+	
+	@Column(name = "shop_id")
+	private Integer shopId;
+	
+	@JsonBackReference(value = "shop-sales")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "shop_id", insertable=false, updatable=false)
+	private Shops shop;
 	
 	@JsonManagedReference(value = "sales-saleItems")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sale", cascade = CascadeType.ALL)
@@ -111,11 +120,21 @@ public class Sales {
 		this.orderTime = orderTime;
 	}
 
-	public Integer getShop() {
+	
+
+	public Integer getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
+	}
+
+	public Shops getShop() {
 		return shop;
 	}
 
-	public void setShop(Integer shop) {
+	public void setShop(Shops shop) {
 		this.shop = shop;
 	}
 

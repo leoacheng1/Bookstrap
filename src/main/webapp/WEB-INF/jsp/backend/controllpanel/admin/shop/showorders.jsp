@@ -129,7 +129,13 @@ prefix="fn" %>
                         </td>
                       </c:when>
                       <c:when test="${sale.payment == 'store-pickup-payment'}">
-                        <td>到店取貨付款</td>
+                        <td>
+                          <a
+                            href="#"
+                            onclick="showOrderShop('${sale.shop.shopName}')"
+                            >到店取貨付款</a
+                          >
+                        </td>
                       </c:when>
                       <c:otherwise>
                         <td>其他付款方式</td>
@@ -270,6 +276,10 @@ prefix="fn" %>
     <script>
       function showOrderNumber(orderNumber) {
         alert("訂單編號為：" + orderNumber);
+      }
+      function showOrderShop(shopAddress) {
+        console.log(shopAddress);
+        alert("分店名稱為：" + shopAddress);
       }
 
       function showSaleStatusSelect(saleId) {
@@ -520,9 +530,9 @@ prefix="fn" %>
                 "<td>" +
                 deliveryMethod +
                 "</td>" +
-                "<td>" +
+                "<td><a href='#'>" +
                 paymentMethod +
-                "</td>" +
+                "</a></td>" +
                 "<td>" +
                 sale.totalPrice +
                 "</td>" +

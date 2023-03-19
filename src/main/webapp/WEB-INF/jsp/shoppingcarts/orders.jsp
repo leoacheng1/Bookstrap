@@ -129,12 +129,16 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   <select class="form-select" name="delivery" id="delivery">
                     <option value="home-delivery">宅配</option>
                     <option value="store-pickup">分店取貨</option>
-                    <option value="convenience-store-pickup">超商取貨</option>
                   </select>
 
                   <div id="shopList" style="display: none">
                     <div style="font-size: large; margin: 5px">選擇分店:</div>
-                    <select name="shop" class="form-select">
+                    <select
+                      name="shop"
+                      class="form-select"
+                      onchange="updateAddress(this.value)"
+                    >
+                      <option></option>
                       <c:forEach items="${shopList}" var="shop">
                         <option value="${shop.id}">${shop.shopName}</option>
                       </c:forEach>
@@ -231,6 +235,24 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     type="text/javascript"
   ></script>
   <script>
+    function updateAddress(shopId) {
+      var address = getAddressByShopId(shopId);
+    }
+    function getAddressByShopId(shopId) {
+      console.log(shopId);
+      axios
+        .get("/Bookstrap/shops/addressshopslist1", { params: { id: shopId } })
+        .then((res) => {
+          var address = res.data.shopAddress;
+          var addressInput = document.getElementsByName("address")[0];
+          addressInput.value = address;
+          addressInput.readOnly = true;
+        })
+        .catch((err) => {
+          var addressInput = document.getElementsByName("address")[0];
+          addressInput.readOnly = false;
+        });
+    }
     ////////// 選取分店取貨付款 /////////
     $(function () {
       $("#delivery").change(function () {

@@ -67,7 +67,7 @@ public class SalesController {
 		sales.setStatus(status);
 		sales.setTotalPrice(totalPrice);
 		if (shop != null) {
-			sales.setShop(shop);
+			sales.setShopId(shop);
 		}
 
 		sService.insert(sales);
@@ -99,7 +99,10 @@ public class SalesController {
 		session.setAttribute("orderId", sales.getSaleId());
 		session.setAttribute("amount", sales.getTotalPrice());
 
-		return "shoppingcarts/tolineapi";
+		if(payment.equals("line-pay")) {
+			return "shoppingcarts/tolineapi";
+		}
+		return "shoppingcarts/checkout";
 	}
 
 	// 查詢所有訂單
@@ -146,6 +149,7 @@ public class SalesController {
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(saleDTOs);
 	}
+	
 
 	@GetMapping("/linepay")
 	public String checkOrderAndChangePay(@RequestParam("transactionId") String transactionId, HttpSession session) {

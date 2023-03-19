@@ -130,7 +130,7 @@ public class NewShoppingCartsController {
 			String memberFullName = memberDetails.getMemberLastName() + memberDetails.getMemberFirstName();
 			session.setAttribute("memberDetails", memberDetails);
 			session.setAttribute("memberFullName", memberFullName);
-//			
+
 			List<Shops> allShop = shService.findAllShop();
 			
 			
@@ -139,7 +139,7 @@ public class NewShoppingCartsController {
 			List<NewShoppingCarts> cartItemList = nscService.findCartByBookId(bookIds);
 			model.addAttribute("shopList", allShop);
 			model.addAttribute("cartItemList", cartItemList);
-//			session.removeAttribute("bookIds");
+
 			return "shoppingcarts/orders";
 		}
 		return "member/SignInPage";

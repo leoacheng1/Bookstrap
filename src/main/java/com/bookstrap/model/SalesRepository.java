@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.bookstrap.harry.bean.Sales;
 
 public interface SalesRepository extends JpaRepository<Sales, Integer> {
+	
+	List<Sales> findSalesByMemberId(Integer memberId);
 
 	List<Sales> findByMemberId(Integer memberId, Sort sort);
 

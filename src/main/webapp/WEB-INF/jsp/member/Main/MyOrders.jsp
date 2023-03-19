@@ -62,7 +62,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   <col width="6%" />
                   <col width="20%" />
                   <col width="3%" />
-                  <col width="16%" />
+                  <col width="8%" />
                 </colgroup>
                 <thead>
                   <tr>
@@ -124,14 +124,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                         <td>
                           <div>分店取貨</div>
                         <a href="http://localhost:8080/Bookstrap/shops/shopmap">
-                        <c:forEach items="${allShopList}" var="shop">
-                               <c:if test="${myorder.shop == shop.id}">
-                                 <c:out value="${shop.shopName}" />
-                               </c:if>
-                             </c:forEach>
-                             <c:if test="${myorder.shop != 1 && myorder.shop != 2 && myorder.shop != 3 && myorder.shop != 4}">
-                               <a href="http://localhost:8080/Bookstrap/shops/shopmap">其他分店</a>
-                             </c:if>
+                                ${myorder.shop.shopName}
                             </a>
                           </td>
                         </c:when>

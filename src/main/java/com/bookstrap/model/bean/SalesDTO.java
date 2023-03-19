@@ -9,6 +9,7 @@ public class SalesDTO {
     private String address;
     private String delivery;
     private Integer shop;
+    private String shopName;
     private String payment;
     private Integer totalPrice;
     private String pay;
@@ -23,7 +24,7 @@ public class SalesDTO {
         this.saleId = sale.getSaleId();
         this.address = sale.getAddress();
         this.delivery = sale.getDelivery();
-        this.shop = sale.getShop();
+        this.shop = sale.getShopId();
         this.payment = sale.getPayment();
         this.totalPrice = sale.getTotalPrice();
         this.pay = sale.getPay();
@@ -33,6 +34,7 @@ public class SalesDTO {
         this.memberId = sale.getMemberId();
         this.memberLastName = sale.getMember().getMemberDetails().getMemberLastName();
         this.memberFirstName = sale.getMember().getMemberDetails().getMemberFirstName();
+        this.shopName = sale.getShop().getShopName();
     }
 
 	public Integer getSaleId() {
@@ -138,5 +140,14 @@ public class SalesDTO {
 	public void setMemberFirstName(String memberFirstName) {
 		this.memberFirstName = memberFirstName;
 	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+	
     
 }
