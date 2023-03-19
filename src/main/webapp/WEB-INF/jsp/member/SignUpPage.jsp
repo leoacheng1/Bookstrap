@@ -13,10 +13,10 @@
 <%-- <link rel="stylesheet" href="${contextRoot}/css/bootstrap.min.css.map" type="application/octet-stream"> --%>
 <%-- <link rel="stylesheet" href="${contextRoot}/css/bootstrap.css.map" type="application/octet-stream"> --%>
 </head>
-<body>
-  <section class="gradient-custom section-custom-hight section-custom-width">
+<body class="gradient-custom section-custom-hight section-custom-width">
+<!--   <section class="gradient-custom section-custom-hight section-custom-width"> -->
     
-
+<section>
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100 ">
         <!-- col-lg-10可改註冊框大小 -->
@@ -88,10 +88,10 @@
               
               <div class="row mt-3" id="quickLogin">
 								            <div class="col-5">
-<!-- 								              <button type="submit" class="btn btn-dark btn-block" id="member1">一般會員註冊</button> -->
-								            </div>
-								              <div class="col-4">
 								              <button type="submit" class="btn btn-dark btn-block" id="member1">一般會員註冊</button>
+								            </div>
+								              <div class="col-5">
+								              <button type="submit" class="btn btn-dark btn-block" id="member2">重複會員註冊</button>
 								            </div>
 								            
 
@@ -110,14 +110,9 @@
           rePassword:"12345"
         },
         'member2': {
-        	email: "1234@gmail.com",
-          password: "1234",
-          rePassword:"1234"
-        },
-        'member3': {
-        	email: "employee",
-          password: "1234",
-          rePassword:"1234"
+        	email: "abc123@gmail.com",
+          password: "abc123",
+          rePassword:"abc123"
         }
       }
       function quickLogin(jobLevel) {
