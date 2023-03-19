@@ -103,7 +103,6 @@
     </head>
 
     <body>
-
       <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
       <script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
       <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
@@ -150,20 +149,20 @@
         <div class="p-4 p-md-5 mb-4 rounded "
           style="background-image:url(${contextRoot}/imafraid/images/blogTopPic.jpg) ">
 
-          <div class="col-md-6 px-0" var="newest">
+          <div class="col-md-6 px-0">
             <h1 style=color:black class="display-4 text-light fw-bold">最新文章</h1>
             <h3 style=color:black id="newParaTitle"></h3>
             <div id="box">
 
               <p id="newParaContent"></p>
-              <p class="lead mb-0"><a href="${contextRoot}/blog/article/${newest.paragraphId}"
-                  class="text-white fw-bold">繼續閱讀...</a></p>
+              <p class="lead mb-0"><a href="#" class="text-white fw-bold">繼續閱讀...</a></p>
             </div>
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col-md-6">
+
           </div>
           <div class="col-md-6">
           </div>
@@ -172,17 +171,15 @@
         </div>
 
         <div class="row g-5">
-          <div id="mainposition" class="col-md-8">
-            <jstl:forEach var="book" items="${Books}">
-              <article class="blog-post">
-                <h2 class="blog-post-title mb-1" id="pTitle01">${book.paragraphTitle}</h2>
-                <p class="blog-post-meta">${book.paragraphTime} <a href="#">${book.paragraphAuther}</a> </p>
-                <p id="${book.paragraphId}">${book.paragraphContent}</p>
-                <p class="lead mb-0"><a href="${contextRoot}/blog/article/${book.paragraphId}"
-                    class="text-black fw-bold">繼續閱讀...</a></p>
-              </article>
-              <p>================================================================</p>
-            </jstl:forEach>
+          <div class="col-md-8">
+
+            <article class="blog-post">
+              <h2 class="blog-post-title mb-1" id="pTitle01">${article.paragraphTitle}</h2>
+              <p class="blog-post-meta">${article.paragraphTime} <a href="#">${article.paragraphAuther}</a> </p>
+              <p id="${book.paragraphId}">${article.paragraphContent}</p>
+            </article>
+            <p>================================================================</p>
+
             <nav class="blog-pagination" aria-label="Pagination">
               <a class="btn btn-outline-primary rounded-pill" href="#">Older</a>
               <a class="btn btn-outline-secondary rounded-pill disabled">Newer</a>
@@ -261,6 +258,25 @@
       </script>
       <script type="text/javascript">
 
+        // axios({
+
+        //   url: "http://localhost:8080/Bookstrap/blog/showCatagory1Para",
+
+        //   method: "get",
+
+
+        // })
+        //   .then(res => {
+        //     console.log(res.data)
+        //     var data = res.data;
+        //     console.log(data)
+
+
+        //   })
+
+      </script>
+      <script type="text/javascript">
+
 
 
         axios({
@@ -281,26 +297,29 @@
               const month = (date.getMonth() + 1).toString().padStart(2, '0');
 
               const datearray = year + '/' + month
-              console.log(datearray)
+              // console.log(datearray)
               if (dateAr.includes(datearray)) {
                 // console.log('030')
 
               }
               else { dateAr.push(datearray) }
+
             });
-            // console.log(dateAr)
+            console.log(dateAr)
 
 
-            const ol = document.getElementById('archives');
-
-
+            const monthUrl = "http://localhost:8080/Bookstrap/blog/article/";
+            var urlArray = [];
+            // urlArray = dateAr.map(dateAr[i] => monthUrl + date[i]);
+            // console.log(urlArray);
 
             for (let i = 0; i < dateAr.length; i++) {
               // console.log(dateAr[i])
-
+              urlArray = dateAr.map(dateAr => monthUrl + dateAr);
+              console.log("urlArray:" + urlArray);
               // 創建新的<li>元素
-              const li = document.createElement('li');
-              li.className = 'list-unstyled mb-0';
+              // urlArray.push(monthUrl + dateAr[i]);
+              // console.log("urlArray:" + urlArray[i])
 
               // 創建新的<a>元素
               const a = document.createElement('a');
@@ -361,7 +380,6 @@
           })
 
       </script>
-
     </body>
 
     </html>

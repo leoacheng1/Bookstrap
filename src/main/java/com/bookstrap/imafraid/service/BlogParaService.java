@@ -110,4 +110,7 @@ public class BlogParaService {
 	public List<BlogParagraph> findAllNativeQuery() {
 		return blogParaDao.findAllNativeQuery();
 		}
+	public List<BlogParagraph> findParaByMonthNativeQuery(String year,String month) {
+		return blogParaDao.findParaByMonthNativeQuery(year,month);
+		}
 }

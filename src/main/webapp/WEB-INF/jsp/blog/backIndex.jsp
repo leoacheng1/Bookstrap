@@ -16,6 +16,7 @@
 		<body
 			class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
 			<div class="wrapper">
+
 				<!--上面導覽列 -->
 				<%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
 					<!-- 左邊導覽列 -->
@@ -24,6 +25,7 @@
 						<div class="content-wrapper">
 							<div class="content-header">
 								<!-- 標題位置 -->
+								<h1>後台首頁</h1>
 							</div>
 							<section class="content">
 								<!-- 寫東西的地方 -->
