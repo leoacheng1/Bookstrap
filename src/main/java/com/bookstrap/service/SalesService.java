@@ -16,7 +16,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bookstrap.harry.bean.Members;
 import com.bookstrap.harry.bean.SaleItems;
 import com.bookstrap.harry.bean.Sales;
 import com.bookstrap.model.SaleItemsRepository;
@@ -54,14 +53,21 @@ public class SalesService {
 	public void deleteById(Integer saleId) {
 		sDao.deleteById(saleId);
 	}
+	
+	public void updateLinepayIdAndPay(String transactionId, Integer saleId) {
+		Optional<Sales> optional = sDao.findById(saleId);
+		if (optional.isPresent()) {
+			optional.get().setLinepayId(transactionId);
+			optional.get().setPay("done");
+		}
+	}
 
 	public List<Sales> findAllSales() {
 		return sDao.findAll();
+
 	}
 
-	public List<Sales> findSalesByMemberId(Integer memberId) {
-		return sDao.findByMemberId(memberId);
-	}
+	
 
 	public Sales getSalesById(Integer saleId) {
 		Optional<Sales> optional = sDao.findById(saleId);
@@ -76,6 +82,12 @@ public class SalesService {
 		PageRequest pageRequest = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "orderTime");
 		return sDao.findAll(pageRequest);
 	}
+	public List<Sales> findSalesByMemberId(Integer memberId, Sort sort) {
+		
+		return sDao.findByMemberId(memberId, sort); 
+	}
+	
+	
 	
 	public void sendVertificationEnail(String email) throws UnsupportedEncodingException, MessagingException {
 		String subject = "您的訂單已送出";

@@ -12,19 +12,29 @@ import com.bookstrap.model.bean.NewShoppingCarts;
 
 public interface NewShoppingCartsRepository extends JpaRepository<NewShoppingCarts, Integer> {
 
-	@Query(value = "select * from NewShoppingCarts where member_Id = :memberId", nativeQuery = true)
+	@Query(value = "FROM NewShoppingCarts WHERE memberId = :memberId")
 	public List<NewShoppingCarts> findByMemberId(@Param("memberId") Integer memberId);
+	
+	@Query(value = "FROM NewShoppingCarts WHERE bookId IN (:bookIds)")
+	public List<NewShoppingCarts> findByBookIds(@Param("bookIds") List<Integer> bookIds);
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM NewShoppingCarts where memberId = :memberId")
+	@Query(value = "DELETE FROM NewShoppingCarts WHERE memberId = :memberId")
 	public void deleteAllByMemberId(@Param("memberId")Integer memberId);
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM NewShoppingCarts where cartId = :cartId")
+	@Query(value = "DELETE FROM NewShoppingCarts WHERE cartId = :cartId")
 	public void deleteByCartId(Integer cartId);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "DELETE FROM NewShoppingCarts WHERE bookId IN (:bookIds)")
+	public void deleteByBookIds(List<Integer> bookIds);
 
+
+	
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE NewShoppingCarts SET amount = :amount WHERE cartId = :cartId")

@@ -55,11 +55,12 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             <div class="container">
               <table class="text-center table-01" style="width: 1200px">
                 <colgroup>
-                  <col width="13%" />
-                  <col width="9%" />
-                  <col width="12%" />
                   <col width="8%" />
-                  <col width="27%" />
+                  <col width="7%" />
+                  <col width="8%" />
+                  <col width="10%" />
+                  <col width="6%" />
+                  <col width="20%" />
                   <col width="3%" />
                   <col width="16%" />
                 </colgroup>
@@ -68,6 +69,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                     <th>訂單編號</th>
                     <th>訂購時間</th>
                     <th>付款方式</th>
+                    <th>取貨方式</th>
                     <th>訂單金額</th>
                     <th>商品名稱</th>
                     <th>數量</th>
@@ -77,6 +79,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                 <tbody>
                   <c:forEach items="${myorder}" var="myorder">
                     <tr>
+                    
                       <td>
                         <fmt:formatDate
                           pattern="yyyy-MM-dd"
@@ -104,15 +107,42 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                         <c:when test="${myorder.payment == 'line-pay'}">
                           <td>Line Pay</td>
                         </c:when>
-                        <c:otherwise>
-                          <td>其他付款方式</td>
-                        </c:otherwise>
-                      </c:choose>
-
+                        <c:when test="${myorder.payment == 'store-pickup-payment'}">
+                          <td> 
+                            <div>分店取貨付款</div>
+                          </td>  
+                            </c:when>
+                              <c:otherwise>
+                                <td>其他付款方式</td>
+                              </c:otherwise>
+                        </c:choose>
+                       <c:choose>
+                        <c:when test="${myorder.delivery == 'home-delivery'}">
+                        <td>宅配</td>
+                        </c:when>
+                        <c:when test="${myorder.delivery == 'store-pickup'}">
+                        <td>
+                          <div>分店取貨</div>
+                        <a href="http://localhost:8080/Bookstrap/shops/shopmap">
+                        <c:forEach items="${allShopList}" var="shop">
+                               <c:if test="${myorder.shop == shop.id}">
+                                 <c:out value="${shop.shopName}" />
+                               </c:if>
+                             </c:forEach>
+                             <c:if test="${myorder.shop != 1 && myorder.shop != 2 && myorder.shop != 3 && myorder.shop != 4}">
+                               <a href="http://localhost:8080/Bookstrap/shops/shopmap">其他分店</a>
+                             </c:if>
+                            </a>
+                          </td>
+                        </c:when>
+                       </c:choose> 
                       <td><c:out value="${myorder.totalPrice}" /></td>
                       <td>
                         <c:forEach var="item" items="${myorder.saleItems}">
-                          <c:out value="${item.book.name}" /><br />
+                          <a href="${contextRoot}/books/oneBook?id=${item.book.id}">
+                            <c:out value="${item.book.name}" />
+                          </a>
+                          <br />
                         </c:forEach>
                       </td>
                       <td>

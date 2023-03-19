@@ -583,7 +583,7 @@
             <footer class="text-muted mt-5 border border-2 border-bottom-0 border-start-0 border-end-0">
                 <div class="container">
                     <p class="float-right justify-content-center">
-                        ##########Test only############ 客戶服務專線：02-26535588
+                        客戶服務專線：02-26535588
                         傳真：02-27885008 服務時間：週一~五 8:00~19:00，週六~日、例假日
                         9:00~18:00，365天全年無休 Bookstrap數位科技股份有限公司 統編 : 96922355
                         地址：臺灣 115 台北市南港區八德路四段768巷1弄18號B1之1

@@ -1,5 +1,6 @@
 package com.bookstrap.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bookstrap.harry.bean.Coupons;
 import com.bookstrap.harry.bean.MemberDetails;
-import com.bookstrap.harry.bean.ShoppingCarts;
+import com.bookstrap.harry.bean.UserCoupon;
 import com.bookstrap.harry.service.MemberDdetailService;
+import com.bookstrap.model.Shops;
 import com.bookstrap.model.bean.NewShoppingCarts;
 import com.bookstrap.service.NewShoppingCartsService;
+import com.bookstrap.service.ShopsService;
+import com.bookstrap.service.UserCouponService;
 
 @Controller
 @RequestMapping("/newshopping")
@@ -32,6 +37,12 @@ public class NewShoppingCartsController {
 	
 	@Autowired
 	private MemberDdetailService mdService;
+	
+	@Autowired
+	private UserCouponService ucService;
+	
+	@Autowired
+	private ShopsService shService;
 
 	// 將商品加入購物車清單
 	@ResponseBody
@@ -39,6 +50,7 @@ public class NewShoppingCartsController {
 	public String insertCartItems(HttpSession session, @RequestParam("bookId") Integer bookId,
 			@RequestParam("amount") Integer amount, @RequestParam("disPrice") Integer Price) {
 		Integer memberId = (Integer) session.getAttribute("memberId");
+		if (memberId != null) {
 		NewShoppingCarts newShoppingCarts = new NewShoppingCarts();
 		newShoppingCarts.setMemberId(memberId);
 		newShoppingCarts.setBookId(bookId);
@@ -47,6 +59,8 @@ public class NewShoppingCartsController {
 
 		nscService.insert(newShoppingCarts);
 		return "success";
+		}
+		return "member/SignInPage";
 	}
 
 	// 透過session 中的 memberId 取得所有購買的商品
@@ -59,6 +73,14 @@ public class NewShoppingCartsController {
 			List<NewShoppingCarts> cartItemList = nscService.findCartIdByMemberId(memberId);
 			System.out.println(cartItemList);
 			model.addAttribute("cartItemList", cartItemList);
+			List<UserCoupon> userCouponList = ucService.findCouponsByMemberId(memberId);
+			List<Coupons> coupons = new ArrayList<Coupons>();
+			for (int n = 0; n < userCouponList.size(); n++) {
+				Coupons coupon = userCouponList.get(n).getCoupon();
+				coupons.add(coupon);
+			}
+			model.addAttribute("userCouponList", userCouponList);
+			model.addAttribute("coupons", coupons);
 			return "shoppingcarts/newshoppingcarts";
 		}
 		return "member/SignInPage";
@@ -91,13 +113,14 @@ public class NewShoppingCartsController {
 	
 	@PostMapping("/newcart/checkout")
 	@ResponseBody
-	public String checkout(HttpSession session, @RequestBody List<NewShoppingCarts> cartItems) {
-		session.setAttribute("cartItems", cartItems);
+	public String checkout(HttpSession session, @RequestBody List<Integer> bookIds) {
+		session.setAttribute("bookIds", bookIds);
 
 		System.out.println("已存入session");
 		return "redirect:/newcart/shipping";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@GetMapping("/newcart/shipping")
 	public String getCartItems(ModelMap model, HttpSession session) {
 		Integer memberId = (Integer) session.getAttribute("memberId");
@@ -107,9 +130,16 @@ public class NewShoppingCartsController {
 			String memberFullName = memberDetails.getMemberLastName() + memberDetails.getMemberFirstName();
 			session.setAttribute("memberDetails", memberDetails);
 			session.setAttribute("memberFullName", memberFullName);
-			List<NewShoppingCarts> cartItemList = nscService.findCartIdByMemberId(memberId);
-			session.getAttribute("cartItems");
+//			
+			List<Shops> allShop = shService.findAllShop();
+			
+			
+			List<Integer> bookIds = (List<Integer>) session.getAttribute("bookIds");
+			System.out.println(bookIds);
+			List<NewShoppingCarts> cartItemList = nscService.findCartByBookId(bookIds);
+			model.addAttribute("shopList", allShop);
 			model.addAttribute("cartItemList", cartItemList);
+//			session.removeAttribute("bookIds");
 			return "shoppingcarts/orders";
 		}
 		return "member/SignInPage";

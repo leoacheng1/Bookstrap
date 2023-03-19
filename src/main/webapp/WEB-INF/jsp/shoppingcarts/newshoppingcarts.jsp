@@ -2,7 +2,7 @@
 pageEncoding="UTF-8"%> <%@ taglib uri="http://www.springframework.org/tags/form"
 prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -36,7 +36,8 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   <tr>
                     <th>
                       <input
-                        class="form-check-input form-check checkbox-lg book-checkbox-all"
+                        id="book-checkbox-all"
+                        class="form-check-input form-check checkbox-lg "
                         type="checkbox"
                       />
                     </th>
@@ -56,12 +57,13 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                   >
                     <tr>
                       <td>
-                        <input
+                        <input 
+                          id="checkbox-price-single-${cartItem.cartId}"
                           class="form-check-input form-check checkbox-lg book-checkbox"
                           type="checkbox"
                           name="checkbook"
-                          data-price="${cartItem.amount * cartItem.book.price * cartItem.book.discount * 0.01}"
-                          value="1"
+                          value="${cartItem.book.price}"
+                          data-bkid="${cartItem.bookId}"
                         />
                       </td>
                       <td>
@@ -70,7 +72,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                           src="${contextRoot}/books/id?id=${cartItem.bookId}"
                         />
                       </td>
-                      <td>${cartItem.book.name}</td>
+                      <td><a href="${contextRoot}/books/oneBook?id=${cartItem.bookId}">${cartItem.book.name}</a></td>
                       <td>
                         <div class="input-group">
                           <div class="input-group-prepend">
@@ -157,7 +159,8 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                           type="checkbox"
                           name="coupon"
                           class="form-check-input form-check checkbox-lg"
-                          value="${cartItem.book.discount}"
+                          value="${coupons[status.index].discount}"
+                          data-couponId="${userCoupon.couponId}"
                         />
                       </td>
                       <td>${coupons[status.index].name}</td>
@@ -171,7 +174,7 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             </div>
           </div>
           <div class="text-right">
-            <h4>折價後金額: <span id="discounted-price" >0</span>元</h4>
+            <h4>折扣後金額: <span id="discounted-price" >0</span>元</h4>
             <button type="button" class="btn btn-info" onclick="checkout()">
               下一步，填寫資訊
             </button>
@@ -189,4 +192,20 @@ prefix="form"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     
     <jsp:include page="../member/layout/MainJs.jsp" />
   </body>
+  <footer class="text-muted mt-5 border border-2 border-bottom-0 border-start-0 border-end-0">
+    <div class="container">
+        <p class="float-right justify-content-center">
+            客戶服務專線：02-26535588
+            傳真：02-27885008 服務時間：週一~五 8:00~19:00，週六~日、例假日
+            9:00~18:00，365天全年無休 Bookstrap數位科技股份有限公司 統編 : 96922355
+            地址：臺灣 115 台北市南港區八德路四段768巷1弄18號B1之1
+            食品業者登陸字號：A-196922355-00000-9 Copyright © since 1995
+            books.com.tw All Rights Reserved.
+        </p>
+        <div class="d-flex justify-content-center">
+            <a href="">服務條款</a>
+            <a href="" class="ms-2">隱私全政策</a>
+        </div>
+    </div>
+</footer>
 </html>
