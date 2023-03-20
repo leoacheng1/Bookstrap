@@ -1,4 +1,5 @@
 const contextRoot = "http://localhost:8080/Bookstrap/";
+const OPEN_ = "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";
 $(document).ready(function () {
   initSummerNote();
   addEvents();
@@ -17,14 +18,17 @@ function addEvents() {
   $("#attachments").focus(inputEffect);
   window.onbeforeunload = draftOnLeave; //draft unsaved mail on leave
   chooseCategory();
+  $("#generateLetterBtn").click(() => {generateLetter($("#gen-mail-topic").val(),$("#gen-mail-content").val(),$("#gen-mail-condition").val());});
+  // $("#correctLetterBtn").click(() => {correctLetter()});
 }
 
 
 /**
  * initialize summernote
  */
-function initSummerNote() {
+function initSummerNote(xss=true) {
   $('#compose-textarea').summernote({
+    codeviewFilter: xss,
     height: "500px", toolbar: [
       ['style', ['style']],
       ['font', ['bold', 'underline', 'clear']],
@@ -169,6 +173,13 @@ function sendEmail(event) {
   let subject = $('[name="mailSubject"]').val();
   let content = $('.note-editable.card-block').html();
   let category;
+
+  //dompurify setting(be careful)
+  if ($("#dom-purify").prop("checked")) {
+    content = DOMPurify.sanitize(content);
+  }else {
+    alert("未受到dom-purify防護")
+  }
   switch ($("#categoryMenuButton").html()) {
     case '一般信件':
       category = "normal";
@@ -211,7 +222,7 @@ function sendEmail(event) {
     })
     .catch(err => Swal.fire(
       '送出失敗',
-      '發生非預期的錯誤',
+      '請檢查郵件是否含有非法字元',
       'error'
     )).finally(
       () => $('#sendModal').modal('hide')
@@ -520,13 +531,14 @@ function makeAttachment(attachmentData) {
   let filesize = $('<span/>', { class: 'filesize', append: attachmentData.size });
   let downloadLink = $('<a/>', {
     download: attachmentData.name,
-    href: attachmentData.uri,
+    // href: attachmentData.uri,
+    href: contextRoot + "mail/attachment/" + attachmentData.id,
     class: "btn btn-default btn-sm float-right",
     append: $("<i/>", { class: "fas fa-cloud-download-alt" }),
   });
   let attachmentSize = $('<span/>', { class: "mailbox-attachment-size clearfix mt-1", append: [filesize, downloadLink] });
   let attachmentName = $('<a/>', {
-    href: attachmentData.uri,
+    href: contextRoot + "mail/attachment/" + attachmentData.id,
     class: "mailbox-attachment-name",
     append: [$('<i/>', { class: (isImg ? "fas fa-camera" : "fas fa-paperclip") }), " " + attachmentData.name],
     download: attachmentData.name
@@ -534,7 +546,8 @@ function makeAttachment(attachmentData) {
   let attachmentIcon = $("<span/>", {
     class: isImg ? "mailbox-attachment-icon has-img" : "mailbox-attachment-icon",
     style: "min-height: 114px;",
-    append: isImg ? $("<img/>", { src: attachmentData.uri, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
+    // append: isImg ? $("<img/>", { src: attachmentData.uri, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
+    append: isImg ? $("<img/>", { src: contextRoot + 'mail/attachment/' + attachmentData.id, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
   });
   let attachmentInfo = $("<div/>", { class: "mailbox-attachment-info", append: [attachmentName, attachmentSize] });
   let li = $('<li/>', { append: [attachmentIcon, attachmentInfo], id: "a" + attachmentData.id });
@@ -559,6 +572,8 @@ function initializeAttachment() {
   } else if (fmailId.length != 0) {
     mailId = fmailId;
     type = "forward"
+  }else {
+    return;
   }
   console.log("mailId: " + mailId);
   axios({
@@ -573,3 +588,73 @@ function initializeAttachment() {
     $('.mailbox-read-time.ml-1.align-middle').html(time.split(".")[0]);
   }).catch(err => console.log(err))
 }
+
+
+async function generateLetter(topic,contents,condition){
+  $("#loader").show();
+  // topic = "求職信";
+  // contents = "我JAVA很弱，但是我很認真";
+  // condition = "大概一百字上下,包含一首五言絕句來歌頌HR看人的眼光";
+  const url = 'https://api.openai.com/v1/chat/completions';
+  // const content = $("<div />").html($("#compose-textarea").summernote("code")).text();
+  let data = {
+    // "model": "text-davinci-003",
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {role:"system", content: "You are a helpful assistant." },
+      {role:"user", content: `請幫我寫一封信，主題是${topic}，內容要表達出${contents}，要滿足以下要求:${condition}`}
+    ],
+    "temperature": 0.7,
+    "max_tokens": 2048,
+  };
+  console.log(data);
+  const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + OPEN_,
+      },
+      body: JSON.stringify(data),
+  });
+  
+  const text = await response.text();
+  
+  console.log(text);
+  console.log(typeof text);
+  const text2 = await JSON.parse(text);
+  $("#compose-textarea").summernote("code",text2["choices"][0]["message"]["content"]);
+  $("#loader").hide();
+  $('#genLetterModal').modal('hide')
+}
+
+
+// async function correctLetter(){
+//   const url = 'https://api.openai.com/v1/chat/completions';
+//   const content = $("<div />").html($("#compose-textarea").summernote("code")).text();
+//   let data = {
+//     // "model": "text-davinci-003",
+//     "model": "gpt-3.5-turbo",
+//     "messages": [
+//       {role:"system", content: "You are a helpful assistant." },
+//       {role:"user", content: `correct grammer and typo of this letter(don't change tag if it's html):\n${content}`}
+//     ],
+//     "temperature": 0.7,
+//     "max_tokens": 2048,
+//   };
+//   console.log(data);
+//   const response = await fetch(url, {
+//       method: 'POST',
+//       headers: {
+//           'Content-Type': 'application/json',
+//           'Authorization': 'Bearer ' + OPEN_,
+//       },
+//       body: JSON.stringify(data),
+//   });
+  
+//   const text = await response.text();
+  
+//   console.log(text);
+//   console.log(typeof text);
+//   const text2 = await JSON.parse(text);
+//   $("#compose-textarea").summernote("code",text2["choices"][0]["message"]["content"]);
+// }

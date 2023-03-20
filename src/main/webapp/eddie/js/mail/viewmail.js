@@ -2,6 +2,7 @@
 const contextRoot = "http://localhost:8080/Bookstrap/";
 $(document).ready(function () {
     setMailContent(location.href.slice(location.href.lastIndexOf("/") + 1));
+    setHasreads(1);
     addEvents();
 });
 /**
@@ -16,7 +17,7 @@ function setAttachment(attachmentIds, attachmentDataArray = []) {
             method: 'GET',
             responseType: 'blob'
         }).then(response => {
-            console.log(response);
+            // console.log(response);
             let disposition = response.headers['content-disposition'];
             let uri = window.URL.createObjectURL(new Blob([response.data]));
             let fileSize = response.data.size.toString();
@@ -49,8 +50,14 @@ function setMailContent(mailId) {
         method: 'GET'
     }).then(response => {
         let data = response.data;
-        console.log(response);
-        $('.mailbox-read-info h5').html(data.mailSubject).siblings('h6').html(`寄件人: ${data.mailFrom}` + `<span class="mailbox-read-time float-right">${data.mailTime}</span>`);
+        // console.log(response);
+        let folderName = $("body").attr("data-folder");
+        
+        $('.mailbox-read-info h5')
+        .html(data.mailSubject)
+        .siblings('h6')
+        .html((folderName == "sent" || folderName == "draft" ? `收件人: ${data.mailTo}` : `寄件人: ${data.mailFrom}`)+ `<span class="mailbox-read-time float-right">${data.mailTime}</span>`);
+        
         $('.mailbox-read-message').html(data.mailContent);
         setAttachment(response.data.attachmentIds);
         if ($('.premail').length) $('.premail').CardWidget('collapse');
@@ -70,7 +77,7 @@ function setMailContent(mailId) {
  */
 function makeAttachment(attachmentData) {
     let extension = attachmentData.extension;
-    console.log(extension)
+    // console.log(extension)
     let typeIcon;
     if (['zip', 'rar', 'tar', 'gz', '7z'].includes(extension)) {
         typeIcon = "far fa-file-archive";
@@ -89,13 +96,15 @@ function makeAttachment(attachmentData) {
     let filesize = $('<span/>', { class: 'filesize', append: attachmentData.size });
     let downloadLink = $('<a/>', {
         download: attachmentData.name,
-        href: attachmentData.uri,
+        // href: attachmentData.uri,
+        href: contextRoot + 'mail/attachment/' + attachmentData.id,
         class: "btn btn-default btn-sm float-right",
         append: $("<i/>", { class: "fas fa-cloud-download-alt" }),
     });
     let attachmentSize = $('<span/>', { class: "mailbox-attachment-size clearfix mt-1", append: [filesize, downloadLink] });
     let attachmentName = $('<a/>', {
-        href: attachmentData.uri,
+        // href: attachmentData.uri,
+        href: contextRoot + 'mail/attachment/' + attachmentData.id,
         class: "mailbox-attachment-name",
         append: [$('<i/>', { class: (isImg ? "fas fa-camera" : "fas fa-paperclip") }), " " + attachmentData.name],
         download: attachmentData.name
@@ -103,12 +112,13 @@ function makeAttachment(attachmentData) {
     let attachmentIcon = $("<span/>", {
         class: isImg ? "mailbox-attachment-icon has-img" : "mailbox-attachment-icon",
         style: "min-height: 114px;",
-        append: isImg ? $("<img/>", { src: attachmentData.uri, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
+        // append: isImg ? $("<img/>", { src: attachmentData.uri, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
+        append: isImg ? $("<img/>", { src: contextRoot + 'mail/attachment/' + attachmentData.id, style: "height:114px;" }) : $("<i/>", { class: typeIcon })
     });
     let attachmentInfo = $("<div/>", { class: "mailbox-attachment-info", append: [attachmentName, attachmentSize] });
     let li = $('<li/>', { append: [attachmentIcon, attachmentInfo] });
     $('.mailbox-attachments:not(.premail-attachment)').append(li);
-    console.log("isImg: " + isImg);
+    // console.log("isImg: " + isImg);
 }
 
 /**
@@ -182,7 +192,9 @@ function deleteEvent() {
             `刪除失敗: ${error}`
         ));
 }
-
+/**
+ * add events
+ */
 function addEvents() {
     $("#printMailBtn").click(() => { window.print() });
     if ($("#permanentdeleteMailBtn").length) {
@@ -201,4 +213,65 @@ function reLinkAttachment() {
       $(li).find("a").attr("href",contextRoot + 'mail/attachment/' + $(li).attr("id").slice(1));
     }
   }
-  
+
+
+/**
+ * - set selected mails read or not read
+ * @param {Number} hasread - 0 or 1, represent not read and read 
+ */
+function setHasreads(hasread) {
+    let formData = new FormData();
+    formData.append("mailIds", [window.location.href.split("/").pop()]);
+    formData.append("accountId", $("body").attr("data-ref"));
+    fetch(contextRoot + "mail/hasreads/" + hasread, {method: "PUT", body:formData,keepalive: true})
+        .then(
+            response => {
+                // initMails();
+                updateNav();
+            }
+        )
+        .catch(
+            error => console.log(error)
+        )
+}
+/**
+ * update top navbar mail section
+ */
+async function updateNav() {
+    $("#nav-mail-dropdown").html("");
+    const accountId = $("body").attr("data-ref");
+    let viewAll = `<a href="/Bookstrap/backend/mailpage/mailbox/folder/inbox" class="dropdown-item dropdown-footer">瀏覽所有郵件</a>`
+    axios.get(contextRoot + "mail/unread/" + accountId)
+        .then(
+            response => {
+                // console.log(response);
+                let data = response.data;
+                $(".nav-mail-count").html(data.totalMails);
+                if (data.totalMails == 0) {
+                    $("#nav-mail-dropdown").append(viewAll);
+                    return;
+                };
+                for (mailData of data.topThreeMails){
+                    let newLink = makeNavMailLink(mailData.mailId, mailData.empAccount, mailData.empName, mailData.mailSubject, mailData.mailTime)
+                    $("#nav-mail-dropdown").append(newLink,$("<div>",{class:"dropdown-divider"}));
+                }
+                $("#nav-mail-dropdown").append(viewAll); 
+            }
+        )
+        .catch(
+            error => console.log(error)
+        )
+}
+function makeNavMailLink(mailId, account, empName, subject, mailTime) {
+    let newLink = $("<a>", { href: "/Bookstrap/backend/mailpage/readmail/" + mailId, class: "dropdown-item nav-mail-link" });
+    let newMedia = $("<div>", { class: "media" });
+    let newImg = $("<img>", { src: "/Bookstrap/employee/photo/" + account, alt: "User Avatar", class: "img-size-50 mr-3 img-circle nav-mail-empPhoto" });
+    let newMediaBody = $("<div>", { class: "media-body" });
+    let newHeading = $("<h3>", { class: "dropdown-item-title nav-mail-empName" }).append(empName, $("<span>", { class: "float-right text-sm text-danger" }));
+    let newSubject = $("<p>", { class: "text-sm nav-mail-subject", html: subject });
+    let newTime = $("<p>", { class: "text-sm text-muted nav-mail-time" }).append($("<i>", { class: "far fa-clock mr-1" }), mailTime);
+    newMediaBody.append(newHeading, newSubject, newTime);
+    newMedia.append(newImg, newMediaBody);
+    newLink.append(newMedia);
+    return newLink
+}

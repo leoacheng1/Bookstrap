@@ -20,7 +20,7 @@ public class BackendPage {
 	
 	@Autowired
 	private MailService mailService;
-
+	
 	@GetMapping("/login")
 	public String loginPage() {
 		return "/backend/login";

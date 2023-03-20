@@ -61,4 +61,7 @@ public interface AccountMailRepository extends JpaRepository<AccountMail, Accoun
 	@Query("SELECT mail FROM AccountMail mail WHERE mail.starred=1 AND mailAccount.id=:aid")
 	public List<AccountMail> getstarredMail(@Param("aid") Integer accountId);
 	
+	@Query("SELECT accmail FROM AccountMail accmail WHERE accmail.hasread=0 AND accmail.mailAccount.id=:aid AND accmail.mailFolder.folderName = 'inbox' ORDER BY accmail.mail.mailTime DESC")
+	public List<AccountMail> getUnreadMail(@Param("aid") Integer accountId);
+	
 }

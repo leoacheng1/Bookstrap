@@ -51,6 +51,7 @@
           .page-link:focus {
             box-shadow: none;
           }
+
         </style>
     </head>
 
@@ -70,10 +71,7 @@
                       <h1>瀏覽郵件</h1>
                     </div>
                     <div class="col-sm-6">
-                      <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">個人信箱</a></li>
-                        <li class="breadcrumb-item active">瀏覽郵件</li>
-                      </ol>
+
                     </div>
                   </div>
                 </div><!-- /.container-fluid -->
