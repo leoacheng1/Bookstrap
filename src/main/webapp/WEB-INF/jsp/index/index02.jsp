@@ -103,9 +103,11 @@
                 .bg-custom {
                     background-color: #5ea0cc;
                 }
+
                 a:link {
                     text-decoration: none;
                 }
+
                 a:hover {
                     text-decoration: underline;
                 }
@@ -114,14 +116,15 @@
 
         <body>
             <jsp:include page="../layout/header.jsp"></jsp:include>
-            
+
             <div class="container-fluid d-flex mt-2 mb-2 justify-content-center ">
                 <div class="top_search_table">
                     <ul class="nav">
 
-                       
+
                         <li class="nav-item">
-                            <a class="nav-link active-2 text-dark fs-5 me-5" aria-current="page" href="http://localhost:8080/Bookstrap/shops/shopmap"><i
+                            <a class="nav-link active-2 text-dark fs-5 me-5" aria-current="page"
+                                href="http://localhost:8080/Bookstrap/shops/shopmap"><i
                                     class="fa-solid fa-location-dot"></i>分店位置
                             </a>
                         </li>
@@ -138,19 +141,20 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link b text-dark text-dark fs-5 me-5 " href="#" >優惠資訊</a>
+                            <a class="nav-link b text-dark text-dark fs-5 me-5 " href="#">優惠資訊</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark text-dark fs-5 me-5" href="#">當月熱銷</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark text-dark fs-5 me-5" href="#">部落格</a>
+                            <a class="nav-link text-dark text-dark fs-5 me-5"
+                                href="${contextRoot}/blog/blogIndex">部落格</a>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            
+
 
             <!-- <div id="booksearch" class="container"></div> -->
 
@@ -266,10 +270,10 @@
 
                     </ul>
 
-                        
-                    </div>
+
                 </div>
-                </div>
+            </div>
+            </div>
             </div>
             <!-- 即將上架 尾 -->
 
@@ -283,10 +287,17 @@
 
                         <p class="ms-2 fs-4 my-auto">本月熱銷</p>
                     </div>
+<<<<<<< HEAD
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist"> -->
+            <!-- 要改改這裡的data-bs-target="#..." -->
+            <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
+            <!-- <button class="btn btn-light rounded-0 active" id="nav-t3i1-tab" data-bs-toggle="tab"
+=======
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <!-- 要改改這裡的data-bs-target="#..." -->
                         <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
                         <button class="btn btn-light rounded-0 active" id="nav-t3i1-tab" data-bs-toggle="tab"
+>>>>>>> master
                             data-bs-target="#nav-t3i1" type="button" role="button" aria-controls="nav-t3i1"
                             aria-selected="true">
                             中文
@@ -318,9 +329,15 @@
                         </button>
                     </div>
                 </nav>
+<<<<<<< HEAD
+                <div class="tab-content" id="nav-tabContent"> -->
+            <!-- nav-home 改此id -->
+            <!-- <div class="tab-pane fade show active" id="nav-t3i1" role="tabpanel" aria-labelledby="nav-home-tab"
+=======
                 <div class="tab-content" id="nav-tabContent">
                     <!-- nav-home 改此id -->
                     <div class="tab-pane fade show active" id="nav-t3i1" role="tabpanel" aria-labelledby="nav-home-tab"
+>>>>>>> master
                         tabindex="0">
                         <div class="container">
                             <div class="homeslider">
@@ -407,24 +424,24 @@
                 <div class="shadow card mb-3 p-2 border border-2 border-opacity-25" style="max-width: 100%;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <a href=""><img src="ad1/9782072940897-xs.webp" class="img-fluid rounded-start"
-                                    alt="..." style="margin-top: 27px;margin-left: 125px;"></a>
+                            <a href=""><img src="ad1/9782072940897-xs.webp" class="img-fluid rounded-start" alt="..."
+                                    style="margin-top: 27px;margin-left: 125px;"></a>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body ">
                                 <h5 class="card-title">La mort de Vivek Oji</h5>
-                                <p class="card-text">Le lendemain d’une grande émeute au marché, la mère 
+                                <p class="card-text">Le lendemain d’une grande émeute au marché, la mère
                                     de Vivek Oji découvre le corps de son fi ls allongé sur leur véranda,
-                                     sans vie. Une simple toile imprimée d’hibiscus rouges recouvre son 
-                                     corps nu. Comment un destin si tragique a-t-il pu frapper ce jeune 
-                                     homme de vingt ans, promis à un bel avenir ?</p>
+                                    sans vie. Une simple toile imprimée d’hibiscus rouges recouvre son
+                                    corps nu. Comment un destin si tragique a-t-il pu frapper ce jeune
+                                    homme de vingt ans, promis à un bel avenir ?</p>
                                 <p class="card-text">La mère se met alors à explorer le passé à l’affût
                                     de bribes de réponses, de signes. Vivek était certes né avec une étrange
                                     tache près de la cheville. Puis il s’était curieusement laissé pousser
                                     les cheveux, de plus en plus long, malgré le courroux de son père.
-                                    Parfois, il semblait aussi planer, ailleurs. En filigrane, son cousin 
+                                    Parfois, il semblait aussi planer, ailleurs. En filigrane, son cousin
                                     prend également la parole pour nous dévoiler la part secrète de Vivek,
-                                     son plaisir caché de se vêtir en femme, son attirance pour les hommes…</p>
+                                    son plaisir caché de se vêtir en femme, son attirance pour les hommes…</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -442,22 +459,22 @@
                     <div class="row g-0">
                         <div class="col-md-4">
                             <a href=""><img src="ad1/2.webp" class="img-fluid rounded-start" alt="..."
-                               style="margin-top: 27px;margin-left: 125px;"></a>
+                                    style="margin-top: 27px;margin-left: 125px;"></a>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body ">
                                 <h5 class="card-title">Napoléon et l'Aquitaine</h5>
                                 <p class="card-text">Jacques-Olivier Boudon évoque de manière très vivante comment
-                                     trois épisodes déterminants du règne de Napoléon Ier se sont déroulés dans 
-                                     l’actuelle région de Nouvelle-Aquitaine, que l’Empereur a partiellement parcourue
-                                      en 1808, allant de Poitiers à Bayonne en passant par Angoulême, Bordeaux et
-                                       Mont-de-Marsan, puis au retour par Pau, Agen, Saintes, Rochefort, l’île d’Aix
-                                        et La Rochelle.</p>
+                                    trois épisodes déterminants du règne de Napoléon Ier se sont déroulés dans
+                                    l’actuelle région de Nouvelle-Aquitaine, que l’Empereur a partiellement parcourue
+                                    en 1808, allant de Poitiers à Bayonne en passant par Angoulême, Bordeaux et
+                                    Mont-de-Marsan, puis au retour par Pau, Agen, Saintes, Rochefort, l’île d’Aix
+                                    et La Rochelle.</p>
                                 <p class="card-text">Vous découvrirez la dramatique entrevue de Bayonne en mai 1808,
-                                     qui entraîna la France dans la tragédie espagnole ; la tentative héroïque, mais
-                                      vaine, du maréchal Soult de contenir les troupes anglo-espagnoles commandées 
-                                      par Wellington et enfin en juillet 1815, l’épisode de l’île d’Aix qui a pour 
-                                      épilogue le départ définitif de Napoléon pour l’île de Sainte-Hélène.</p>
+                                    qui entraîna la France dans la tragédie espagnole ; la tentative héroïque, mais
+                                    vaine, du maréchal Soult de contenir les troupes anglo-espagnoles commandées
+                                    par Wellington et enfin en juillet 1815, l’épisode de l’île d’Aix qui a pour
+                                    épilogue le départ définitif de Napoléon pour l’île de Sainte-Hélène.</p>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                             </div>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -491,13 +508,13 @@
                                 <div class="card-body">
                                     <h5 class="card-title">La petite-fille</h5>
                                     <p class="card-text">À la mort de son épouse Birgit, Kaspar découvre
-                                         un pan de sa vie qu’il avait toujours ignoré : avant de quitter
-                                          la RDA pour passer à l’Ouest en 1965, Birgit avait abandonné un
-                                           bébé à la naissance.</p>
-                                           <p class="card-text">Plus de vingt-cinq ans après Le liseur, 
-                                            Bernhard Schlink offre de nouveau un grand roman sur l’Allemagne
-                                             qui sonde puissamment la place du passé dans le présent, et nous
-                                              interroge sur ce qui peut unir ou séparer les êtres.</p>       
+                                        un pan de sa vie qu’il avait toujours ignoré : avant de quitter
+                                        la RDA pour passer à l’Ouest en 1965, Birgit avait abandonné un
+                                        bébé à la naissance.</p>
+                                    <p class="card-text">Plus de vingt-cinq ans après Le liseur,
+                                        Bernhard Schlink offre de nouveau un grand roman sur l’Allemagne
+                                        qui sonde puissamment la place du passé dans le présent, et nous
+                                        interroge sur ce qui peut unir ou séparer les êtres.</p>
                                 </div>
                                 <br>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -512,17 +529,18 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Sirem et l'oiseau maudit</h5>
                                     <p class="card-text">Depuis la fin de la guerre des Astres, Sirem travaille
-                                         avec son père adoptif, Ziri, dans la bibliothèque de la cité d’Afra. 
-                                         </p>
+                                        avec son père adoptif, Ziri, dans la bibliothèque de la cité d’Afra.
+                                    </p>
                                     <p class="card-text">Quand Ziri est victime d’un attentat, Sirem doit affronter
-                                         les fantômes de son passé et le pouvoir autoritaire des Veilleurs, adorateurs
-                                          du Soleil. Esseulée, elle pactise avec Tanit, une femme transformée en 
-                                          faucon par un sortilège. Mais peut-elle faire confiance à l’oiseau maudit ?
-                                           Qui est-il vraiment, et quels sont ses secrets ?</p>
+                                        les fantômes de son passé et le pouvoir autoritaire des Veilleurs, adorateurs
+                                        du Soleil. Esseulée, elle pactise avec Tanit, une femme transformée en
+                                        faucon par un sortilège. Mais peut-elle faire confiance à l’oiseau maudit ?
+                                        Qui est-il vraiment, et quels sont ses secrets ?</p>
                                 </div>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-                                    <button type="button" class="btn btn-success " style="margin-top: 5px;">加入購物車 NT:500</button>
+                                    <button type="button" class="btn btn-success " style="margin-top: 5px;">加入購物車
+                                        NT:500</button>
                                 </div>
                             </div>
                         </div>
@@ -532,15 +550,15 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Les Fossoyeurs</h5>
                                     <p class="card-text">Trois ans d’investigations, 250 témoins, le courage
-                                         d’une poignée de lanceurs d’alerte, des dizaines de documents explosifs,
-                                          plusieurs personnalités impliquées…</p>
+                                        d’une poignée de lanceurs d’alerte, des dizaines de documents explosifs,
+                                        plusieurs personnalités impliquées…</p>
                                     <p class="card-text">Voici une plongée inquiétante dans les secrets du groupe
-                                         Orpéa, leader mondial des Ehpad et des cliniques. Truffé de révélations
-                                          spectaculaires, ce récit haletant et émouvant met au jour de multiples
-                                           dérives et révèle un vaste réseau d’influence, bien loin du dévouement
-                                            des équipes d’aidants et de soignants, majoritairement attachées au 
-                                            soutien des plus fragiles.
-                                        </p>
+                                        Orpéa, leader mondial des Ehpad et des cliniques. Truffé de révélations
+                                        spectaculaires, ce récit haletant et émouvant met au jour de multiples
+                                        dérives et révèle un vaste réseau d’influence, bien loin du dévouement
+                                        des équipes d’aidants et de soignants, majoritairement attachées au
+                                        soutien des plus fragiles.
+                                    </p>
                                 </div>
                                 <br>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -555,16 +573,16 @@
                                 <div class="card-body">
                                     <h5 class="card-title">La Soeur de l'ombre</h5>
                                     <p class="card-text">À la mort de leur père, énigmatique milliardaire qui
-                                         les a ramenées des quatre coins du monde et adoptées lorsqu’elles étaient
-                                          bébés, Star d’Aplièse et ses sœurs se retrouvent dans la maison de leur
-                                           enfance, Atlantis, un magnifique château sur les bords du lac de Genève.
-                                            Pour héritage, elles reçoivent chacune un indice qui leur permettra 
-                                            peut-être de percer le mystère de leurs origines.</p>
+                                        les a ramenées des quatre coins du monde et adoptées lorsqu’elles étaient
+                                        bébés, Star d’Aplièse et ses sœurs se retrouvent dans la maison de leur
+                                        enfance, Atlantis, un magnifique château sur les bords du lac de Genève.
+                                        Pour héritage, elles reçoivent chacune un indice qui leur permettra
+                                        peut-être de percer le mystère de leurs origines.</p>
                                     <p class="card-text">
                                         À travers ses romans au souffle unique, peuplés de personnages inoubliables,
-                                         liés par les drames et l’amour, Lucinda Riley a affirmé son immense talent,
-                                          créant un genre littéraire à part entière.
-                                        </p>
+                                        liés par les drames et l’amour, Lucinda Riley a affirmé son immense talent,
+                                        créant un genre littéraire à part entière.
+                                    </p>
                                 </div>
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
@@ -583,7 +601,7 @@
             <footer class="text-muted mt-5 border border-2 border-bottom-0 border-start-0 border-end-0">
                 <div class="container">
                     <p class="float-right justify-content-center">
-                        客戶服務專線：02-26535588
+                        ##########Test only############ 客戶服務專線：02-26535588
                         傳真：02-27885008 服務時間：週一~五 8:00~19:00，週六~日、例假日
                         9:00~18:00，365天全年無休 Bookstrap數位科技股份有限公司 統編 : 96922355
                         地址：臺灣 115 台北市南港區八德路四段768巷1弄18號B1之1
