@@ -91,7 +91,7 @@ function htmlmaker(data){
             +`<p class="card-text" style="margin-bottom: 3px;">優惠價：
               <strong class="disId" id="disId" style="color: red;font-size: large;">`+element.discount+`</strong>折,`
             +`<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p></p>`
-            +`<a href="#" class="btn btn-primary">加入購物車</a>`
+            +`<a href="#" class="btn btn-primary add-to-cart" data-book-id="`+element.id+`">加入購物車</a>`
             +`</div>`
             +`</div>`
             +`</div>`
@@ -195,7 +195,7 @@ function htmlLike(res) {
       + `<p class="card-text" style="margin-bottom: 3px;">優惠價：
          <strong class="disId" id="disId" style="color: red;font-size: large;">` + element.discount + `</strong>折,`
       + `<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p></p>`
-      + `<a href="#" class="btn btn-primary">加入購物車</a>`
+      + `<a href="#" class="btn btn-primary add-to-cart" data-book-id="`+element.id+`">加入購物車</a>`
       + `</div>`
       + `</div>`
       + `</div>`
@@ -323,7 +323,7 @@ console.log(element.name )
     <strong class="disId" id="disId" style="color: red;font-size: large;">`+element.discount+`</strong>折,`
   +`<strong class="disPriId" id="disPriId" style="color: red;font-size: large;"></strong>元</p>`
   +`</p>`
-  +`<a href="#" class="btn btn-primary">加入購物車</a>`
+  +`<a href="#" class="btn btn-primary add-to-cart" data-book-id="`+element.id+`">加入購物車</a>`
   +`</div>`
   +`</div>`
   }); 
@@ -359,6 +359,5 @@ let disPrice = Math.round(price*(discount/100))
 disPriId[i].textContent = disPrice;// 將計算結果寫回元素
 }
 }
-
 
 

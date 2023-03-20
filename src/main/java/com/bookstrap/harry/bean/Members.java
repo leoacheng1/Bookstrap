@@ -82,6 +82,7 @@ public class Members {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<Comment> comment;
 	
+	@JsonManagedReference(value = "member-sales")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL)
 	private List<Sales> sales;
 	

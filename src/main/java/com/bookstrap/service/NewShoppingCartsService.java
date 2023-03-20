@@ -24,8 +24,16 @@ public class NewShoppingCartsService {
 		nscDao.deleteByCartId(cartId);
 	}
 	
+	public void deleteByBookIds(List<Integer> bookIds) {
+		nscDao.deleteByBookIds(bookIds);
+	}
+	
 	public List<NewShoppingCarts> findCartIdByMemberId(Integer memberId){
 		return nscDao.findByMemberId(memberId);
+	}
+	
+	public List<NewShoppingCarts> findCartByBookId(List<Integer> bookId){
+		return nscDao.findByBookIds(bookId);
 	}
 	
 	public void deleteAllByMemberId(Integer memberId) {
@@ -35,4 +43,6 @@ public class NewShoppingCartsService {
 	public void updateAmountByCartId(Integer amount, Integer cartId) {
 		nscDao.updateAmountByCartId(amount, cartId);
 	}
+
+	
 }

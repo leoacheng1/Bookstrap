@@ -1,5 +1,7 @@
 package com.bookstrap.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,12 @@ public class MailPageController {
 	
 	@Autowired
 	private MailService mailService;
+	
+	@ModelAttribute(name="unreadMails")
+	List<AccountMail> getUnreadMail(HttpSession session) {
+		return mailService.findAllUnreadMails(mailService.findByEmployees(empService.findById((Integer)session.getAttribute("empId"))).getAccountId());
+	}
+	
 	
 	@ModelAttribute(name="mailAccount")
 	public MailAccount getMailAccount(HttpSession session) {

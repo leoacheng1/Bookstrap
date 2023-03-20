@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.owasp.validator.html.AntiSamy;
+import org.owasp.validator.html.CleanResults;
+import org.owasp.validator.html.PolicyException;
+import org.owasp.validator.html.ScanException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -96,6 +100,9 @@ public class MailService {
 		return emDao.findMailsCountByConditions(condition, accountId);
 	}
 // ================================================= for Searching =============================================================
+	public List<AccountMail> findAllUnreadMails(Integer accountId) {
+		return accountMailDao.getUnreadMail(accountId);
+	}
 	public List<AccountLabel> findAllLabelByAccountId(Integer accountId) {
 		return emDao.findAllLabelByAccountId(accountId);
 	}
@@ -237,13 +244,32 @@ public class MailService {
 			throw new SQLException("no data found for MailAccount with account name: "+mailDto.getMailTo());
 		}
 		// folder 1:inbox, 2:sent, 3:draft, 4: delete
-				
+		String mailContent = mailDto.getMailContent();
+		AntiSamy antiSamy = new AntiSamy();
+		try {
+			CleanResults cr = antiSamy.scan(mailContent,"src/main/webapp/eddie/antisamy-myspace.xml");
+			mailContent = cr.getCleanHTML();
+//			System.out.println("=================================================================================================");
+//			System.out.println(mailContent);
+		} catch (ScanException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PolicyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+        
+        
+        
+        
 		//add mail
 		Mail mail = new Mail();
 		mail.setAccountFrom(mailFrom);
 		mail.setAccountTo(mailTo);		
 		mail.setMailSubject(mailDto.getMailSubject());
-		mail.setMailContent(mailDto.getMailContent());
+//		mail.setMailContent(mailDto.getMailContent());
+		mail.setMailContent(mailContent);
 		Mail newMail = mailDao.save(mail);
 		
 		
