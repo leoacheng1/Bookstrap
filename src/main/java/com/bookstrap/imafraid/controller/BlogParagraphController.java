@@ -70,7 +70,7 @@ public class BlogParagraphController {
 	@GetMapping("/blog/getAllBlogParagraphForMonthSelect")
 	@ResponseBody
 	public List<BlogParagraph> getAllBlogParagraphForMonthSelect() {
-		List<BlogParagraph> allBlogParagraph = blogParaService.getAllBlogParagraph();
+		List<BlogParagraph> allBlogParagraph = blogParaService.getAllBlogParagraphforMonthselect();
 
 		return allBlogParagraph;
 	}
@@ -92,7 +92,7 @@ public class BlogParagraphController {
 	}
 	@ResponseBody
 	@PutMapping("/blog/updatePara")
-	public String updatePara(@RequestParam Integer id,@RequestParam String pTitle,@RequestParam String pContent,@RequestParam String pAuther,@RequestParam String pCatagory,@RequestParam("pPhoto") MultipartFile[] pPhoto){
+	public String updatePara(@RequestParam Integer id,@RequestParam String pTitle,@RequestParam String pContent,@RequestParam String pAuther,@RequestParam String pCatagory,@RequestParam(name = "pPhoto",required = false ) MultipartFile[] pPhoto){
 	
 		blogParaService.updatePara(id, pTitle, pContent, pAuther, pCatagory, pPhoto);
 	return "成功";

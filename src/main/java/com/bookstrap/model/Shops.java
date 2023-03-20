@@ -58,7 +58,7 @@ public class Shops {
 	@JsonManagedReference(value = "shop-shopStocks")
 	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
 	private Set<ShopStock> shopStocks;
-	
+
 	@JsonManagedReference(value = "shop-sales")
 	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
 	private Set<Sales> sales;
@@ -147,12 +147,12 @@ public class Shops {
 	public Shops() {
 	}
 
-	public Set<ShopEmployees> getShopEmployees() {
-		return shopEmployees;
-	}
-
-	public void setShopEmployees(Set<ShopEmployees> shopEmployees) {
-		this.shopEmployees = shopEmployees;
-	}
+//	public Set<ShopEmployees> getShopEmployees() {
+//		return shopEmployees;
+//	}
+//
+//	public void setShopEmployees(Set<ShopEmployees> shopEmployees) {
+//		this.shopEmployees = shopEmployees;
+//	}
 
 }

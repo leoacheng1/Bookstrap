@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 
 import com.bookstrap.model.Shops;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -52,6 +53,7 @@ public class ShopEmployees{
 	private String empTitle;
 	
 	@OneToOne
+	@JsonManagedReference
 	@JoinColumn(name="emp_id")
 	@MapsId
 	private Employees employee;

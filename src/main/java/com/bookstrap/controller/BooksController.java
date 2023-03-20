@@ -304,7 +304,7 @@ public class BooksController {
 		session.setAttribute("name", name);
         String result = (String) session.getAttribute("name");
 		Page<Books> page = bService.getBookByPage2(pageNumber,result);
-		Model addAttribute = model.addAttribute("book", page);
+		Model addAttribute = model.addAttribute("books", page);
 		System.out.println(addAttribute);
 		
 		return "/books/search";
