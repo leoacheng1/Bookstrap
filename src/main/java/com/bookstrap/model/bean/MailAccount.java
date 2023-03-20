@@ -24,7 +24,7 @@ public class MailAccount {
 	
 	@Id
 	@Column(name = "account_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer accountId;
 
 	@Column(name = "account")
