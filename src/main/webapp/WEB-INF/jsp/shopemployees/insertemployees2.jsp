@@ -64,8 +64,15 @@
                               <input type="text" name="empSalary" class="form-control">
                             </div>
                             <div class="form-group">
-                              <label>員工職稱:</label>
-                              <input type="text" name="empTitle" class="form-control">
+                              <label for="shop-title" >員工職稱:</label>
+                              <select id="shop-title" class="form-control" name="empTitle">
+                              
+                                <option value="員工">員工</option>
+                                <option value="組長">組長</option>
+                                <option value="副店長">副店長</option>
+                                <option value="店長">店長</option>
+                              </select>
+                              <!-- <input type="text" name="empTitle" class="form-control"> -->
                             </div>
                             <input type="submit" value="上傳" class="btn btn-primary">
                           </form>

@@ -48,6 +48,14 @@
             <p>管理訂單</p>
           </a>
         </li>
+        
+        <li class="nav-item">
+          <a href="${contextRoot}/comment/allPage" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>所有評論</p>
+          </a>
+        </li>
+                
       </ul>
     </li>
 

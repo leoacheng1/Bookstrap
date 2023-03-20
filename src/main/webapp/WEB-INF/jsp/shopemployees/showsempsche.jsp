@@ -95,8 +95,15 @@
 															name="leave-type-select">
 															<option selected="selected" value=""></option>
 															<option value="休假">休假</option>
-															<option value="病假">病假</option>
 															<option value="特休">特休</option>
+	
+															
+																<option value="事假">事假</option>
+																<option value="病假">病假</option>
+																<option value="喪假">喪假</option>
+																<option value="婚假">婚假</option>
+																<option value="生理假">生理假</option>
+															</select>
 														</select>
 													</div>
 												</div>

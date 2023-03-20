@@ -58,7 +58,7 @@ public class ShopEmployeesAttendanceController {
 			sempAtt.setAttAgree(attAgree);
 			sempattService.addShopEmployeesAttendance(sempAtt);
 		
-			return "shopemployees/home";
+			return "shopemployees/insertsempsatt";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -146,7 +146,7 @@ public class ShopEmployeesAttendanceController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/semps/home";
+		return "shopemployees/insertsempsatt";
 
 	}
     
