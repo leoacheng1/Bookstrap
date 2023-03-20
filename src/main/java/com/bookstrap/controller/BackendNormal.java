@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -43,6 +45,7 @@ import com.bookstrap.model.bean.MailAttachment;
 import com.bookstrap.model.bean.MailCategory;
 import com.bookstrap.model.bean.MailCountDto;
 import com.bookstrap.model.bean.MailFolder;
+import com.bookstrap.model.bean.NavMailDto;
 import com.bookstrap.model.bean.SendMailDto;
 import com.bookstrap.model.bean.ViewMailDto;
 import com.bookstrap.service.EmployeesService;
@@ -76,11 +79,13 @@ public class BackendNormal {
 			m.addAttribute("error", "密碼錯誤");
 			return "backend/login";
 		}
+		List<AccountMail> mails = mailService.findAllUnreadMails(mailService.findByEmployees(emp).getAccountId());
 		session.setAttribute("empId", emp.getEmpId());
 		session.setAttribute("empAccount", emp.getAccount());
 		session.setAttribute("empName", emp.getEmpName());
 		session.setAttribute("empPosition", emp.getEmpPosition());
 		session.setAttribute("empId", emp.getEmpId());
+		session.setAttribute("unreadMails", mails);
 		return "redirect:index";
 	}
 	
@@ -166,6 +171,8 @@ public class BackendNormal {
 		 dto.setMailSubject(mail.getMailSubject());
 		 dto.setMailTime(mail.getMailTime());
 		 dto.setMailContent(mail.getMailContent());
+		 MailAccount accountTo = mail.getAccountTo();
+		 dto.setMailTo(accountTo == null ? "" : accountTo.getAccount());
 		 return dto;
 	}
 	
@@ -409,6 +416,33 @@ public class BackendNormal {
 	public List<AccountLabel> getAllLabels(@PathVariable("accountId") Integer accountId) {
 		return mailService.findAllLabelByAccountId(accountId);
 	}
+	
+	@GetMapping("mail/unread/{accountId}")
+	@ResponseBody
+	public Map<String,Object> getUnreadMails(@PathVariable("accountId") Integer accountId) {
+		List<AccountMail> accMails = mailService.findAllUnreadMails(accountId);
+		HashMap<String, Object> map = new HashMap<String,Object>();
+		if (accMails == null) return null;
+		
+		Integer size = accMails.size();
+		
+		List<NavMailDto> navMails = new ArrayList<NavMailDto>();
+		for (int i = 0; i < accMails.size(); i++) {
+			if (i == 3) break;
+			AccountMail accMail = accMails.get(i);
+			NavMailDto navMail = new NavMailDto();
+			navMail.setMailId(accMail.getMail().getMailId());
+			navMail.setEmpName(accMail.getMail().getAccountFrom().getEmployee().getEmpName());
+			navMail.setEmpAccount(accMail.getMail().getAccountFrom().getEmployee().getAccount());
+			navMail.setMailSubject(accMail.getMail().getMailSubject());
+			navMail.setMailTime(accMail.getMail().getMailTime());
+			navMails.add(navMail);
+		}
+		map.put("totalMails", size);
+		map.put("topThreeMails", navMails);
+		return map;
+	}
+	
 //===================================================Updating==========================================================
 	@PutMapping("mail/important/{mailId}")
 	@ResponseBody
