@@ -85,7 +85,7 @@
 						<jstl:forEach var="memberDetails" items="${page.content}">
 							<tr>  
 								<th scope="row">${memberDetails.memberId}</th>
-								<td><img src="${contextRoot}/admin/get/getphoto?memberId=${member.memberId}" width="100px"> </td>
+								<td><img src="${contextRoot}/admin/get/getphoto?memberId=${memberDetails.memberId}" width="100px"> </td>
 								<td>${memberDetails.memberLastName}</td>
 								<td>${memberDetails.memberFirstName}</td>
 								<td>${memberDetails.memberEmail}</td>
