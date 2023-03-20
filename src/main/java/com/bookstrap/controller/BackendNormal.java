@@ -79,13 +79,17 @@ public class BackendNormal {
 			m.addAttribute("error", "密碼錯誤");
 			return "backend/login";
 		}
-		List<AccountMail> mails = mailService.findAllUnreadMails(mailService.findByEmployees(emp).getAccountId());
+		if (mailService.findByEmployees(emp) != null) {
+			List<AccountMail> mails = mailService.findAllUnreadMails(mailService.findByEmployees(emp).getAccountId());		
+			session.setAttribute("unreadMails", mails);
+		}
+	
 		session.setAttribute("empId", emp.getEmpId());
 		session.setAttribute("empAccount", emp.getAccount());
 		session.setAttribute("empName", emp.getEmpName());
 		session.setAttribute("empPosition", emp.getEmpPosition());
 		session.setAttribute("empId", emp.getEmpId());
-		session.setAttribute("unreadMails", mails);
+
 		return "redirect:index";
 	}
 	

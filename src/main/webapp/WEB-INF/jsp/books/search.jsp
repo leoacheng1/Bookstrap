@@ -210,14 +210,14 @@ padding: 15px;
 <div style="height: 13px; margin-right:30px;">
   <nav aria-label="Page navigation example" >
     <ul class="pagination justify-content-end">
-<jstl:forEach var="pageNumber" begin="1" end="${book.totalPages}">
+<jstl:forEach var="pageNumber" begin="1" end="${books.totalPages}">
   <li class="page-item"><a class="page-link likeBtn" data-likeId="${pageNumber}" data-name="${sessionScope.name}">${pageNumber}</a></li>
 </jstl:forEach>  
     </ul>
   </nav>
 </div>
 
-<jstl:forEach var="book" items="${book.content}">
+<jstl:forEach var="book" items="${books.content}">
   <div class="card" style="width:240px;height:420px;margin-right:5px;margin-left:10px;margin-top:57px;position: relative;">
     <a href='http://localhost:8080/Bookstrap/books/oneBook?id=${book.id}'>
       <img src="http://localhost:8080/Bookstrap/books/id?id=${book.id}" class="card-img-top"

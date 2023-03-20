@@ -112,8 +112,8 @@
           password: "12345"
         },
         'member2': {
-          username: "abc123@gmail.com",
-          password: "abc123"
+          username: "bookeeit157@gmail.com",
+          password: "123456"
         },
         'member3': {
           username: "def456@gmail.com",

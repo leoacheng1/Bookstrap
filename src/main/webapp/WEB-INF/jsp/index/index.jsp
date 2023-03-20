@@ -106,9 +106,6 @@
                 a:link {
                     text-decoration: none;
                 }
-                a:hover {
-                    text-decoration: underline;
-                }
             </style>
         </head>
 
@@ -144,7 +141,7 @@
                             <a class="nav-link text-dark text-dark fs-5 me-5" href="#">當月熱銷</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark text-dark fs-5 me-5" href="#">部落格</a>
+                            <a class="nav-link text-dark text-dark fs-5 me-5" href="${contextRoot}/blog/blogIndex">部落格</a>
                         </li>
                     </ul>
                 </div>

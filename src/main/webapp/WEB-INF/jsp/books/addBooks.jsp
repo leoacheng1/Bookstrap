@@ -15,9 +15,7 @@
     margin-bottom: 10px;
     
   }
-  form{
-    font-size: large;
-  }
+
 </style>
 </head>
 <body class="dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse">
@@ -31,7 +29,7 @@
 <div class="container">
 <div class="content-header">
   <br/>
-  <div style="position: absolute;top: 40px;left: 450px;">
+  <div style="position: absolute;top: 40px;left: 425px;">
 	<h1>新增書籍</h1>
   <br/>
   <form action="${contextRoot}/books/post" method="post" enctype="multipart/form-data">
@@ -62,7 +60,7 @@
   折扣：<input class="input" type="text" name="discount" id="discountInput" placeholder="請輸入折扣"/><br/>
   定價：<input class="input" type="text" name="price" id="priceInput" placeholder="請輸入定價"/><br/>
   </div>
-  <div style="position: absolute;top: 100px;right: 350px;">
+  <div style="position: absolute;top: 100px;right: 325px;">
   尺寸：<input class="input" type="text" name="size" id="sizeInput" placeholder="請輸入尺寸"/><br/>
   頁數：<input class="input" type="text" name="pages" id="pagesInput" placeholder="請輸入頁數"/><br/>
   <div style="display: flex;margin-top: 10px;">簡介：
