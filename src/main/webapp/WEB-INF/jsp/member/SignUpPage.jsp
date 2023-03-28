@@ -44,7 +44,7 @@
                       <input type="email" class="form-control" id="memberEmail" name="memberEmail" required/>
                       <label for="exampleDatepicker1" class="form-label" >電子郵件地址</label>
                     </div>
-                        <div style="color: red;" class="accountExist">
+                        <div style="color: red;" class="accountExist" id = "responseData" data-response="${response}">
                         
                         </div>
                         <div style="color: green;" class="accountNotExist">

@@ -199,6 +199,7 @@ public class MemberController {
 	@PostMapping("/member/checkaccount")
 	public Map<String,String> checkAccount(@RequestParam(value = "memberEmail") String memberAccount,
 			Model m) {
+		
 		Members account = memberService.checkAccount(memberAccount);
 		Map<String, String> errors = new HashMap<String, String>();
 	    HashMap<String, String> map = new HashMap<>();
