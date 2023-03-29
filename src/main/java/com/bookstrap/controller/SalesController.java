@@ -48,13 +48,18 @@ public class SalesController {
 
 	// 結帳後送出訂單
 	@PostMapping("/checkout")
-	public String checkout(@RequestParam("totalPrice") Integer totalPrice, @RequestParam("address") String address,
-			@RequestParam("delivery") String delivery, @RequestParam(value = "shop", required = false) Integer shop,
-			@RequestParam("payment") String payment, @RequestParam("pay") String pay,
-			@RequestParam("email") String email, @RequestParam("status") String status,
-			@RequestParam(value = "coupon", required = false) Integer coupon, HttpSession session,
-			@RequestParam("bookId") List<Integer> bookId, @RequestParam("amount") List<Integer> amount)
-			throws UnsupportedEncodingException, MessagingException {
+	public String checkout(@RequestParam("totalPrice") Integer totalPrice, 
+						   @RequestParam("address") String address,
+						   @RequestParam("delivery") String delivery, 
+						   @RequestParam(value = "shop", required = false) Integer shop,
+						   @RequestParam("payment") String payment, 
+						   @RequestParam("pay") String pay,
+						   @RequestParam("email") String email, 
+						   @RequestParam("status") String status,
+						   @RequestParam(value = "coupon", required = false) Integer coupon, HttpSession session,
+						   @RequestParam("bookId") List<Integer> bookId, 
+						   @RequestParam("amount") List<Integer> amount)
+								   throws UnsupportedEncodingException, MessagingException {
 
 		Integer memberId = (Integer) session.getAttribute("memberId");
 		// create a Sales object
@@ -90,12 +95,12 @@ public class SalesController {
 		session.removeAttribute("coupon");
 
 		// 刪除已使用的優惠券
-//		if(coupon != null) {
-//			ucService.deleteById(coupon, memberId);
-//		}
+		if(coupon != null) {
+			ucService.deleteById(coupon, memberId);
+		}
 
-		// 寄Email
-		sService.sendVertificationEnail(email);
+//		// 寄Email
+//		sService.sendVertificationEnail(email);
 		session.setAttribute("orderId", sales.getSaleId());
 		session.setAttribute("amount", sales.getTotalPrice());
 

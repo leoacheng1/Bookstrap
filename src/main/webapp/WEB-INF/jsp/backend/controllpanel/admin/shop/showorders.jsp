@@ -69,7 +69,7 @@ prefix="fn" %>
                 <col width="10%" />
                 <col width="10%" />
                 <col width="8%" />
-                <col width="10%" />
+
                 <col width="8%" />
                 <col width="10%" />
               </colgroup>
@@ -83,7 +83,7 @@ prefix="fn" %>
                   <th>付款方式</th>
                   <th>金額</th>
                   <th>付款狀態</th>
-                  <th>修改付款狀態</th>
+
                   <th>訂單狀態</th>
                   <th>修改訂單狀態</th>
                 </tr>
@@ -151,14 +151,6 @@ prefix="fn" %>
                           <c:otherwise>未知</c:otherwise>
                         </c:choose>
                       </div>
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-info"
-                        onclick="showSalePaySelect(${sale.saleId})"
-                      >
-                        編輯
-                      </button>
                     </td>
 
                     <td>
@@ -541,9 +533,6 @@ prefix="fn" %>
                 "'>" +
                 payStatus +
                 "</div></td>" +
-                "<td><button class='btn btn-info' onclick='showSalePaySelect(" +
-                sale.saleId +
-                ")'>編輯</button></td>" +
                 "<td><div id='sale-status-" +
                 sale.saleId +
                 "'>" +
