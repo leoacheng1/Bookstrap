@@ -35,7 +35,10 @@ import com.bookstrap.harry.service.EBookFavorityService;
 import com.bookstrap.harry.service.EBookPurchaseService;
 import com.bookstrap.harry.service.MemberDdetailService;
 import com.bookstrap.harry.service.MemberService;
+import com.bookstrap.model.Shops;
 import com.bookstrap.service.SalesService;
+import com.bookstrap.service.ShopsService;
+import com.bookstrap.service.UserCouponService;
 
 @Controller
 @SessionAttributes({"member", "memberId", "memberName"})
@@ -57,6 +60,12 @@ public class MemberController {
 	
 	@Autowired
 	private SalesService sService;
+	
+	@Autowired
+	private UserCouponService ucService;
+	
+	@Autowired
+	private ShopsService shService;
 
 //	@GetMapping("/member/registrationpage")
 //	public String registrationpage() {
@@ -104,11 +113,15 @@ public class MemberController {
 
 	// Registration 2
 	@PostMapping("/member/post")
-	public String memberRegistration(@RequestParam("memberId") Integer memberId, @RequestParam("memberLastName") String memberLastName,
-			@RequestParam("memberFirstName") String memberFirstName,
-			@RequestParam("memberSex") Integer memberSex, @RequestParam("memberBirthday") Date memberBirthday,
-			@RequestParam("memberPhone") String memberPhone, @RequestParam("memberPhone") String memberCellPhone,
-			@RequestParam("memberAddress") String memberAddress, @RequestParam("memberPhoto") MultipartFile memberPhoto, Model m, HttpSession session)
+	public String memberRegistration(@RequestParam("memberId") Integer memberId, 
+									 @RequestParam("memberLastName") String memberLastName,
+									 @RequestParam("memberFirstName") String memberFirstName,
+									 @RequestParam("memberSex") Integer memberSex, 
+									 @RequestParam("memberBirthday") Date memberBirthday,
+									 @RequestParam("memberPhone") String memberPhone,
+									 @RequestParam("memberPhone") String memberCellPhone,
+									 @RequestParam("memberAddress") String memberAddress, 
+									 @RequestParam("memberPhoto") MultipartFile memberPhoto, Model m, HttpSession session)
 			throws MessagingException, IOException {
 
 		java.util.Date jDate = new java.util.Date();
@@ -170,7 +183,7 @@ public class MemberController {
 		memberDetail.setMemberPhoto(photo);
 
 		memberDetailService.insertMemberDetails(memberDetail);
-		
+		ucService.insert(memberId);
 		MemberDetails memberNameById = memberDetailService.useIdFindName(memberId);
 		String memberName = memberNameById.getMemberFirstName();
 		
@@ -527,11 +540,11 @@ public class MemberController {
 		
 		Integer memberId = (Integer) session.getAttribute("memberId");
 		List<Sales> myorder = sService.findSalesByMemberId(memberId);
-		
+		List<Shops> allShopList = shService.findAllShop();
 		Collections.reverse(myorder);
 		
 		model.addAttribute("myorder", myorder); 
-		
+		model.addAttribute("allShopList", allShopList);
 		
 		return "member/Main/MyOrders";
 	}

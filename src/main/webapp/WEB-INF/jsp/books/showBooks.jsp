@@ -35,22 +35,22 @@
 </div>
 
 
-<div style="font-size:large;">
-<table class="text-center" style="width: 1614px;">
+<div>
+<table class="text-center" style="width: 1315px;">
     <thead style="background-color:#DCDCDC;">
       <tr>
-        <th colspan="2" style="width: 295px;">書名</th>     
+        <th colspan="2" style="width: 250px;">書名</th>     
         <th ></th>     
         <th style="width: 125px;">作者</th>
         <th style="width: 125px;">譯者</th>
         <th style="width: 75px;">語言</th>
-        <th style="width: 125px;">類別</th>
-        <th style="width: 150px;">出版社</th>
-        <th style="width: 150px;">出版日期</th>
+        <th style="width: 100px;">類別</th>
+        <th style="width: 125px;">出版社</th>
+        <th style="width: 125px;">出版日期</th>
         <th style="width: 110px;height: 50px;">封面圖片</th>
-        <th style="width: 75px;">折扣</th>
-        <th style="width: 75px;">定價</th>
-        <th style="width: 140px;">詳細資料</th>
+        <th style="width: 50px;">折扣</th>
+        <th style="width: 50px;">定價</th>
+        <th style="width: 110px;">詳細資料</th>
         <th style="width: 80px;">更新</th>
 	      <th style="width: 80px;">刪除</th>
       </tr>

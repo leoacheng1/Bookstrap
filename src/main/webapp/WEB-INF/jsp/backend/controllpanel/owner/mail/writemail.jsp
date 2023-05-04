@@ -57,12 +57,50 @@
           .select2-selection__rendered {
             padding-left: 0 !important;
           }
+
+          /*                 loader              */
+          .loader {
+            border: 1px solid #ccc;
+            padding: 20px;
+            float: right;
+          }
+
+          .loader_ajax_small {
+            border: 2px solid #f3f3f3 !important;
+            border-radius: 50%;
+            border-top: 2px solid #2D2D2D !important;
+            width: 29px;
+            height: 29px;
+            margin: 0 10px;
+            -webkit-animation: spin_loader_ajax_small 1.5s linear infinite;
+            animation: spin_loader_ajax_small 1.5s linear infinite;
+          }
+
+          @-webkit-keyframes spin_loader_ajax_small {
+            0% {
+              -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+              -webkit-transform: rotate(360deg);
+            }
+          }
+
+          @keyframes spin_loader_ajax_small {
+            0% {
+              transform: rotate(0deg);
+            }
+
+            100% {
+              transform: rotate(360deg);
+            }
+          }
         </style>
     </head>
 
     <body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse"
       data-ref="${mailAccount.accountId}" data-mailTo="${mailTo}" data-draftMail="${draftMail.mailId}"
-      data-replyMail="${replyMail.mailId}" data-forwardMail = "${forwardMail.mailId}">
+      data-replyMail="${replyMail.mailId}" data-forwardMail="${forwardMail.mailId}">
       <div class="wrapper">
         <!--上面導覽列 -->
         <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
@@ -77,10 +115,10 @@
                       <h1>撰寫郵件</h1>
                     </div>
                     <div class="col-sm-6">
-                      <ol class="breadcrumb float-sm-right">
+                      <!-- <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">個人信箱</a></li>
                         <li class="breadcrumb-item active">撰寫郵件</li>
-                      </ol>
+                      </ol> -->
                     </div>
                   </div>
                 </div><!-- /.container-fluid -->
@@ -289,13 +327,16 @@
                           <div class="form-group">
                             <jstl:choose>
                               <jstl:when test="${not empty draftMail}">
-                                <input class="form-control" placeholder="主旨" name="mailSubject" value="${draftMail.mailSubject}">
+                                <input class="form-control" placeholder="主旨" name="mailSubject"
+                                  value="${draftMail.mailSubject}">
                               </jstl:when>
                               <jstl:when test="${not empty replyMail}">
-                                <input class="form-control" placeholder="主旨" name="mailSubject" value="RE:${replyMail.mailSubject}">
+                                <input class="form-control" placeholder="主旨" name="mailSubject"
+                                  value="RE:${replyMail.mailSubject}">
                               </jstl:when>
                               <jstl:when test="${not empty forwardMail}">
-                                <input class="form-control" placeholder="主旨" name="mailSubject" value="FW:${forwardMail.mailSubject}">
+                                <input class="form-control" placeholder="主旨" name="mailSubject"
+                                  value="FW:${forwardMail.mailSubject}">
                               </jstl:when>
                               <jstl:otherwise>
                                 <input class="form-control" placeholder="主旨" name="mailSubject">
@@ -386,6 +427,9 @@
                           </div>
                           <button type="reset" class="btn btn-danger" id="giveupBtn" data-toggle="modal"
                             data-target="#dropModal"><i class="fas fa-times"></i> 放棄</button>
+                          <button type="reset" class="btn btn-success" data-toggle="modal"
+                            data-target="#genLetterModal"> 生成信件</button>
+                          <!-- <button type="reset" class="btn btn-success" id="correctLetterBtn"> 英文修正</button> -->
                         </div>
                         <!-- /.card-footer -->
                       </div>
@@ -540,6 +584,44 @@
           </div>
         </div>
       </div>
+      <!-- Modal -->
+      <div class="modal fade" id="genLetterModal" tabindex="-1" role="dialog" aria-labelledby="genLetterModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="genLetterModalLabel">信件生成</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+              <form>
+                <div class="form-group">
+                  <label for="">信件主題</label>
+                  <input type="text" class="form-control" id="gen-mail-topic" placeholder="輸入主題">
+                </div>
+                <div class="form-group">
+                  <label for="">內文包含</label>
+                  <textarea class="form-control" rows="3" placeholder="主要的信件內容" id="gen-mail-content"
+                    style="min-height: 150px;"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="">其他條件</label>
+                  <textarea class="form-control" rows="3" placeholder="輸入條件,例如字數限制等" id="gen-mail-condition"
+                    style="min-height: 150px;"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+              <button type="button" class="btn btn-primary" id="generateLetterBtn">送出</button>
+              <div class="loader_ajax_small" id="loader" style="display: none;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!--右側彈跳式功能列 -->
       <%@ include file="/WEB-INF/jsp/backend/layout/controllsidebar/ownercontroll.jsp" %>
         <!--版型需要的js-->
@@ -564,5 +646,8 @@
         <script src="${contextRoot}/eddie/js/select2.min.js"></script>
         <script src="${contextRoot}/eddie/js/mail/composemail.js"></script>
         <script src="${contextRoot}/eddie/js/mail/mailside.js"></script>
+        <script src="${contextRoot}/eddie/js/mail/demoUtil.js"></script>
+        <script type="text/javascript" src="${contextRoot}/eddie/js/purify.min.js"></script>
     </body>
+
     </html>

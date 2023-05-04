@@ -20,14 +20,14 @@ public class UserCouponController {
 	@Autowired
 	private UserCouponService ucService;
 
-	@GetMapping()
+	@GetMapping("/mycoupon")
 	public String findCouponsByMemberId(ModelMap model, HttpSession session) {
 
 		Integer memberId = (Integer) session.getAttribute("memberId");
 
 		if (memberId != null) {
 			List<UserCoupon> userCouponList = ucService.findCouponsByMemberId(memberId);
-
+	
 			List<Coupons> coupons = new ArrayList<Coupons>();
 			for (int n = 0; n < userCouponList.size(); n++) {
 				Coupons coupon = userCouponList.get(n).getCoupon();
@@ -35,7 +35,7 @@ public class UserCouponController {
 			}
 			model.addAttribute("userCouponList", userCouponList);
 			model.addAttribute("coupons", coupons);
-			return "";
+			return "member/Main/MyCoupon";
 		}
 		return "member/SignInPage";
 	}

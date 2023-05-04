@@ -98,6 +98,7 @@
         </head>
 
         <body>
+        
             <noscript>
                 <h2>Sorry! Your browser doesn't support Javascript</h2>
             </noscript>

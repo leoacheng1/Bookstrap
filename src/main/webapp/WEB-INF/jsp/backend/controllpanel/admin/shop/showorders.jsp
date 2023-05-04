@@ -34,36 +34,61 @@ prefix="fn" %>
       <%@ include file="/WEB-INF/jsp/backend/layout/sidebar/adminsidebar.jsp"%>
 
       <div class="content-wrapper">
-        <div style="margin-left: 200px">
+        <div style="margin-left: 100px">
           <div class="content-header">
             <br />
             <h1>所有訂單</h1>
             <br />
           </div>
           <div class="container">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="memberId"
+                name="memberId"
+                placeholder="會員編號查詢訂單："
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  onclick="searchSalesByMemberId()"
+                >
+                  搜尋
+                </button>
+              </div>
+            </div>
             <table>
               <colgroup>
                 <col width="8%" />
                 <col width="9%" />
-                <col width="12%" />
+                <col width="9%" />
                 <col width="8%" />
-                <col width="20%" />
-                <col width="5%" />
-                <col width="18%" />
+                <col width="8%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="8%" />
+                <col width="10%" />
+                <col width="8%" />
+                <col width="10%" />
               </colgroup>
               <thead>
                 <tr>
                   <th>訂單編號</th>
                   <th>訂單時間</th>
                   <th>訂購會員</th>
-                  <th>訂購會員編號</th>
+                  <th>會員編號</th>
                   <th>配送方式</th>
                   <th>付款方式</th>
-                  <th>訂單總金額</th>
+                  <th>金額</th>
+                  <th>付款狀態</th>
+                  <th>修改付款狀態</th>
                   <th>訂單狀態</th>
+                  <th>修改訂單狀態</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="sales-tbody">
                 <c:forEach var="sale" items="${salesPage.content}">
                   <tr>
                     <td>${sale.saleId}</td>
@@ -95,7 +120,22 @@ prefix="fn" %>
                         <td>貨到付款</td>
                       </c:when>
                       <c:when test="${sale.payment == 'line-pay'}">
-                        <td>Line Pay</td>
+                        <td>
+                          <a
+                            href="#"
+                            onclick="showOrderNumber(${sale.linepayId})"
+                            >Line Pay</a
+                          >
+                        </td>
+                      </c:when>
+                      <c:when test="${sale.payment == 'store-pickup-payment'}">
+                        <td>
+                          <a
+                            href="#"
+                            onclick="showOrderShop('${sale.shop.shopName}')"
+                            >到店取貨付款</a
+                          >
+                        </td>
                       </c:when>
                       <c:otherwise>
                         <td>其他付款方式</td>
@@ -103,32 +143,59 @@ prefix="fn" %>
                     </c:choose>
 
                     <td>${sale.totalPrice}</td>
+                    <td>
+                      <div id="sale-pay-${sale.saleId}">
+                        <c:choose>
+                          <c:when test="${sale.pay eq 'undone'}">未付款</c:when>
+                          <c:when test="${sale.pay eq 'done'}">已付款</c:when>
+                          <c:otherwise>未知</c:otherwise>
+                        </c:choose>
+                      </div>
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-info"
+                        onclick="showSalePaySelect(${sale.saleId})"
+                      >
+                        編輯
+                      </button>
+                    </td>
 
                     <td>
-                      <c:choose>
-                        <c:when test="${sale.status eq 'Pending'}"
-                          >處理訂單中</c:when
-                        >
-                        <c:when test="${sale.status eq 'Processing'}"
-                          >處理中</c:when
-                        >
-                        <c:when test="${sale.status eq 'Shipped'}"
-                          >運送中</c:when
-                        >
-                        <c:when test="${sale.status eq 'Delivered'}"
-                          >已送達</c:when
-                        >
-                        <c:when test="${sale.status eq 'Completed'}"
-                          >交易完成</c:when
-                        >
-                        <c:when test="${sale.status eq 'Cancelled'}"
-                          >已取消</c:when
-                        >
-                        <c:when test="${sale.status eq 'Refunded'}"
-                          >已退款</c:when
-                        >
-                        <c:otherwise>未知</c:otherwise>
-                      </c:choose>
+                      <div id="sale-status-${sale.saleId}">
+                        <c:choose>
+                          <c:when test="${sale.status eq 'Pending'}"
+                            >處理訂單中</c:when
+                          >
+                          <c:when test="${sale.status eq 'Processing'}"
+                            >理貨中</c:when
+                          >
+                          <c:when test="${sale.status eq 'Shipped'}"
+                            >運送中</c:when
+                          >
+                          <c:when test="${sale.status eq 'Delivered'}"
+                            >已送達</c:when
+                          >
+                          <c:when test="${sale.status eq 'Completed'}"
+                            >交易完成</c:when
+                          >
+                          <c:when test="${sale.status eq 'Cancelled'}"
+                            >已取消</c:when
+                          >
+                          <c:when test="${sale.status eq 'Refunded'}"
+                            >已退款</c:when
+                          >
+                          <c:otherwise>未知</c:otherwise>
+                        </c:choose>
+                      </div>
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-info"
+                        onclick="showSaleStatusSelect(${sale.saleId})"
+                      >
+                        編輯
+                      </button>
                     </td>
                   </tr>
                 </c:forEach>
@@ -136,17 +203,18 @@ prefix="fn" %>
             </table>
 
             <div>
-              <c:forEach var="i" begin="1" end="${salesPage.totalPages}">
+              <!-- <c:forEach var="i" begin="1" end="${salesPage.totalPages}">
                 <c:choose>
                   <c:when test="${i == salesPage.number}">
                     <span>${i}</span>
                     <span>|</span>
                   </c:when>
                   <c:otherwise>
+                    <span>|</span>
                     <a href="?page=${i}">${i}</a>
                   </c:otherwise>
                 </c:choose>
-              </c:forEach>
+              </c:forEach> -->
               <span>第</span>
               <span>${salesPage.number + 1}</span>
               <span>/</span>
@@ -205,61 +273,298 @@ prefix="fn" %>
       type="text/javascript"
     ></script>
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-    <!-- <script>
-      $(document).ready(function () {
-        var currentPage = 1; // 當前頁面編號，初始值為 1
+    <script>
+      function showOrderNumber(orderNumber) {
+        alert("訂單編號為：" + orderNumber);
+      }
+      function showOrderShop(shopAddress) {
+        console.log(shopAddress);
+        alert("分店名稱為：" + shopAddress);
+      }
 
-        // 監聽搜尋框的鍵盤輸入事件
-        $("#search-keyword").on("keyup", function (event) {
-          var keyword = $(this).val();
-          // 如果搜尋關鍵字不為空，則發送 AJAX 請求進行搜尋
-          if (keyword != "") {
-            search(keyword, currentPage);
-          } else {
-            // 如果搜尋關鍵字為空，則清空搜尋結果和分頁按鈕
-            $("#search-result").empty();
-            $("#page-buttons").empty();
-          }
+      function showSaleStatusSelect(saleId) {
+        var saleStatusDiv = $("#sale-status-" + saleId);
+        var saleStatus = saleStatusDiv.find("span").text();
+        var selectHtml = '<select id="sale-status-select-' + saleId + '">';
+        selectHtml +=
+          '<option value="Pending" ' +
+          (saleStatus === "處理訂單中" ? "selected" : "") +
+          ">處理訂單中</option>";
+        selectHtml +=
+          '<option value="Processing" ' +
+          (saleStatus === "理貨中" ? "selected" : "") +
+          ">理貨中</option>";
+        selectHtml +=
+          '<option value="Shipped" ' +
+          (saleStatus === "運送中" ? "selected" : "") +
+          ">運送中</option>";
+        selectHtml +=
+          '<option value="Delivered" ' +
+          (saleStatus === "已送達" ? "selected" : "") +
+          ">已送達</option>";
+        selectHtml +=
+          '<option value="Completed" ' +
+          (saleStatus === "交易完成" ? "selected" : "") +
+          ">交易完成</option>";
+        selectHtml +=
+          '<option value="Cancelled" ' +
+          (saleStatus === "已取消" ? "selected" : "") +
+          ">已取消</option>";
+        selectHtml +=
+          '<option value="Refunded" ' +
+          (saleStatus === "已退款" ? "selected" : "") +
+          ">已退款</option>";
+        selectHtml += "</select>";
+
+        saleStatusDiv.html(selectHtml);
+        var saleStatusSelect = $("#sale-status-select-" + saleId);
+        saleStatusSelect.val(saleStatus);
+        saleStatusSelect.on("change", function () {
+          var newStatus = $(this).val();
+          editSale(saleId, newStatus);
         });
+      }
 
-        // 監聽分頁按鈕的點擊事件
-        $("#page-buttons").on("click", "button", function (event) {
-          var pageNumber = $(this).data("page");
-          search($("#search-keyword").val(), pageNumber);
-        });
-
-        // 搜尋函數，發送 AJAX 請求並顯示搜尋結果和分頁按鈕
-        function search(keyword, pageNumber) {
-          $.ajax({
-            url: "/api/search",
-            type: "GET",
-            dataType: "json",
-            data: {
-              keyword: keyword,
-              pageNumber: pageNumber,
-            },
-            success: function (data) {
-              // 顯示搜尋結果
-              var searchResult = "";
-              for (var i = 0; i < data.length; i++) {
-                searchResult += "<div>" + data[i].name + "</div>";
-              }
-              $("#search-result").html(searchResult);
-
-              // 顯示分頁按鈕
-              var pageButtons = "";
-              for (var i = 1; i <= data.totalPages; i++) {
-                pageButtons +=
-                  '<button data-page="' + i + '">' + i + "</button>";
-              }
-              $("#page-buttons").html(pageButtons);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-              console.error("搜尋失敗：", textStatus, errorThrown);
-            },
-          });
+      /////////////// 將訂單狀態英文切換成中文 ///////////////
+      function convertStatusToChinese(status) {
+        switch (status) {
+          case "Pending":
+            return "處理訂單中";
+          case "Processing":
+            return "理貨中";
+          case "Shipped":
+            return "運送中";
+          case "Delivered":
+            return "已送達";
+          case "Completed":
+            return "交易完成";
+          case "Cancelled":
+            return "已取消";
+          case "Refunded":
+            return "已退款";
+          default:
+            return "未知";
         }
-      });
-    </script> -->
+      }
+      /////////////// 將付款狀態英文切換成中文 ///////////////
+      function convertPayToChinese(pay) {
+        switch (pay) {
+          case "undone":
+            return "未付款";
+          case "done":
+            return "已付款";
+        }
+      }
+
+      function editSale(saleId, newStatus) {
+        if (newStatus !== "") {
+          if (
+            confirm(
+              "確定要將銷售記錄狀態設為 " +
+                convertStatusToChinese(newStatus) +
+                " 嗎？"
+            )
+          ) {
+            $.ajax({
+              url: "/Bookstrap/shipping/" + saleId + "/status",
+              method: "PUT",
+              contentType: "application/json;charset=UTF-8",
+              data: JSON.stringify({ status: newStatus }),
+              success: function (data, textStatus, xhr) {
+                // 更新銷售記錄的狀態成功，將狀態設置回div中
+                var saleStatusDiv = $("#sale-status-" + saleId);
+                var html = '<div id="sale-status-' + saleId + '">';
+                html += convertStatusToChinese(newStatus);
+                html += "</div>";
+                saleStatusDiv.html(html);
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                // 更新銷售記錄的狀態失敗，可以在這裡顯示錯誤訊息等等
+              },
+            });
+          }
+        }
+      }
+
+      function showSalePaySelect(saleId) {
+        var salePayDiv = $("#sale-pay-" + saleId);
+        var salePay = salePayDiv.text();
+
+        var selectHtml = '<select id="sale-pay-select-' + saleId + '">';
+        selectHtml +=
+          '<option value="undone" ' +
+          (salePay === "未付款" ? "selected" : "") +
+          ">未付款</option>";
+        selectHtml +=
+          '<option value="done" ' +
+          (salePay === "已付款" ? "selected" : "") +
+          ">已付款</option>";
+        selectHtml += "</select>";
+        salePayDiv.html(selectHtml);
+
+        var salePaySelect = $("#sale-pay-select-" + saleId);
+
+        salePaySelect.on("change", function () {
+          var newPay = $(this).val();
+          editSalePay(saleId, newPay);
+        });
+      }
+
+      function editSalePay(saleId, newPay) {
+        if (newPay !== "") {
+          if (
+            confirm(
+              "確定要將銷售記錄付款狀態設為 " +
+                convertPayToChinese(newPay) +
+                " 嗎？"
+            )
+          ) {
+            $.ajax({
+              url: "/Bookstrap/shipping/" + saleId + "/pay",
+              method: "PUT",
+              contentType: "application/json;charset=UTF-8",
+              data: JSON.stringify({ pay: newPay }),
+              success: function (data, textStatus, xhr) {
+                // 更新銷售記錄的付款狀態成功，將狀態設置回div中
+                var salePayDiv = $("#sale-pay-" + saleId);
+                salePayDiv.text(
+                  newPay === "undone"
+                    ? "未付款"
+                    : newPay === "done"
+                    ? "已付款"
+                    : "未知"
+                );
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                // 更新銷售記錄的付款狀態失敗，可以在這裡顯示錯誤訊息等等
+              },
+            });
+          }
+        }
+      }
+      function searchSalesByMemberId() {
+        var memberId = $("#memberId").val();
+        $.ajax({
+          url: "/Bookstrap/shipping/searchByMemberId",
+          method: "GET",
+          data: { memberId: memberId },
+          success: function (data, textStatus, xhr) {
+            // 取得銷售紀錄列表
+            var salesList = data;
+
+            // 找到要更新的 DOM 元素
+            var tableBody = $("#sales-tbody");
+
+            // 清空表格內容
+            tableBody.empty();
+
+            // 逐一產生表格的每一行
+            for (var i = 0; i < salesList.length; i++) {
+              var sale = salesList[i];
+              var deliveryMethod = "";
+              var paymentMethod = "";
+              var payStatus = "";
+              var saleStatus = "";
+
+              if (sale.delivery == "home-delivery") {
+                deliveryMethod = "宅配";
+              } else if (sale.delivery == "store-pickup") {
+                deliveryMethod = "分店取貨";
+              } else {
+                deliveryMethod = "其他配送方式";
+              }
+
+              if (sale.payment == "cash-on-delivery") {
+                paymentMethod = "貨到付款";
+              } else if (sale.payment == "line-pay") {
+                paymentMethod = "Line Pay";
+              } else if (sale.payment == "store-pickup-payment") {
+                paymentMethod = "到店取貨付款";
+              } else {
+                paymentMethod = "其他付款方式";
+              }
+
+              if (sale.pay == "undone") {
+                payStatus = "未付款";
+              } else if (sale.pay == "done") {
+                payStatus = "已付款";
+              } else {
+                payStatus = "未知";
+              }
+
+              if (sale.status == "Pending") {
+                saleStatus = "處理訂單中";
+              } else if (sale.status == "Processing") {
+                saleStatus = "理貨中";
+              } else if (sale.status == "Shipped") {
+                saleStatus = "運送中";
+              } else if (sale.status == "Delivered") {
+                saleStatus = "已送達";
+              } else if (sale.status == "Completed") {
+                saleStatus = "交易完成";
+              } else if (sale.status == "Cancelled") {
+                saleStatus = "已取消";
+              } else if (sale.status == "Refunded") {
+                saleStatus = "已退款";
+              } else {
+                saleStatus = "未知";
+              }
+
+              var row =
+                "<tr>" +
+                "<td>" +
+                sale.saleId +
+                "</td>" +
+                "<td>" +
+                sale.orderTime.substring(0, 10) +
+                "<br>" +
+                sale.orderTime.substring(11, 19) +
+                "</td>" +
+                "<td>" +
+                sale.memberLastName +
+                sale.memberFirstName +
+                "</td>" +
+                "<td>" +
+                sale.memberId +
+                "</td>" +
+                "<td>" +
+                deliveryMethod +
+                "</td>" +
+                "<td><a href='#'>" +
+                paymentMethod +
+                "</a></td>" +
+                "<td>" +
+                sale.totalPrice +
+                "</td>" +
+                "<td><div id='sale-pay-" +
+                sale.saleId +
+                "'>" +
+                payStatus +
+                "</div></td>" +
+                "<td><button class='btn btn-info' onclick='showSalePaySelect(" +
+                sale.saleId +
+                ")'>編輯</button></td>" +
+                "<td><div id='sale-status-" +
+                sale.saleId +
+                "'>" +
+                saleStatus +
+                "</div></td>" +
+                "<td><button class='btn btn-info' onclick='showSaleStatusSelect(" +
+                sale.saleId +
+                ")'>編輯</button></td>" +
+                "</tr>";
+
+              // 將產生的表格行插入表格中
+              tableBody.append(row);
+            }
+          },
+
+          error: function (xhr, textStatus, errorThrown) {
+            // 顯示錯誤訊息等等
+            alert("未找到此會員的訂單！");
+          },
+        });
+      }
+    </script>
   </body>
 </html>

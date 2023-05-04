@@ -32,8 +32,8 @@
       <h1 style="margin-left: 550px;">所有評論</h1>
     <hr>    
   
-  <div style="font-size:large;">
-  <table class="text-center" style="width: 1350px;">
+  <div>
+  <table class="text-center" style="width: 1150px;">
     <thead  style="background-color:#DCDCDC;">
       <tr>
         <th style="width: 50px;">會員id</th>

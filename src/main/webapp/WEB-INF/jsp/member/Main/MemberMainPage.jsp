@@ -39,7 +39,9 @@
 
                     <div class="card-body">
                       <h5 class="card-title">訂單查詢</h5>
-                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                      <br>
+                      <p class="card-text">檢視訂購清單</p>
+                      <a type = "button" href = "${contextRoot}/member/myorder" class = "btn btn-secondary">進入</a>
                     </div>
                   </div>
                 </div>
@@ -48,7 +50,9 @@
 
                     <div class="card-body">
                       <h5 class="card-title">購物車</h5>
-                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                      <br>
+                      <p class="card-text">檢視購物車</p>
+                      <a type = "button" href = "${contextRoot}/newshopping/newcart" class = "btn btn-secondary">進入</a>
                     </div>
                   </div>
                 </div>
@@ -57,7 +61,10 @@
 
                     <div class="card-body">
                       <h5 class="card-title">個人資訊</h5>
-                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                      <br>
+                      <p class="card-text">修改個人基本資料</p>
+                      <p class="card-text">修改個人密碼</p>
+                      <a type = "button" href = "${contextRoot}/member/information" class = "btn btn-secondary">進入</a>
                     </div>
                   </div>
                 </div>
@@ -66,7 +73,9 @@
 
                     <div class="card-body">
                       <h5 class="card-title">追蹤商品</h5>
-                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                      <br>
+                      <p class="card-text">檢視追蹤商品</p>
+                      <a type = "button" href = "${contextRoot}/member/myfavorite?memberId=${memberId}" class = "btn btn-secondary">進入</a>
                     </div>
                                                    
                                   
@@ -78,27 +87,34 @@
 
                     <div class="card-body">
                       <h5 class="card-title">我的評論</h5>
-                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                      <br>
+                      <p class="card-text">檢視商品評論</p>
+                      <a type = "button" href = "${contextRoot}/comment/memberPage?p=1&memberId=${memberId}" class = "btn btn-secondary">進入</a>
                     </div>
                   </div>
                 </div>
                 
-                 <div class="col">
-                  <div class="card">
+<!--                  <div class="col"> -->
+<!--                   <div class="card"> -->
 
-                    <div class="card-body">
-                      <h5 class="card-title">付款資訊</h5>
-                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
-                    </div>
-                  </div>
-                </div>
+<!--                     <div class="card-body"> -->
+<!--                       <h5 class="card-title">付款資訊</h5> -->
+<!--                       <br> -->
+<!--                       <p class="card-text">檢視付款資訊</p> -->
+<!--                       <p class="card-text">更新付款資訊</p> -->
+<!--                       <a type = "button" href = "" class = "btn btn-secondary">進入</a> -->
+<!--                     </div> -->
+<!--                   </div> -->
+<!--                 </div> -->
                 
                  <div class="col">
                   <div class="card">
 
                     <div class="card-body">
                       <h5 class="card-title">優惠券</h5>
-                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                      <br>
+                      <p class="card-text">檢視優惠券</p>
+                      <a type = "button" href = "${contextRoot}/mycoupon" class = "btn btn-secondary">進入</a>
                     </div>
                   </div>
                 </div>
@@ -108,7 +124,9 @@
 
                     <div class="card-body">
                       <h5 class="card-title">電子書</h5>
-                      <p class="card-text"><a type = "button" href = "" class = "btn btn-secondary">進入</a></p>
+                      <br>
+                      <p class="card-text">檢視已購買電子書</p>
+                      <a type = "button" href = "${contextRoot}/member/myebook?memberId=${memberId}" class = "btn btn-secondary">進入</a>
                     </div>
                   </div>
                 </div>

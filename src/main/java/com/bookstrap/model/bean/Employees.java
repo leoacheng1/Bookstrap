@@ -15,7 +15,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Employees")
@@ -45,6 +44,7 @@ public class Employees {
 	@Column(name="emp_position")
 	private String empPosition;
 	
+	@JsonBackReference
 	@OneToOne(mappedBy="employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private ShopEmployees shopEmployee;

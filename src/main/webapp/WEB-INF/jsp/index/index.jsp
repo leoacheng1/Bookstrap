@@ -106,9 +106,6 @@
                 a:link {
                     text-decoration: none;
                 }
-                a:hover {
-                    text-decoration: underline;
-                }
             </style>
         </head>
 
@@ -144,7 +141,7 @@
                             <a class="nav-link text-dark text-dark fs-5 me-5" href="#">當月熱銷</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark text-dark fs-5 me-5" href="#">部落格</a>
+                            <a class="nav-link text-dark text-dark fs-5 me-5" href="${contextRoot}/blog/blogIndex">部落格</a>
                         </li>
                     </ul>
                 </div>
@@ -274,19 +271,19 @@
             <!-- 即將上架 尾 -->
 
 
-            <!-- 本月熱銷 頭 (寫死 僅供參考)-->
+           <!-- 本月熱銷 頭 (寫死 僅供參考)-->
 
-            <!-- <div class="container mt-5 mb-5">
+            <div class="container mt-5 mb-5">
                 <nav>
 
                     <div class="d-flex align-items-center">
 
                         <p class="ms-2 fs-4 my-auto">本月熱銷</p>
                     </div>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist"> -->
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <!-- 要改改這裡的data-bs-target="#..." -->
                         <!-- id 中間名稱 改  本週熱銷t2 內附類別 i1、 i2 依此類推-->
-                        <!-- <button class="btn btn-light rounded-0 active" id="nav-t3i1-tab" data-bs-toggle="tab"
+                        <button class="btn btn-light rounded-0 active" id="nav-t3i1-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-t3i1" type="button" role="button" aria-controls="nav-t3i1"
                             aria-selected="true">
                             中文
@@ -318,9 +315,9 @@
                         </button>
                     </div>
                 </nav>
-                <div class="tab-content" id="nav-tabContent"> -->
+                <div class="tab-content" id="nav-tabContent">
                     <!-- nav-home 改此id -->
-                    <!-- <div class="tab-pane fade show active" id="nav-t3i1" role="tabpanel" aria-labelledby="nav-home-tab"
+                    <div class="tab-pane fade show active" id="nav-t3i1" role="tabpanel" aria-labelledby="nav-home-tab"
                         tabindex="0">
                         <div class="container">
                             <div class="homeslider">
@@ -396,7 +393,7 @@
                         t3i6
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <!-- 本月熱銷 尾 -->
 
@@ -583,7 +580,7 @@
             <footer class="text-muted mt-5 border border-2 border-bottom-0 border-start-0 border-end-0">
                 <div class="container">
                     <p class="float-right justify-content-center">
-                        ##########Test only############ 客戶服務專線：02-26535588
+                        客戶服務專線：02-26535588
                         傳真：02-27885008 服務時間：週一~五 8:00~19:00，週六~日、例假日
                         9:00~18:00，365天全年無休 Bookstrap數位科技股份有限公司 統編 : 96922355
                         地址：臺灣 115 台北市南港區八德路四段768巷1弄18號B1之1

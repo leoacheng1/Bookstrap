@@ -80,10 +80,13 @@
 								              <button type="submit" class="btn btn-dark btn-block" id="member1">一般會員登入</button>
 								            </div>
 								            <div class="col-4">
-								              <button type="submit" class="btn btn-dark btn-block" id="member2">新註冊會員登入</button>
+								              <button type="submit" class="btn btn-dark btn-block" id="member4">電子書會員登入</button>
 								            </div>
 								            <div class="col-4">
-								              <button type="submit" class="btn btn-dark btn-block" id="member3">更改密碼後會員</button>
+								              <button type="submit" class="btn btn-dark btn-block" id="member2">購買會員登入</button>
+								            </div>
+								             <div class="col-4 mt-3">
+								              <button type="submit" class="btn btn-dark btn-block" id="member3">客服會員登入</button>
 								            </div>
 								      </div>
 										<br>
@@ -105,17 +108,21 @@
 <script>
       const accountInfo = {
         'member1': {
-          username: "12345@gmail.com",
+          username: "bookeeit157@gmail.com",
           password: "12345"
         },
         'member2': {
-          username: "1234@gmail.com",
-          password: "1234"
+          username: "bookeeit157@gmail.com",
+          password: "123456"
         },
         'member3': {
-          username: "employee",
-          password: "1234"
-        }
+          username: "def456@gmail.com",
+          password: "def456"
+        },
+        'member4': {
+            username: "123jkl@oulook.com",
+            password: "123jkl"
+          }
       }
       function quickLogin(jobLevel) {
         document.getElementById("email").value = accountInfo[jobLevel].username;

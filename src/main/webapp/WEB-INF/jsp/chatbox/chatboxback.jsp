@@ -13,7 +13,7 @@
                     #chat-page ul {
                     /* height: calc(100% - 120px);
                      */
-                    height: 400px;
+                    height: 270px;
                     }
             </style>
         </head>
@@ -30,22 +30,14 @@
                                 <div class="content-header">
 
                                 </div>
-                                <section class="content">
-                                    <h2>客服中心</h2>
-                                    <br>
-                                    <br>
-                                    <h2>客戶訊息</h2>
+                                <section class="content">   
+                                    <h3>客戶訊息</h3>
                                     <div id="msggroup" class="" style="width: 300px">
-
 
                                     </div>
                                     <div id="chat-page">
 
-
                                     </div>
-
-
-
                                 </section>
                                 
                             </div>

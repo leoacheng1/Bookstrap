@@ -103,6 +103,7 @@
     </head>
 
     <body>
+
       <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
       <script type="text/javascript" src="${contextRoot}/js/bootstrap.bundle.min.js"></script>
       <script type="text/javascript" src="${contextRoot}/js/jquery-3.6.3.min.js"></script>
@@ -115,7 +116,7 @@
             <div class="col-4 text-center">
               <img src="${contextRoot}/logo/logo2.png" style="vertical-align: bottom;" width="7%" alt="©BookStraper"
                 title="©BookStraper">
-              <a class="blog-header-logo text-dark" href="#">BookStrapper</a>
+              <a class="blog-header-logo text-dark" href="${contextRoot}/blog/blogIndex">BookStrapper</a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
               <a class="link-secondary" href="#" aria-label="Search">
@@ -149,13 +150,14 @@
         <div class="p-4 p-md-5 mb-4 rounded "
           style="background-image:url(${contextRoot}/imafraid/images/blogTopPic.jpg) ">
 
-          <div class="col-md-6 px-0">
+          <div class="col-md-6 px-0" var="newest">
             <h1 style=color:black class="display-4 text-light fw-bold">最新文章</h1>
             <h3 style=color:black id="newParaTitle"></h3>
             <div id="box">
 
               <p id="newParaContent"></p>
-              <p class="lead mb-0"><a href="#" class="text-white fw-bold">繼續閱讀...</a></p>
+              <p class="lead mb-0"><a href="${contextRoot}/blog/article/${newest.paragraphId}"
+                  class="text-white fw-bold">繼續閱讀...</a></p>
             </div>
           </div>
         </div>
@@ -170,13 +172,16 @@
         </div>
 
         <div class="row g-5">
-          <div class="col-md-8">
+          <div id="mainposition" class="col-md-8">
             <jstl:forEach var="book" items="${Books}">
               <article class="blog-post">
                 <h2 class="blog-post-title mb-1" id="pTitle01">${book.paragraphTitle}</h2>
-                <p class="blog-post-meta">January 1, 2021 by <a href="#">${book.paragraphAuther}</a></p>
+                <p class="blog-post-meta">${book.paragraphTime} <a href="#">${book.paragraphAuther}</a> </p>
                 <p id="${book.paragraphId}">${book.paragraphContent}</p>
+                <p class="lead mb-0"><a href="${contextRoot}/blog/article/${book.paragraphId}"
+                    class="text-black fw-bold">繼續閱讀...</a></p>
               </article>
+              <p>================================================================</p>
             </jstl:forEach>
             <nav class="blog-pagination" aria-label="Pagination">
               <a class="btn btn-outline-primary rounded-pill" href="#">Older</a>
@@ -194,19 +199,9 @@
 
               <div class="p-4">
                 <h4 class="fst-italic">Archives</h4>
-                <ol class="list-unstyled mb-0">
-                  <li><a href="#">March 2021</a></li>
-                  <li><a href="#">February 2021</a></li>
-                  <li><a href="#">January 2021</a></li>
-                  <li><a href="#">December 2020</a></li>
-                  <li><a href="#">November 2020</a></li>
-                  <li><a href="#">October 2020</a></li>
-                  <li><a href="#">September 2020</a></li>
-                  <li><a href="#">August 2020</a></li>
-                  <li><a href="#">July 2020</a></li>
-                  <li><a href="#">June 2020</a></li>
-                  <li><a href="#">May 2020</a></li>
-                  <li><a href="#">April 2020</a></li>
+                <ol id=archives sclass="list-unstyled mb-0">
+
+
                 </ol>
               </div>
 
@@ -225,8 +220,7 @@
       </main>
 
       <footer class="blog-footer">
-        <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a
-            href="https://twitter.com/mdo">@mdo</a>.</p>
+        <p>BookStrap <a href="http://localhost:8080/Bookstrap/index">©</a>.</p>
         <p>
           <a href="#">Back to top</a>
         </p>
@@ -266,20 +260,103 @@
       </script>
       <script type="text/javascript">
 
+
+
         axios({
 
-          url: "http://localhost:8080/Bookstrap/blog/showCatagory1Para",
+          url: "http://localhost:8080/Bookstrap/blog/getAllBlogParagraphForMonthSelect",
 
           method: "get",
 
 
         })
           .then(res => {
-            console.log(res.data)
-            var data = res.data;
-            console.log(data)
+            // console.log(res.data)
+            const dateAr = []
+            res.data.forEach(element => {
+              // console.log(element.paragraphTime)
+              const date = new Date(element.paragraphTime)
+              const year = date.getFullYear()
+              const month = (date.getMonth() + 1).toString().padStart(2, '0');
+
+              const datearray = year + '/' + month
+              console.log(datearray)
+              if (dateAr.includes(datearray)) {
+                // console.log('030')
+
+              }
+              else { dateAr.push(datearray) }
+            });
+            // console.log(dateAr)
 
 
+            const ol = document.getElementById('archives');
+
+
+
+            for (let i = 0; i < dateAr.length; i++) {
+              // console.log(dateAr[i])
+
+              // 創建新的<li>元素
+              const li = document.createElement('li');
+              li.className = 'list-unstyled mb-0';
+
+              // 創建新的<a>元素
+              const a = document.createElement('a');
+              // a.href = '';
+              a.id = dateAr[i]
+              a.textContent = dateAr[i];
+
+              // 將<a>元素加入<li>元素中
+              li.appendChild(a);
+
+              // 將新的<li>元素加入<ol>元素中
+              ol.appendChild(li);
+
+              document.getElementById(dateAr[i]).addEventListener('click', function (e) {
+                console.log(this.id)
+                const str = dateAr[i];
+                const parts = str.split('/');
+                console.log(parts[0]); // 輸出 ["2023", "02"]
+                console.log(parts[1]); // 輸出 ["2023", "02"]
+                let nyear = parts[0]
+                let nmonth = parts[1]
+                axios({
+
+                  url: "http://localhost:8080/Bookstrap/blog/getArchive",
+
+                  method: "post",
+                  params: { year: nyear, month: nmonth }
+
+
+                })
+                  .then(res => {
+                    console.log(res.data)
+                    const mainposition = document.getElementById('mainposition'); // 取得 id 屬性為 "mainposition" 的 div 元素
+                    document.getElementById('mainposition').innerHTML = ""
+                    res.data.forEach(e => {
+                      const newArticle = document.createElement('article'); // 建立一個新的 article 元素
+
+                      // 設定 article 元素的內容，使用模板字串與變數進行資料綁定
+                      newArticle.innerHTML = `
+                       <h2 class="blog-post-title mb-1" id="pTitle01">`+ e.paragraphTitle + `</h2>
+                        <p class="blog-post-meta">`+ e.paragraphTime + ` <a href="#">` + e.paragraphAuther + `</a></p>
+                        <p id="`+ e.paragraphId + `">` + e.paragraphContent + `</p>
+                        <p class="lead mb-0"><a href="${contextRoot}/blog/article/` + e.paragraphId + `" class="text-black fw-bold">繼續閱讀...</a></p><p>=======================================================</p>
+                        `;
+
+                      mainposition.appendChild(newArticle);
+                    })
+                  })
+
+
+
+
+
+
+              })
+
+            }
           })
 
       </script>

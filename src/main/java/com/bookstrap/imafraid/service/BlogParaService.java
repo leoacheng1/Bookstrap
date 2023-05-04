@@ -43,6 +43,19 @@ public class BlogParaService {
 		return allBlogParagraph;
 	}
 
+	public List<BlogParagraph> getAllBlogParagraphforMonthselect() {
+		List<BlogParagraph> allBlogParagraph = blogParaDao.findAllOrderByDate();
+
+		return allBlogParagraph;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public String deleteParaById(Integer id) {
 		try {
 			blogParaDao.deleteById(id);
@@ -53,61 +66,81 @@ public class BlogParaService {
 	}
 
 	public BlogParagraph getParaById(Integer paragraphId) {
-		Optional <BlogParagraph> op =blogParaDao.findById(paragraphId);
-		
-			BlogParagraph bp = op.get();
-			return bp;
-}
+		Optional<BlogParagraph> op = blogParaDao.findById(paragraphId);
 
-	public String updatePara(Integer id,String pTitle,String pContent,String pAuther,String pCatagory,MultipartFile[] pPhoto) {
-		Optional <BlogParagraph> op =blogParaDao.findById(id);
-		List<BlogPhotos> blogPhoto= new LinkedList<>();
-	
-			try {
-				if(op.isPresent()) {
-					BlogParagraph bp = op.get();
-					for(MultipartFile photo : pPhoto) {
+		BlogParagraph bp = op.get();
+		return bp;
+	}
+
+	public String updatePara(Integer id, String pTitle, String pContent, String pAuther, String pCatagory,
+			MultipartFile[] pPhoto) {
+		Optional<BlogParagraph> op = blogParaDao.findById(id);
+		if (op.isEmpty())
+			return "查無此篇文章";
+		List<BlogPhotos> blogPhoto = new LinkedList<>();
+		if (pPhoto == null) {
+			BlogParagraph bp = op.get();
+			bp.setParagraphTitle(pTitle);
+			bp.setParagraphAuther(pAuther);
+			bp.setParagraphCatagory(pCatagory);
+			bp.setParagraphContent(pContent);
+			return "更新成功";
+		}
+
+		try {
+			if (op.isPresent()) {
+				BlogParagraph bp = op.get();
+				for (MultipartFile photo : pPhoto) {
 					BlogPhotos bPhoto = new BlogPhotos();
 					byte[] photoByte;
-				photoByte = photo.getBytes();
-				bp.setParagraphTitle(pTitle);
-				bp.setParagraphAuther(pAuther);
-				bp.setParagraphCatagory(pCatagory);
-				bp.setParagraphContent(pContent);
-				bPhoto.setBlogPhoto(photoByte);
-				bPhoto.setBlogparagraph(bp);
-				blogPhoto.add(bPhoto);
+					photoByte = photo.getBytes();
+					bp.setParagraphTitle(pTitle);
+					bp.setParagraphAuther(pAuther);
+					bp.setParagraphCatagory(pCatagory);
+					bp.setParagraphContent(pContent);
+					bPhoto.setBlogPhoto(photoByte);
+					bPhoto.setBlogparagraph(bp);
+					blogPhoto.add(bPhoto);
 				}
 				bp.setBlogPhotos(blogPhoto);
 				return "更新成功";
-				}
-			
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			return "查無此篇文章";
-			
-	}	
-		
-	public String makeItCanSeen(Integer id,Integer showOrNot){
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "查無此篇文章";
+
+	}
+
+	public String makeItCanSeen(Integer id, Integer showOrNot) {
 		Optional<BlogParagraph> optional = blogParaDao.findById(id);
-		if (optional.isEmpty()) return null;
+		if (optional.isEmpty())
+			return null;
 		BlogParagraph paragraph = optional.get();
 		paragraph.setIsThisParaShow(showOrNot);
 		blogParaDao.save(paragraph);
 		return "ok";
 	}
+
 	public BlogParagraph findLatestParaByIdNativeQuery() {
-	return blogParaDao.findLatestParaByIdNativeQuery();
+		return blogParaDao.findLatestParaByIdNativeQuery();
 	}
+
 	public List<BlogParagraph> findCatagory1NativeQuery() {
 		return blogParaDao.findCatagory1NativeQuery();
-		}
+	}
+
 	public List<BlogParagraph> findCatagory2NativeQuery() {
 		return blogParaDao.findCatagory2NativeQuery();
-		}
+	}
+
 	public List<BlogParagraph> findAllNativeQuery() {
 		return blogParaDao.findAllNativeQuery();
-		}
+	}
+
+	public List<BlogParagraph> findParaByMonthNativeQuery(String year, String month) {
+		return blogParaDao.findParaByMonthNativeQuery(year, month);
+	}
 }

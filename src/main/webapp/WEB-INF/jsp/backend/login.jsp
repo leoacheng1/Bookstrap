@@ -94,8 +94,8 @@
           password: "12345"
         },
         'employee': {
-          username: "employee",
-          password: "1234"
+          username: "shopemployee",
+          password: "123123"
         }
       }
       function quickLogin(jobLevel) {

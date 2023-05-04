@@ -60,7 +60,7 @@ public class EpubController {
 	
 	 @GetMapping("/epub/ebook/{id}")
 	 public ResponseEntity<byte[]> getEPUB(@PathVariable String id) throws IOException{
-		 String filePath = "C:\\epub\\" + id ;
+		 String filePath = "C:\\Bookstrap\\epub\\" + id ;
 		 File file = new File(filePath);
 		 if (file.exists()) {
 			 System.out.println("fileExistedfsfwfwefwefwef");

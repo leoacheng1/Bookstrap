@@ -22,6 +22,9 @@
             font-size: 50px;
           }
 
+          .mailbox-read-info h5{
+            margin-bottom: 8px;
+          }
           @media print {
             body * {
               visibility: hidden;
@@ -64,7 +67,7 @@
     </head>
 
     <body class="sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-closed sidebar-collapse"
-      data-ref="${mailAccount.accountId}">
+      data-ref="${mailAccount.accountId}" data-folder ="${accountMail.mailFolder.folderName}">
       <div class="wrapper">
         <!--上面導覽列 -->
         <%@ include file="/WEB-INF/jsp/backend/layout/nav.jsp" %>
@@ -79,10 +82,10 @@
                       <h1>閱讀郵件</h1>
                     </div>
                     <div class="col-sm-6">
-                      <ol class="breadcrumb float-sm-right">
+                      <!-- <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active">Compose</li>
-                      </ol>
+                      </ol> -->
                     </div>
                   </div>
                 </div><!-- /.container-fluid -->

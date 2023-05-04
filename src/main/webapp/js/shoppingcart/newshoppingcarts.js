@@ -55,8 +55,9 @@ function clearCart(mId) {
       })
       .catch((err) => {
         console.log(err);
+        alert("購物車為空！")
         window.location.href =
-          "http://localhost:8080/Bookstrap/newshopping/newcart";
+          "http://localhost:8080/Bookstrap/index";
       });
   } else {
     // Do nothing!
@@ -91,6 +92,7 @@ function updateCartItemAmount(cartId, action) {
       .then((res) => {
         let amount = document.getElementById(`book-amount-${cartId}`);
         let price = document.getElementById(`total-price-single-${cartId}`);
+        let checkbox = document.getElementById(`checkbox-price-single-${cartId}`)
         let disPrice = document.getElementById(
           `discount-price-${cartId}`
         ).textContent;
@@ -100,6 +102,9 @@ function updateCartItemAmount(cartId, action) {
         amount.value = res.data;
         console.log(price.textContent);
         price.textContent = amount.value * disPrice;
+        checkbox.value = amount.value * disPrice;
+        updateTotalPrice();
+        updateDiscountedPrice();
         // window.location.href =
         //   "http://localhost:8080/Bookstrap/newshopping/newcart";
       })
@@ -131,14 +136,20 @@ for (let i = 0; i < priId.length; i++) {
   let amounta = amount[i].value;
   console.log("數量:" + amounta);
 
+  let check = checkbox[i].value;
+  console.log("check:" + check)
+
+  checkbox[i].value = disPrice * parseInt(amounta);
   disPriId[i].textContent = disPrice; // 將計算結果寫回元素
-  disPriAmo[i].textContent = disPrice * amounta;
+  disPriAmo[i].textContent = disPrice * parseInt(amounta);
+
+  console.log(disPrice * parseInt(amounta))
 }
 
 ////////////////////////// 總金額計算 //////////////////////////
 
 // 取得全選checkbox元素
-const checkall = document.getElementsByClassName("book-checkbox-all")[0];
+const checkall = document.getElementById("book-checkbox-all");
 // 取得所有checkbox元素
 const checkboxes = document.querySelectorAll(".book-checkbox");
 // 取得總金額元素
@@ -152,110 +163,93 @@ const discountedPriceEl = document.getElementById("discounted-price");
 // 初始化折扣後金額為0
 let discountedPrice = 0;
 
-checkall.addEventListener("change", () => {
-  if (checkall.checked) {
-    totalPrice = 0;
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = true;
-      if (checkbox.checked) {
-        totalPrice += parseInt(checkbox.dataset.price);
-      }
-    });
-  } else {
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-      couponCheckboxes.checked = false;
-      totalPrice = 0;
-      discountedPrice = 0;
-    });
-  }
+function updateTotalPrice() {
+  totalPrice = 0;
+  discountedPrice = 0;
+  let allChecked = true; // 先預設為全選
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      totalPrice += parseInt(checkbox.value);
+    } else {
+      allChecked = false; // 只要有一個沒被選就代表不是全選
+    }
+  });
   // 更新總金額的顯示
   totalPriceEl.innerText = totalPrice;
+  // 更新全選checkbox的狀態
+  checkall.checked = allChecked;
+}
+
+function updateDiscountedPrice() {
+  discountedPrice = totalPrice;
+  couponCheckboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      discountedPrice -= parseInt(checkbox.value);
+    }
+  });
+
+  // 更新折扣後金額的顯示
   discountedPriceEl.innerText = discountedPrice;
+}
+
+checkall.addEventListener("change", () => {
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = checkall.checked;
+  });
+  updateTotalPrice();
+  updateDiscountedPrice();
+
+  if (!checkall.checked) {
+    couponCheckboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+      
+    });
+    discountedPrice = 0;
+    discountedPriceEl.innerText = discountedPrice;
+  }
 });
 
-// 為每個checkbox加入事件監聽
 checkboxes.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
-    // 若checkbox被選取，則將其對應書籍的金額加入總金額
-    if (checkbox.checked) {
-      totalPrice += parseInt(checkbox.dataset.price);
-    } else {
-      totalPrice -= parseInt(checkbox.dataset.price);
+    if (!checkbox.checked) {
+      checkall.checked = false;
     }
-
-    // 檢查所有checkbox是否都被選取，若是則勾選全選checkbox，否則取消勾選全選checkbox
-    const allChecked = Array.from(checkboxes).every(
-      (checkbox) => checkbox.checked
-    );
-    checkall.checked = allChecked;
-
-    // 更新總金額的顯示
-    totalPriceEl.innerText =
-      totalPrice > 0 || checkbox.checked ? totalPrice : 0;
+    updateTotalPrice();
+    updateDiscountedPrice();
   });
 });
 
-// 綁定事件
-
-for (var i = 0; i < couponCheckboxes.length; i++) {
-  couponCheckboxes[i].addEventListener("change", function () {
-    // 取消其他checkbox的選擇狀態
-
-    for (var j = 0; j < couponCheckboxes.length; j++) {
-      if (couponCheckboxes[j] !== this) {
-        couponCheckboxes[j].checked = false;
-      }
-    }
-
-    // 取得被選取的折價券 checkbox 元素
-    const selectedCoupon = document.querySelector(
-      "input[name='coupon']:checked"
-    );
-
-    // 判斷totalPrice是否為0
-    if (totalPrice === 0 && selectedCoupon) {
-      // 若為0，則顯示alert並取消選取的折價券
-      alert("總金額為0，無法使用折價券。");
-      selectedCoupon.checked = false;
-      return;
-    }
-
-    // 確認是否有被選取的折價券，若有則取得其折扣值
-    let discount = 0;
-    if (selectedCoupon) {
-      console.log(selectedCoupon.value);
-      discount = parseInt(selectedCoupon.value);
-      // 將總金額扣除折扣值，得到折扣後的金額
-      console.log(totalPrice);
-      console.log(discount);
-      const discountedPrice = totalPrice - discount;
-
-      // 更新折扣後金額的顯示
-
-      discountedPriceEl.innerText = discountedPrice;
-    }
+couponCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    updateDiscountedPrice();
   });
-}
+});
 
 function checkout() {
   // 取得已勾選的商品
   var checkedItems = $('input[name="checkbook"]:checked');
   var coupon = $('input[name="coupon"]:checked');
   var totalPrice = document.getElementById("total-price").innerText;
-  console.log(totalPrice);
-  sessionStorage.setItem("totalPrice", totalPrice);
   console.log(coupon);
+  sessionStorage.setItem("totalPrice", totalPrice);
+  
+
+   // 將 coupon 的 value 值存入 sessionStorage
+   if (coupon.length > 0 && coupon.prop('checked')) {
+    var couponId = coupon.data('couponid');
+    var discount = coupon.val();
+    var couponData = { couponId: couponId, discount: discount };
+    sessionStorage.setItem("coupon", JSON.stringify(couponData));
+  }
+
+
 
   // 將勾選的商品資料存成 JavaScript 物件
-  var cartItems = [];
+  var bookIds = [];
   checkedItems.each(function () {
-    console.log(checkedItems);
-    var bookId = $(this).val();
-    var amount = $(this).closest("tr").find(".quantity").val();
-    console.log("itemId" + bookId);
-    console.log("itemQty" + amount);
-    cartItems.push({ bookId: bookId, amount: amount });
+    var bookId = $(this).data("bkid");
+    bookIds.push(bookId);
+    console.log(bookId)
   });
 
   // 發送 AJAX 請求
@@ -263,7 +257,7 @@ function checkout() {
     type: "POST",
     url: "http://localhost:8080/Bookstrap/newshopping/newcart/checkout",
     contentType: "application/json; charset=utf-8",
-    data: JSON.stringify(cartItems),
+    data: JSON.stringify(bookIds),
     success: function () {
       // 成功處理後端儲存購物車商品的 Session
       window.location.href =

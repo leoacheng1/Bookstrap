@@ -1,6 +1,8 @@
 package com.bookstrap.imafraid.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bookstrap.imafraid.bean.BlogParagraph;
 import com.bookstrap.imafraid.bean.BlogPhotos;
-import com.bookstrap.imafraid.model.BlogParagraphRepository;
 import com.bookstrap.imafraid.service.BlogParaService;
 
 @Controller
@@ -41,6 +42,8 @@ public class BlogParagraphController {
 
 		BlogPhotos bPhoto = new BlogPhotos();
 		byte[] photoByte = photo.getBytes();
+		
+		bp.setParagraphTime(new Timestamp(new Date().getTime()));
 		bp.setParagraphTitle(pTitle);
 		bp.setParagraphContent(pContent);
 		bp.setParagraphAuther(pAuther);
@@ -54,13 +57,20 @@ public class BlogParagraphController {
 		}
 		bp.setBlogPhotos(blogPhoto);
 		blogParaService.insertBlog(bp);
-		return "/blog/blogIndex";
+		return "redirect:/blog/backIndex";
 	}
 
 	@PostMapping("/blog/getAllBlogParagraph")
 	@ResponseBody
 	public List<BlogParagraph> getAllBlogParagraph() {
 		List<BlogParagraph> allBlogParagraph = blogParaService.getAllBlogParagraph();
+
+		return allBlogParagraph;
+	}
+	@GetMapping("/blog/getAllBlogParagraphForMonthSelect")
+	@ResponseBody
+	public List<BlogParagraph> getAllBlogParagraphForMonthSelect() {
+		List<BlogParagraph> allBlogParagraph = blogParaService.getAllBlogParagraphforMonthselect();
 
 		return allBlogParagraph;
 	}
@@ -82,7 +92,7 @@ public class BlogParagraphController {
 	}
 	@ResponseBody
 	@PutMapping("/blog/updatePara")
-	public String updatePara(@RequestParam Integer id,@RequestParam String pTitle,@RequestParam String pContent,@RequestParam String pAuther,@RequestParam String pCatagory,@RequestParam("pPhoto") MultipartFile[] pPhoto){
+	public String updatePara(@RequestParam Integer id,@RequestParam String pTitle,@RequestParam String pContent,@RequestParam String pAuther,@RequestParam String pCatagory,@RequestParam(name = "pPhoto",required = false ) MultipartFile[] pPhoto){
 	
 		blogParaService.updatePara(id, pTitle, pContent, pAuther, pCatagory, pPhoto);
 	return "成功";
@@ -125,7 +135,12 @@ public class BlogParagraphController {
 //
 //		return "/blog/fakeIndex_mvc";
 //	}
-	
+	@PostMapping("/blog/getArchive")
+	@ResponseBody
+	public List<BlogParagraph> findParaByMonthNativeQuery(@RequestParam String year,@RequestParam String month){
+		return blogParaService.findParaByMonthNativeQuery(year,month);
+		
+	}
 	
 	}
 

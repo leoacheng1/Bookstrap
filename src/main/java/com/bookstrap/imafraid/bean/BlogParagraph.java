@@ -1,6 +1,7 @@
 package com.bookstrap.imafraid.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,6 +31,8 @@ public class BlogParagraph {
 	private String paragraphAuther;
 	@Column(name = "paragraphCatagory")
 	private String paragraphCatagory;
+	@Column(name = "paragraphTime")
+	private Date paragraphTime;
 	@JsonManagedReference	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blogparagraph", cascade = CascadeType.ALL)
 	private List<BlogPhotos> blogPhotos = new ArrayList<>();
@@ -76,6 +79,16 @@ public class BlogParagraph {
 
 	public void setParagraphCatagory(String paragraphCatagory) {
 		this.paragraphCatagory = paragraphCatagory;
+	}
+
+
+
+	public Date getParagraphTime() {
+		return paragraphTime;
+	}
+
+	public void setParagraphTime(Date paragraphTime) {
+		this.paragraphTime = paragraphTime;
 	}
 
 	public List<BlogPhotos> getBlogPhotos() {

@@ -12,6 +12,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.bookstrap.harry.bean.Sales;
 import com.bookstrap.model.bean.ShopEmployees;
 import com.bookstrap.model.bean.ShopStock;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -57,6 +58,10 @@ public class Shops {
 	@JsonManagedReference(value = "shop-shopStocks")
 	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
 	private Set<ShopStock> shopStocks;
+
+	@JsonManagedReference(value = "shop-sales")
+	@OneToMany(mappedBy="shop", cascade = CascadeType.ALL)
+	private Set<Sales> sales;
 	
 	
 	public Set<ShopStock> getShopStocks() {
@@ -142,12 +147,12 @@ public class Shops {
 	public Shops() {
 	}
 
-	public Set<ShopEmployees> getShopEmployees() {
-		return shopEmployees;
-	}
-
-	public void setShopEmployees(Set<ShopEmployees> shopEmployees) {
-		this.shopEmployees = shopEmployees;
-	}
+//	public Set<ShopEmployees> getShopEmployees() {
+//		return shopEmployees;
+//	}
+//
+//	public void setShopEmployees(Set<ShopEmployees> shopEmployees) {
+//		this.shopEmployees = shopEmployees;
+//	}
 
 }

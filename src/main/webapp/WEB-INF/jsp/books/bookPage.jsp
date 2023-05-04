@@ -171,7 +171,7 @@
           <br>
           <br>
           <hr style="width: 505px;">
-          <button type="button" class="btn btn-info" style="margin-right: 20px;margin-left: 30px;font-size: large;"><i
+          <button type="button" class="btn btn-info" id="checkOutBtn" style="margin-right: 20px;margin-left: 30px;font-size: large;"><i
               class="fa-solid fa-cart-shopping"></i>立刻結帳</button>
           <button type="button" class="btn btn-secondary" id="addCartBtn"
             style="margin-right: 20px;margin-left: 30px;font-size: large;"><i
@@ -556,6 +556,37 @@ submitBtn.addEventListener('click', function (e) {
 //     showArea.innerHTML= comments
 // })
 // }
+
+///////////// 直接結帳 /////////////
+const checkOutBtn = document.getElementById('checkOutBtn');
+
+checkOutBtn.addEventListener('click', function(e){
+  const memberId = `${memberId}`
+  const bookId = `${book.id}`
+  const amount = 1;
+  const disprice =  Math.round(`${book.price * book.discount * 0.01}`)
+
+  axios({
+    method: 'post',
+    url: 'http://localhost:8080/Bookstrap/newshopping/buy',
+    params: {
+      memberId: memberId,
+      bookId: bookId,
+      amount: amount,
+      disPrice: disprice
+    }
+  })
+  .then(res =>{
+    console.log(res)
+    window.location.href = "http://localhost:8080/Bookstrap/newshopping/newcart";
+  })
+  .catch(err => {
+    console.log(err)
+    
+      })
+
+})
+
 ///////////// 加入購物車 /////////////
 const addCartBtn = document.getElementById('addCartBtn');
 

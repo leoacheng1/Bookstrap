@@ -14,15 +14,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.bookstrap.model.Shops;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Sales")
@@ -39,6 +42,8 @@ public class Sales {
 	@Column(name = "delivery")
 	private String delivery;
 	
+	
+	
 	@Column(name = "payment")
 	private String payment;
 	
@@ -54,6 +59,9 @@ public class Sales {
 	@Column(name = "status")
 	private String status;
 	
+	@Column(name = "linepay_id")
+	private String linepayId;
+	
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@Column(name = "order_time")
@@ -63,10 +71,20 @@ public class Sales {
 	@Column(name = "member_id")
 	private Integer memberId;
 	
+	@JsonBackReference(value = "member-sales")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id", insertable=false, updatable=false)
 	private Members member;
 	
+	@Column(name = "shop_id")
+	private Integer shopId;
+	
+	@JsonBackReference(value = "shop-sales")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "shop_id", insertable=false, updatable=false)
+	private Shops shop;
+	
+	@JsonManagedReference(value = "sales-saleItems")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sale", cascade = CascadeType.ALL)
 	private List<SaleItems> saleItems;
 	
@@ -100,6 +118,24 @@ public class Sales {
 
 	public void setOrderTime(Date orderTime) {
 		this.orderTime = orderTime;
+	}
+
+	
+
+	public Integer getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
+	}
+
+	public Shops getShop() {
+		return shop;
+	}
+
+	public void setShop(Shops shop) {
+		this.shop = shop;
 	}
 
 	public List<SaleItems> getSaleItems() {
@@ -173,6 +209,14 @@ public class Sales {
 
 	public void setMember(Members member) {
 		this.member = member;
+	}
+
+	public String getLinepayId() {
+		return linepayId;
+	}
+
+	public void setLinepayId(String linepayId) {
+		this.linepayId = linepayId;
 	}
 
 }
