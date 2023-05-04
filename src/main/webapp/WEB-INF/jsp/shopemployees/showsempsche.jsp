@@ -165,11 +165,9 @@
 								}
 
 
-								// 初始化 fullcalendar
 								$(document).ready(function () {
 
 									$('#calendar').fullCalendar({
-										// 設定日曆樣式
 										header: {
 											left: 'prev,next today',
 											center: 'title',
@@ -177,13 +175,12 @@
 										},
 										// defaultDate: new Date(),
 										defaultDate: "2023-04-01",
-										// 日历配置部分
 										locale: 'zh-cn', //配置语言
 										firstDay: 1,
 										timezone: 'local',//时区
-										displayEventEnd: true, //所有视图显示结束时间
+										displayEventEnd: true,
 										dayMaxEvents: true,
-										aspectRatio: 1.5,//设置日历单元格宽度与高度的比例。
+										aspectRatio: 1.5,
 										editable: true,
 
 										events: function (start, end, timezone, callback) {
@@ -242,7 +239,7 @@
 												'</div>' +
 												'</div>');
 
-											// 註冊刪除按鈕的點擊事件
+
 											modal.find('#delete-event-btn').on('click', function () {
 												// 發送 GET 請求
 												alert('您即將刪除這筆資料');
@@ -288,18 +285,17 @@
 														optionsHtml += '<option value="' + data[i].sempId + '">' + data[i].sempName + '</option>';
 													}
 
-													// 彈出對話框前，先清空下拉式選單的選項
 													$('#employee-name').empty();
 
-													// 將選項 HTML 字串加入到下拉式選單中
+
 													$('#employee-name').html(optionsHtml);
 
 													// 彈出對話框
 													$('#dialog').dialog({
 														title: '新增員工班表',
 														modal: true,
-														width: 500,   // 設置寬度為500像素
-														height: 400,   // 設置高度為400像素
+														width: 500,
+														height: 400,
 														close: function () {
 															$('#event-form')[0].reset();
 														},
