@@ -55,9 +55,8 @@ function clearCart(mId) {
       })
       .catch((err) => {
         console.log(err);
-        alert("購物車為空！")
-        window.location.href =
-          "http://localhost:8080/Bookstrap/index";
+        alert("購物車為空！");
+        window.location.href = "http://localhost:8080/Bookstrap/index";
       });
   } else {
     // Do nothing!
@@ -92,7 +91,9 @@ function updateCartItemAmount(cartId, action) {
       .then((res) => {
         let amount = document.getElementById(`book-amount-${cartId}`);
         let price = document.getElementById(`total-price-single-${cartId}`);
-        let checkbox = document.getElementById(`checkbox-price-single-${cartId}`)
+        let checkbox = document.getElementById(
+          `checkbox-price-single-${cartId}`
+        );
         let disPrice = document.getElementById(
           `discount-price-${cartId}`
         ).textContent;
@@ -137,13 +138,13 @@ for (let i = 0; i < priId.length; i++) {
   console.log("數量:" + amounta);
 
   let check = checkbox[i].value;
-  console.log("check:" + check)
+  console.log("check:" + check);
 
   checkbox[i].value = disPrice * parseInt(amounta);
   disPriId[i].textContent = disPrice; // 將計算結果寫回元素
   disPriAmo[i].textContent = disPrice * parseInt(amounta);
 
-  console.log(disPrice * parseInt(amounta))
+  console.log(disPrice * parseInt(amounta));
 }
 
 ////////////////////////// 總金額計算 //////////////////////////
@@ -202,7 +203,6 @@ checkall.addEventListener("change", () => {
   if (!checkall.checked) {
     couponCheckboxes.forEach((checkbox) => {
       checkbox.checked = false;
-      
     });
     discountedPrice = 0;
     discountedPriceEl.innerText = discountedPrice;
@@ -232,24 +232,21 @@ function checkout() {
   var totalPrice = document.getElementById("total-price").innerText;
   console.log(coupon);
   sessionStorage.setItem("totalPrice", totalPrice);
-  
 
-   // 將 coupon 的 value 值存入 sessionStorage
-   if (coupon.length > 0 && coupon.prop('checked')) {
-    var couponId = coupon.data('couponid');
+  // 將 coupon 的 value 值存入 sessionStorage
+  if (coupon.length > 0 && coupon.prop("checked")) {
+    var couponId = coupon.data("couponid");
     var discount = coupon.val();
     var couponData = { couponId: couponId, discount: discount };
     sessionStorage.setItem("coupon", JSON.stringify(couponData));
   }
-
-
 
   // 將勾選的商品資料存成 JavaScript 物件
   var bookIds = [];
   checkedItems.each(function () {
     var bookId = $(this).data("bkid");
     bookIds.push(bookId);
-    console.log(bookId)
+    console.log(bookId);
   });
 
   // 發送 AJAX 請求

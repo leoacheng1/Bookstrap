@@ -43,24 +43,26 @@ public class NewShoppingCartsController {
 	
 	@Autowired
 	private ShopsService shService;
+	
+	
 
 	// 將商品加入購物車清單
 	@ResponseBody
 	@PostMapping("/buy")
-	public String insertCartItems(HttpSession session, @RequestParam("bookId") Integer bookId,
-			@RequestParam("amount") Integer amount, @RequestParam("disPrice") Integer Price) {
+	public String insertCartItems(HttpSession session, 
+								  @RequestParam("bookId") Integer bookId,
+								  @RequestParam("amount") Integer amount, 
+								  @RequestParam("disPrice") Integer price) {
+		// 從 session 中取得 memberId
 		Integer memberId = (Integer) session.getAttribute("memberId");
+		
 		if (memberId != null) {
-		NewShoppingCarts newShoppingCarts = new NewShoppingCarts();
-		newShoppingCarts.setMemberId(memberId);
-		newShoppingCarts.setBookId(bookId);
-		newShoppingCarts.setAmount(amount);
-		newShoppingCarts.setPrice(Price);
+			nscService.addCartItem(memberId, bookId, amount, price);
 
-		nscService.insert(newShoppingCarts);
 		return "success";
 		}
-		return "member/SignInPage";
+		
+		return "failToLogin";
 	}
 
 	// 透過session 中的 memberId 取得所有購買的商品
@@ -71,19 +73,21 @@ public class NewShoppingCartsController {
 
 		if (memberId != null) {
 			List<NewShoppingCarts> cartItemList = nscService.findCartIdByMemberId(memberId);
-			System.out.println(cartItemList);
-			model.addAttribute("cartItemList", cartItemList);
 			List<UserCoupon> userCouponList = ucService.findCouponsByMemberId(memberId);
 			List<Coupons> coupons = new ArrayList<Coupons>();
-			for (int n = 0; n < userCouponList.size(); n++) {
-				Coupons coupon = userCouponList.get(n).getCoupon();
-				coupons.add(coupon);
-			}
+			for (UserCoupon userCoupon : userCouponList) {
+	            Coupons coupon = userCoupon.getCoupon();
+	            coupons.add(coupon);
+	        }
+			model.addAttribute("cartItemList", cartItemList);
 			model.addAttribute("userCouponList", userCouponList);
 			model.addAttribute("coupons", coupons);
 			return "shoppingcarts/newshoppingcarts";
-		}
-		return "member/SignInPage";
+		} else {
+	        // 未登入，提示使用者需要先登入會員
+	        model.addAttribute("message", "Please sign in to view your shopping cart.");
+	        return "member/SignInPage";
+	    }
 	}
 
 	// 清除購物車中其中一樣商品
@@ -105,21 +109,19 @@ public class NewShoppingCartsController {
 	@ResponseBody
 	@PutMapping("/newcart/api/update")
 	public Integer updateCartItemAmount(@RequestParam("cartId") Integer cartId,
-			@RequestParam("amount") Integer amount) {
+										@RequestParam("amount") Integer amount) {
 		nscService.updateAmountByCartId(amount, cartId);
 		return amount;
 
 	}
 	
 	@PostMapping("/newcart/checkout")
-	@ResponseBody
 	public String checkout(HttpSession session, @RequestBody List<Integer> bookIds) {
 		session.setAttribute("bookIds", bookIds);
-
-		System.out.println("已存入session");
 		return "redirect:/newcart/shipping";
 	}
 	
+
 	@SuppressWarnings("unchecked")
 	@GetMapping("/newcart/shipping")
 	public String getCartItems(ModelMap model, HttpSession session) {
@@ -132,16 +134,14 @@ public class NewShoppingCartsController {
 			session.setAttribute("memberFullName", memberFullName);
 
 			List<Shops> allShop = shService.findAllShop();
-			
-			
 			List<Integer> bookIds = (List<Integer>) session.getAttribute("bookIds");
-			System.out.println(bookIds);
 			List<NewShoppingCarts> cartItemList = nscService.findCartByBookId(bookIds);
+			
 			model.addAttribute("shopList", allShop);
 			model.addAttribute("cartItemList", cartItemList);
 
 			return "shoppingcarts/orders";
 		}
-		return "member/SignInPage";
+		return "redirect:/member/signin";
 	}
 }

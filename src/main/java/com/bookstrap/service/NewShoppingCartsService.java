@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bookstrap.model.NewShoppingCartsRepository;
 import com.bookstrap.model.bean.NewShoppingCarts;
+import com.bookstrap.model.dao.NewShoppingCartsRepository;
 
 @Service
 @Transactional
@@ -16,8 +16,13 @@ public class NewShoppingCartsService {
 	@Autowired
 	private NewShoppingCartsRepository nscDao;
 	
-	public void insert(NewShoppingCarts carts) {
-		nscDao.save(carts);
+	public void addCartItem(Integer memberId, Integer bookId, Integer amount, Integer price) {
+		NewShoppingCarts newShoppingCarts = new NewShoppingCarts();
+		newShoppingCarts.setMemberId(memberId);
+		newShoppingCarts.setBookId(bookId);
+		newShoppingCarts.setAmount(amount);
+		newShoppingCarts.setPrice(price);
+		nscDao.save(newShoppingCarts);
 	}
 	
 	public void deleteByCartId(Integer cartId) {
